@@ -1,0 +1,22 @@
+.message {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 1rem;
+  background-color: var(--theme-secondary-color);
+}
+
+.message__author {
+  margin-bottom: 0.5rem;
+
+  font-size: 1.2rem;
+  font-family: 500;
+  color: var(--title-color);
+}
+
+.message__text {
+  font-size: 1.15rem;
+}

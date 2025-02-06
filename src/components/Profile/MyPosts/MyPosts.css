@@ -1,0 +1,26 @@
+.posts-container__title {
+  margin: 0 0 1rem;
+  font-size: 1.75rem;
+  font-weight: 500;
+  color: var(--title-color);
+}
+
+.post-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 1rem 0 2rem;
+}
+
+.post-textarea {
+  width: 100%;
+  color: var(--secondary-color);
+  background-color: var(--primary-color);
+  resize: vertical;
+}
+
+.post-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}

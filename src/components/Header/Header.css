@@ -1,0 +1,39 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  grid-area: h;
+
+  padding: 1rem var(--side-padding);
+  background-color: var(--theme-primary-color);
+}
+
+.header__link {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: all 0.2s ease-in;
+}
+
+.header__link:hover {
+  color: var(--title-color);
+}
+
+.header__link:active {
+  opacity: 0.8;
+}
+
+.logo {
+  width: 4rem;
+  animation: logoRotate 12s linear infinite;
+}
+
+@keyframes logoRotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

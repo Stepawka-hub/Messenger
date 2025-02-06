@@ -1,0 +1,8 @@
+.loader-container {
+  text-align: center;
+}
+
+.loader-default {
+  width: 6rem;
+  height: 6rem;
+}
