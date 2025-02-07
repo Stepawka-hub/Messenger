@@ -2,38 +2,24 @@ import './User.css';
 import Button from '../../common/Button/Button';
 import { NavLink } from 'react-router-dom';
 import avatar from '../../../assets/images/black.png';
-import axios from 'axios';
-import { API_URL } from '../../../utils/constants';
+import usersAPI from '../../../api/api';
 
 const User = (props) => {
   const state = props.userData;
 
   const followToUser = () => {
-    axios
-      .post(`${API_URL}/follow/${state.id}`, {}, {
-        withCredentials: true,
-        headers: {
-          "API-KEY": "835fcfc9-18a8-4730-8961-291be216ecb3"
-        }
-      })
-      .then((res) => {
-        if (res.data.resultCode === 0) {
+    usersAPI.followUser(state.id)
+      .then((data) => {
+        if (data.resultCode === 0) {
           props.followToUser(state.id);
         }
       })
   };
 
   const unfollowFromUser = () => {
-    axios
-      .delete(`${API_URL}/follow/${state.id}`, {
-        withCredentials: true,
-        headers: {
-          "API-KEY": "835fcfc9-18a8-4730-8961-291be216ecb3"
-        }
-      })
-      .then((res) => {
-        console.log(res);
-        if (res.data.resultCode === 0) {
+    usersAPI.unfollowUser(state.id)
+      .then((data) => {
+        if (data.resultCode === 0) {
           props.unfollowFromUser(state.id);
         }
       });

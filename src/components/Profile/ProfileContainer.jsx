@@ -1,22 +1,20 @@
 import React from 'react';
-import Profile from './Profile';
-
-import { API_URL } from '../../utils/constants';
-import { setUserProfileAC } from '../../redux/profileReducer';
-
-import axios from 'axios';
 import { connect } from 'react-redux';
+
+import Profile from './Profile';
+import { setUserProfileAC } from '../../redux/profileReducer';
 import withRouter from '../../utils/withRouter';
+import usersAPI from '../../api/api';
 
 class ProfileContainer extends React.Component {
   componentDidMount() {
     const userId = this.props.router.params.userId || 2;
 
-    axios
-      .get(`${API_URL}/profile/${userId}`)
-      .then((response) => {
-        this.props.setUserProfile(response.data);
+    usersAPI.getProfile(userId)
+      .then((data) => {
+        this.props.setUserProfile(data);
       });
+
   }
 
   render = () => {

@@ -1,27 +1,24 @@
 import React from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
 
 import { followAC, setUsersAC, unfollowAC, setTotalUsersCountAC, setCurrentPageAC, setLoadingAC } from '../../redux/usersReducer';
-import { API_URL } from '../../utils/constants'
 import Users from './Users';
+
+import usersAPI from '../../api/api';
 
 class UsersContainer extends React.Component {
   componentDidMount = () => {
     this.props.setLoading(true);
-    axios
-      .get(`${API_URL}/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
-        withCredentials: true
-      })
-      .then((response) => {
-        const users = response.data.items.map((item) =>
+    usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
+      .then((data) => {
+        const users = data.items.map((item) =>
         ({
           ...item,
           location: { country: 'Russia', city: 'Moscow' },
         }));
 
         this.props.setLoading(false);
-        this.props.setTotalUsersCount(response.data.totalCount);
+        this.props.setTotalUsersCount(data.totalCount);
         this.props.setUsers(users);
       })
   }
@@ -30,12 +27,9 @@ class UsersContainer extends React.Component {
     this.props.setLoading(true);
     this.props.setCurrentPage(pageNumber);
 
-    axios
-      .get(`${API_URL}/users?page=${pageNumber}&count=${this.props.pageSize}`, {
-        withCredentials: true
-      })
-      .then((response) => {
-        const users = response.data.items.map((item) =>
+    usersAPI.getUsers(pageNumber, this.props.pageSize)
+      .then((data) => {
+        const users = data.items.map((item) =>
         ({
           ...item,
           location: { country: 'Russia', city: 'Moscow' },
