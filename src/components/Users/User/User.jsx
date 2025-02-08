@@ -8,21 +8,31 @@ const User = (props) => {
   const state = props.userData;
 
   const followToUser = () => {
+    props.setFollowingProgress(true, state.id);
     usersAPI.followUser(state.id)
       .then((data) => {
         if (data.resultCode === 0) {
           props.followToUser(state.id);
         }
+
+        props.setFollowingProgress(false, state.id);
       })
   };
 
   const unfollowFromUser = () => {
+    props.setFollowingProgress(true, state.id);
     usersAPI.unfollowUser(state.id)
       .then((data) => {
         if (data.resultCode === 0) {
           props.unfollowFromUser(state.id);
         }
+
+        props.setFollowingProgress(false, state.id);
       });
+  };
+
+  const checkFollowingProgress = () => {
+    return props.followingInProgress.some(id => id === state.id);
   };
 
   return (
@@ -35,9 +45,8 @@ const User = (props) => {
         </div>
         <Button
           text={state.followed ? 'Unfollowed' : 'Follow'}
-          padding='0.5rem 1.5rem'
-          alignSelf='center'
-          color='follow-btn-color'
+          className={'user-card__btn'}
+          disabled={checkFollowingProgress()}
           onClick={state.followed ? unfollowFromUser : followToUser}
         />
       </header>

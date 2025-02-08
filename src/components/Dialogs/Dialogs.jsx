@@ -41,7 +41,11 @@ const Dialogs = (props) => {
             value={state.newMessageText}
             onChange={onMessageChange}
           />
-          <Button onClick={sendMessage} text="Отправить" />
+          <Button
+            text="Отправить"
+            className="new-message__btn"
+            onClick={sendMessage}
+          />
         </div>
       </div>
     </section>
