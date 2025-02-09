@@ -1,3 +1,5 @@
+import { usersAPI } from "../api/api";
+
 const FOLLOW_TO_USER = "FOLLOW-TO-USER";
 const UNFOLLOW_FROM_USER = "UNFOLLOW-FROM-USER";
 const SET_USERS = "SET-USERS";
@@ -12,7 +14,7 @@ const initialState = {
   pageSize: 4,
   currentPage: 1,
   isLoading: false,
-  followingInProgress: []
+  followingInProgress: [],
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -42,7 +44,11 @@ const usersReducer = (state = initialState, action) => {
     }
 
     case TOGGLE_IS_FOLLOWING_PROGRESS: {
-      return setFollowingProgress(state, action.followingInProgress, action.userid);
+      return setFollowingProgress(
+        state,
+        action.followingInProgress,
+        action.userid
+      );
     }
 
     default:
@@ -58,7 +64,7 @@ const setFollowed = (state, userid, status) => ({
     }
 
     return user;
-  })
+  }),
 });
 
 const setUsers = (state, users) => ({
@@ -81,14 +87,14 @@ const setLoading = (state, isLoading) => ({
   isLoading,
 });
 
-
 export const setFollowingProgress = (state, followingInProgress, userid) => ({
   ...state,
-  followingInProgress: followingInProgress ?
-  [...state.followingInProgress, userid] :
-  state.followingInProgress.filter(id => id !== userid)
+  followingInProgress: followingInProgress
+    ? [...state.followingInProgress, userid]
+    : state.followingInProgress.filter((id) => id !== userid),
 });
 
+// Action Creators
 export const followAC = (userid) => ({
   type: FOLLOW_TO_USER,
   userid,
@@ -122,7 +128,45 @@ export const setLoadingAC = (isLoading) => ({
 export const setFollowingProgressAC = (followingInProgress, userid) => ({
   type: TOGGLE_IS_FOLLOWING_PROGRESS,
   followingInProgress,
-  userid
+  userid,
 });
+
+// thunk
+export const getUsers = (currentPage, pageSize) => (dispatch) => {
+  dispatch(setLoadingAC(true));
+
+  usersAPI.getUsers(currentPage, pageSize).then((data) => {
+    const users = data.items.map((item) => ({
+      ...item,
+      location: { country: "Russia", city: "Moscow" },
+    }));
+
+    dispatch(setLoadingAC(false));
+    dispatch(setTotalUsersCountAC(data.totalCount));
+    dispatch(setUsersAC(users));
+  });
+};
+
+export const followToUser = (id) => (dispatch) => {
+  dispatch(setFollowingProgressAC(true, id));
+  usersAPI.followUser(id).then((data) => {
+    if (data.resultCode === 0) {
+      dispatch(followAC(id));
+    }
+
+    dispatch(setFollowingProgressAC(false, id));
+  });
+};
+
+export const unfollowFromUser = (id) => (dispatch) => {
+  dispatch(setFollowingProgressAC(true, id));
+  usersAPI.unfollowUser(id).then((data) => {
+    if (data.resultCode === 0) {
+      dispatch(unfollowAC(id));
+    }
+
+    dispatch(setFollowingProgressAC(false, id));
+  });
+};
 
 export default usersReducer;

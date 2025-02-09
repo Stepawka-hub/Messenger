@@ -2,51 +2,21 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { 
-  followAC, 
-  setUsersAC, 
-  unfollowAC, 
-  setTotalUsersCountAC, 
   setCurrentPageAC, 
-  setLoadingAC, 
-  setFollowingProgressAC 
+  unfollowFromUser,
+  followToUser,
+  getUsers
 } from '../../redux/usersReducer';
 import Users from './Users';
 
-import usersAPI from '../../api/api';
-
 class UsersContainer extends React.Component {
   componentDidMount = () => {
-    this.props.setLoading(true);
-
-    usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
-      .then((data) => {
-        const users = data.items.map((item) =>
-        ({
-          ...item,
-          location: { country: 'Russia', city: 'Moscow' },
-        }));
-
-        this.props.setLoading(false);
-        this.props.setTotalUsersCount(data.totalCount);
-        this.props.setUsers(users);
-      })
+    this.props.getUsers(this.props.currentPage, this.props.pageSize);
   }
 
   setCurrentPage = (pageNumber) => {
-    this.props.setLoading(true);
+    this.props.getUsers(pageNumber, this.props.pageSize);
     this.props.setCurrentPage(pageNumber);
-
-    usersAPI.getUsers(pageNumber, this.props.pageSize)
-      .then((data) => {
-        const users = data.items.map((item) =>
-        ({
-          ...item,
-          location: { country: 'Russia', city: 'Moscow' },
-        }));
-
-        this.props.setLoading(false);
-        this.props.setUsers(users);
-      })
   }
 
   render = () => {
@@ -61,7 +31,6 @@ class UsersContainer extends React.Component {
         followToUser={this.props.followToUser}
         unfollowFromUser={this.props.unfollowFromUser}
         setCurrentPage={this.setCurrentPage}
-        setFollowingProgress={this.props.setFollowingProgress}
       />
     );
   }
@@ -79,11 +48,8 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, {
-  followToUser: followAC,
-  unfollowFromUser: unfollowAC,
-  setUsers: setUsersAC,
-  setTotalUsersCount: setTotalUsersCountAC,
   setCurrentPage: setCurrentPageAC,
-  setLoading: setLoadingAC,
-  setFollowingProgress: setFollowingProgressAC
+  followToUser,
+  unfollowFromUser,
+  getUsers
 })(UsersContainer);

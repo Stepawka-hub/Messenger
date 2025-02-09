@@ -33,7 +33,6 @@ const Users = (props) => {
                 followToUser={props.followToUser}
                 unfollowFromUser={props.unfollowFromUser}
                 followingInProgress={props.followingInProgress}
-                setFollowingProgress={props.setFollowingProgress}
               />
             )}
           </div>

@@ -3,28 +3,11 @@ import { connect } from 'react-redux';
 
 import './Header.css';
 import Header from './Header';
-import { setAuthAC, setLoadingAC, setAuthUserDataAC } from '../../redux/authReducer';
-import usersAPI from '../../api/api';
+import { getAuthUserData } from '../../redux/authReducer';
 
 class HeaderContainer extends React.Component {
   componentDidMount() {
-    this.props.setLoading(true);
-
-    usersAPI.authMe()
-      .then((data) => {
-        if (data.resultCode === 0) {
-          const { id, login, email } = data.data;
-
-          usersAPI.getProfile(id)
-            .then((data) => {
-              const photos = data.photos;
-              this.props.setAuthUserData(id, login, email, photos);
-              this.props.setAuth(true);
-            })
-        }
-
-        this.props.setLoading(false);
-      });
+    this.props.getAuthUserData();
   }
 
   render = () => {
@@ -43,8 +26,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, {
-  setAuthUserData: setAuthUserDataAC,
-  setLoading: setLoadingAC,
-  setAuth: setAuthAC
-})(HeaderContainer);
+export default connect(mapStateToProps, { getAuthUserData })(HeaderContainer);

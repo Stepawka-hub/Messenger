@@ -1,9 +1,9 @@
+import { usersAPI } from '../api/api';
 import avatarBlack from "./../assets/images/black.png";
 
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 const SET_USER_PROFILE = "SET-USER-PROFILE";
-
 
 const initialState = {
   profile: null,
@@ -24,7 +24,7 @@ const initialState = {
     },
   ],
   newPostText: "",
-}
+};
 
 const profileReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -40,9 +40,10 @@ const profileReducer = (state = initialState, action) => {
       return setUserProfile(state, action.profile);
     }
 
-    default: return state;
+    default:
+      return state;
   }
-}
+};
 
 const addPost = (state) => {
   if (!state.newPostText) return state;
@@ -58,24 +59,25 @@ const addPost = (state) => {
   return {
     ...state,
     posts: [...state.posts, post],
-    newPostText: ''
-  }
-}
+    newPostText: "",
+  };
+};
 
 const updateNewPostText = (state, postText) => {
   return {
     ...state,
-    newPostText: postText
-  }
-}
+    newPostText: postText,
+  };
+};
 
 const setUserProfile = (state, profile) => {
   return {
     ...state,
-    profile
-  }
-}
+    profile,
+  };
+};
 
+// Action creators
 export const addPostAC = () => ({ type: ADD_POST });
 
 export const updateNewPostTextAC = (text) => ({
@@ -86,8 +88,16 @@ export const updateNewPostTextAC = (text) => ({
 export const setUserProfileAC = (profile) => {
   return {
     type: SET_USER_PROFILE,
-    profile
-  }
-}
+    profile,
+  };
+};
+
+
+// Thunk
+export const getProfile = (userId) => (dispatch) => {
+  usersAPI.getProfile(userId).then((data) => {
+    dispatch(setUserProfileAC(data));
+  });
+};
 
 export default profileReducer;

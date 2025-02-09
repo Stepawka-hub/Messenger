@@ -29,11 +29,17 @@ class UsersAPI {
       .get(`profile/${userid}`)
       .then((res) => res.data);
   }
-  
-  authMe = () => {
+}
+
+class AuthAPI {
+  constructor(api) {
+    this.api = api;
+  }
+
+  me = () => {
     return this.api
-      .get(`auth/me`)
-      .then((res) => res.data);
+    .get(`auth/me`)
+    .then((res) => res.data)
   }
 }
 
@@ -45,7 +51,6 @@ const api = axios.create({
   },
 });
 
-const usersAPI = new UsersAPI(api);
-
-export default usersAPI;
+export const usersAPI = new UsersAPI(api);
+export const authAPI = new AuthAPI(api);
 

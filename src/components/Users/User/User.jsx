@@ -2,33 +2,16 @@ import './User.css';
 import Button from '../../common/Button/Button';
 import { NavLink } from 'react-router-dom';
 import avatar from '../../../assets/images/black.png';
-import usersAPI from '../../../api/api';
 
 const User = (props) => {
   const state = props.userData;
 
   const followToUser = () => {
-    props.setFollowingProgress(true, state.id);
-    usersAPI.followUser(state.id)
-      .then((data) => {
-        if (data.resultCode === 0) {
-          props.followToUser(state.id);
-        }
-
-        props.setFollowingProgress(false, state.id);
-      })
+    props.followToUser(state.id);
   };
 
   const unfollowFromUser = () => {
-    props.setFollowingProgress(true, state.id);
-    usersAPI.unfollowUser(state.id)
-      .then((data) => {
-        if (data.resultCode === 0) {
-          props.unfollowFromUser(state.id);
-        }
-
-        props.setFollowingProgress(false, state.id);
-      });
+    props.unfollowFromUser(state.id);
   };
 
   const checkFollowingProgress = () => {
