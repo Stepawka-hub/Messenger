@@ -1,15 +1,10 @@
-import { Navigate } from 'react-router-dom';
-
 import './Dialogs.css';
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
 import Button from '../common/Button/Button';
 
-const Dialogs = (props) => {
-  if (!props.isAuth) {
-    return <Navigate to="/login"/>;
-  }
 
+const Dialogs = (props) => {
   const state = props.dialogsPage;
 
   const dialogsElements = state.dialogs.map(dialog =>

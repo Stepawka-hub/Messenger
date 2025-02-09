@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Navigate } from 'react-router-dom';
 
 import {
   setCurrentPageAC,
@@ -9,6 +8,8 @@ import {
   getUsers
 } from '../../redux/usersReducer';
 import Users from './Users';
+import withAuthRedirect from '../../utils/withAuthRedirect';
+import { compose } from 'redux';
 
 class UsersContainer extends React.Component {
   componentDidMount = () => {
@@ -21,10 +22,6 @@ class UsersContainer extends React.Component {
   }
 
   render = () => {
-    if (!this.props.isAuth) {
-      return <Navigate to="/login" />;
-    }
-
     return (
       <Users
         userList={this.props.userList}
@@ -48,14 +45,16 @@ const mapStateToProps = (state) => {
     pageSize: state.usersPage.pageSize,
     currentPage: state.usersPage.currentPage,
     isLoading: state.usersPage.isLoading,
-    followingInProgress: state.usersPage.followingInProgress,
-    isAuth: state.auth.isAuth
+    followingInProgress: state.usersPage.followingInProgress
   }
 }
 
-export default connect(mapStateToProps, {
-  setCurrentPage: setCurrentPageAC,
-  followToUser,
-  unfollowFromUser,
-  getUsers
-})(UsersContainer);
+export default compose(
+  connect(mapStateToProps, {
+    setCurrentPage: setCurrentPageAC,
+    followToUser,
+    unfollowFromUser,
+    getUsers
+  }),
+  withAuthRedirect
+)(UsersContainer);
