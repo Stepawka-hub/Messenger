@@ -12,9 +12,9 @@ const ProfileInfo = (props) => {
   const profileData = {
     photos: profile.photos.small || avatar,
     fullName: profile.fullName || 'Имя пользователя',
-    aboutMe: profile.aboutMe || 'Обо мне',
+    aboutMe: profile.aboutMe || 'Нет',
     lookingForAJob: profile.lookingForAJob ? 'Да' : 'Нет',
-    lookingForAJobDescription: profile.lookingForAJobDescription || 'нет',
+    lookingForAJobDescription: profile.lookingForAJobDescription || 'Нет',
 
     vk: profile.contacts.vk || '-',
     facebook: profile.contacts.facebook || '-',

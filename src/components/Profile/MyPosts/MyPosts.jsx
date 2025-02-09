@@ -16,7 +16,7 @@ const MyPosts = (props) => {
     const text = evt.target.value;
     props.updateNewPostText(text);
   }
-  
+
   return (
     <div className='posts-container'>
       <h3 className='posts-container__title'>
@@ -33,7 +33,11 @@ const MyPosts = (props) => {
           onChange={onPostChange}
         />
 
-        <Button onClick={addPost} text="Отправить" />
+        <Button
+          text="Отправить"
+          className='post-container__btn'
+          onClick={addPost}
+        />
       </div>
 
       <section className='post-list'>

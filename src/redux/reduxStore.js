@@ -14,7 +14,7 @@ const reducers = combineReducers({
 });
 
 const store = configureStore({
-  reducer: reducers,
-})
+  reducer: reducers
+});
 
 export default store;

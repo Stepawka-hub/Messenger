@@ -1,3 +1,5 @@
+import { authAPI, usersAPI } from "../api/api";
+
 const SET_USER_DATA = "SET-USER-DATA";
 const TOGGLE_IS_LOADING = "TOGGLE-IS-LOADING";
 const SET_IS_AUTH = "SET-IS-AUTH";
@@ -33,32 +35,33 @@ const authReducer = (state = initialState, action) => {
 const setAuthUserData = (state, data) => {
   return {
     ...state,
-    ...data
+    ...data,
   };
 };
 
 const setLoading = (state, isLoading) => {
   return {
     ...state,
-    isLoading
-  }
-}
+    isLoading,
+  };
+};
 
 const setAuth = (state, isAuth) => {
   return {
     ...state,
-    isAuth
-  }
-}
+    isAuth,
+  };
+};
 
+// Actions Creator
 export const setAuthUserDataAC = (id, login, email, photos) => ({
   type: SET_USER_DATA,
   data: {
     id,
     login,
     email,
-    photos
-  }
+    photos,
+  },
 });
 
 export const setLoadingAC = (isLoading) => ({
@@ -70,5 +73,23 @@ export const setAuthAC = (isAuth) => ({
   type: SET_IS_AUTH,
   isAuth,
 });
+
+export const getAuthUserData = () => (dispatch) => {
+  dispatch(setLoadingAC(true));
+
+  authAPI.me().then((data) => {
+    if (data.resultCode === 0) {
+      const { id, login, email } = data.data;
+
+      usersAPI.getProfile(id).then((data) => {
+        const photos = data.photos;
+        dispatch(setAuthUserDataAC(id, login, email, photos));
+        dispatch(setAuthAC(true));
+      });
+    }
+
+    dispatch(setLoadingAC(false));
+  });
+};
 
 export default authReducer;

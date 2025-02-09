@@ -12,3 +12,17 @@
 .button:active {
   opacity: 0.7;
 }
+
+.button.disabled {
+  cursor: default;
+  pointer-events: none;
+  background-color: var(--disabled-btn-color);
+}
+
+.button.disabled:hover {
+  transform: scale(1);
+}
+
+.button.disabled:active {
+  opacity: 1;
+}

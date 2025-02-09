@@ -1,9 +1,15 @@
+import { Navigate } from 'react-router-dom';
+
 import './Dialogs.css';
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
 import Button from '../common/Button/Button';
 
 const Dialogs = (props) => {
+  if (!props.isAuth) {
+    return <Navigate to="/login"/>;
+  }
+
   const state = props.dialogsPage;
 
   const dialogsElements = state.dialogs.map(dialog =>
@@ -41,7 +47,11 @@ const Dialogs = (props) => {
             value={state.newMessageText}
             onChange={onMessageChange}
           />
-          <Button onClick={sendMessage} text="Отправить" />
+          <Button
+            text="Отправить"
+            className="new-message__btn"
+            onClick={sendMessage}
+          />
         </div>
       </div>
     </section>

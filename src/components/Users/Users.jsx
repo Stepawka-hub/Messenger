@@ -32,6 +32,7 @@ const Users = (props) => {
                 key={user.id}
                 followToUser={props.followToUser}
                 unfollowFromUser={props.unfollowFromUser}
+                followingInProgress={props.followingInProgress}
               />
             )}
           </div>
@@ -43,6 +44,7 @@ const Users = (props) => {
             <span
               className={`pagination__item ${props.currentPage === number && 'active'}`}
               onClick={() => props.setCurrentPage(number)}
+              key={number}
             >
               {number}
             </span>

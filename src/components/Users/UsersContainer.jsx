@@ -1,58 +1,37 @@
 import React from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
-import { followAC, setUsersAC, unfollowAC, setTotalUsersCountAC, setCurrentPageAC, setLoadingAC } from '../../redux/usersReducer';
-import { API_URL } from '../../utils/constants'
+import {
+  setCurrentPageAC,
+  unfollowFromUser,
+  followToUser,
+  getUsers
+} from '../../redux/usersReducer';
 import Users from './Users';
 
 class UsersContainer extends React.Component {
   componentDidMount = () => {
-    this.props.setLoading(true);
-    axios
-      .get(`${API_URL}/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
-        withCredentials: true
-      })
-      .then((response) => {
-        const users = response.data.items.map((item) =>
-        ({
-          ...item,
-          location: { country: 'Russia', city: 'Moscow' },
-        }));
-
-        this.props.setLoading(false);
-        this.props.setTotalUsersCount(response.data.totalCount);
-        this.props.setUsers(users);
-      })
+    this.props.getUsers(this.props.currentPage, this.props.pageSize);
   }
 
   setCurrentPage = (pageNumber) => {
-    this.props.setLoading(true);
+    this.props.getUsers(pageNumber, this.props.pageSize);
     this.props.setCurrentPage(pageNumber);
-
-    axios
-      .get(`${API_URL}/users?page=${pageNumber}&count=${this.props.pageSize}`, {
-        withCredentials: true
-      })
-      .then((response) => {
-        const users = response.data.items.map((item) =>
-        ({
-          ...item,
-          location: { country: 'Russia', city: 'Moscow' },
-        }));
-
-        this.props.setLoading(false);
-        this.props.setUsers(users);
-      })
   }
 
   render = () => {
+    if (!this.props.isAuth) {
+      return <Navigate to="/login" />;
+    }
+
     return (
       <Users
         userList={this.props.userList}
         totalUsersCount={this.props.totalUsersCount}
         pageSize={this.props.pageSize}
         currentPage={this.props.currentPage}
+        followingInProgress={this.props.followingInProgress}
 
         followToUser={this.props.followToUser}
         unfollowFromUser={this.props.unfollowFromUser}
@@ -68,15 +47,15 @@ const mapStateToProps = (state) => {
     totalUsersCount: state.usersPage.totalUsersCount,
     pageSize: state.usersPage.pageSize,
     currentPage: state.usersPage.currentPage,
-    isLoading: state.usersPage.isLoading
+    isLoading: state.usersPage.isLoading,
+    followingInProgress: state.usersPage.followingInProgress,
+    isAuth: state.auth.isAuth
   }
 }
 
 export default connect(mapStateToProps, {
-  followToUser: followAC,
-  unfollowFromUser: unfollowAC,
-  setUsers: setUsersAC,
-  setTotalUsersCount: setTotalUsersCountAC,
   setCurrentPage: setCurrentPageAC,
-  setLoading: setLoadingAC
+  followToUser,
+  unfollowFromUser,
+  getUsers
 })(UsersContainer);
