@@ -1,4 +1,4 @@
-import { authAPI, usersAPI } from "../api/api";
+import { authAPI, profileAPI } from "../api/api";
 
 const SET_USER_DATA = "SET-USER-DATA";
 const TOGGLE_IS_LOADING = "TOGGLE-IS-LOADING";
@@ -81,7 +81,7 @@ export const getAuthUserData = () => (dispatch) => {
     if (data.resultCode === 0) {
       const { id, login, email } = data.data;
 
-      usersAPI.getProfile(id).then((data) => {
+      profileAPI.getProfile(id).then((data) => {
         const photos = data.photos;
         dispatch(setAuthUserDataAC(id, login, email, photos));
         dispatch(setAuthAC(true));
