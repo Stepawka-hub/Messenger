@@ -18,9 +18,7 @@ const Login = (props) => {
 }
 
 const mapStateToProps = () => {
-  return {
-
-  }
+  return {}
 }
 
 export default connect(mapStateToProps, { loginUser })(Login);

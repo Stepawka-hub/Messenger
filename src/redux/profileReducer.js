@@ -46,8 +46,6 @@ const profileReducer = (state = initialState, action) => {
 };
 
 const addPost = (state, newPostText) => {
-  if (!newPostText) return state;
-
   const post = {
     postid: state.posts.length + 1,
     userid: 1,

@@ -1,6 +1,10 @@
 import s from './LoginForm.module.css';
 import Button from '../../common/Button/Button';
 import { Field, reduxForm } from 'redux-form';
+import FormControls  from '../../common/FormsControls/FormsControls';
+import { required, minLength } from '../../../utils/validators/validators';
+
+const Input = FormControls('input');
 
 const LoginForm = (props) => {
   return (
@@ -10,18 +14,20 @@ const LoginForm = (props) => {
 
         <Field
           type="text"
-          component="input"
+          component={Input}
           name="email"
           className={s.form__input}
           placeholder='Email'
+          validate={[required]}
         />
 
         <Field
           type="text"
-          component="input"
+          component={Input}
           name="password"
           className={s.form__input}
           placeholder='Password'
+          validate={[required, minLength(5)]}
         />
 
         <div className={s.form__remember}>
