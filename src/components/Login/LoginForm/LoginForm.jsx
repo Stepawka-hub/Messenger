@@ -11,9 +11,9 @@ const LoginForm = (props) => {
         <Field
           type="text"
           component="input"
-          name="login"
+          name="email"
           className={s.form__input}
-          placeholder='Login'
+          placeholder='Email'
         />
 
         <Field

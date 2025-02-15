@@ -62,8 +62,14 @@ class AuthAPI {
 
   me = () => {
     return this.api
-    .get(`auth/me`)
-    .then((res) => res.data)
+      .get('auth/me')
+      .then((res) => res.data)
+  }
+
+  login = (formData) => {
+    return this.api
+      .post('auth/login', {...formData})
+      .then((res) => res.data)
   }
 }
 

@@ -74,6 +74,7 @@ export const setAuthAC = (isAuth) => ({
   isAuth,
 });
 
+// Thunks
 export const getAuthUserData = () => (dispatch) => {
   dispatch(setLoadingAC(true));
 
@@ -91,5 +92,12 @@ export const getAuthUserData = () => (dispatch) => {
     dispatch(setLoadingAC(false));
   });
 };
+
+export const loginUser =
+  (email, password, rememberMe, captcha) => (dispatch) => {
+    authAPI.login({ email, password, rememberMe, captcha }).then(() => {
+      
+    });
+  };
 
 export default authReducer;

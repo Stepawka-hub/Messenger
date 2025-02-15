@@ -1,6 +1,9 @@
+import { addPostAC } from '../../../redux/profileReducer';
+import { connect } from 'react-redux';
+
 import './MyPosts.css';
 import Post from './Post/Post'
-import Button from '../../common/Button/Button';
+import SendMessageForm from './AddPostForm/AddPostForm';
 
 const MyPosts = (props) => {
   const state = props.profilePage;
@@ -8,13 +11,8 @@ const MyPosts = (props) => {
   const postsElements = state.posts.map(post =>
     <Post postid={post.postid} message={post.message} key={post.postid} />)
 
-  const addPost = () => {
-    props.addPost();
-  }
-
-  const onPostChange = (evt) => {
-    const text = evt.target.value;
-    props.updateNewPostText(text);
+  const onSubmit = (formData) => {
+    props.addPost(formData.newPost);
   }
 
   return (
@@ -23,20 +21,10 @@ const MyPosts = (props) => {
         My posts
       </h3>
 
-      <div className='post-container'>
-        <textarea
-          name="newpost"
-          className="textarea post-textarea"
-          id="newpost"
-          placeholder='Что у вас нового?'
-          value={state.newPostText}
-          onChange={onPostChange}
-        />
-
-        <Button
-          text="Отправить"
-          className='post-container__btn'
-          onClick={addPost}
+      <div className='new-post-container'>
+        <SendMessageForm
+          addPost={props.addPost}
+          onSubmit={onSubmit}
         />
       </div>
 
@@ -47,4 +35,13 @@ const MyPosts = (props) => {
   );
 }
 
-export default MyPosts;
+
+const mapStateToProps = (state) => {
+  return {
+    profilePage: state.profilePage
+  }
+}
+
+export default connect(mapStateToProps, {
+  addPost: addPostAC
+})(MyPosts);

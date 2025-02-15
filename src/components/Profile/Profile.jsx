@@ -1,4 +1,4 @@
-import MyPostsContainer from './MyPosts/MyPostsContainer';
+import MyPosts from './MyPosts/MyPosts';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 
 const Profile = (props) => {
@@ -9,7 +9,7 @@ const Profile = (props) => {
         status={props.status}
         updateUserStatus={props.updateUserStatus}
       />
-      <MyPostsContainer />
+      <MyPosts />
     </section>
   );
 }

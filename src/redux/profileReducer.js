@@ -2,7 +2,6 @@ import { profileAPI } from "../api/api";
 import avatarBlack from "./../assets/images/black.png";
 
 const ADD_POST = "ADD-POST";
-const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 const SET_USER_PROFILE = "SET-USER-PROFILE";
 const SET_USER_STATUS = "SET-USER-STATUS";
 
@@ -25,17 +24,12 @@ const initialState = {
       avatar: avatarBlack,
     },
   ],
-  newPostText: "",
 };
 
 const profileReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_POST: {
-      return addPost(state);
-    }
-
-    case UPDATE_NEW_POST_TEXT: {
-      return updateNewPostText(state, action.newPostText);
+      return addPost(state, action.postText);
     }
 
     case SET_USER_PROFILE: {
@@ -51,28 +45,20 @@ const profileReducer = (state = initialState, action) => {
   }
 };
 
-const addPost = (state) => {
-  if (!state.newPostText) return state;
+const addPost = (state, postText) => {
+  if (!postText) return state;
 
   const post = {
-    postid: 3,
+    postid: state.posts.length + 1,
     userid: 1,
-    message: state.newPostText,
+    postText,
     username: "Stepawka",
     avatar: avatarBlack,
   };
 
   return {
     ...state,
-    posts: [...state.posts, post],
-    newPostText: "",
-  };
-};
-
-const updateNewPostText = (state, postText) => {
-  return {
-    ...state,
-    newPostText: postText,
+    posts: [...state.posts, post]
   };
 };
 
@@ -91,11 +77,9 @@ const setUserStatus = (state, status) => {
 };
 
 // Action creators
-export const addPostAC = () => ({ type: ADD_POST });
-
-export const updateNewPostTextAC = (text) => ({
-  type: UPDATE_NEW_POST_TEXT,
-  newPostText: text,
+export const addPostAC = (postText) => ({ 
+  type: ADD_POST,
+  postText
 });
 
 export const setUserProfileAC = (profile) => ({

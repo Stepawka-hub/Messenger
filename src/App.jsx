@@ -2,7 +2,7 @@ import "./App.css";
 import { Route, Routes } from 'react-router-dom';
 
 import Navbar from './components/Navbar/Navbar';
-import DialogsContainer from './components/Dialogs/DialogsContainer';
+import Dialogs from './components/Dialogs/Dialogs';
 import News from './components/News/News';
 import UsersContainer from './components/Users/UsersContainer';
 import Music from './components/Music/Music';
@@ -20,7 +20,7 @@ const App = () => {
         <Routes>
 
           <Route path='/profile/:userId?' element={<ProfileContainer />} />
-          <Route path='/dialogs/*' element={<DialogsContainer />} />
+          <Route path='/dialogs/*' element={<Dialogs />} />
           <Route path='/news' element={<News />} />
           <Route path='/users' element={<UsersContainer />} />
           <Route path='/music' element={<Music />} />

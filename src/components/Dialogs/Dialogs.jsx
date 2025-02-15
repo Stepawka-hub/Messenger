@@ -1,8 +1,13 @@
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+
 import './Dialogs.css';
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
-import Button from '../common/Button/Button';
 
+import { sendMessageAC } from '../../redux/dialogsReducer';
+import withAuthRedirect from '../../utils/withAuthRedirect';
+import SendMessageForm from './SendMessageForm/SendMessageForm';
 
 const Dialogs = (props) => {
   const state = props.dialogsPage;
@@ -13,13 +18,8 @@ const Dialogs = (props) => {
   const messagesElements = state.messages.map(message =>
     <Message state={message} key={message.msgid} />)
 
-  const sendMessage = () => {
-    props.sendMessage();
-  }
-
-  const onMessageChange = (evt) => {
-    const text = evt.target.value;
-    props.updateNewMessageText(text);
+  const onSubmit = (formData) => {
+    props.sendMessage(formData.newMessage);
   }
 
   return (
@@ -34,23 +34,20 @@ const Dialogs = (props) => {
         </div>
 
         <div className='new-message'>
-          <textarea
-            name="newmsg"
-            className="textarea new-message__textarea"
-            id="newmsg"
-            placeholder='Введите сообщение...'
-            value={state.newMessageText}
-            onChange={onMessageChange}
-          />
-          <Button
-            text="Отправить"
-            className="new-message__btn"
-            onClick={sendMessage}
-          />
+          <SendMessageForm onSubmit={onSubmit} />
         </div>
       </div>
     </section>
   );
 }
 
-export default Dialogs;
+const mapStateToProps = (state) => {
+  return {
+    dialogsPage: state.dialogsPage
+  }
+}
+
+export default compose(
+  connect(mapStateToProps, { sendMessage: sendMessageAC }),
+  withAuthRedirect
+)(Dialogs);
