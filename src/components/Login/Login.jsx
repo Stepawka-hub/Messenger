@@ -1,9 +1,16 @@
 import './Login.css';
+import LoginForm from './LoginForm/LoginForm';
 
 const Login = () => {
+  const onSubmit = (formData) => {
+    console.log(formData);
+  }
+
   return (
     <section className='login'>
-      <h2 className='login__title'>Login</h2>
+      <LoginForm 
+        onSubmit={onSubmit}
+      />
     </section>
   )
 }

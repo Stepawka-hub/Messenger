@@ -29,5 +29,5 @@
 
 .dialog-list__item.active {
   cursor: default;
-  background-color: var(--dialog-bg-color-active);
+  background-color: var(--orange-color);
 }
