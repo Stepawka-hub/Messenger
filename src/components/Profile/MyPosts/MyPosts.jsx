@@ -12,7 +12,7 @@ const MyPosts = (props) => {
     <Post postid={post.postid} message={post.message} key={post.postid} />)
 
   const onSubmit = (formData) => {
-    props.addPost(formData.newPost);
+    props.addPost(formData.newPostText);
   }
 
   return (

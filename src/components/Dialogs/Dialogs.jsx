@@ -19,7 +19,7 @@ const Dialogs = (props) => {
     <Message state={message} key={message.msgid} />)
 
   const onSubmit = (formData) => {
-    props.sendMessage(formData.newMessage);
+    props.sendMessage(formData.newMessageText);
   }
 
   return (

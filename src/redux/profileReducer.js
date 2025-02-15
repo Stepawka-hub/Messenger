@@ -29,7 +29,7 @@ const initialState = {
 const profileReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_POST: {
-      return addPost(state, action.postText);
+      return addPost(state, action.newPostText);
     }
 
     case SET_USER_PROFILE: {
@@ -45,13 +45,13 @@ const profileReducer = (state = initialState, action) => {
   }
 };
 
-const addPost = (state, postText) => {
-  if (!postText) return state;
+const addPost = (state, newPostText) => {
+  if (!newPostText) return state;
 
   const post = {
     postid: state.posts.length + 1,
     userid: 1,
-    postText,
+    message: newPostText,
     username: "Stepawka",
     avatar: avatarBlack,
   };
@@ -77,9 +77,9 @@ const setUserStatus = (state, status) => {
 };
 
 // Action creators
-export const addPostAC = (postText) => ({ 
+export const addPostAC = (newPostText) => ({ 
   type: ADD_POST,
-  postText
+  newPostText
 });
 
 export const setUserProfileAC = (profile) => ({

@@ -59,22 +59,22 @@ const initialState = {
 const dialogsReducer = (state = initialState, action) => { 
   switch (action.type) {
     case SEND_MESSAGE: {
-      return sendMessage(state, action.messageText);
+      return sendMessage(state, action.newMessageText);
     }
 
     default: return state;
   }
 }
 
-const sendMessage = (state, messageText) => {
-  if (!messageText) return state;
+const sendMessage = (state, newMessageText) => {
+  if (!newMessageText) return state;
 
   const message = {
     msgid: state.messages.length + 1,
     userid: 1,
     username: "Stepawka",
     avatar: avatarBlack,
-    text: messageText,
+    text: newMessageText,
   };
 
   return {
@@ -83,9 +83,9 @@ const sendMessage = (state, messageText) => {
   };
 }
 
-export const sendMessageAC = (messageText) => ({ 
+export const sendMessageAC = (newMessageText) => ({ 
   type: SEND_MESSAGE,
-  messageText
+  newMessageText
 });
 
 export default dialogsReducer;

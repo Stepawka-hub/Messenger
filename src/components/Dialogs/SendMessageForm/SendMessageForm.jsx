@@ -6,8 +6,8 @@ const SendMessageForm = (props) => {
   return (
     <form className={s.form} onSubmit={props.handleSubmit}>
       <Field
-        id="newMessage"
-        name="newMessage"
+        id="newMessageText"
+        name="newMessageText"
         component="textarea"
         className={`textarea ${s.form__textarea}`}
         placeholder='Введите сообщение...'
