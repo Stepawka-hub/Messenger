@@ -1,16 +1,18 @@
 import s from './LoginForm.module.css';
 import Button from '../../common/Button/Button';
 import { Field, reduxForm } from 'redux-form';
-import FormControls  from '../../common/FormsControls/FormsControls';
+import { FormControl, FormError } from '../../common/FormsControls/FormsControls';
 import { required, minLength } from '../../../utils/validators/validators';
 
-const Input = FormControls('input');
+const Input = FormControl('input');
 
 const LoginForm = (props) => {
   return (
     <div>
       <form className={s.form} onSubmit={props.handleSubmit}>
-        <h2 className={s.form__title}>Login</h2>
+        <h2 className={s.form__title}>
+          Login
+        </h2>
 
         <Field
           type="text"
@@ -22,7 +24,7 @@ const LoginForm = (props) => {
         />
 
         <Field
-          type="text"
+          type="password"
           component={Input}
           name="password"
           className={s.form__input}
@@ -38,6 +40,8 @@ const LoginForm = (props) => {
             name="rememberMe"
           />
         </div>
+
+        { props.error && <FormError error={props.error} /> }
 
         <Button
           text='Login'

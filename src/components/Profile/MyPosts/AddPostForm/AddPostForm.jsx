@@ -3,9 +3,9 @@ import { Field, reduxForm } from 'redux-form'
 import s from './AddPostForm.module.css';
 import Button from '../../../common/Button/Button';
 import { maxLength, required } from '../../../../utils/validators/validators';
-import FormControls from '../../../common/FormsControls/FormsControls';
+import { FormControl } from '../../../common/FormsControls/FormsControls';
 
-const Textarea = FormControls("textarea");
+const Textarea = FormControl("textarea");
 
 const SendMessageForm = (props) => {
   return (

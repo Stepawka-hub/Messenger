@@ -1,10 +1,10 @@
 import { Field, reduxForm } from 'redux-form';
 import s from './SendMessageForm.module.css';
 import Button from '../../common/Button/Button';
-import FormControls from '../../common/FormsControls/FormsControls';
+import { FormControl } from '../../common/FormsControls/FormsControls';
 import { maxLength, required } from '../../../utils/validators/validators';
 
-const Textarea = FormControls("textarea");
+const Textarea = FormControl("textarea");
 
 const SendMessageForm = (props) => {
   return (

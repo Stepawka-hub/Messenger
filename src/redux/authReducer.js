@@ -1,8 +1,8 @@
+import { stopSubmit } from 'redux-form';
 import { authAPI, profileAPI } from "../api/api";
 
 const SET_USER_DATA = "SET-USER-DATA";
 const TOGGLE_IS_LOADING = "TOGGLE-IS-LOADING";
-const SET_IS_AUTH = "SET-IS-AUTH";
 
 const initialState = {
   id: null,
@@ -16,15 +16,11 @@ const initialState = {
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_USER_DATA: {
-      return setAuthUserData(state, action.data);
+      return setAuthUserData(state, action.payload);
     }
 
     case TOGGLE_IS_LOADING: {
       return setLoading(state, action.isLoading);
-    }
-
-    case SET_IS_AUTH: {
-      return setAuth(state, action.isAuth);
     }
 
     default:
@@ -32,35 +28,25 @@ const authReducer = (state = initialState, action) => {
   }
 };
 
-const setAuthUserData = (state, data) => {
-  return {
-    ...state,
-    ...data,
-  };
-};
+const setAuthUserData = (state, payload) => ({
+  ...state,
+  ...payload,
+});
 
-const setLoading = (state, isLoading) => {
-  return {
-    ...state,
-    isLoading,
-  };
-};
-
-const setAuth = (state, isAuth) => {
-  return {
-    ...state,
-    isAuth,
-  };
-};
+const setLoading = (state, isLoading) => ({
+  ...state,
+  isLoading,
+});
 
 // Actions Creator
-export const setAuthUserDataAC = (id, login, email, photos) => ({
+export const setAuthUserDataAC = (id, login, email, photos, isAuth) => ({
   type: SET_USER_DATA,
-  data: {
+  payload: {
     id,
     login,
     email,
     photos,
+    isAuth,
   },
 });
 
@@ -69,23 +55,17 @@ export const setLoadingAC = (isLoading) => ({
   isLoading,
 });
 
-export const setAuthAC = (isAuth) => ({
-  type: SET_IS_AUTH,
-  isAuth,
-});
-
 // Thunks
 export const getAuthUserData = () => (dispatch) => {
   dispatch(setLoadingAC(true));
 
-  authAPI.me().then((data) => {
-    if (data.resultCode === 0) {
-      const { id, login, email } = data.data;
+  authAPI.me().then((res) => {
+    if (res.resultCode === 0) {
+      const { id, login, email } = res.data;
 
       profileAPI.getProfile(id).then((data) => {
         const photos = data.photos;
-        dispatch(setAuthUserDataAC(id, login, email, photos));
-        dispatch(setAuthAC(true));
+        dispatch(setAuthUserDataAC(id, login, email, photos, true));
       });
     }
 
@@ -93,11 +73,24 @@ export const getAuthUserData = () => (dispatch) => {
   });
 };
 
-export const loginUser =
-  (email, password, rememberMe, captcha) => (dispatch) => {
-    authAPI.login({ email, password, rememberMe, captcha }).then(() => {
-      
+export const loginUser = (email, password, rememberMe = false, captcha) => (dispatch) => { 
+  authAPI.login({ email, password, rememberMe, captcha })
+    .then((res) => {
+      if (res.resultCode === 0) {
+        dispatch(getAuthUserData());
+      } else {
+        const message = res.messages.length > 0 ? res.messages[0] : 'Some error';
+        dispatch(stopSubmit('login', {_error: message}));
+      }
     });
-  };
+};
+
+export const logoutUser = () => (dispatch) => {
+  authAPI.logout().then((res) => {
+    if (res.resultCode === 0) {
+      dispatch(setAuthUserDataAC(null, null, null, null, false));
+    }
+  });
+};
 
 export default authReducer;
