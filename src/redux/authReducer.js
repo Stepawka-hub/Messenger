@@ -56,21 +56,21 @@ export const setLoadingAC = (isLoading) => ({
 });
 
 // Thunks
-export const getAuthUserData = () => (dispatch) => {
+export const getAuthUserData = () => async (dispatch) => {
   dispatch(setLoadingAC(true));
 
-  authAPI.me().then((res) => {
+  try {
+    const res = await authAPI.me();
     if (res.resultCode === 0) {
       const { id, login, email } = res.data;
-
-      profileAPI.getProfile(id).then((data) => {
-        const photos = data.photos;
-        dispatch(setAuthUserDataAC(id, login, email, photos, true));
-      });
+      const data = await profileAPI.getProfile(id);
+      dispatch(setAuthUserDataAC(id, login, email, data.photos, true));
     }
-
+  } catch (error) {
+    console.error("Error in getAuthUserData:", error);
+  } finally {
     dispatch(setLoadingAC(false));
-  });
+  }
 };
 
 export const loginUser = (email, password, rememberMe = false, captcha) => (dispatch) => { 

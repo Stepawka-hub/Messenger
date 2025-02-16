@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import './Header.css';
 import UserDetails from './UserDetails/UserDetails';
@@ -8,6 +9,9 @@ import logo from '../../assets/images/logo.png';
 import logoutIcon from '../../assets/images/logout.svg';
 import avatarDefault from './../../assets/images/black.png';
 import Button from '../common/Button/Button';
+
+import { logoutUser } from '../../redux/authReducer';
+
 
 const Header = ({ login, email, photos, ...props }) => {
   const userDetails = {
@@ -45,4 +49,11 @@ const Header = ({ login, email, photos, ...props }) => {
   );
 }
 
-export default Header;
+const mapStateToProps = (state) => ({
+  login: state.auth.login,
+  email: state.auth.email,
+  isLoading: state.auth.isLoading,
+  isAuth: state.auth.isAuth
+});
+
+export default connect(mapStateToProps, { logoutUser })(Header);
