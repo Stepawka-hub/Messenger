@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import './Login.css';
 import LoginForm from './LoginForm/LoginForm';
-import { loginUser } from '../../redux/authReducer';
+import { loginUser } from '../../redux/reducers/authReducer';
 import { Navigate } from 'react-router-dom';
 
 const Login = (props) => {

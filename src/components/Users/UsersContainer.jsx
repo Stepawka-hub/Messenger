@@ -6,9 +6,18 @@ import {
   unfollowFromUser,
   followToUser,
   getUsers
-} from '../../redux/usersReducer';
+} from '../../redux/reducers/usersReducer';
+
+import {
+  getCurrentPage,
+  getFollowingInProgress,
+  getIsLoading,
+  getPageSize,
+  getTotalUsersCount,
+  getUserList
+} from '../../redux/selectors/usersSelectors';
+
 import Users from './Users';
-import withAuthRedirect from '../../utils/withAuthRedirect';
 import { compose } from 'redux';
 
 class UsersContainer extends React.Component {
@@ -38,14 +47,25 @@ class UsersContainer extends React.Component {
   }
 }
 
+// const mapStateToProps = (state) => {
+//   return {
+//     userList: state.usersPage.users,
+//     totalUsersCount: state.usersPage.totalUsersCount,
+//     pageSize: state.usersPage.pageSize,
+//     currentPage: state.usersPage.currentPage,
+//     isLoading: state.usersPage.isLoading,
+//     followingInProgress: state.usersPage.followingInProgress
+//   }
+// }
+
 const mapStateToProps = (state) => {
   return {
-    userList: state.usersPage.users,
-    totalUsersCount: state.usersPage.totalUsersCount,
-    pageSize: state.usersPage.pageSize,
-    currentPage: state.usersPage.currentPage,
-    isLoading: state.usersPage.isLoading,
-    followingInProgress: state.usersPage.followingInProgress
+    userList: getUserList(state),
+    totalUsersCount: getTotalUsersCount(state),
+    pageSize: getPageSize(state),
+    currentPage: getCurrentPage(state),
+    isLoading: getIsLoading(state),
+    followingInProgress: getFollowingInProgress(state)
   }
 }
 
@@ -55,6 +75,5 @@ export default compose(
     followToUser,
     unfollowFromUser,
     getUsers
-  }),
-  withAuthRedirect
+  })
 )(UsersContainer);

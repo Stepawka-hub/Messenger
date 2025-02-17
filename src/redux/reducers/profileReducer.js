@@ -1,5 +1,5 @@
-import { profileAPI } from "../api/api";
-import avatarBlack from "./../assets/images/black.png";
+import { profileAPI } from "../../api/api";
+import avatarBlack from "./../../assets/images/black.png";
 
 const ADD_POST = "ADD-POST";
 const SET_USER_PROFILE = "SET-USER-PROFILE";

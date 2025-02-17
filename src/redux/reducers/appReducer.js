@@ -30,7 +30,6 @@ const initializedSuccessAC = () => ({
 // Thunk
 export const initializeApp = () => (dispatch) => {
   const getAuthPromise = dispatch(getAuthUserData());
-  console.log(getAuthPromise);
 
   Promise.all([getAuthPromise]).then(() => {
     dispatch(initializedSuccessAC());

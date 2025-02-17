@@ -10,7 +10,7 @@ import logoutIcon from '../../assets/images/logout.svg';
 import avatarDefault from './../../assets/images/black.png';
 import Button from '../common/Button/Button';
 
-import { logoutUser } from '../../redux/authReducer';
+import { logoutUser } from '../../redux/reducers/authReducer';
 
 
 const Header = ({ login, email, photos, ...props }) => {

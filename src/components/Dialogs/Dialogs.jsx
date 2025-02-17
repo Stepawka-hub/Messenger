@@ -5,7 +5,7 @@ import './Dialogs.css';
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
 
-import { sendMessageAC } from '../../redux/dialogsReducer';
+import { sendMessageAC } from '../../redux/reducers/dialogsReducer';
 import withAuthRedirect from '../../utils/withAuthRedirect';
 import SendMessageForm from './SendMessageForm/SendMessageForm';
 

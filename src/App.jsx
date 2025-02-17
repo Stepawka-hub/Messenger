@@ -14,7 +14,7 @@ import ProfileContainer from './components/Profile/ProfileContainer';
 import Header from './components/Header/Header';
 import Login from './components/Login/Login';
 import withRouter from './utils/withRouter';
-import { initializeApp } from './redux/appReducer';
+import { initializeApp } from './redux/reducers/appReducer';
 import Preloader from './components/Preloader/Preloader';
 
 class App extends React.Component {

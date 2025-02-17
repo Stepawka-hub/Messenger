@@ -1,5 +1,5 @@
 import { stopSubmit } from 'redux-form';
-import { authAPI, profileAPI } from "../api/api";
+import { authAPI, profileAPI } from "../../api/api";
 
 const SET_USER_DATA = "SET-USER-DATA";
 const TOGGLE_IS_LOADING = "TOGGLE-IS-LOADING";
