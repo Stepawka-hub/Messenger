@@ -1,61 +1,7 @@
 import { stopSubmit } from 'redux-form';
 import { authAPI, profileAPI } from "../../api/api";
+import { setAuthUserDataAC, setLoadingAC } from './actions';
 
-const SET_USER_DATA = "SET-USER-DATA";
-const TOGGLE_IS_LOADING = "TOGGLE-IS-LOADING";
-
-const initialState = {
-  id: null,
-  login: null,
-  email: null,
-  photos: null,
-  isLoading: false,
-  isAuth: false,
-};
-
-const authReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case SET_USER_DATA: {
-      return setAuthUserData(state, action.payload);
-    }
-
-    case TOGGLE_IS_LOADING: {
-      return setLoading(state, action.isLoading);
-    }
-
-    default:
-      return state;
-  }
-};
-
-const setAuthUserData = (state, payload) => ({
-  ...state,
-  ...payload,
-});
-
-const setLoading = (state, isLoading) => ({
-  ...state,
-  isLoading,
-});
-
-// Actions Creator
-export const setAuthUserDataAC = (id, login, email, photos, isAuth) => ({
-  type: SET_USER_DATA,
-  payload: {
-    id,
-    login,
-    email,
-    photos,
-    isAuth,
-  },
-});
-
-export const setLoadingAC = (isLoading) => ({
-  type: TOGGLE_IS_LOADING,
-  isLoading,
-});
-
-// Thunks
 export const getAuthUserData = () => async (dispatch) => {
   dispatch(setLoadingAC(true));
 
@@ -92,5 +38,3 @@ export const logoutUser = () => (dispatch) => {
     }
   });
 };
-
-export default authReducer;

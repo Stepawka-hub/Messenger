@@ -10,7 +10,8 @@ import logoutIcon from '../../assets/images/logout.svg';
 import avatarDefault from './../../assets/images/black.png';
 import Button from '../common/Button/Button';
 
-import { logoutUser } from '../../redux/reducers/authReducer';
+import { logoutUser } from '../../redux/auth/thunks';
+import { getAuthEmail, getAuthLogin, getIsAuth, getIsLoading } from '../../redux/auth/selectors';
 
 
 const Header = ({ login, email, photos, ...props }) => {
@@ -50,10 +51,10 @@ const Header = ({ login, email, photos, ...props }) => {
 }
 
 const mapStateToProps = (state) => ({
-  login: state.auth.login,
-  email: state.auth.email,
-  isLoading: state.auth.isLoading,
-  isAuth: state.auth.isAuth
+  login: getAuthLogin(state),
+  email: getAuthEmail(state),
+  isLoading: getIsLoading(state),
+  isAuth: getIsAuth(state),
 });
 
 export default connect(mapStateToProps, { logoutUser })(Header);

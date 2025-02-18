@@ -1,9 +1,5 @@
-import { profileAPI } from "../../api/api";
 import avatarBlack from "./../../assets/images/black.png";
-
-const ADD_POST = "ADD-POST";
-const SET_USER_PROFILE = "SET-USER-PROFILE";
-const SET_USER_STATUS = "SET-USER-STATUS";
+import { ADD_POST, SET_USER_PROFILE, SET_USER_STATUS } from './actionTypes';
 
 const initialState = {
   profile: null,
@@ -72,43 +68,6 @@ const setUserStatus = (state, status) => {
     ...state,
     status,
   };
-};
-
-// Action creators
-export const addPostAC = (newPostText) => ({ 
-  type: ADD_POST,
-  newPostText
-});
-
-export const setUserProfileAC = (profile) => ({
-  type: SET_USER_PROFILE,
-  profile,
-});
-
-export const setUserStatusAC = (status) => ({
-  type: SET_USER_STATUS,
-  status
-});
-
-// Thunk
-export const getProfile = (userId) => (dispatch) => {
-  profileAPI.getProfile(userId).then((data) => {
-    dispatch(setUserProfileAC(data));
-  });
-};
-
-export const getUserStatus = (userId) => (dispatch) => {
-  profileAPI.getUserStatus(userId).then((data) => {
-    dispatch(setUserStatusAC(data.data));
-  });
-};
-
-export const updateUserStatus = (status) => (dispatch) => {
-  profileAPI.updateUserStatus(status).then((res) => {
-    if (res.data.resultCode === 0) {
-      dispatch(setUserStatusAC(status));
-    }
-  });
 };
 
 export default profileReducer;

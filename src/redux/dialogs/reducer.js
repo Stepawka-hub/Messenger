@@ -1,7 +1,6 @@
 import avatarBlack from "./../../assets/images/black.png";
 import avatarOrange from "./../../assets/images/avatar_orange.jpg";
-
-const SEND_MESSAGE = "SEND-MESSAGE";
+import { SEND_MESSAGE } from './actionTypes';
 
 const initialState = {
   dialogs: [
@@ -82,10 +81,5 @@ const sendMessage = (state, newMessageText) => {
     messages: [...state.messages, message]
   };
 }
-
-export const sendMessageAC = (newMessageText) => ({ 
-  type: SEND_MESSAGE,
-  newMessageText
-});
 
 export default dialogsReducer;

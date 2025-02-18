@@ -5,9 +5,10 @@ import './Dialogs.css';
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
 
-import { sendMessageAC } from '../../redux/reducers/dialogsReducer';
+import { sendMessageAC } from '../../redux/dialogs/actions';
 import withAuthRedirect from '../../utils/withAuthRedirect';
 import SendMessageForm from './SendMessageForm/SendMessageForm';
+import { getDialogsPage } from '../../redux/dialogs/selectors';
 
 const Dialogs = (props) => {
   const state = props.dialogsPage;
@@ -43,7 +44,7 @@ const Dialogs = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    dialogsPage: state.dialogsPage
+    dialogsPage: getDialogsPage(state),
   }
 }
 

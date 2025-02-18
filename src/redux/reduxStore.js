@@ -1,10 +1,10 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import appReducer from './reducers/appReducer';
-import authReducer from "./reducers/authReducer";
-import profileReducer from "./reducers/profileReducer";
-import sidebarReducer from "./reducers/sidebarReducer";
-import dialogsReducer from "./reducers/dialogsReducer";
-import usersReducer from "./reducers/usersReducer";
+import appReducer from './app/reducer';
+import authReducer from './auth/reducer';
+import profileReducer from './profile/reducer';
+import sidebarReducer from './sidebar/reducer';
+import dialogsReducer from './dialogs/reducer';
+import usersReducer from './users/reducer';
 import { reducer as formReducer } from "redux-form";
 
 const reducers = combineReducers({

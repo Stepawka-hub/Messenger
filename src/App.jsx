@@ -14,8 +14,9 @@ import ProfileContainer from './components/Profile/ProfileContainer';
 import Header from './components/Header/Header';
 import Login from './components/Login/Login';
 import withRouter from './utils/withRouter';
-import { initializeApp } from './redux/reducers/appReducer';
+import { initializeApp } from './redux/app/thunks';
 import Preloader from './components/Preloader/Preloader';
+import { getInitialized } from './redux/app/selectors';
 
 class App extends React.Component {
   componentDidMount() {
@@ -48,7 +49,7 @@ class App extends React.Component {
 };
 
 const mapStateToProps = (state) => ({
-  initialized: state.app.initialized
+  initialized: getInitialized(state),
 });
 
 export default compose(

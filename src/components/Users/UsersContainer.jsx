@@ -1,12 +1,6 @@
 import React from 'react';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
-
-import {
-  setCurrentPageAC,
-  unfollowFromUser,
-  followToUser,
-  getUsers
-} from '../../redux/reducers/usersReducer';
 
 import {
   getCurrentPage,
@@ -15,10 +9,12 @@ import {
   getPageSize,
   getTotalUsersCount,
   getUserList
-} from '../../redux/selectors/usersSelectors';
+} from '../../redux/users/selectors';
+import { setCurrentPageAC } from '../../redux/users/actions';
+import { getUsers, followToUser, unfollowFromUser } from '../../redux/users/thunks';
+import withAuthRedirect from '../../utils/withAuthRedirect';
 
 import Users from './Users';
-import { compose } from 'redux';
 
 class UsersContainer extends React.Component {
   componentDidMount = () => {
@@ -47,17 +43,6 @@ class UsersContainer extends React.Component {
   }
 }
 
-// const mapStateToProps = (state) => {
-//   return {
-//     userList: state.usersPage.users,
-//     totalUsersCount: state.usersPage.totalUsersCount,
-//     pageSize: state.usersPage.pageSize,
-//     currentPage: state.usersPage.currentPage,
-//     isLoading: state.usersPage.isLoading,
-//     followingInProgress: state.usersPage.followingInProgress
-//   }
-// }
-
 const mapStateToProps = (state) => {
   return {
     userList: getUserList(state),
@@ -70,6 +55,7 @@ const mapStateToProps = (state) => {
 }
 
 export default compose(
+  withAuthRedirect,
   connect(mapStateToProps, {
     setCurrentPage: setCurrentPageAC,
     followToUser,

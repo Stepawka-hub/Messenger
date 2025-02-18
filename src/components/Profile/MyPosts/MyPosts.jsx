@@ -1,9 +1,10 @@
-import { addPostAC } from '../../../redux/reducers/profileReducer';
+import { addPostAC } from '../../../redux/profile/actions';
 import { connect } from 'react-redux';
 
 import './MyPosts.css';
 import Post from './Post/Post'
 import SendMessageForm from './AddPostForm/AddPostForm';
+import { getProfilePage } from '../../../redux/profile/selectors';
 
 const MyPosts = (props) => {
   const state = props.profilePage;
@@ -36,11 +37,9 @@ const MyPosts = (props) => {
 }
 
 
-const mapStateToProps = (state) => {
-  return {
-    profilePage: state.profilePage
-  }
-}
+const mapStateToProps = (state) => ({
+  profilePage: getProfilePage(state)
+});
 
 export default connect(mapStateToProps, {
   addPost: addPostAC

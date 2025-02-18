@@ -2,10 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import Profile from './Profile';
-import { getProfile, getUserStatus, updateUserStatus } from '../../redux/reducers/profileReducer';
+import { getProfile, getUserStatus, updateUserStatus } from '../../redux/profile/thunks';
 import withRouter from '../../utils/withRouter';
 import withAuthRedirect from '../../utils/withAuthRedirect';
 import { compose } from 'redux';
+import { getProfileSelector, getStatusSelector } from '../../redux/profile/selectors';
+import { getCurrentUserId } from '../../redux/auth/selectors';
 
 class ProfileContainer extends React.Component {
   componentDidMount() {
@@ -25,13 +27,11 @@ class ProfileContainer extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    profile: state.profilePage.profile,
-    status: state.profilePage.status,
-    currentUserId: state.auth.id,
-  }
-}
+const mapStateToProps = (state) => ({
+  profile: getProfileSelector(state),
+  status: getStatusSelector(state),
+  currentUserId: getCurrentUserId(state),
+});
 
 export default compose(
   connect(mapStateToProps, {getProfile, getUserStatus, updateUserStatus}),
