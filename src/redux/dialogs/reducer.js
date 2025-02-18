@@ -1,8 +1,6 @@
-import avatarBlack from "./../assets/images/black.png";
-import avatarOrange from "./../assets/images/avatar_orange.jpg";
-
-const SEND_MESSAGE = "SEND-MESSAGE";
-const UPDATE_NEW_MESSAGE_TEXT = "UPDATE-NEW-MESSAGE-TEXT";
+import avatarBlack from "./../../assets/images/black.png";
+import avatarOrange from "./../../assets/images/avatar_orange.jpg";
+import { SEND_MESSAGE } from './actionTypes';
 
 const initialState = {
   dialogs: [
@@ -54,54 +52,34 @@ const initialState = {
       avatar: avatarBlack,
       text: "I`m fine, thank you!",
     },
-  ],
-  newMessageText: "",
+  ]
 }
 
 const dialogsReducer = (state = initialState, action) => { 
   switch (action.type) {
     case SEND_MESSAGE: {
-      return sendMessage(state);
-    }
-
-    case UPDATE_NEW_MESSAGE_TEXT: {
-      return updateNewMessageText(state, action.newMessageText);
+      return sendMessage(state, action.newMessageText);
     }
 
     default: return state;
   }
 }
 
-const sendMessage = (state) => {
-  if (!state.newMessageText) return state;
+const sendMessage = (state, newMessageText) => {
+  if (!newMessageText) return state;
 
   const message = {
-    msgid: 4,
+    msgid: state.messages.length + 1,
     userid: 1,
     username: "Stepawka",
     avatar: avatarBlack,
-    text: state.newMessageText,
+    text: newMessageText,
   };
 
   return {
     ...state,
-    messages: [...state.messages, message],
-    newMessageText: ''
+    messages: [...state.messages, message]
   };
 }
-
-const updateNewMessageText = (state, messageText) => {
-  return {
-    ...state,
-    newMessageText: messageText
-  };
-}
-
-export const sendMessageAC = () => ({ type: SEND_MESSAGE });
-
-export const updateNewMessageTextAC = (text) => ({
-  type: UPDATE_NEW_MESSAGE_TEXT,
-  newMessageText: text,
-});
 
 export default dialogsReducer;

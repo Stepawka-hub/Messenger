@@ -1,15 +1,16 @@
-import { Navigate } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
 
 import './Dialogs.css';
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
-import Button from '../common/Button/Button';
+
+import { sendMessageAC } from '../../redux/dialogs/actions';
+import withAuthRedirect from '../../utils/withAuthRedirect';
+import SendMessageForm from './SendMessageForm/SendMessageForm';
+import { getDialogsPage } from '../../redux/dialogs/selectors';
 
 const Dialogs = (props) => {
-  if (!props.isAuth) {
-    return <Navigate to="/login"/>;
-  }
-
   const state = props.dialogsPage;
 
   const dialogsElements = state.dialogs.map(dialog =>
@@ -18,13 +19,8 @@ const Dialogs = (props) => {
   const messagesElements = state.messages.map(message =>
     <Message state={message} key={message.msgid} />)
 
-  const sendMessage = () => {
-    props.sendMessage();
-  }
-
-  const onMessageChange = (evt) => {
-    const text = evt.target.value;
-    props.updateNewMessageText(text);
+  const onSubmit = (formData) => {
+    props.sendMessage(formData.newMessageText);
   }
 
   return (
@@ -39,23 +35,20 @@ const Dialogs = (props) => {
         </div>
 
         <div className='new-message'>
-          <textarea
-            name="newmsg"
-            className="textarea new-message__textarea"
-            id="newmsg"
-            placeholder='Введите сообщение...'
-            value={state.newMessageText}
-            onChange={onMessageChange}
-          />
-          <Button
-            text="Отправить"
-            className="new-message__btn"
-            onClick={sendMessage}
-          />
+          <SendMessageForm onSubmit={onSubmit} />
         </div>
       </div>
     </section>
   );
 }
 
-export default Dialogs;
+const mapStateToProps = (state) => {
+  return {
+    dialogsPage: getDialogsPage(state),
+  }
+}
+
+export default compose(
+  connect(mapStateToProps, { sendMessage: sendMessageAC }),
+  withAuthRedirect
+)(Dialogs);

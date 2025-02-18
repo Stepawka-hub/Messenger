@@ -1,13 +1,19 @@
 import React from 'react';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { Navigate } from 'react-router-dom';
 
 import {
-  setCurrentPageAC,
-  unfollowFromUser,
-  followToUser,
-  getUsers
-} from '../../redux/usersReducer';
+  getCurrentPage,
+  getFollowingInProgress,
+  getIsLoading,
+  getPageSize,
+  getTotalUsersCount,
+  getUserList
+} from '../../redux/users/selectors';
+import { setCurrentPageAC } from '../../redux/users/actions';
+import { getUsers, followToUser, unfollowFromUser } from '../../redux/users/thunks';
+import withAuthRedirect from '../../utils/withAuthRedirect';
+
 import Users from './Users';
 
 class UsersContainer extends React.Component {
@@ -21,10 +27,6 @@ class UsersContainer extends React.Component {
   }
 
   render = () => {
-    if (!this.props.isAuth) {
-      return <Navigate to="/login" />;
-    }
-
     return (
       <Users
         userList={this.props.userList}
@@ -43,19 +45,21 @@ class UsersContainer extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    userList: state.usersPage.users,
-    totalUsersCount: state.usersPage.totalUsersCount,
-    pageSize: state.usersPage.pageSize,
-    currentPage: state.usersPage.currentPage,
-    isLoading: state.usersPage.isLoading,
-    followingInProgress: state.usersPage.followingInProgress,
-    isAuth: state.auth.isAuth
+    userList: getUserList(state),
+    totalUsersCount: getTotalUsersCount(state),
+    pageSize: getPageSize(state),
+    currentPage: getCurrentPage(state),
+    isLoading: getIsLoading(state),
+    followingInProgress: getFollowingInProgress(state)
   }
 }
 
-export default connect(mapStateToProps, {
-  setCurrentPage: setCurrentPageAC,
-  followToUser,
-  unfollowFromUser,
-  getUsers
-})(UsersContainer);
+export default compose(
+  withAuthRedirect,
+  connect(mapStateToProps, {
+    setCurrentPage: setCurrentPageAC,
+    followToUser,
+    unfollowFromUser,
+    getUsers
+  })
+)(UsersContainer);

@@ -2,21 +2,22 @@
   --primary-color: #fff;
   --secondary-color: #000;
   --lighten-orange-color: #ffa454;
+  --orange-color: #ff5b42;
   --theme-primary-color: #141414;
   --theme-secondary-color: #222222;
 
   --side-padding: 2.5rem;
-  
+
   --title-color: #ff7b57;
   --link-color-active: #ff7b57;
 
   --create-btn-color: #2fac7c;
   --follow-btn-color: #ff6d4c;
   --disabled-btn-color: #695c58;
-
-  --dialog-bg-color-active: #ff5b42;
+  --login-btn-color: #ff7b57;
+  --logout-btn-color: #ff7b57;
 
   --friend-card-bg-hover: rgba(34, 34, 34, 0.5);
 
-  --pagination-item-active: #ff5b42;
+  --error-color: #ff5757;
 }

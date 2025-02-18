@@ -1,6 +1,8 @@
 import './ProfileInfo.css'
 import avatar from '../../../assets/images/black.png';
 import Loader from '../../common/Loader/Loader';
+import ProfileStatus from './ProfileStatus/ProfileStatus';
+import ProfileInfoItem from './ProfileInfoItem/ProfileInfoItem';
 
 const ProfileInfo = (props) => {
   const profile = props.profile;
@@ -9,13 +11,19 @@ const ProfileInfo = (props) => {
     return <Loader />
   }
 
-  const profileData = {
-    photos: profile.photos.small || avatar,
-    fullName: profile.fullName || 'Имя пользователя',
+  const translations = {
+    aboutMe: 'Обо мне',
+    lookingForAJob: 'Ищу работу',
+    lookingForAJobDescription: 'Описание поиска работы'
+  };
+
+  const profileInfo = {
     aboutMe: profile.aboutMe || 'Нет',
     lookingForAJob: profile.lookingForAJob ? 'Да' : 'Нет',
     lookingForAJobDescription: profile.lookingForAJobDescription || 'Нет',
+  }
 
+  const profileContacts = {
     vk: profile.contacts.vk || '-',
     facebook: profile.contacts.facebook || '-',
     twitter: profile.contacts.twitter || '-',
@@ -27,53 +35,45 @@ const ProfileInfo = (props) => {
     <div className="profile-container">
       <div className="profile-info">
         <div className="profile-info__avatar">
-          <img src={profileData.photos} alt="Avatar" />
+          <img src={profile.photos.small || avatar} alt="Avatar" />
         </div>
 
         <div>
           <h2 className="profile-info__title">
-            {profileData.fullName}
+            {profile.fullName || 'Имя пользователя'}
           </h2>
 
           <div className="profile-info__description">
-            <p className='profile-info__item'>
-              <span className='profile-info__label'>Обо мне: </span>
-              {profileData.aboutMe}
-            </p>
-            <p className='profile-info__item'>
-              <span className='profile-info__label'>Ищу работу: </span>
-              {profileData.lookingForAJob}
-            </p>
-            <p className='profile-info__item'>
-              <span className='profile-info__label'>Описание: </span>
-              {profileData.lookingForAJobDescription}
-            </p>
+            <ProfileStatus
+              label='Статус: '
+              status={props.status}
+              updateUserStatus={props.updateUserStatus}
+            />
+            {
+              Object.entries(profileInfo).map(([key, value], index) =>
+                <ProfileInfoItem 
+                  label={translations[key]} 
+                  value={value} 
+                  key={index} 
+                />
+              )
+            }
           </div>
         </div>
       </div>
 
       <div className='profile-contacts'>
         <h3 className='profile-contacts__title'>Контакты</h3>
-        <p className='profile-contacts__item'>
-          <span className='profile-contacts__label'>VK: </span>
-          {profileData.vk}
-        </p>
-        <p className='profile-contacts__item'>
-          <span className='profile-contacts__label'>Facebook: </span>
-          {profileData.facebook}
-        </p>
-        <p className='profile-contacts__item'>
-          <span className='profile-contacts__label'>Twitter: </span>
-          {profileData.twitter}
-        </p>
-        <p className='profile-contacts__item'>
-          <span className='profile-contacts__label'>Instagram: </span>
-          {profileData.instagram}
-        </p>
-        <p className='profile-contacts__item'>
-          <span className='profile-contacts__label'>GitHub: </span>
-          {profileData.github}
-        </p>
+        {
+          Object.entries(profileContacts).map(([key, value], index) =>
+            <ProfileInfoItem 
+              contacts
+              label={key} 
+              value={value} 
+              key={index} 
+            />
+          )
+        }
       </div>
     </div>
   );

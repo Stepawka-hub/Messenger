@@ -1,0 +1,23 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.form__textarea {
+  width: 100%;
+  font-size: 1.25rem;
+  color: var(--primary-color);
+  background-color: var(--theme-primary-color);
+  resize: vertical;
+}
+
+.form__submit {
+  align-self: flex-end;
+  padding: 1rem 2rem;
+
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--primary-color);
+  background-color: var(--create-btn-color);
+}

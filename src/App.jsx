@@ -1,36 +1,58 @@
-import "./App.css";
+import React from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
 
+import "./App.css";
 import Navbar from './components/Navbar/Navbar';
-import DialogsContainer from './components/Dialogs/DialogsContainer';
+import Dialogs from './components/Dialogs/Dialogs';
 import News from './components/News/News';
 import UsersContainer from './components/Users/UsersContainer';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import ProfileContainer from './components/Profile/ProfileContainer';
-import HeaderContainer from './components/Header/HeaderContainer';
+import Header from './components/Header/Header';
 import Login from './components/Login/Login';
+import withRouter from './utils/withRouter';
+import { initializeApp } from './redux/app/thunks';
+import Preloader from './components/Preloader/Preloader';
+import { getInitialized } from './redux/app/selectors';
 
-const App = () => {
-  return (
-    <div className="app-wrapper">
-      <HeaderContainer />
-      <Navbar />
-      <div className="app-wrapper-content">
-        <Routes>
+class App extends React.Component {
+  componentDidMount() {
+    this.props.initializeApp();
+  }
 
-          <Route path='/profile/:userId?' element={<ProfileContainer />} />
-          <Route path='/dialogs/*' element={<DialogsContainer />} />
-          <Route path='/news' element={<News />} />
-          <Route path='/users' element={<UsersContainer />} />
-          <Route path='/music' element={<Music />} />
-          <Route path='/settings' element={<Settings />} />
-          <Route path='/login' element={<Login />} />
+  render() {
+    return (
+      !this.props.initialized ? <Preloader />
+      :
+      <div className="app-wrapper">
+        <Header />
+        <Navbar />
+        <div className="app-wrapper-content">
+          <Routes>
 
-        </Routes>
+            <Route path='/profile/:userId?' element={<ProfileContainer />} />
+            <Route path='/dialogs/*' element={<Dialogs />} />
+            <Route path='/news' element={<News />} />
+            <Route path='/users' element={<UsersContainer />} />
+            <Route path='/music' element={<Music />} />
+            <Route path='/settings' element={<Settings />} />
+            <Route path='/login' element={<Login />} />
+
+          </Routes>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
 
-export default App;
+const mapStateToProps = (state) => ({
+  initialized: getInitialized(state),
+});
+
+export default compose(
+  withRouter,
+  connect(mapStateToProps, { initializeApp })
+)(App)

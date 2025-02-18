@@ -43,7 +43,7 @@
 
 .pagination__item.active {
   cursor: default;
-  background-color: var(--pagination-item-active);
+  background-color: var(--orange-color);
 }
 
 .pagination__item.active:hover,

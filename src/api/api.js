@@ -31,6 +31,30 @@ class UsersAPI {
   }
 }
 
+class ProfileAPI {
+  constructor(api) {
+    this.api = api;
+  }
+
+  getProfile = (userid) => {
+    return this.api
+      .get(`profile/${userid}`)
+      .then((res) => res.data);
+  }
+
+  getUserStatus = (userid) => {
+    return this.api.get(`profile/status/${userid}`);
+  }
+
+  updateUserStatus = (status) => {
+    return this.api.put(`profile/status`, {status});
+  }
+
+  // updatePhoto = () => {
+  //   return this.api.put(`profile/photo`);
+  // }
+}
+
 class AuthAPI {
   constructor(api) {
     this.api = api;
@@ -38,8 +62,20 @@ class AuthAPI {
 
   me = () => {
     return this.api
-    .get(`auth/me`)
-    .then((res) => res.data)
+      .get('auth/me')
+      .then((res) => res.data);
+  }
+
+  login = (formData) => {
+    return this.api
+      .post('auth/login', {...formData})
+      .then((res) => res.data);
+  }
+
+  logout = () => {
+    return this.api
+      .delete('auth/login')
+      .then((res) => res.data);
   }
 }
 
@@ -53,4 +89,5 @@ const api = axios.create({
 
 export const usersAPI = new UsersAPI(api);
 export const authAPI = new AuthAPI(api);
+export const profileAPI = new ProfileAPI(api);
 

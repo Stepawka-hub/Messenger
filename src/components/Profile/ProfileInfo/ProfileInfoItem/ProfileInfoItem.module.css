@@ -1,0 +1,27 @@
+.item {
+  font-size: 1.25rem;
+  line-height: 1.35;
+}
+
+.item__label {
+  font-weight: 500;
+  color: var(--lighten-orange-color);
+}
+
+.contacts {
+  position: relative;
+  padding-left: 1.2rem;
+}
+
+.contacts::before {
+  content: '';
+
+  position: absolute;
+  top: 0.5rem;
+  left: 0;
+
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: var(--lighten-orange-color);
+  border-radius: 50%;
+}

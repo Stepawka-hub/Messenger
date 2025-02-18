@@ -1,0 +1,2 @@
+export const SET_USER_DATA = "SET-USER-DATA";
+export const TOGGLE_IS_LOADING = "TOGGLE-IS-LOADING";
