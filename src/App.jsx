@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect }  from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -18,34 +18,32 @@ import { initializeApp } from './redux/app/thunks';
 import Preloader from './components/Preloader/Preloader';
 import { getInitialized } from './redux/app/selectors';
 
-class App extends Component {
-  componentDidMount() {
-    this.props.initializeApp();
-  }
+const App = (props) => {
+  useEffect(() => {
+    props.initializeApp();
+  }, []);
 
-  render() {
-    return (
-      !this.props.initialized ? <Preloader />
-      :
-      <div className="app-wrapper">
-        <Header />
-        <Navbar />
-        <div className="app-wrapper-content">
-          <Routes>
+  return (
+    !props.initialized ? <Preloader />
+    :
+    <div className="app-wrapper">
+      <Header />
+      <Navbar />
+      <div className="app-wrapper-content">
+        <Routes>
 
-            <Route path='/profile/:userId?' element={<ProfileContainer />} />
-            <Route path='/dialogs/*' element={<Dialogs />} />
-            <Route path='/news' element={<News />} />
-            <Route path='/users' element={<UsersContainer />} />
-            <Route path='/music' element={<Music />} />
-            <Route path='/settings' element={<Settings />} />
-            <Route path='/login' element={<Login />} />
+          <Route path='/profile/:userId?' element={<ProfileContainer />} />
+          <Route path='/dialogs/*' element={<Dialogs />} />
+          <Route path='/news' element={<News />} />
+          <Route path='/users' element={<UsersContainer />} />
+          <Route path='/music' element={<Music />} />
+          <Route path='/settings' element={<Settings />} />
+          <Route path='/login' element={<Login />} />
 
-          </Routes>
-        </div>
+        </Routes>
       </div>
-    );
-  }
+    </div>
+  );
 };
 
 const mapStateToProps = (state) => ({

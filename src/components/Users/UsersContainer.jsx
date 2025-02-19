@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 
@@ -16,31 +16,29 @@ import withAuthRedirect from '../../utils/withAuthRedirect';
 
 import Users from './Users';
 
-class UsersContainer extends Component {
-  componentDidMount = () => {
-    this.props.getUsers(this.props.currentPage, this.props.pageSize);
-  }
+const UsersContainer = (props) => {
+  useEffect(() => {
+    props.getUsers(props.currentPage, props.pageSize);
+  }, []);
 
-  setCurrentPage = (pageNumber) => {
-    this.props.getUsers(pageNumber, this.props.pageSize);
-    this.props.setCurrentPage(pageNumber);
-  }
+  const setCurrentPage = (pageNumber) => {
+    props.getUsers(pageNumber, props.pageSize);
+    props.setCurrentPage(pageNumber);
+  };
 
-  render = () => {
-    return (
-      <Users
-        userList={this.props.userList}
-        totalUsersCount={this.props.totalUsersCount}
-        pageSize={this.props.pageSize}
-        currentPage={this.props.currentPage}
-        followingInProgress={this.props.followingInProgress}
+  return (
+    <Users
+      userList={props.userList}
+      totalUsersCount={props.totalUsersCount}
+      pageSize={props.pageSize}
+      currentPage={props.currentPage}
+      followingInProgress={props.followingInProgress}
 
-        followToUser={this.props.followToUser}
-        unfollowFromUser={this.props.unfollowFromUser}
-        setCurrentPage={this.setCurrentPage}
-      />
-    );
-  }
+      followToUser={props.followToUser}
+      unfollowFromUser={props.unfollowFromUser}
+      setCurrentPage={setCurrentPage}
+    />
+  );
 }
 
 const mapStateToProps = (state) => {

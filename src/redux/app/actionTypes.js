@@ -1,1 +1,1 @@
-export const INITIALIZED_SUCCESS = "INITIALIZED-SUCCESS";
+export const INITIALIZED_SUCCESS = "social-network/app/INITIALIZED-SUCCESS";
