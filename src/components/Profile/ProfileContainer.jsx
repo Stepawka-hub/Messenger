@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Profile from './Profile';
@@ -9,7 +9,7 @@ import { compose } from 'redux';
 import { getProfileSelector, getStatusSelector } from '../../redux/profile/selectors';
 import { getCurrentUserId } from '../../redux/auth/selectors';
 
-class ProfileContainer extends React.Component {
+class ProfileContainer extends Component {
   componentDidMount() {
     const userId = this.props.router.params.userId || this.props.currentUserId;
     this.props.getProfile(userId);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -18,7 +18,7 @@ import { initializeApp } from './redux/app/thunks';
 import Preloader from './components/Preloader/Preloader';
 import { getInitialized } from './redux/app/selectors';
 
-class App extends React.Component {
+class App extends Component {
   componentDidMount() {
     this.props.initializeApp();
   }

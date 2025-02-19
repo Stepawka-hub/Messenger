@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 
@@ -16,7 +16,7 @@ import withAuthRedirect from '../../utils/withAuthRedirect';
 
 import Users from './Users';
 
-class UsersContainer extends React.Component {
+class UsersContainer extends Component {
   componentDidMount = () => {
     this.props.getUsers(this.props.currentPage, this.props.pageSize);
   }
