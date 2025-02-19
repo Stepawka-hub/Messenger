@@ -2,10 +2,11 @@ import { Field, reduxForm } from 'redux-form'
 
 import s from './AddPostForm.module.css';
 import Button from '../../../common/Button/Button';
-import { maxLength, required } from '../../../../utils/validators/validators';
+import { maxLengthValidate, required } from '../../../../utils/validators/validators';
 import { FormControl } from '../../../common/FormsControls/FormsControls';
 
 const Textarea = FormControl("textarea");
+const maxLength = maxLengthValidate(255);
 
 const SendMessageForm = (props) => {
   return (
@@ -16,7 +17,7 @@ const SendMessageForm = (props) => {
         component={Textarea}
         className={`textarea ${s.form__textarea}`}
         placeholder='Что у вас нового?'
-        validate={[required, maxLength(255)]}
+        validate={[required, maxLength]}
       />
 
       <Button

@@ -2,9 +2,10 @@ import s from './LoginForm.module.css';
 import Button from '../../common/Button/Button';
 import { Field, reduxForm } from 'redux-form';
 import { FormControl, FormError } from '../../common/FormsControls/FormsControls';
-import { required, minLength } from '../../../utils/validators/validators';
+import { required, minLengthValidate } from '../../../utils/validators/validators';
 
 const Input = FormControl('input');
+const minLength = minLengthValidate(5);
 
 const LoginForm = (props) => {
   return (
@@ -29,7 +30,7 @@ const LoginForm = (props) => {
           name="password"
           className={s.form__input}
           placeholder='Password'
-          validate={[required, minLength(5)]}
+          validate={[required, minLength]}
         />
 
         <div className={s.form__remember}>
