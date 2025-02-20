@@ -1,3 +1,4 @@
+import { updateObjectInArray } from '../../utils/objectHelpers';
 import { 
   FOLLOW_TO_USER, 
   SET_CURRENT_PAGE, 
@@ -58,13 +59,7 @@ const usersReducer = (state = initialState, action) => {
 
 const setFollowed = (state, userid, status) => ({
   ...state,
-  users: state.users.map((user) => {
-    if (user.id === userid) {
-      return { ...user, followed: status };
-    }
-
-    return user;
-  }),
+  users: updateObjectInArray(state.users, userid, "id", { followed: status })
 });
 
 const setUsers = (state, users) => ({
@@ -87,7 +82,7 @@ const setLoading = (state, isLoading) => ({
   isLoading,
 });
 
-export const setFollowingProgress = (state, followingInProgress, userid) => ({
+export const setFollowingProgress = (state, followingInProgress, userid) => ({ 
   ...state,
   followingInProgress: followingInProgress
     ? [...state.followingInProgress, userid]

@@ -10,17 +10,15 @@ import withAuthRedirect from '../../utils/withAuthRedirect';
 import SendMessageForm from './SendMessageForm/SendMessageForm';
 import { getDialogsPage } from '../../redux/dialogs/selectors';
 
-const Dialogs = (props) => {
-  const state = props.dialogsPage;
+const Dialogs = ({dialogsPage, sendMessage}) => {
+  const dialogsElements = dialogsPage.dialogs.map(dialog =>
+    <DialogItem dialog={dialog} key={dialog.dialogid} />)
 
-  const dialogsElements = state.dialogs.map(dialog =>
-    <DialogItem state={dialog} key={dialog.dialogid} />)
-
-  const messagesElements = state.messages.map(message =>
+  const messagesElements = dialogsPage.messages.map(message =>
     <Message state={message} key={message.msgid} />)
 
   const onSubmit = (formData) => {
-    props.sendMessage(formData.newMessageText);
+    sendMessage(formData.newMessageText);
   }
 
   return (

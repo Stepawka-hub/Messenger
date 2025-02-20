@@ -7,9 +7,9 @@ import { maxLengthValidate, required } from '../../../utils/validators/validator
 const Textarea = FormControl("textarea");
 const maxLength = maxLengthValidate(1024);
 
-const SendMessageForm = (props) => {
+const SendMessageForm = ({handleSubmit}) => {
   return (
-    <form className={s.form} onSubmit={props.handleSubmit}>
+    <form className={s.form} onSubmit={handleSubmit}>
       <Field
         id="newMessageText"
         name="newMessageText"

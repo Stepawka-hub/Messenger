@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
@@ -14,7 +15,7 @@ const ProfileContainer = (props) => {
     const userId = props.router.params.userId || props.currentUserId;
     props.getProfile(userId);
     props.getUserStatus(userId);
-  }, [])
+  }, []);
 
   return (
     <Profile

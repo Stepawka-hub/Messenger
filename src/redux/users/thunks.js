@@ -1,46 +1,44 @@
 import { usersAPI } from "../../api/api";
-import { 
-  followAC, 
-  setFollowingProgressAC, 
-  setLoadingAC, 
-  setTotalUsersCountAC, 
-  setUsersAC, 
-  unfollowAC 
-} from './actions';
+import {
+  followAC,
+  setFollowingProgressAC,
+  setLoadingAC,
+  setTotalUsersCountAC,
+  setUsersAC,
+  unfollowAC,
+} from "./actions";
 
-export const getUsers = (currentPage, pageSize) => (dispatch) => {
+export const getUsers = (currentPage, pageSize) => async (dispatch) => {
   dispatch(setLoadingAC(true));
 
-  usersAPI.getUsers(currentPage, pageSize).then((data) => {
-    const users = data.items.map((item) => ({
-      ...item,
-      location: { country: "Russia", city: "Moscow" },
-    }));
+  const data = await usersAPI.getUsers(currentPage, pageSize);
+  const users = data.items.map((item) => ({
+    ...item,
+    location: { country: "Russia", city: "Moscow" },
+  }));
 
-    dispatch(setLoadingAC(false));
-    dispatch(setTotalUsersCountAC(data.totalCount));
-    dispatch(setUsersAC(users));
-  });
+  dispatch(setLoadingAC(false));
+  dispatch(setTotalUsersCountAC(data.totalCount));
+  dispatch(setUsersAC(users));
 };
 
-export const followToUser = (id) => (dispatch) => {
-  dispatch(setFollowingProgressAC(true, id));
-  usersAPI.followUser(id).then((data) => {
-    if (data.resultCode === 0) {
-      dispatch(followAC(id));
-    }
+const followUnfollowFlow = async (dispatch, userId, apiMethod, actionCreator) => {
+  dispatch(setFollowingProgressAC(true, userId));
+  
+  const data = await apiMethod(userId);
+  if (data.resultCode === 0) {
+    dispatch(actionCreator(userId));
+  }
 
-    dispatch(setFollowingProgressAC(false, id));
-  });
+  dispatch(setFollowingProgressAC(false, userId));
+}
+
+export const followToUser = (userId) => async (dispatch) => {
+  const apiMethod = usersAPI.followUser.bind(usersAPI);
+  followUnfollowFlow(dispatch, userId, apiMethod, followAC)
 };
 
-export const unfollowFromUser = (id) => (dispatch) => {
-  dispatch(setFollowingProgressAC(true, id));
-  usersAPI.unfollowUser(id).then((data) => {
-    if (data.resultCode === 0) {
-      dispatch(unfollowAC(id));
-    }
-
-    dispatch(setFollowingProgressAC(false, id));
-  });
+export const unfollowFromUser = (userId) => async (dispatch) => {
+  const apiMethod = usersAPI.unfollowUser.bind(usersAPI);
+  followUnfollowFlow(dispatch, userId, apiMethod, unfollowAC)
 };

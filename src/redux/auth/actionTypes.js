@@ -1,2 +1,2 @@
-export const SET_USER_DATA = "social-network/auth/SET-USER-DATA";
-export const TOGGLE_IS_LOADING = "social-network/auth/TOGGLE-IS-LOADING";
+export const SET_USER_DATA = "AUTH/SET-USER-DATA";
+export const TOGGLE_IS_LOADING = "AUTH/TOGGLE-IS-LOADING";

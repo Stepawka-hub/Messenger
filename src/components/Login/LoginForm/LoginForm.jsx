@@ -7,10 +7,10 @@ import { required, minLengthValidate } from '../../../utils/validators/validator
 const Input = FormControl('input');
 const minLength = minLengthValidate(5);
 
-const LoginForm = (props) => {
+const LoginForm = ({handleSubmit, error}) => {
   return (
     <div>
-      <form className={s.form} onSubmit={props.handleSubmit}>
+      <form className={s.form} onSubmit={handleSubmit}>
         <h2 className={s.form__title}>
           Login
         </h2>
@@ -42,7 +42,7 @@ const LoginForm = (props) => {
           />
         </div>
 
-        { props.error && <FormError error={props.error} /> }
+        { error && <FormError error={error} /> }
 
         <Button
           text='Login'

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { compose } from 'redux';
-import { connect } from 'react-redux';
+import { connect, useSelector, useDispatch } from 'react-redux';
 
 import {
   getCurrentPage,
@@ -17,12 +17,16 @@ import withAuthRedirect from '../../utils/withAuthRedirect';
 import Users from './Users';
 
 const UsersContainer = (props) => {
+  const dispatch = useDispatch();
+
+  const currentPage = useSelector(getCurrentPage);
+  const pageSize = useSelector(getPageSize);
+
   useEffect(() => {
-    props.getUsers(props.currentPage, props.pageSize);
-  }, []);
+    dispatch(getUsers(currentPage, pageSize));
+  }, [dispatch, currentPage, pageSize]);
 
   const setCurrentPage = (pageNumber) => {
-    props.getUsers(pageNumber, props.pageSize);
     props.setCurrentPage(pageNumber);
   };
 
@@ -30,8 +34,8 @@ const UsersContainer = (props) => {
     <Users
       userList={props.userList}
       totalUsersCount={props.totalUsersCount}
-      pageSize={props.pageSize}
-      currentPage={props.currentPage}
+      pageSize={pageSize}
+      currentPage={currentPage}
       followingInProgress={props.followingInProgress}
 
       followToUser={props.followToUser}
@@ -45,8 +49,6 @@ const mapStateToProps = (state) => {
   return {
     userList: getUserList(state),
     totalUsersCount: getTotalUsersCount(state),
-    pageSize: getPageSize(state),
-    currentPage: getCurrentPage(state),
     isLoading: getIsLoading(state),
     followingInProgress: getFollowingInProgress(state)
   }
@@ -57,7 +59,6 @@ export default compose(
   connect(mapStateToProps, {
     setCurrentPage: setCurrentPageAC,
     followToUser,
-    unfollowFromUser,
-    getUsers
+    unfollowFromUser
   })
 )(UsersContainer);

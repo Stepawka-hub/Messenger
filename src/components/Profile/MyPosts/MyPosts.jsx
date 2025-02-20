@@ -6,12 +6,12 @@ import Post from './Post/Post'
 import SendMessageForm from './AddPostForm/AddPostForm';
 import { getPosts } from '../../../redux/profile/selectors';
 
-const MyPosts = (props) => {
+const MyPosts = ({posts, addPost}) => {
   const onSubmit = (formData) => {
-    props.addPost(formData.newPostText);
+    addPost(formData.newPostText);
   }
 
-  const postsElements = props.posts.map(post =>
+  const postsElements = posts.map(post =>
     <Post postid={post.postid} message={post.message} key={post.postid} />)
 
   return (
@@ -22,7 +22,7 @@ const MyPosts = (props) => {
 
       <div className='new-post-container'>
         <SendMessageForm
-          addPost={props.addPost}
+          addPost={addPost}
           onSubmit={onSubmit}
         />
       </div>

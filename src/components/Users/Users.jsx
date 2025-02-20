@@ -1,20 +1,9 @@
 import './Users.css';
 import User from './User/User';
 import Loader from '../common/Loader/Loader';
+import Pagination from '../common/Pagination/Pagination';
 
 const Users = (props) => {
-  const pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
-  const pages = [];
-
-  for (let i = 1; i <= pagesCount; i++) {
-    pages.push(i);
-  }
-
-  const currentPage = props.currentPage;
-  const firstPage = ((currentPage - 4) < 0) ? 0 : currentPage - 4;
-  const lastPage = currentPage + 3;
-  const slicedPages = pages.slice(firstPage, lastPage);
-
   return (
     <section className='users-section' >
       <h2 className='users-section__title'>
@@ -38,19 +27,12 @@ const Users = (props) => {
           </div>
       }
 
-      <div className='pagination'>
-        {
-          slicedPages.map((number) =>
-            <span
-              className={`pagination__item ${props.currentPage === number && 'active'}`}
-              onClick={() => props.setCurrentPage(number)}
-              key={number}
-            >
-              {number}
-            </span>
-          )
-        }
-      </div>
+      <Pagination 
+        totalUsersCount={props.totalUsersCount}
+        pageSize={props.pageSize}
+        currentPage={props.currentPage}
+        setCurrentPage={props.setCurrentPage}
+      />
     </section>
   )
 }

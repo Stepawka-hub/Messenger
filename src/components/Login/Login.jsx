@@ -6,13 +6,13 @@ import { loginUser } from '../../redux/auth/thunks';
 import { Navigate } from 'react-router-dom';
 import { getIsAuth } from '../../redux/auth/selectors';
 
-const Login = (props) => {
+const Login = ({isAuth, loginUser}) => {
   const onSubmit = (formData) => {
     const { email, password, rememberMe } = formData;
-    props.loginUser(email, password, rememberMe, true);
+    loginUser(email, password, rememberMe, true);
   }
 
-  if (props.isAuth) {
+  if (isAuth) {
     return <Navigate to='/profile' />;
   }
 

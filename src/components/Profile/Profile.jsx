@@ -1,13 +1,13 @@
 import MyPosts from './MyPosts/MyPosts';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 
-const Profile = (props) => {
+const Profile = ({profile, status, updateUserStatus}) => {
   return (
     <section className="profile">
       <ProfileInfo 
-        profile={props.profile}
-        status={props.status}
-        updateUserStatus={props.updateUserStatus}
+        profile={profile}
+        status={status}
+        updateUserStatus={updateUserStatus}
       />
       <MyPosts />
     </section>
