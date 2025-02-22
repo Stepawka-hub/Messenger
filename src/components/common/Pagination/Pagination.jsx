@@ -1,7 +1,7 @@
 import s from './Pagination.module.css';
 
-const Pagination = ({totalUsersCount, pageSize, currentPage, setCurrentPage}) => {
-  const pagesCount = Math.ceil(totalUsersCount / pageSize);
+const Pagination = ({totalItemsCount, pageSize, currentPage, setCurrentPage}) => {
+  const pagesCount = Math.ceil(totalItemsCount / pageSize);
   const pages = [];
 
   for (let i = 1; i <= pagesCount; i++) {

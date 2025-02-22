@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import './MyPosts.css';
 import Post from './Post/Post'
-import SendMessageForm from './AddPostForm/AddPostForm';
 import { getPosts } from '../../../redux/profile/selectors';
+import AddPostForm from './AddPostForm/AddPostForm';
 
 const MyPosts = () => {
   const dispatch = useDispatch();
@@ -24,7 +24,7 @@ const MyPosts = () => {
       </h3>
 
       <div className='new-post-container'>
-        <SendMessageForm onSubmit={onSubmit} />
+        <AddPostForm onSubmit={onSubmit} />
       </div>
 
       <section className='post-list'>
