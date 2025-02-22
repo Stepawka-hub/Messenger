@@ -1,5 +1,5 @@
 import avatarBlack from "./../../assets/images/black.png";
-import { ADD_POST, SET_USER_PROFILE, SET_USER_STATUS } from './actionTypes';
+import { ADD_POST, DELETE_POST, SET_USER_PROFILE, SET_USER_STATUS } from './actionTypes';
 
 const initialState = {
   profile: null,
@@ -26,6 +26,10 @@ const profileReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_POST: {
       return addPost(state, action.newPostText);
+    }
+
+    case DELETE_POST: {
+      return deletePost(state, action.postid);
     }
 
     case SET_USER_PROFILE: {
@@ -55,6 +59,11 @@ const addPost = (state, newPostText) => {
     posts: [...state.posts, post]
   };
 };
+
+const deletePost = (state, id) => ({
+  ...state,
+  posts: state.posts.filter(post => post.postid !== id)
+});
 
 const setUserProfile = (state, profile) => {
   return {

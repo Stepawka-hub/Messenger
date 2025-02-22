@@ -1,20 +1,21 @@
 import { addPostAC } from '../../../redux/profile/actions';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import './MyPosts.css';
 import Post from './Post/Post'
 import SendMessageForm from './AddPostForm/AddPostForm';
-import { getProfilePage } from '../../../redux/profile/selectors';
+import { getPosts } from '../../../redux/profile/selectors';
 
-const MyPosts = (props) => {
-  const state = props.profilePage;
-
-  const postsElements = state.posts.map(post =>
-    <Post postid={post.postid} message={post.message} key={post.postid} />)
+const MyPosts = () => {
+  const dispatch = useDispatch();
+  const posts = useSelector(getPosts);
 
   const onSubmit = (formData) => {
-    props.addPost(formData.newPostText);
+    dispatch(addPostAC(formData.newPostText));
   }
+
+  const postsElements = posts.map(post =>
+    <Post postid={post.postid} message={post.message} key={post.postid} />)
 
   return (
     <div className='posts-container'>
@@ -23,10 +24,7 @@ const MyPosts = (props) => {
       </h3>
 
       <div className='new-post-container'>
-        <SendMessageForm
-          addPost={props.addPost}
-          onSubmit={onSubmit}
-        />
+        <SendMessageForm onSubmit={onSubmit} />
       </div>
 
       <section className='post-list'>
@@ -36,11 +34,4 @@ const MyPosts = (props) => {
   );
 }
 
-
-const mapStateToProps = (state) => ({
-  profilePage: getProfilePage(state)
-});
-
-export default connect(mapStateToProps, {
-  addPost: addPostAC
-})(MyPosts);
+export default MyPosts;

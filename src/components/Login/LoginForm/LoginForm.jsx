@@ -2,14 +2,15 @@ import s from './LoginForm.module.css';
 import Button from '../../common/Button/Button';
 import { Field, reduxForm } from 'redux-form';
 import { FormControl, FormError } from '../../common/FormsControls/FormsControls';
-import { required, minLength } from '../../../utils/validators/validators';
+import { required, minLengthValidate } from '../../../utils/validators/validators';
 
 const Input = FormControl('input');
+const minLength = minLengthValidate(5);
 
-const LoginForm = (props) => {
+const LoginForm = ({handleSubmit, error}) => {
   return (
     <div>
-      <form className={s.form} onSubmit={props.handleSubmit}>
+      <form className={s.form} onSubmit={handleSubmit}>
         <h2 className={s.form__title}>
           Login
         </h2>
@@ -18,7 +19,8 @@ const LoginForm = (props) => {
           type="text"
           component={Input}
           name="email"
-          className={s.form__input}
+          classField={s.form__field}
+          classElement={s.form__input}
           placeholder='Email'
           validate={[required]}
         />
@@ -27,9 +29,10 @@ const LoginForm = (props) => {
           type="password"
           component={Input}
           name="password"
-          className={s.form__input}
+          classField={s.form__field}
+          classElement={s.form__input}
           placeholder='Password'
-          validate={[required, minLength(5)]}
+          validate={[required, minLength]}
         />
 
         <div className={s.form__remember}>
@@ -41,7 +44,7 @@ const LoginForm = (props) => {
           />
         </div>
 
-        { props.error && <FormError error={props.error} /> }
+        { error && <FormError error={error} /> }
 
         <Button
           text='Login'

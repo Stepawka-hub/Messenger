@@ -19,22 +19,21 @@ export const getAuthUserData = () => async (dispatch) => {
   }
 };
 
-export const loginUser = (email, password, rememberMe = false, captcha) => (dispatch) => { 
-  authAPI.login({ email, password, rememberMe, captcha })
-    .then((res) => {
-      if (res.resultCode === 0) {
-        dispatch(getAuthUserData());
-      } else {
-        const message = res.messages.length > 0 ? res.messages[0] : 'Some error';
-        dispatch(stopSubmit('login', {_error: message}));
-      }
-    });
+export const loginUser = (email, password, rememberMe = false, captcha) => async (dispatch) => { 
+  const res = await authAPI.login({ email, password, rememberMe, captcha });
+
+  if (res.resultCode === 0) {
+    dispatch(getAuthUserData());
+  } else {
+    const message = res.messages.length > 0 ? res.messages[0] : 'Some error';
+    dispatch(stopSubmit('login', {_error: message}));
+  }
 };
 
-export const logoutUser = () => (dispatch) => {
-  authAPI.logout().then((res) => {
-    if (res.resultCode === 0) {
-      dispatch(setAuthUserDataAC(null, null, null, null, false));
-    }
-  });
+export const logoutUser = () => async (dispatch) => {
+  const res = await authAPI.logout()
+
+  if (res.resultCode === 0) {
+    dispatch(setAuthUserDataAC(null, null, null, null, false));
+  }
 };

@@ -1,4 +1,4 @@
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import './Login.css';
 import LoginForm from './LoginForm/LoginForm';
@@ -6,13 +6,16 @@ import { loginUser } from '../../redux/auth/thunks';
 import { Navigate } from 'react-router-dom';
 import { getIsAuth } from '../../redux/auth/selectors';
 
-const Login = (props) => {
+const Login = () => {
+  const dispatch = useDispatch();
+  const isAuth = useSelector(getIsAuth);
+
   const onSubmit = (formData) => {
     const { email, password, rememberMe } = formData;
-    props.loginUser(email, password, rememberMe, true);
+    dispatch(loginUser(email, password, rememberMe, true));
   }
 
-  if (props.isAuth) {
+  if (isAuth) {
     return <Navigate to='/profile' />;
   }
 
@@ -23,8 +26,4 @@ const Login = (props) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  isAuth: getIsAuth(state),
-});
-
-export default connect(mapStateToProps, { loginUser })(Login);
+export default Login;

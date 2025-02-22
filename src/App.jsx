@@ -1,7 +1,7 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect }  from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import "./App.css";
 import Navbar from './components/Navbar/Navbar';
@@ -18,41 +18,35 @@ import { initializeApp } from './redux/app/thunks';
 import Preloader from './components/Preloader/Preloader';
 import { getInitialized } from './redux/app/selectors';
 
-class App extends React.Component {
-  componentDidMount() {
-    this.props.initializeApp();
-  }
+const App = () => {
+  const dispatch = useDispatch();
+  const initialized = useSelector(getInitialized);
 
-  render() {
-    return (
-      !this.props.initialized ? <Preloader />
-      :
-      <div className="app-wrapper">
-        <Header />
-        <Navbar />
-        <div className="app-wrapper-content">
-          <Routes>
+  useEffect(() => {
+    dispatch(initializeApp());
+  }, []);
 
-            <Route path='/profile/:userId?' element={<ProfileContainer />} />
-            <Route path='/dialogs/*' element={<Dialogs />} />
-            <Route path='/news' element={<News />} />
-            <Route path='/users' element={<UsersContainer />} />
-            <Route path='/music' element={<Music />} />
-            <Route path='/settings' element={<Settings />} />
-            <Route path='/login' element={<Login />} />
+  return (
+    !initialized ? <Preloader />
+    :
+    <div className="app-wrapper">
+      <Header />
+      <Navbar />
+      <div className="app-wrapper-content">
+        <Routes>
 
-          </Routes>
-        </div>
+          <Route path='/profile/:userId?' element={<ProfileContainer />} />
+          <Route path='/dialogs/*' element={<Dialogs />} />
+          <Route path='/news' element={<News />} />
+          <Route path='/users' element={<UsersContainer />} />
+          <Route path='/music' element={<Music />} />
+          <Route path='/settings' element={<Settings />} />
+          <Route path='/login' element={<Login />} />
+
+        </Routes>
       </div>
-    );
-  }
+    </div>
+  );
 };
 
-const mapStateToProps = (state) => ({
-  initialized: getInitialized(state),
-});
-
-export default compose(
-  withRouter,
-  connect(mapStateToProps, { initializeApp })
-)(App)
+export default withRouter(App);

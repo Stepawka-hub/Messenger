@@ -1,5 +1,4 @@
-import { connect } from 'react-redux';
-import { compose } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import './Dialogs.css';
 import DialogItem from './DialogItem/DialogItem';
@@ -10,17 +9,18 @@ import withAuthRedirect from '../../utils/withAuthRedirect';
 import SendMessageForm from './SendMessageForm/SendMessageForm';
 import { getDialogsPage } from '../../redux/dialogs/selectors';
 
-const Dialogs = (props) => {
-  const state = props.dialogsPage;
+const Dialogs = () => {
+  const dispatch = useDispatch();
+  const dialogsPage = useSelector(getDialogsPage);
 
-  const dialogsElements = state.dialogs.map(dialog =>
-    <DialogItem state={dialog} key={dialog.dialogid} />)
+  const dialogsElements = dialogsPage.dialogs.map(dialog =>
+    <DialogItem dialog={dialog} key={dialog.dialogid} />)
 
-  const messagesElements = state.messages.map(message =>
-    <Message state={message} key={message.msgid} />)
+  const messagesElements = dialogsPage.messages.map(message =>
+    <Message message={message} key={message.msgid} />)
 
   const onSubmit = (formData) => {
-    props.sendMessage(formData.newMessageText);
+    dispatch(sendMessageAC(formData.newMessageText));
   }
 
   return (
@@ -42,13 +42,4 @@ const Dialogs = (props) => {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    dialogsPage: getDialogsPage(state),
-  }
-}
-
-export default compose(
-  connect(mapStateToProps, { sendMessage: sendMessageAC }),
-  withAuthRedirect
-)(Dialogs);
+export default withAuthRedirect(Dialogs);

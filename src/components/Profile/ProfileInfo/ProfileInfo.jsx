@@ -4,9 +4,7 @@ import Loader from '../../common/Loader/Loader';
 import ProfileStatus from './ProfileStatus/ProfileStatus';
 import ProfileInfoItem from './ProfileInfoItem/ProfileInfoItem';
 
-const ProfileInfo = (props) => {
-  const profile = props.profile;
-
+const ProfileInfo = ({profile, status, updateUserStatus}) => {
   if (!profile) {
     return <Loader />
   }
@@ -46,8 +44,8 @@ const ProfileInfo = (props) => {
           <div className="profile-info__description">
             <ProfileStatus
               label='Статус: '
-              status={props.status}
-              updateUserStatus={props.updateUserStatus}
+              status={status}
+              updateUserStatus={updateUserStatus}
             />
             {
               Object.entries(profileInfo).map(([key, value], index) =>

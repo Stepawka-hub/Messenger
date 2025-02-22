@@ -1,9 +1,17 @@
 import './FriendList.css';
 import FriendItem from './FriendItem/FriendItem';
+import { useSelector } from 'react-redux';
+import { getFriendList } from '../../../redux/sidebar/selectors';
 
-const FriendList = (props) => {
-  const friendsData = props.friends.map((friend) =>
-    <FriendItem state={friend} key={friend.userid} />
+const FriendList = () => {
+  const friends = useSelector(getFriendList);
+
+  const friendsData = friends.map((friend) =>
+    <FriendItem
+      username={friend.username}
+      avatar={friend.avatar}
+      key={friend.userid}
+    />
   );
   const friendsCount = friendsData.length;
 

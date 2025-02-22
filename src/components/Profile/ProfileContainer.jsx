@@ -1,5 +1,6 @@
-import React from 'react';
-import { connect } from 'react-redux';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Profile from './Profile';
 import { getProfile, getUserStatus, updateUserStatus } from '../../redux/profile/thunks';
@@ -9,32 +10,32 @@ import { compose } from 'redux';
 import { getProfileSelector, getStatusSelector } from '../../redux/profile/selectors';
 import { getCurrentUserId } from '../../redux/auth/selectors';
 
-class ProfileContainer extends React.Component {
-  componentDidMount() {
-    const userId = this.props.router.params.userId || this.props.currentUserId;
-    this.props.getProfile(userId);
-    this.props.getUserStatus(userId);
+const ProfileContainer = (props) => {
+  const dispatch = useDispatch();
+  const profile = useSelector(getProfileSelector);
+  const status = useSelector(getStatusSelector);
+  const currentUserId = useSelector(getCurrentUserId);
+
+  useEffect(() => {
+    const userId = props.router.params.userId || currentUserId;
+    dispatch(getProfile(userId));
+    dispatch(getUserStatus(userId));
+  }, []);
+
+  const updateStatus = (status) => {
+    dispatch(updateUserStatus(status));
   }
 
-  render = () => {
-    return (
-      <Profile
-        profile={this.props.profile}
-        status={this.props.status}
-        updateUserStatus={this.props.updateUserStatus}
-      />
-    )
-  }
+  return (
+    <Profile
+      profile={profile}
+      status={status}
+      updateUserStatus={updateStatus}
+    />
+  );
 }
 
-const mapStateToProps = (state) => ({
-  profile: getProfileSelector(state),
-  status: getStatusSelector(state),
-  currentUserId: getCurrentUserId(state),
-});
-
 export default compose(
-  connect(mapStateToProps, {getProfile, getUserStatus, updateUserStatus}),
   withRouter,
   withAuthRedirect
 )(ProfileContainer);
