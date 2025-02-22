@@ -8,7 +8,7 @@ import { FormControl } from '../../../common/FormsControls/FormsControls';
 const Textarea = FormControl("textarea");
 const maxLength = maxLengthValidate(255);
 
-const SendMessageForm = ({handleSubmit}) => {
+const AddPostForm = ({handleSubmit}) => {
   return (
     <form className={s.form} onSubmit={handleSubmit}>
       <Field
@@ -28,4 +28,4 @@ const SendMessageForm = ({handleSubmit}) => {
   )
 }
 
-export default reduxForm({ form: 'add-post' })(SendMessageForm);
+export default reduxForm({ form: 'add-post' })(AddPostForm);
