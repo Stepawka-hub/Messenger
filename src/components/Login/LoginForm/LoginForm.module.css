@@ -29,8 +29,11 @@
   width: 100%;
 }
 
+.form__field {
+  margin-bottom: 1.25rem;
+}
+
 .form__input {
-  margin-bottom: 1.5rem;
   padding: 1rem;
   border-radius: 1rem;
   color: var(--primary-color);

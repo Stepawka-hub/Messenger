@@ -1,5 +1,4 @@
-import { connect } from 'react-redux';
-import { compose } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import './Dialogs.css';
 import DialogItem from './DialogItem/DialogItem';
@@ -10,15 +9,18 @@ import withAuthRedirect from '../../utils/withAuthRedirect';
 import SendMessageForm from './SendMessageForm/SendMessageForm';
 import { getDialogsPage } from '../../redux/dialogs/selectors';
 
-const Dialogs = ({dialogsPage, sendMessage}) => {
+const Dialogs = () => {
+  const dispatch = useDispatch();
+  const dialogsPage = useSelector(getDialogsPage);
+
   const dialogsElements = dialogsPage.dialogs.map(dialog =>
     <DialogItem dialog={dialog} key={dialog.dialogid} />)
 
   const messagesElements = dialogsPage.messages.map(message =>
-    <Message state={message} key={message.msgid} />)
+    <Message message={message} key={message.msgid} />)
 
   const onSubmit = (formData) => {
-    sendMessage(formData.newMessageText);
+    dispatch(sendMessageAC(formData.newMessageText));
   }
 
   return (
@@ -40,13 +42,4 @@ const Dialogs = ({dialogsPage, sendMessage}) => {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    dialogsPage: getDialogsPage(state),
-  }
-}
-
-export default compose(
-  connect(mapStateToProps, { sendMessage: sendMessageAC }),
-  withAuthRedirect
-)(Dialogs);
+export default withAuthRedirect(Dialogs);

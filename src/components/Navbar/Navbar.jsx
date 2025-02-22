@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import './Navbar.css';
-import FriendListContainer from './FriendList/FriendListContainer';
+import FriendList from './FriendList/FriendList';
 
 const Navbar = () => {
   return (
@@ -13,9 +13,9 @@ const Navbar = () => {
         <NavLink to='/music' className='nav__link'>Music</NavLink>
         <NavLink to='/settings' className='nav__link'>Settings</NavLink>
       </div>
-      
+
       <div className='nav__friends'>
-        <FriendListContainer />
+        <FriendList />
       </div>
     </nav>
   );

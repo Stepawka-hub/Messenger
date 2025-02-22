@@ -1,10 +1,16 @@
 import './FriendItem.css';
 
-const FriendItem = (props) => {
+const FriendItem = ({ username, avatar }) => {
+  const handleClick = () => {
+    alert(`Я твой друг - ${username}!`)
+  }
+
   return (
-    <div className='friend' onClick={() => alert(`Я твой друг - ${props.state.username}!`)}>
-      <img src={props.state.avatar} className='avatar' alt="Avatar" />
-      <span className='friend__name'>{props.state.username}</span>
+    <div className='friend' onClick={handleClick}>
+      <img src={avatar} className='avatar' alt="Avatar" />
+      <span className='friend__name'>
+        {username}
+      </span>
     </div>
   )
 }

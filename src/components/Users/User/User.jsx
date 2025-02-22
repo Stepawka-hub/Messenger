@@ -4,7 +4,6 @@ import { NavLink } from 'react-router-dom';
 import avatar from '../../../assets/images/black.png';
 
 const User = ({userData, followToUser, unfollowFromUser, followingInProgress}) => {
-
   const follow = () => {
     followToUser(userData.id);
   };

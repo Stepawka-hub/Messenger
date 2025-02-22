@@ -19,7 +19,8 @@ const LoginForm = ({handleSubmit, error}) => {
           type="text"
           component={Input}
           name="email"
-          className={s.form__input}
+          classField={s.form__field}
+          classElement={s.form__input}
           placeholder='Email'
           validate={[required]}
         />
@@ -28,7 +29,8 @@ const LoginForm = ({handleSubmit, error}) => {
           type="password"
           component={Input}
           name="password"
-          className={s.form__input}
+          classField={s.form__field}
+          classElement={s.form__input}
           placeholder='Password'
           validate={[required, minLength]}
         />

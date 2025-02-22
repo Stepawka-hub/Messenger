@@ -1,14 +1,17 @@
 import { addPostAC } from '../../../redux/profile/actions';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import './MyPosts.css';
 import Post from './Post/Post'
 import SendMessageForm from './AddPostForm/AddPostForm';
 import { getPosts } from '../../../redux/profile/selectors';
 
-const MyPosts = ({posts, addPost}) => {
+const MyPosts = () => {
+  const dispatch = useDispatch();
+  const posts = useSelector(getPosts);
+
   const onSubmit = (formData) => {
-    addPost(formData.newPostText);
+    dispatch(addPostAC(formData.newPostText));
   }
 
   const postsElements = posts.map(post =>
@@ -21,10 +24,7 @@ const MyPosts = ({posts, addPost}) => {
       </h3>
 
       <div className='new-post-container'>
-        <SendMessageForm
-          addPost={addPost}
-          onSubmit={onSubmit}
-        />
+        <SendMessageForm onSubmit={onSubmit} />
       </div>
 
       <section className='post-list'>
@@ -34,10 +34,4 @@ const MyPosts = ({posts, addPost}) => {
   );
 }
 
-const mapStateToProps = (state) => ({
-  posts: getPosts(state)
-});
-
-export default connect(mapStateToProps, {
-  addPost: addPostAC
-})(MyPosts);
+export default MyPosts;

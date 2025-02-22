@@ -1,17 +1,24 @@
 import './UserDetails.css';
+import { useSelector } from 'react-redux';
+import avatarDefault from './../../../assets/images/black.png';
+import { getAuthEmail, getAuthLogin, getAuthPhoto } from '../../../redux/auth/selectors';
 
-const UserDetails = (props) => {
+const UserDetails = () => {
+  const login = useSelector(getAuthLogin);
+  const email = useSelector(getAuthEmail);
+  const photos = useSelector(getAuthPhoto);
+
   return (
     <div className='user-details'>
       <div className='user-details__avatar'>
-        <img src={props.photo} className='avatar' alt="Avatar" />
+        <img src={photos?.small || avatarDefault} className='avatar' alt="Avatar" />
       </div>
       <div>
         <h4 className='user-details__login'>
-          {props.login}
+          {login}
         </h4>
         <p className='user-details__email'>
-          {props.email}
+          {email}
         </p>
       </div>
     </div>

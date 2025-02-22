@@ -14,7 +14,7 @@ const SendMessageForm = ({handleSubmit}) => {
         id="newMessageText"
         name="newMessageText"
         component={Textarea}
-        className={`textarea ${s.form__textarea}`}
+        classElement={`textarea ${s.form__textarea}`}
         placeholder='Введите сообщение...'
         validate={[required, maxLength]}
       />

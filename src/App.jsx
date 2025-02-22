@@ -1,7 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect }  from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import "./App.css";
 import Navbar from './components/Navbar/Navbar';
@@ -18,13 +18,16 @@ import { initializeApp } from './redux/app/thunks';
 import Preloader from './components/Preloader/Preloader';
 import { getInitialized } from './redux/app/selectors';
 
-const App = (props) => {
+const App = () => {
+  const dispatch = useDispatch();
+  const initialized = useSelector(getInitialized);
+
   useEffect(() => {
-    props.initializeApp();
+    dispatch(initializeApp());
   }, []);
 
   return (
-    !props.initialized ? <Preloader />
+    !initialized ? <Preloader />
     :
     <div className="app-wrapper">
       <Header />
@@ -46,11 +49,4 @@ const App = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  initialized: getInitialized(state),
-});
-
-export default compose(
-  withRouter,
-  connect(mapStateToProps, { initializeApp })
-)(App)
+export default withRouter(App);

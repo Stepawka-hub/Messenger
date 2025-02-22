@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import { compose } from 'redux';
-import { connect, useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import {
   getCurrentPage,
@@ -16,9 +15,13 @@ import withAuthRedirect from '../../utils/withAuthRedirect';
 
 import Users from './Users';
 
-const UsersContainer = (props) => {
+const UsersContainer = () => {
   const dispatch = useDispatch();
 
+  const userList = useSelector(getUserList);
+  const totalUsersCount = useSelector(getTotalUsersCount);
+  const isLoading = useSelector(getIsLoading);
+  const followingInProgress = useSelector(getFollowingInProgress);
   const currentPage = useSelector(getCurrentPage);
   const pageSize = useSelector(getPageSize);
 
@@ -27,38 +30,31 @@ const UsersContainer = (props) => {
   }, [dispatch, currentPage, pageSize]);
 
   const setCurrentPage = (pageNumber) => {
-    props.setCurrentPage(pageNumber);
-  };
+    dispatch(setCurrentPageAC(pageNumber));
+  }
+
+  const follow = (userId) => {
+    dispatch(followToUser(userId));
+  }
+
+  const unfollow = (userId) => {
+    dispatch(unfollowFromUser(userId))
+  }
 
   return (
     <Users
-      userList={props.userList}
-      totalUsersCount={props.totalUsersCount}
+      userList={userList}
+      totalUsersCount={totalUsersCount}
       pageSize={pageSize}
       currentPage={currentPage}
-      followingInProgress={props.followingInProgress}
+      followingInProgress={followingInProgress}
+      isLoading={isLoading}
 
-      followToUser={props.followToUser}
-      unfollowFromUser={props.unfollowFromUser}
+      followToUser={follow}
+      unfollowFromUser={unfollow}
       setCurrentPage={setCurrentPage}
     />
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    userList: getUserList(state),
-    totalUsersCount: getTotalUsersCount(state),
-    isLoading: getIsLoading(state),
-    followingInProgress: getFollowingInProgress(state)
-  }
-}
-
-export default compose(
-  withAuthRedirect,
-  connect(mapStateToProps, {
-    setCurrentPage: setCurrentPageAC,
-    followToUser,
-    unfollowFromUser
-  })
-)(UsersContainer);
+export default withAuthRedirect(UsersContainer);

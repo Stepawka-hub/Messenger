@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import './Header.css';
 import UserDetails from './UserDetails/UserDetails';
@@ -7,18 +7,20 @@ import Loader from '../common/Loader/Loader';
 
 import logo from '../../assets/images/logo.png';
 import logoutIcon from '../../assets/images/logout.svg';
-import avatarDefault from './../../assets/images/black.png';
 import Button from '../common/Button/Button';
 
 import { logoutUser } from '../../redux/auth/thunks';
-import { getAuthEmail, getAuthLogin, getIsAuth, getIsLoading } from '../../redux/auth/selectors';
+import { getIsAuth, getIsLoading } from '../../redux/auth/selectors';
 
 
-const Header = ({ login, email, photos, ...props }) => {
-  const userDetails = {
-    login: login,
-    email: email,
-    photo: photos?.small || avatarDefault
+const Header = () => {
+  const dispatch = useDispatch();
+
+  const isLoading = useSelector(getIsLoading);
+  const isAuth = useSelector(getIsAuth);
+
+  const logout = () => {
+    dispatch(logoutUser());
   }
 
   return (
@@ -27,14 +29,14 @@ const Header = ({ login, email, photos, ...props }) => {
 
       <div>
         {
-          props.isLoading ?
+          isLoading ?
             <Loader /> :
             <div>
               {
-                props.isAuth ?
+                isAuth ?
                   <div className='header__user-details'>
-                    <UserDetails {...userDetails} />
-                    <Button className='header__logout' onClick={props.logoutUser}>
+                    <UserDetails />
+                    <Button className='header__logout' onClick={logout}>
                       <img src={logoutIcon} alt='Logout'></img>
                     </Button>
                   </div>
@@ -50,11 +52,4 @@ const Header = ({ login, email, photos, ...props }) => {
   );
 }
 
-const mapStateToProps = (state) => ({
-  login: getAuthLogin(state),
-  email: getAuthEmail(state),
-  isLoading: getIsLoading(state),
-  isAuth: getIsAuth(state),
-});
-
-export default connect(mapStateToProps, { logoutUser })(Header);
+export default Header;

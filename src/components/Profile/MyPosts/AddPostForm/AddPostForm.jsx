@@ -8,14 +8,14 @@ import { FormControl } from '../../../common/FormsControls/FormsControls';
 const Textarea = FormControl("textarea");
 const maxLength = maxLengthValidate(255);
 
-const SendMessageForm = (props) => {
+const SendMessageForm = ({handleSubmit}) => {
   return (
-    <form className={s.form} onSubmit={props.handleSubmit}>
+    <form className={s.form} onSubmit={handleSubmit}>
       <Field
         id="newPostText"
         name="newPostText"
         component={Textarea}
-        className={`textarea ${s.form__textarea}`}
+        classElement={`textarea ${s.form__textarea}`}
         placeholder='Что у вас нового?'
         validate={[required, maxLength]}
       />
