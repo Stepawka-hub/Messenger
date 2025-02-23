@@ -3,8 +3,9 @@ import avatar from '../../../assets/images/black.png';
 import Loader from '../../common/Loader/Loader';
 import ProfileStatus from './ProfileStatus/ProfileStatus';
 import ProfileInfoItem from './ProfileInfoItem/ProfileInfoItem';
+import InputFile from '../../common/InputFile/InputFile';
 
-const ProfileInfo = ({profile, status, updateUserStatus}) => {
+const ProfileInfo = ({ isOwner, profile, status, isUpdatingPhoto, updateUserStatus, updateUserPhoto }) => {
   if (!profile) {
     return <Loader />
   }
@@ -29,14 +30,29 @@ const ProfileInfo = ({profile, status, updateUserStatus}) => {
     github: profile.contacts.github || '-',
   }
 
+  const onSelectedPhoto = (evt) => {
+    const photo = evt.target.files;
+
+    if (photo.length) {
+      updateUserPhoto(photo[0]);
+    }
+  }
+
   return (
     <div className="profile-container">
       <div className="profile-info">
         <div className="profile-info__avatar">
-          <img src={profile.photos.small || avatar} alt="Avatar" />
+          <img src={profile?.photos?.large || avatar} alt="Avatar" />
+          {isOwner &&
+            <InputFile
+              className='profile-info__update-photo'
+              text='Сменить аватар'
+              disabled={isUpdatingPhoto}
+              callback={onSelectedPhoto}
+            />}
         </div>
 
-        <div>
+        <div className='profile-info__data'>
           <h2 className="profile-info__title">
             {profile.fullName || 'Имя пользователя'}
           </h2>
@@ -49,10 +65,10 @@ const ProfileInfo = ({profile, status, updateUserStatus}) => {
             />
             {
               Object.entries(profileInfo).map(([key, value], index) =>
-                <ProfileInfoItem 
-                  label={translations[key]} 
-                  value={value} 
-                  key={index} 
+                <ProfileInfoItem
+                  label={translations[key]}
+                  value={value}
+                  key={index}
                 />
               )
             }
@@ -64,11 +80,11 @@ const ProfileInfo = ({profile, status, updateUserStatus}) => {
         <h3 className='profile-contacts__title'>Контакты</h3>
         {
           Object.entries(profileContacts).map(([key, value], index) =>
-            <ProfileInfoItem 
+            <ProfileInfoItem
               contacts
-              label={key} 
-              value={value} 
-              key={index} 
+              label={key}
+              value={value}
+              key={index}
             />
           )
         }

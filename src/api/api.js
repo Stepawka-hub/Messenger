@@ -50,9 +50,16 @@ class ProfileAPI {
     return this.api.put(`profile/status`, {status});
   }
 
-  // updatePhoto = () => {
-  //   return this.api.put(`profile/photo`);
-  // }
+  updatePhoto = (photoFile) => {
+    const formData = new FormData();
+    formData.append('image', photoFile)
+    return this.api
+    .put(`profile/photo`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }).then(res => res.data);
+  }
 }
 
 class AuthAPI {

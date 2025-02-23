@@ -1,5 +1,5 @@
 import avatarBlack from "./../../assets/images/black.png";
-import { ADD_POST, DELETE_POST, SET_USER_PROFILE, SET_USER_STATUS } from './actionTypes';
+import { ADD_POST, DELETE_POST, SET_USER_PHOTO, SET_USER_PROFILE, SET_USER_STATUS, TOGGLE_IS_UPDATING_PHOTO } from './actionTypes';
 
 const initialState = {
   profile: null,
@@ -20,6 +20,7 @@ const initialState = {
       avatar: avatarBlack,
     },
   ],
+  isUpdatingPhoto: false
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -38,6 +39,14 @@ const profileReducer = (state = initialState, action) => {
 
     case SET_USER_STATUS: {
       return setUserStatus(state, action.status);
+    }
+
+    case SET_USER_PHOTO: {
+      return setUserPhoto(state, action.photos);
+    }
+
+    case TOGGLE_IS_UPDATING_PHOTO: {
+      return setIsUpdatingPhoto(state, action.isUpdate);
     }
 
     default:
@@ -78,5 +87,22 @@ const setUserStatus = (state, status) => {
     status,
   };
 };
+
+const setUserPhoto = (state, photos) => {
+  return {
+    ...state,
+    profile: {
+      ...state.profile,
+      photos
+    }
+  }
+}
+
+const setIsUpdatingPhoto = (state, isUpdatingPhoto) => {
+  return {
+    ...state,
+    isUpdatingPhoto
+  }
+}
 
 export default profileReducer;
