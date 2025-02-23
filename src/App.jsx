@@ -1,22 +1,28 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect }  from 'react';
+import React, { useEffect, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import "./App.css";
 import Navbar from './components/Navbar/Navbar';
-import Dialogs from './components/Dialogs/Dialogs';
-import News from './components/News/News';
 import UsersContainer from './components/Users/UsersContainer';
-import Music from './components/Music/Music';
-import Settings from './components/Settings/Settings';
-import ProfileContainer from './components/Profile/ProfileContainer';
 import Header from './components/Header/Header';
 import Login from './components/Login/Login';
+// import ProfileContainer from './components/Profile/ProfileContainer';
+import Preloader from './components/Preloader/Preloader';
+
 import withRouter from './utils/withRouter';
 import { initializeApp } from './redux/app/thunks';
-import Preloader from './components/Preloader/Preloader';
 import { getInitialized } from './redux/app/selectors';
+import Loader from './components/common/Loader/Loader';
+
+// Lazy загрузка
+const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
+const Dialogs = React.lazy(() => import('./components/Dialogs/Dialogs'));
+const News = React.lazy(() => import('./components/News/News'));
+const Music = React.lazy(() => import('./components/Music/Music'));
+const Settings = React.lazy(() => import('./components/Settings/Settings'));
+
 
 const App = () => {
   const dispatch = useDispatch();
@@ -28,24 +34,24 @@ const App = () => {
 
   return (
     !initialized ? <Preloader />
-    :
-    <div className="app-wrapper">
-      <Header />
-      <Navbar />
-      <div className="app-wrapper-content">
-        <Routes>
-
-          <Route path='/profile/:userId?' element={<ProfileContainer />} />
-          <Route path='/dialogs/*' element={<Dialogs />} />
-          <Route path='/news' element={<News />} />
-          <Route path='/users' element={<UsersContainer />} />
-          <Route path='/music' element={<Music />} />
-          <Route path='/settings' element={<Settings />} />
-          <Route path='/login' element={<Login />} />
-
-        </Routes>
+      :
+      <div className="app-wrapper">
+        <Header />
+        <Navbar />
+        <div className="app-wrapper-content">
+          <Suspense fallback={<Loader />}>
+            <Routes>
+              <Route path='/profile/:userId?' element={<ProfileContainer />} />
+              <Route path='/dialogs/*' element={<Dialogs />} />
+              <Route path='/news' element={<News />} />
+              <Route path='/users' element={<UsersContainer />} />
+              <Route path='/music' element={<Music />} />
+              <Route path='/settings' element={<Settings />} />
+              <Route path='/login' element={<Login />} />
+            </Routes>
+          </Suspense>
+        </div>
       </div>
-    </div>
   );
 };
 
