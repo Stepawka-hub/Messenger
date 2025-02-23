@@ -3,7 +3,7 @@ import ProfileInfo from './ProfileInfo/ProfileInfo';
 
 const Profile = ({isOwner, profile, status, isUpdatingPhoto, updateUserStatus, updateUserPhoto}) => {
   return (
-    <section className="profile">
+    <section>
       <ProfileInfo
         isOwner={isOwner}
         profile={profile}

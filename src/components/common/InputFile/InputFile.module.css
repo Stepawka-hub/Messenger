@@ -13,12 +13,10 @@
 	font-size: 1rem;
   font-weight: 400;
   color: var(--primary-color);
-  background-color: var(--orange-color);
+  background-color: var(--edit-btn-color);
   text-align: center;
 
-	transition: 
-    background-color 0.2s linear,
-    opacity 0.2s linear;
+	transition: all 0.2s ease-in;
 }
 
 .input {
@@ -32,10 +30,10 @@
  
 /* Hover/active */
 .inputFile:hover .text {
-	background-color: var(--lighten-orange-color);
+	transform: scale(1.05);
 }
 .inputFile:active .text {
-	opacity: 0.8;
+	opacity: 0.6;
 }
  
 /* Disabled */

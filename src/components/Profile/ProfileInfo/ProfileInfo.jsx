@@ -1,33 +1,25 @@
+import { useState } from 'react';
+
 import './ProfileInfo.css'
 import avatar from '../../../assets/images/black.png';
 import Loader from '../../common/Loader/Loader';
-import ProfileStatus from './ProfileStatus/ProfileStatus';
-import ProfileInfoItem from './ProfileInfoItem/ProfileInfoItem';
 import InputFile from '../../common/InputFile/InputFile';
+import ProfileData from './ProfileData/ProfileData';
+import ProfileContacts from './ProfileContacts/ProfileContacts';
+import Button from '../../common/Button/Button';
 
 const ProfileInfo = ({ isOwner, profile, status, isUpdatingPhoto, updateUserStatus, updateUserPhoto }) => {
-  if (!profile) {
-    return <Loader />
+  const [editMode, setEditMode] = useState(false);
+
+  if (!profile) return <Loader />
+
+  const activateEditMode = () => {
+    if (!isOwner) return;
+    setEditMode(true);
   }
 
-  const translations = {
-    aboutMe: 'Обо мне',
-    lookingForAJob: 'Ищу работу',
-    lookingForAJobDescription: 'Описание поиска работы'
-  };
-
-  const profileInfo = {
-    aboutMe: profile.aboutMe || 'Нет',
-    lookingForAJob: profile.lookingForAJob ? 'Да' : 'Нет',
-    lookingForAJobDescription: profile.lookingForAJobDescription || 'Нет',
-  }
-
-  const profileContacts = {
-    vk: profile.contacts.vk || '-',
-    facebook: profile.contacts.facebook || '-',
-    twitter: profile.contacts.twitter || '-',
-    instagram: profile.contacts.instagram || '-',
-    github: profile.contacts.github || '-',
+  const deactivateEditMode = () => {
+    setEditMode(false);
   }
 
   const onSelectedPhoto = (evt) => {
@@ -39,57 +31,60 @@ const ProfileInfo = ({ isOwner, profile, status, isUpdatingPhoto, updateUserStat
   }
 
   return (
-    <div className="profile-container">
+    <div className="profile">
       <div className="profile-info">
-        <div className="profile-info__avatar">
-          <img src={profile?.photos?.large || avatar} alt="Avatar" />
-          {isOwner &&
-            <InputFile
-              className='profile-info__update-photo'
-              text='Сменить аватар'
-              disabled={isUpdatingPhoto}
-              callback={onSelectedPhoto}
-            />}
+        <div className="profile-info__details">
+          <div className="profile-info__avatar">
+            <img src={profile?.photos?.large || avatar} alt="Avatar" />
+            {isOwner &&
+              <InputFile
+                className='profile-info__update-photo'
+                text='Сменить аватар'
+                disabled={isUpdatingPhoto}
+                callback={onSelectedPhoto}
+              />}
+          </div>
+
+          {
+            editMode ?
+              <ProfileDataForm /> :
+              <ProfileData
+                isOwner={isOwner}
+                profile={profile}
+                status={status}
+                updateUserStatus={updateUserStatus}
+              />
+          }
         </div>
 
-        <div className='profile-info__data'>
-          <h2 className="profile-info__title">
-            {profile.fullName || 'Имя пользователя'}
-          </h2>
-
-          <div className="profile-info__description">
-            <ProfileStatus
-              label='Статус: '
-              status={status}
-              updateUserStatus={updateUserStatus}
-            />
-            {
-              Object.entries(profileInfo).map(([key, value], index) =>
-                <ProfileInfoItem
-                  label={translations[key]}
-                  value={value}
-                  key={index}
-                />
-              )
-            }
-          </div>
+        <div className='profile-info__edit'>
+          <Button
+            text={editMode ? 'Сохранить' : 'Редактировать профиль'}
+            onClick={editMode ? deactivateEditMode : activateEditMode}
+          />
         </div>
       </div>
 
-      <div className='profile-contacts'>
-        <h3 className='profile-contacts__title'>Контакты</h3>
+      <div>
         {
-          Object.entries(profileContacts).map(([key, value], index) =>
-            <ProfileInfoItem
-              contacts
-              label={key}
-              value={value}
-              key={index}
-            />
-          )
+          editMode ?
+            <ProfileContactsForm /> :
+            <ProfileContacts contacts={profile.contacts} />
         }
       </div>
     </div>
+  );
+}
+
+const ProfileDataForm = () => {
+  return (
+    <></>
+  )
+}
+
+const ProfileContactsForm = () => {
+  return (
+    <></>
   );
 }
 
