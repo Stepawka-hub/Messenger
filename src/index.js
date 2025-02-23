@@ -11,18 +11,27 @@ import "./index.css";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
+  <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </BrowserRouter>
+
+  // STRICT MODE
   // <React.StrictMode>
-  //   <BrowserRouter>
+  //   <BrowserRouter basename={process.env.PUBLIC_URL}>
   //     <Provider store={store}>
   //       <App />
   //     </Provider>
   //   </BrowserRouter>
   // </React.StrictMode>
-  <BrowserRouter>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </BrowserRouter>
+
+  // DEPLOY TO GITHUB PAGES
+  // <HashRouter>
+  //   <Provider store={store}>
+  //     <App />
+  //   </Provider>
+  // </HashRouter>
 );
 
 reportWebVitals();
