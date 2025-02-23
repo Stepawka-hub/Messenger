@@ -1,0 +1,1 @@
+{"version":3,"file":"static/js/578.9e22deda.chunk.js","mappings":"0IAAA,MAQA,EARcA,KAEVC,EAAAA,EAAAA,KAAA,WAAAC,SAAS,S","sources":["components/Music/Music.jsx"],"sourcesContent":["const Music = () => {\r\n  return (\r\n    <section>\r\n      Music\r\n    </section>\r\n  );\r\n}\r\n\r\nexport default Music;"],"names":["Music","_jsx","children"],"sourceRoot":""}
