@@ -3,7 +3,6 @@ import { useState, useRef, useEffect } from 'react';
 
 import './ProfileInfo.css'
 import avatar from '../../../assets/images/black.png';
-import Loader from '../../common/Loader/Loader';
 import InputFile from '../../common/InputFile/InputFile';
 import ProfileData from './ProfileData/ProfileData';
 import ProfileEditForm from './ProfileEditForm/ProfileEditForm';
@@ -20,15 +19,14 @@ const ProfileInfo = ({ isOwner, profile, status, isUpdatingPhoto, ...props }) =>
   }
 
   const deactivateEditMode = () => {
-    if (!isOwner) return;
-    setEditMode(false);
+    if (editMode && isOwner) {
+      setEditMode(false);
+    }
   }
 
   useEffect(() => {
     deactivateEditMode();
   }, [profile])
-
-  if (!profile) return <Loader />
 
   const saveData = () => {
     if (editForm.current) {
@@ -114,11 +112,14 @@ const ProfileInfo = ({ isOwner, profile, status, isUpdatingPhoto, ...props }) =>
         </div>
 
         <div>
-          <Button
-            text={editMode ? 'Сохранить' : 'Редактировать профиль'}
-            className='profile-info__edit-btn'
-            onClick={editMode ? saveData : activateEditMode}
-          />
+          {
+            isOwner &&
+            <Button
+              text={editMode ? 'Сохранить' : 'Редактировать профиль'}
+              className='profile-info__edit-btn'
+              onClick={editMode ? saveData : activateEditMode}
+            />
+          }
           {
             editMode &&
             <Button

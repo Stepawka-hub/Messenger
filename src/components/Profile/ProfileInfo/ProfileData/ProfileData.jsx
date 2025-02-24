@@ -17,7 +17,7 @@ const ProfileData = ({ profile, isOwner, status, updateUserStatus }) => {
     },
     {
       label: 'Описание поиска работы',
-      value: getValue(profile.aboutMe)
+      value: getValue(profile.lookingForAJobDescription)
     },
   ];
 
