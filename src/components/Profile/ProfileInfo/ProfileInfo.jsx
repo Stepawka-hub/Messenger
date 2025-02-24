@@ -1,4 +1,5 @@
-import { useState, useRef } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useState, useRef, useEffect } from 'react';
 
 import './ProfileInfo.css'
 import avatar from '../../../assets/images/black.png';
@@ -13,8 +14,6 @@ const ProfileInfo = ({ isOwner, profile, status, isUpdatingPhoto, ...props }) =>
   const [editMode, setEditMode] = useState(false);
   const editForm = useRef(null);
 
-  if (!profile) return <Loader />
-
   const activateEditMode = () => {
     if (!isOwner) return;
     setEditMode(true);
@@ -24,6 +23,12 @@ const ProfileInfo = ({ isOwner, profile, status, isUpdatingPhoto, ...props }) =>
     if (!isOwner) return;
     setEditMode(false);
   }
+
+  useEffect(() => {
+    deactivateEditMode();
+  }, [profile])
+
+  if (!profile) return <Loader />
 
   const saveData = () => {
     if (editForm.current) {
@@ -57,7 +62,6 @@ const ProfileInfo = ({ isOwner, profile, status, isUpdatingPhoto, ...props }) =>
     }
 
     props.updateUserProfile(data);
-    deactivateEditMode();
   }
 
   const onSelectedPhoto = (evt) => {

@@ -6,6 +6,7 @@ import {
   setUserStatusAC,
 } from "./actions";
 import { getCurrentUserId } from "../auth/selectors";
+import { stopSubmit } from 'redux-form';
 
 export const getProfile = (userId) => async (dispatch) => {
   const data = await profileAPI.getProfile(userId);
@@ -41,5 +42,8 @@ export const updateUserProfile = (profileData) => async (dispatch, getState) => 
   const res = await profileAPI.updateProfile(profileData);
   if (res.resultCode === 0) {
     dispatch(getProfile(userId));
+  } else {
+    const message = res.messages.length > 0 ? res.messages[0] : 'Some error';
+    dispatch(stopSubmit('profile-edit', {_error: message}));
   }
 };
