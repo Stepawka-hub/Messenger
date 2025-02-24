@@ -1,19 +1,25 @@
 import ProfileInfoItem from '../ProfileInfoItem/ProfileInfoItem';
 import ProfileStatus from './ProfileStatus/ProfileStatus';
 import s from './ProfileData.module.css';
+import { getSafeValue } from '../../../../utils/helpers/valueHelpers';
+
+const getValue = getSafeValue('Нет');
 
 const ProfileData = ({ profile, isOwner, status, updateUserStatus }) => {
-  const translations = {
-    aboutMe: 'Обо мне',
-    lookingForAJob: 'Ищу работу',
-    lookingForAJobDescription: 'Описание поиска работы'
-  };
-
-  const profileInfo = {
-    aboutMe: profile.aboutMe || 'Нет',
-    lookingForAJob: profile.lookingForAJob ? 'Да' : 'Нет',
-    lookingForAJobDescription: profile.lookingForAJobDescription || 'Нет',
-  }
+  const profileInfo = [
+    {
+      label: 'Обо мне',
+      value: getValue(profile.aboutMe)
+    },
+    {
+      label: 'Ищу работу',
+      value: profile.lookingForAJob ? 'Да' : 'Нет'
+    },
+    {
+      label: 'Описание поиска работы',
+      value: getValue(profile.aboutMe)
+    },
+  ];
 
   return (
     <div className={s.profileData}>
@@ -29,10 +35,10 @@ const ProfileData = ({ profile, isOwner, status, updateUserStatus }) => {
           updateUserStatus={updateUserStatus}
         />
         {
-          Object.entries(profileInfo).map(([key, value], index) =>
+          profileInfo.map((item, index) =>
             <ProfileInfoItem
-              label={translations[key]}
-              value={value}
+              label={item.label}
+              value={item.value}
               key={index}
             />
           )

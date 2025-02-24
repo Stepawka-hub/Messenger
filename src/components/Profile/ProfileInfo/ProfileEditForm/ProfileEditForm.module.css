@@ -1,0 +1,30 @@
+.formFields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.fieldContainer {
+  flex: 0 0 30%;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+  line-height: 1.35;
+  margin-top: 0.25rem;
+}
+
+.element {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  color: var(--primary-color);
+  background-color: var(--theme-primary-color);
+}
+
+.label {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--lighten-orange-color);
+}

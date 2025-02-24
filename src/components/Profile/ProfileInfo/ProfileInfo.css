@@ -41,10 +41,16 @@
   margin-top: 0.75rem;
 }
 
-.profile-info__edit button {
+.profile-info__edit-btn,
+.profile-info__cancel-btn {
+  margin-left: 0.5rem;
   padding: 0.5rem 1rem;
   color: var(--primary-color);
   font-size: 1.1rem;
   font-weight: 500;
   background-color: var(--edit-btn-color);
+}
+
+.profile-info__cancel-btn {
+  background-color: var(--disabled-btn-color);
 }

@@ -1,15 +1,17 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 import './ProfileInfo.css'
 import avatar from '../../../assets/images/black.png';
 import Loader from '../../common/Loader/Loader';
 import InputFile from '../../common/InputFile/InputFile';
 import ProfileData from './ProfileData/ProfileData';
+import ProfileEditForm from './ProfileEditForm/ProfileEditForm';
 import ProfileContacts from './ProfileContacts/ProfileContacts';
 import Button from '../../common/Button/Button';
 
-const ProfileInfo = ({ isOwner, profile, status, isUpdatingPhoto, updateUserStatus, updateUserPhoto }) => {
+const ProfileInfo = ({ isOwner, profile, status, isUpdatingPhoto, ...props }) => {
   const [editMode, setEditMode] = useState(false);
+  const editForm = useRef(null);
 
   if (!profile) return <Loader />
 
@@ -19,15 +21,59 @@ const ProfileInfo = ({ isOwner, profile, status, isUpdatingPhoto, updateUserStat
   }
 
   const deactivateEditMode = () => {
+    if (!isOwner) return;
     setEditMode(false);
+  }
+
+  const saveData = () => {
+    if (editForm.current) {
+      editForm.current.submit();
+    }
+  }
+
+  const onSubmit = (formData) => {
+    const {
+      aboutMe, lookingForAJobDescription, fullName,
+      github, vk, facebook, instagram, twitter
+    } = formData;
+    const lookingForAJob = formData.lookingForAJob.toLowerCase() === 'да';
+
+    const data = {
+      userId: profile.userId,
+      aboutMe,
+      fullName,
+      lookingForAJob,
+      lookingForAJobDescription,
+      contacts: {
+        github,
+        vk,
+        facebook,
+        instagram,
+        twitter,
+        website: '',
+        youtube: '',
+        mainLink: '',
+      }
+    }
+
+    props.updateUserProfile(data);
+    deactivateEditMode();
   }
 
   const onSelectedPhoto = (evt) => {
     const photo = evt.target.files;
 
     if (photo.length) {
-      updateUserPhoto(photo[0]);
+      props.updateUserPhoto(photo[0]);
     }
+  }
+
+  const initialValues = {
+    fullName: profile.fullName,
+    aboutMe: profile.aboutMe,
+    lookingForAJobDescription: profile.lookingForAJobDescription,
+    lookingForAJob: profile.lookingForAJob ? 'Да' : 'Нет',
+    ...profile.contacts
   }
 
   return (
@@ -47,44 +93,45 @@ const ProfileInfo = ({ isOwner, profile, status, isUpdatingPhoto, updateUserStat
 
           {
             editMode ?
-              <ProfileDataForm /> :
+              <ProfileEditForm
+                profile={profile}
+                ref={editForm}
+                onSubmit={onSubmit}
+                initialValues={initialValues}
+              />
+              :
               <ProfileData
                 isOwner={isOwner}
                 profile={profile}
                 status={status}
-                updateUserStatus={updateUserStatus}
+                updateUserStatus={props.updateUserStatus}
               />
           }
         </div>
 
-        <div className='profile-info__edit'>
+        <div>
           <Button
             text={editMode ? 'Сохранить' : 'Редактировать профиль'}
-            onClick={editMode ? deactivateEditMode : activateEditMode}
+            className='profile-info__edit-btn'
+            onClick={editMode ? saveData : activateEditMode}
           />
+          {
+            editMode &&
+            <Button
+              text={'Отменить'}
+              className='profile-info__cancel-btn'
+              onClick={deactivateEditMode}
+            />
+          }
         </div>
       </div>
 
       <div>
         {
-          editMode ?
-            <ProfileContactsForm /> :
-            <ProfileContacts contacts={profile.contacts} />
+          !editMode && <ProfileContacts contacts={profile.contacts} />
         }
       </div>
     </div>
-  );
-}
-
-const ProfileDataForm = () => {
-  return (
-    <></>
-  )
-}
-
-const ProfileContactsForm = () => {
-  return (
-    <></>
   );
 }
 

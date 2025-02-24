@@ -1,7 +1,7 @@
 import MyPosts from './MyPosts/MyPosts';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 
-const Profile = ({isOwner, profile, status, isUpdatingPhoto, updateUserStatus, updateUserPhoto}) => {
+const Profile = ({ isOwner, profile, status, isUpdatingPhoto, ...props }) => {
   return (
     <section>
       <ProfileInfo
@@ -9,8 +9,9 @@ const Profile = ({isOwner, profile, status, isUpdatingPhoto, updateUserStatus, u
         profile={profile}
         status={status}
         isUpdatingPhoto={isUpdatingPhoto}
-        updateUserStatus={updateUserStatus}
-        updateUserPhoto={updateUserPhoto}
+        updateUserStatus={props.updateUserStatus}
+        updateUserPhoto={props.updateUserPhoto}
+        updateUserProfile={props.updateUserProfile}
       />
       <MyPosts />
     </section>

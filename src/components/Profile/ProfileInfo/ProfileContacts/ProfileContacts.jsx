@@ -1,14 +1,32 @@
+import { getSafeValue } from '../../../../utils/helpers/valueHelpers';
 import ProfileInfoItem from '../ProfileInfoItem/ProfileInfoItem'
 import s from './ProfileContacts.module.css';
 
+const getValue = getSafeValue('-');
+
 const ProfileContacts = ({ contacts }) => {
-  const profileContacts = {
-    vk: contacts.vk || '-',
-    facebook: contacts.facebook || '-',
-    twitter: contacts.twitter || '-',
-    instagram: contacts.instagram || '-',
-    github: contacts.github || '-',
-  }
+  const profileContacts = [
+    {
+      label: 'VK',
+      value: getValue(contacts.vk)
+    },
+    {
+      label: 'Facebook',
+      value: getValue(contacts.facebook)
+    },
+    {
+      label: 'Twitter',
+      value: getValue(contacts.twitter)
+    },
+    {
+      label: 'Instagram',
+      value: getValue(contacts.instagram)
+    },
+    {
+      label: 'GitHub',
+      value: getValue(contacts.github)
+    },
+  ]
 
   return (
     <div className={s.profileContacts}>
@@ -16,11 +34,11 @@ const ProfileContacts = ({ contacts }) => {
         Контакты
       </h3>
       {
-        Object.entries(profileContacts).map(([key, value], index) =>
+        profileContacts.map((item, index) =>
           <ProfileInfoItem
             contact
-            label={key}
-            value={value}
+            label={item.label}
+            value={item.value}
             key={index}
           />
         )

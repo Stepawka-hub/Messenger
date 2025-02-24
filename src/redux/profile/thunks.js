@@ -1,5 +1,11 @@
 import { profileAPI } from "../../api/api";
-import { setIsUpdatingPhotoAC, setUserPhotoAC, setUserProfileAC, setUserStatusAC } from "./actions";
+import {
+  setIsUpdatingPhotoAC,
+  setUserPhotoAC,
+  setUserProfileAC,
+  setUserStatusAC,
+} from "./actions";
+import { getCurrentUserId } from "../auth/selectors";
 
 export const getProfile = (userId) => async (dispatch) => {
   const data = await profileAPI.getProfile(userId);
@@ -27,4 +33,13 @@ export const updateUserPhoto = (photo) => async (dispatch) => {
   }
 
   dispatch(setIsUpdatingPhotoAC(false));
-}
+};
+
+export const updateUserProfile = (profileData) => async (dispatch, getState) => {
+  const userId = getCurrentUserId(getState());
+
+  const res = await profileAPI.updateProfile(profileData);
+  if (res.resultCode === 0) {
+    dispatch(getProfile(userId));
+  }
+};

@@ -60,6 +60,12 @@ class ProfileAPI {
       }
     }).then(res => res.data);
   }
+
+  updateProfile = (profileData) => {
+    return this.api
+    .put('profile', profileData)
+    .then(res => res.data);
+  }
 }
 
 class AuthAPI {

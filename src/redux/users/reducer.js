@@ -1,4 +1,4 @@
-import { updateObjectInArray } from '../../utils/objectHelpers';
+import { updateObjectInArray } from '../../utils/helpers/objectHelpers';
 import { 
   FOLLOW_TO_USER, 
   SET_CURRENT_PAGE, 

@@ -6,7 +6,7 @@ import { compose } from 'redux';
 import Profile from './Profile';
 import withRouter from '../../utils/withRouter';
 import withAuthRedirect from '../../utils/withAuthRedirect';
-import { getProfile, getUserStatus, updateUserPhoto, updateUserStatus } from '../../redux/profile/thunks';
+import { getProfile, getUserStatus, updateUserPhoto, updateUserProfile, updateUserStatus } from '../../redux/profile/thunks';
 import { getIsUpdatingPhoto, getProfileSelector, getStatusSelector } from '../../redux/profile/selectors';
 import { getCurrentUserId } from '../../redux/auth/selectors';
 
@@ -31,6 +31,10 @@ const ProfileContainer = (props) => {
     dispatch(updateUserPhoto(photo));
   }
 
+  const updateProfile = (profileData) => {
+    dispatch(updateUserProfile(profileData));
+  }
+
   return (
     <Profile
       isOwner={!props.router.params.userId}
@@ -39,6 +43,7 @@ const ProfileContainer = (props) => {
       isUpdatingPhoto={isUpdatingPhoto}
       updateUserStatus={updateStatus}
       updateUserPhoto={updatePhoto}
+      updateUserProfile={updateProfile}
     />
   );
 }
