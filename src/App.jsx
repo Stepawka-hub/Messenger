@@ -27,9 +27,18 @@ const Settings = React.lazy(() => import('./components/Settings/Settings'));
 const App = () => {
   const dispatch = useDispatch();
   const initialized = useSelector(getInitialized);
+
+  const catchAllUnhandledErrors = (promiseRejectionEvent) => {
+    console.error(promiseRejectionEvent);
+  }
  
   useEffect(() => {
     dispatch(initializeApp());
+    window.addEventListener('unhandledrejection', catchAllUnhandledErrors);
+
+    return () => {
+      window.removeEventListener('unhandledrejection', catchAllUnhandledErrors);
+    }
   }, []);
 
   return (

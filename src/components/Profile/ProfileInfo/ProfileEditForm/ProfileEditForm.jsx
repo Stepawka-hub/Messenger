@@ -1,4 +1,3 @@
-import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { FormControl, FormError } from '../../../common/FormsControls/FormsControls';
 import s from './ProfileEditForm.module.css';
@@ -7,7 +6,7 @@ import { isValidUrl, isValueValidate, required } from '../../../../utils/validat
 const Input = FormControl('input');
 const isValue = isValueValidate(['Да', 'Нет']);
 
-const ProfileEditForm = React.forwardRef(({ handleSubmit, error, ref }) => {
+const ProfileEditForm = ({ handleSubmit, ref, error }) => {
   const fields = [
     {
       label: 'Полное имя',
@@ -81,7 +80,7 @@ const ProfileEditForm = React.forwardRef(({ handleSubmit, error, ref }) => {
       </div>
     </form>
   );
-});
+};
 
 export default reduxForm({
   form: 'profile-edit'
