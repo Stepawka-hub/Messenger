@@ -7,7 +7,7 @@ import { required, minLengthValidate } from '../../../utils/validators/validator
 const Input = FormControl('input');
 const minLength = minLengthValidate(5);
 
-const LoginForm = ({handleSubmit, error}) => {
+const LoginForm = ({ handleSubmit, captchaUrl, error }) => {
   return (
     <div>
       <form className={s.form} onSubmit={handleSubmit}>
@@ -35,6 +35,26 @@ const LoginForm = ({handleSubmit, error}) => {
           validate={[required, minLength]}
         />
 
+        {
+          captchaUrl &&
+          <div className={s.captchaContainer}>
+            <Field
+              type="text"
+              component={Input}
+              name="captcha"
+              classField={s.form__field}
+              classElement={s.form__input}
+              placeholder='Captcha'
+              validate={[required]}
+            />
+            <img
+              className={s.captcha}
+              src={captchaUrl}
+              alt='Captcha'
+            />
+          </div>
+        }
+
         <div className={s.form__remember}>
           <span>Remember me</span>
           <Field
@@ -44,7 +64,7 @@ const LoginForm = ({handleSubmit, error}) => {
           />
         </div>
 
-        { error && <FormError error={error} /> }
+        {error && <FormError error={error} />}
 
         <Button
           text='Login'

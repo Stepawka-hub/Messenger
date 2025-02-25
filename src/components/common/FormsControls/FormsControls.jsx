@@ -1,6 +1,6 @@
 import s from './FormsControls.module.css'
 
-export const FormControl = (FormElement) => ({ input, meta, classElement, classField, ...props }) => {
+export const FormControl = (FormElement) => ({ input, meta, classElement, classField, initialValue, ...props }) => {
   const hasError = meta.touched && meta.error;
   const invalidClass = hasError ? s.element_invalid : '';
 
@@ -21,7 +21,7 @@ export const FormControl = (FormElement) => ({ input, meta, classElement, classF
   );
 };
 
-export const FormError = ({error}) => {
+export const FormError = ({ error }) => {
   return (
     <span className={s['form-error-text']}>
       {error}

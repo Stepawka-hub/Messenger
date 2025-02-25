@@ -1,0 +1,53 @@
+.inputFile {
+  display: inline-block;
+	position: relative;
+}
+
+.text {
+  display: inline-block;
+	position: relative;
+
+  border-radius: 1rem;
+  padding: 0.5rem;
+
+	font-size: 1rem;
+  font-weight: 400;
+  color: var(--primary-color);
+  background-color: var(--edit-btn-color);
+  text-align: center;
+
+	transition: all 0.2s ease-in;
+}
+
+.input {
+  display: block;
+	position: absolute;
+	opacity: 0;
+	width: 0;
+	height: 0;
+  z-index: -1;
+}
+ 
+/* Hover/active */
+.inputFile:hover .text {
+	transform: scale(1.05);
+}
+.inputFile:active .text {
+	opacity: 0.6;
+}
+ 
+/* Disabled */
+.inputFile:has(input:disabled) {
+  cursor: default;
+}
+
+.input:disabled {
+  pointer-events: none;
+}
+
+.input:disabled + .text,
+.inputFile:hover .input:disabled + .text,
+.inputFile:active .input:disabled + .text {
+	background-color: var(--disabled-btn-color);
+  opacity: 1;
+}

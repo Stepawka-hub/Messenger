@@ -1,11 +1,15 @@
-import { API_KEY, API_URL } from "../utils/constants";
+import { API_URL } from "../utils/constants";
 import axios from "axios";
 
-class UsersAPI {
+const API_KEY = process.env.REACT_APP_API_KEY;
+
+class BaseAPI {
   constructor(api) {
     this.api = api;
   }
+}
 
+class UsersAPI extends BaseAPI {
   getUsers = (currentPage = 1, pageSize = 10) => {
     return this.api
       .get(`users?page=${currentPage}&count=${pageSize}`)
@@ -23,19 +27,9 @@ class UsersAPI {
       .delete(`follow/${userid}`)
       .then((res) => res.data);
   }
-  
-  getProfile = (userid) => {
-    return this.api
-      .get(`profile/${userid}`)
-      .then((res) => res.data);
-  }
 }
 
-class ProfileAPI {
-  constructor(api) {
-    this.api = api;
-  }
-
+class ProfileAPI extends BaseAPI  {
   getProfile = (userid) => {
     return this.api
       .get(`profile/${userid}`)
@@ -50,16 +44,25 @@ class ProfileAPI {
     return this.api.put(`profile/status`, {status});
   }
 
-  // updatePhoto = () => {
-  //   return this.api.put(`profile/photo`);
-  // }
-}
-
-class AuthAPI {
-  constructor(api) {
-    this.api = api;
+  updatePhoto = (photoFile) => {
+    const formData = new FormData();
+    formData.append('image', photoFile)
+    return this.api
+    .put(`profile/photo`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }).then(res => res.data);
   }
 
+  updateProfile = (profileData) => {
+    return this.api
+    .put('profile', profileData)
+    .then(res => res.data);
+  }
+}
+
+class AuthAPI extends BaseAPI  {
   me = () => {
     return this.api
       .get('auth/me')
@@ -79,6 +82,14 @@ class AuthAPI {
   }
 }
 
+class SecurityAPI extends BaseAPI  {
+  getCaptchaURL = () => {
+    return this.api
+      .get('security/get-captcha-url')
+      .then(res => res.data)
+  }
+}
+
 const api = axios.create({
   baseURL: API_URL,
   withCredentials: true,
@@ -87,7 +98,7 @@ const api = axios.create({
   },
 });
 
-export const usersAPI = new UsersAPI(api);
 export const authAPI = new AuthAPI(api);
+export const securityAPI = new SecurityAPI(api);
+export const usersAPI = new UsersAPI(api);
 export const profileAPI = new ProfileAPI(api);
-

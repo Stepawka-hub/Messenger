@@ -1,5 +1,12 @@
 import { profileAPI } from "../../api/api";
-import { setUserProfileAC, setUserStatusAC } from "./actions";
+import {
+  setIsUpdatingPhotoAC,
+  setUserPhotoAC,
+  setUserProfileAC,
+  setUserStatusAC,
+} from "./actions";
+import { getCurrentUserId } from "../auth/selectors";
+import { stopSubmit } from 'redux-form';
 
 export const getProfile = (userId) => async (dispatch) => {
   const data = await profileAPI.getProfile(userId);
@@ -15,5 +22,28 @@ export const updateUserStatus = (status) => async (dispatch) => {
   const res = await profileAPI.updateUserStatus(status);
   if (res.data.resultCode === 0) {
     dispatch(setUserStatusAC(status));
+  }
+};
+
+export const updateUserPhoto = (photo) => async (dispatch) => {
+  dispatch(setIsUpdatingPhotoAC(true));
+
+  const res = await profileAPI.updatePhoto(photo);
+  if (res.resultCode === 0) {
+    dispatch(setUserPhotoAC(res.data.photos));
+  }
+
+  dispatch(setIsUpdatingPhotoAC(false));
+};
+
+export const updateUserProfile = (profileData) => async (dispatch, getState) => {
+  const userId = getCurrentUserId(getState());
+
+  const res = await profileAPI.updateProfile(profileData);
+  if (res.resultCode === 0) {
+    dispatch(getProfile(userId));
+  } else {
+    const message = res.messages.length > 0 ? res.messages[0] : 'Some error';
+    dispatch(stopSubmit('profile-edit', {_error: message}));
   }
 };
