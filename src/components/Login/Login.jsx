@@ -1,27 +1,35 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useDispatch, useSelector } from 'react-redux';
 
 import './Login.css';
 import LoginForm from './LoginForm/LoginForm';
-import { loginUser } from '../../redux/auth/thunks';
+import { getCaptcha, loginUser } from '../../redux/auth/thunks';
 import { Navigate } from 'react-router-dom';
-import { getIsAuth } from '../../redux/auth/selectors';
+import { getCaptchaUrl, getIsAuth } from '../../redux/auth/selectors';
+import { useEffect } from 'react';
 
 const Login = () => {
   const dispatch = useDispatch();
   const isAuth = useSelector(getIsAuth);
+  const captchaUrl = useSelector(getCaptchaUrl);
+
+  useEffect(() => {
+    dispatch(getCaptcha());
+  }, [])
+
+  if (isAuth) return <Navigate to='/profile' />;
 
   const onSubmit = (formData) => {
-    const { email, password, rememberMe } = formData;
-    dispatch(loginUser(email, password, rememberMe, true));
-  }
-
-  if (isAuth) {
-    return <Navigate to='/profile' />;
+    const { email, password, rememberMe, captcha } = formData;
+    dispatch(loginUser(email, password, rememberMe, captcha));
   }
 
   return (
     <section className='login'>
-      <LoginForm onSubmit={onSubmit} />
+      <LoginForm 
+        captchaUrl={captchaUrl}
+        onSubmit={onSubmit} 
+      />
     </section>
   )
 }

@@ -1,4 +1,4 @@
-import { SET_USER_DATA, TOGGLE_IS_LOADING } from './actionTypes';
+import { SET_CAPTCHA_URL, SET_USER_DATA, TOGGLE_IS_LOADING } from './actionTypes';
 
 const initialState = {
   id: null,
@@ -7,6 +7,7 @@ const initialState = {
   photos: null,
   isLoading: false,
   isAuth: false,
+  captchaUrl: null
 };
 
 const authReducer = (state = initialState, action) => {
@@ -17,6 +18,10 @@ const authReducer = (state = initialState, action) => {
 
     case TOGGLE_IS_LOADING: {
       return setLoading(state, action.isLoading);
+    }
+
+    case SET_CAPTCHA_URL: {
+      return setCaptchaUrl(state, action.captchaUrl);
     }
 
     default:
@@ -33,5 +38,10 @@ const setLoading = (state, isLoading) => ({
   ...state,
   isLoading,
 });
+
+const setCaptchaUrl = (state, captchaUrl) => ({
+  ...state,
+  captchaUrl
+})
 
 export default authReducer;
