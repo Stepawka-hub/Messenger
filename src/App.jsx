@@ -13,9 +13,10 @@ import Preloader from './components/Preloader/Preloader';
 
 import withRouter from './utils/withRouter';
 import { initializeApp } from './redux/app/thunks';
-import { getInitialized } from './redux/app/selectors';
+import { getInitialized, getModal } from './redux/app/selectors';
 import Loader from './components/common/Loader/Loader';
 import NotFound from './components/NotFound/NotFound';
+import ModalError from './components/common/ModalError/ModalError';
 
 // Lazy загрузка
 const Dialogs = React.lazy(() => import('./components/Dialogs/Dialogs'));
@@ -27,11 +28,12 @@ const Settings = React.lazy(() => import('./components/Settings/Settings'));
 const App = () => {
   const dispatch = useDispatch();
   const initialized = useSelector(getInitialized);
+  const modal = useSelector(getModal);
 
   const catchAllUnhandledErrors = (promiseRejectionEvent) => {
     console.error(promiseRejectionEvent);
   }
- 
+
   useEffect(() => {
     dispatch(initializeApp());
     window.addEventListener('unhandledrejection', catchAllUnhandledErrors);
@@ -44,7 +46,13 @@ const App = () => {
   return (
     !initialized ? <Preloader />
       :
-      <div className="app-wrapper">
+      <div className={`app-wrapper ${modal.isOpen && 'locked'}`}>
+        <ModalError
+          isOpen={modal.isOpen}
+          title={modal.title}
+          text={modal.text}
+          delay={modal.delay}
+        />
         <Header />
         <Navbar />
         <div className="app-wrapper-content">

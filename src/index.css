@@ -16,6 +16,10 @@ code {
     monospace;
 }
 
+.locked {
+  overflow: hidden;
+}
+
 .avatar {
   width: 3rem;
   height: 3rem;
