@@ -7,21 +7,34 @@ import {
 } from "./actions";
 import { getCurrentUserId } from "../auth/selectors";
 import { stopSubmit } from 'redux-form';
+import { handleError } from '../../utils/helpers/errorsHelpers';
 
-export const getProfile = (userId) => async (dispatch) => {
-  const data = await profileAPI.getProfile(userId);
-  dispatch(setUserProfileAC(data));
+export const getProfile = (userId, navigate) => async (dispatch) => {
+  try {
+    const data = await profileAPI.getProfile(userId);
+    dispatch(setUserProfileAC(data));
+  } catch(err) {
+    navigate('/profile');
+    handleError('Произошла ошибка!', 'Некорректный профиль!', 5000)(dispatch);
+  }
 };
 
-export const getUserStatus = (userId) => async (dispatch) => {
-  const data = await profileAPI.getUserStatus(userId);
-  dispatch(setUserStatusAC(data.data));
+export const getUserStatus = (userId, navigate) => async (dispatch) => {
+  try {
+    const data = await profileAPI.getUserStatus(userId);
+    dispatch(setUserStatusAC(data.data));
+  } catch(err) {
+    navigate('/profile');
+    handleError('Произошла ошибка!', 'Некорректный профиль!', 5000)(dispatch);
+  }
 };
 
 export const updateUserStatus = (status) => async (dispatch) => {
   const res = await profileAPI.updateUserStatus(status);
   if (res.data.resultCode === 0) {
     dispatch(setUserStatusAC(status));
+  } else {
+    handleError('Произошла ошибка!', 'Слишком длинный статус!')(dispatch);
   }
 };
 

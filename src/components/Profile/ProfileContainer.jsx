@@ -9,9 +9,11 @@ import withAuthRedirect from '../../utils/withAuthRedirect';
 import { getProfile, getUserStatus, updateUserPhoto, updateUserProfile, updateUserStatus } from '../../redux/profile/thunks';
 import { getIsUpdatingPhoto, getProfileSelector, getStatusSelector } from '../../redux/profile/selectors';
 import { getCurrentUserId } from '../../redux/auth/selectors';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileContainer = (props) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const profile = useSelector(getProfileSelector);
   const status = useSelector(getStatusSelector);
   const currentUserId = useSelector(getCurrentUserId);
@@ -19,8 +21,8 @@ const ProfileContainer = (props) => {
   const userId = props.router.params.userId || currentUserId;
 
   useEffect(() => {
-    dispatch(getProfile(userId));
-    dispatch(getUserStatus(userId));
+    dispatch(getProfile(userId, navigate));
+    dispatch(getUserStatus(userId, navigate));
   }, [props.router.params.userId]);
 
   const updateStatus = (status) => {
