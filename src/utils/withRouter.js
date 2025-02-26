@@ -6,7 +6,6 @@ import { useNavigate, useLocation, useParams } from 'react-router-dom';
 
   Функция создаёт оболочку (функциональную компоненту) над нашей классовой компонентой.
   И в нашу новую оболочку уже передаётся хук.
-
 */
 function withRouter(Component) {
   const ComponentWithRouterProp = (props) => {

@@ -8,10 +8,12 @@ import { sendMessageAC } from '../../redux/dialogs/actions';
 import withAuthRedirect from '../../utils/withAuthRedirect';
 import SendMessageForm from './SendMessageForm/SendMessageForm';
 import { getDialogsPage } from '../../redux/dialogs/selectors';
+import useTitle from '../../hooks/useTitle';
 
 const Dialogs = () => {
   const dispatch = useDispatch();
   const dialogsPage = useSelector(getDialogsPage);
+  useTitle('Messages');
 
   const dialogsElements = dialogsPage.dialogs.map(dialog =>
     <DialogItem dialog={dialog} key={dialog.dialogid} />)
