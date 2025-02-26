@@ -1,0 +1,10 @@
+.news {
+  margin-top: 3rem;
+}
+
+.news__title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--title-color);
+  text-align: center;
+}

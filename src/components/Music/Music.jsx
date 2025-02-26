@@ -1,13 +1,20 @@
 import useTitle from '../../hooks/useTitle';
+import s from './Music.module.css';
+
+import Loader from '../common/Loader/Loader';
+import withAuthRedirect from '../../utils/withAuthRedirect';
 
 const Music = () => {
   useTitle('Music');
 
   return (
-    <section>
-      Music
+    <section className={s.music}>
+      <h2 className={s.music__title}>
+        Здесь пока нет никакой музыки...
+      </h2>
+      <Loader />
     </section>
   );
 }
 
-export default Music;
+export default withAuthRedirect(Music);
