@@ -36,21 +36,21 @@ const initialState = {
       userid: 1,
       username: "Stepawka",
       avatar: avatarBlack,
-      text: "Hello!",
+      text: "Привет!",
     },
     {
       msgid: 2,
       userid: 2,
       username: "Maxim",
       avatar: avatarOrange,
-      text: "How are you?",
+      text: "*Какое-то сообщение*",
     },
     {
       msgid: 3,
       userid: 1,
       username: "Stepawka",
       avatar: avatarBlack,
-      text: "I`m fine, thank you!",
+      text: "*Какой-то классный ответ*",
     },
   ]
 }
