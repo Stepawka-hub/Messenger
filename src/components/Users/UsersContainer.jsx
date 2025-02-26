@@ -14,6 +14,7 @@ import { getUsers, followToUser, unfollowFromUser } from '../../redux/users/thun
 import withAuthRedirect from '../../utils/withAuthRedirect';
 
 import Users from './Users';
+import useTitle from '../../hooks/useTitle';
 
 const UsersContainer = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,8 @@ const UsersContainer = () => {
   const followingInProgress = useSelector(getFollowingInProgress);
   const currentPage = useSelector(getCurrentPage);
   const pageSize = useSelector(getPageSize);
+
+  useTitle('Find friends');
 
   useEffect(() => {
     dispatch(getUsers(currentPage, pageSize));

@@ -10,84 +10,78 @@ class BaseAPI {
 }
 
 class UsersAPI extends BaseAPI {
-  getUsers = (currentPage = 1, pageSize = 10) => {
-    return this.api
-      .get(`users?page=${currentPage}&count=${pageSize}`)
-      .then((res) => res.data);
-  }
-  
-  followUser = (userid) => {
-    return this.api
-      .post(`follow/${userid}`)
-      .then((res) => res.data);
-  }
-  
-  unfollowUser = (userid) => {
-    return this.api
-      .delete(`follow/${userid}`)
-      .then((res) => res.data);
-  }
+  getUsers = async (currentPage = 1, pageSize = 10) => {
+    const { data } = await this.api.get(`users?page=${currentPage}&count=${pageSize}`);
+    return data;
+  };
+
+  followUser = async (userid) => {
+    const { data } = await this.api.post(`follow/${userid}`);
+    return data;
+  };
+
+  unfollowUser = async (userid) => {
+    const { data } = await this.api.delete(`follow/${userid}`);
+    return data;
+  };
 }
 
-class ProfileAPI extends BaseAPI  {
-  getProfile = (userid) => {
-    return this.api
-      .get(`profile/${userid}`)
-      .then((res) => res.data);
+class ProfileAPI extends BaseAPI {
+  getProfile = async (userid) => {
+    const { data } = await this.api.get(`profile/${userid}`);
+    return data;
+  };
+
+  getUserStatus = async (userid) => {
+    return await this.api.get(`profile/status/${userid}`);
   }
 
-  getUserStatus = (userid) => {
-    return this.api.get(`profile/status/${userid}`);
-  }
+  updateUserStatus = async (status) => {
+    return await this.api.put(`profile/status`, { status });
+  };
 
-  updateUserStatus = (status) => {
-    return this.api.put(`profile/status`, {status});
-  }
-
-  updatePhoto = (photoFile) => {
+  updatePhoto = async (photoFile) => {
     const formData = new FormData();
-    formData.append('image', photoFile)
-    return this.api
-    .put(`profile/photo`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    }).then(res => res.data);
-  }
+    formData.append("image", photoFile);
+    
+    const { data } = await this.api
+      .put(`profile/photo`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
-  updateProfile = (profileData) => {
-    return this.api
-    .put('profile', profileData)
-    .then(res => res.data);
-  }
+    return data;
+  };
+
+  updateProfile = async (profileData) => {
+    const { data } = await this.api.put("profile", profileData);
+    return data;
+  };
 }
 
-class AuthAPI extends BaseAPI  {
-  me = () => {
-    return this.api
-      .get('auth/me')
-      .then((res) => res.data);
-  }
+class AuthAPI extends BaseAPI {
+  me = async () => {
+    const { data } = await this.api.get("auth/me");
+    return data;
+  };
 
-  login = (formData) => {
-    return this.api
-      .post('auth/login', {...formData})
-      .then((res) => res.data);
-  }
+  login = async (formData) => {
+    const { data } = await this.api.post("auth/login", { ...formData });
+    return data;
+  };
 
-  logout = () => {
-    return this.api
-      .delete('auth/login')
-      .then((res) => res.data);
-  }
+  logout = async () => {
+    const { data } = await this.api.delete("auth/login");
+    return data;
+  };
 }
 
-class SecurityAPI extends BaseAPI  {
-  getCaptchaURL = () => {
-    return this.api
-      .get('security/get-captcha-url')
-      .then(res => res.data)
-  }
+class SecurityAPI extends BaseAPI {
+  getCaptchaURL = async () => {
+    const { data } = await this.api.get("security/get-captcha-url");
+    return data;
+  };
 }
 
 const api = axios.create({

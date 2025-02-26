@@ -7,11 +7,14 @@ import { getCaptcha, loginUser } from '../../redux/auth/thunks';
 import { Navigate } from 'react-router-dom';
 import { getCaptchaUrl, getIsAuth } from '../../redux/auth/selectors';
 import { useEffect } from 'react';
+import useTitle from '../../hooks/useTitle';
 
 const Login = () => {
   const dispatch = useDispatch();
   const isAuth = useSelector(getIsAuth);
   const captchaUrl = useSelector(getCaptchaUrl);
+
+  useTitle('Login');
 
   useEffect(() => {
     dispatch(getCaptcha());

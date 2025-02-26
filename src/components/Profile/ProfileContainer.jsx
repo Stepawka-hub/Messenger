@@ -10,6 +10,7 @@ import { getProfile, getUserStatus, updateUserPhoto, updateUserProfile, updateUs
 import { getIsUpdatingPhoto, getProfileSelector, getStatusSelector } from '../../redux/profile/selectors';
 import { getCurrentUserId } from '../../redux/auth/selectors';
 import { useNavigate } from 'react-router-dom';
+import useTitle from '../../hooks/useTitle';
 
 const ProfileContainer = (props) => {
   const dispatch = useDispatch();
@@ -18,12 +19,14 @@ const ProfileContainer = (props) => {
   const status = useSelector(getStatusSelector);
   const currentUserId = useSelector(getCurrentUserId);
   const isUpdatingPhoto = useSelector(getIsUpdatingPhoto);
-  const userId = props.router.params.userId || currentUserId;
+  const userId = props.router.params.userId || currentUserId; 
 
   useEffect(() => {
     dispatch(getProfile(userId, navigate));
     dispatch(getUserStatus(userId, navigate));
   }, [props.router.params.userId]);
+
+  useTitle(profile?.fullName, profile);
 
   const updateStatus = (status) => {
     dispatch(updateUserStatus(status));
