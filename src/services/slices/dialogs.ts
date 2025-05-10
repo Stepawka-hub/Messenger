@@ -1,6 +1,4 @@
-import avatarBlack from "./../../assets/images/black.png";
-import avatarOrange from "./../../assets/images/avatar_orange.jpg";
-import { SEND_MESSAGE } from './actionTypes';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   dialogs: [
@@ -52,34 +50,36 @@ const initialState = {
       avatar: avatarBlack,
       text: "*Какой-то классный ответ*",
     },
-  ]
-}
+  ],
+};
 
-const dialogsReducer = (state = initialState, action) => { 
-  switch (action.type) {
-    case SEND_MESSAGE: {
-      return sendMessage(state, action.newMessageText);
-    }
+const dialogsSlice = createSlice({
+  name: "dialogs",
+  initialState,
+  reducers: {
+    sendMessage: (state, newMessageText) => {
+      if (!newMessageText) return state;
 
-    default: return state;
-  }
-}
+      const message = {
+        msgid: state.messages.length + 1,
+        userid: 1,
+        username: "Stepawka",
+        avatar: avatarBlack,
+        text: newMessageText,
+      };
 
-const sendMessage = (state, newMessageText) => {
-  if (!newMessageText) return state;
+      return {
+        ...state,
+        messages: [...state.messages, message],
+      };
+    },
+  },
+  selectors: {
+    getInitializedSelector: (state) => state.initialized,
+    getModalSelector: (state) => state.modal,
+  },
+});
 
-  const message = {
-    msgid: state.messages.length + 1,
-    userid: 1,
-    username: "Stepawka",
-    avatar: avatarBlack,
-    text: newMessageText,
-  };
-
-  return {
-    ...state,
-    messages: [...state.messages, message]
-  };
-}
-
-export default dialogsReducer;
+export const reducer = dialogsSlice.reducer;
+export const { getInitializedSelector, getModalSelector } =
+  dialogsSlice.selectors;

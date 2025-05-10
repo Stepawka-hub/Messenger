@@ -1,13 +1,9 @@
-import { profileAPI } from "../../api/api";
-import {
-  setIsUpdatingPhotoAC,
-  setUserPhotoAC,
-  setUserProfileAC,
-  setUserStatusAC,
-} from "./actions";
-import { getCurrentUserId } from "../auth/selectors";
-import { stopSubmit } from 'redux-form';
-import { handleError } from '../../utils/helpers/errorsHelpers';
+export const ADD_POST = "PROFILE/ADD-POST";
+export const DELETE_POST = "PROFILE/DELETE-POST";
+export const SET_USER_PROFILE = "PROFILE/SET-USER-PROFILE";
+export const SET_USER_STATUS = "PROFILE/SET-USER-STATUS";
+export const SET_USER_PHOTO = "PROFILE/SET-USER-PHOTO";
+export const TOGGLE_IS_UPDATING_PHOTO = "PROFILE/TOGGLE-IS-UPDATING-PHOTO";
 
 export const getProfile = (userId, navigate) => async (dispatch) => {
   try {

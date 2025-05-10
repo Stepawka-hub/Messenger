@@ -4,15 +4,21 @@ import {
   useSelector as selectorHook,
   TypedUseSelectorHook,
 } from "react-redux";
+import { reducer as appReducer } from "@slices/app";
+import { reducer as usersReducer } from "@slices/users";
+import { reducer as profileReducer } from "@slices/profile";
+import { reducer as friendsReducer } from "@slices/friends";
+import { reducer as authReducer } from "@slices/auth";
+import { reducer as dialogsReducer } from "@slices/dialogs";
 
 const rootReducer = combineReducers({
   app: appReducer,
   auth: authReducer,
   profilePage: profileReducer,
   dialogsPage: dialogsReducer,
-  sidebar: sidebarReducer,
+  friends: friendsReducer,
   usersPage: usersReducer,
-  form: formReducer,
+  // form: formReducer,
 });
 
 export const store = configureStore({

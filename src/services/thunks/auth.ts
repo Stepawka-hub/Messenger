@@ -1,6 +1,6 @@
-import { stopSubmit } from 'redux-form';
-import { authAPI, profileAPI, securityAPI } from "../../api/api";
-import { setAuthUserDataAC, setCaptchaUrlAC, setLoadingAC } from './actions';
+export const SET_USER_DATA = "AUTH/SET-USER-DATA";
+export const TOGGLE_IS_LOADING = "AUTH/TOGGLE-IS-LOADING";
+export const SET_CAPTCHA_URL = "AUTH/SET-CAPTCHA-URL";
 
 export const getAuthUserData = () => async (dispatch) => {
   dispatch(setLoadingAC(true));

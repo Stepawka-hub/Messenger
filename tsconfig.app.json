@@ -10,7 +10,7 @@
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
+    "verbatimModuleSyntax": false,
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
@@ -35,6 +35,7 @@
       "@actions/*": ["src/services/actions/*"],
       "@selectors/*": ["src/services/selectors/*"],
       "@thunks/*": ["src/services/thunks/*"],
+      "@api": ["src/utils/api/api.ts"],
       "@utils/*": ["src/utils/*"],
       "@store": ["src/services/store/store.ts"]
     }

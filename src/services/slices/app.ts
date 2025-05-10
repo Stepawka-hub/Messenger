@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { TAppState } from "./types";
+import { TAppState } from "./types";
 import { initializeApp } from "@thunks/app";
 
 const initialState: TAppState = {
@@ -38,7 +38,7 @@ const appSlice = createSlice({
       .addCase(initializeApp.fulfilled, (state) => {
         state.initialized = true;
       })
-      .addCase(initializeApp.pending, (state) => {
+      .addCase(initializeApp.rejected, (state) => {
         state.initialized = false;
       });
   },
