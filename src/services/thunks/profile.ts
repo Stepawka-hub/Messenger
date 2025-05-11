@@ -1,58 +1,81 @@
-export const ADD_POST = "PROFILE/ADD-POST";
-export const DELETE_POST = "PROFILE/DELETE-POST";
-export const SET_USER_PROFILE = "PROFILE/SET-USER-PROFILE";
-export const SET_USER_STATUS = "PROFILE/SET-USER-STATUS";
-export const SET_USER_PHOTO = "PROFILE/SET-USER-PHOTO";
-export const TOGGLE_IS_UPDATING_PHOTO = "PROFILE/TOGGLE-IS-UPDATING-PHOTO";
+import { profileAPI, SUCCESS_CODE } from "@api";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { RootState } from "@store";
+import { TPhotos, TProfile } from "src/types";
 
-export const getProfile = (userId, navigate) => async (dispatch) => {
-  try {
-    const data = await profileAPI.getProfile(userId);
-    dispatch(setUserProfileAC(data));
-  } catch(err) {
-    navigate('/profile');
-    handleError('Произошла ошибка!', 'Некорректный профиль!', 5000)(dispatch);
+const GET_PROFILE = "profile/get";
+const UPDATE_PROFILE = "profile/update";
+const GET_STATUS = "profile/get-status";
+const UPDATE_STATUS = "profile/update-status";
+const UPDATE_PHOTO = "profile/update-photo";
+
+export const getProfileAsync = createAsyncThunk<TProfile, number>(
+  GET_PROFILE,
+  async (userId, { rejectWithValue }) => {
+    try {
+      const profile = await profileAPI.getProfile(userId);
+      return profile;
+    } catch (err) {
+      return rejectWithValue(err || "Failed to get profile");
+    }
   }
-};
+);
 
-export const getUserStatus = (userId, navigate) => async (dispatch) => {
-  try {
-    const data = await profileAPI.getUserStatus(userId);
-    dispatch(setUserStatusAC(data.data));
-  } catch(err) {
-    navigate('/profile');
-    handleError('Произошла ошибка!', 'Некорректный профиль!', 5000)(dispatch);
+export const getUserStatusAsync = createAsyncThunk<string, number>(
+  GET_STATUS,
+  async (userId, { rejectWithValue }) => {
+    try {
+      const status = await profileAPI.getUserStatus(userId);
+      return status;
+    } catch (err) {
+      return rejectWithValue(err || "Failed to get status");
+    }
   }
-};
+);
 
-export const updateUserStatus = (status) => async (dispatch) => {
-  const res = await profileAPI.updateUserStatus(status);
-  if (res.data.resultCode === 0) {
-    dispatch(setUserStatusAC(status));
-  } else {
-    handleError('Произошла ошибка!', 'Слишком длинный статус!')(dispatch);
+export const updateProfileStatusAsync = createAsyncThunk<string, string>(
+  UPDATE_STATUS,
+  async (status, { rejectWithValue }) => {
+    const { resultCode, messages } = await profileAPI.updateUserStatus(status);
+    if (resultCode === SUCCESS_CODE) {
+      return status;
+    }
+
+    return rejectWithValue(messages[0] || "Failed to update profile status");
   }
-};
+);
 
-export const updateUserPhoto = (photo) => async (dispatch) => {
-  dispatch(setIsUpdatingPhotoAC(true));
+export const updateProfilePhotoAsync = createAsyncThunk<TPhotos, File>(
+  UPDATE_PHOTO,
+  async (photo, { rejectWithValue }) => {
+    const { data, messages, resultCode } = await profileAPI.updatePhoto(photo);
+    if (resultCode === SUCCESS_CODE) {
+      return data.photos;
+    }
 
-  const res = await profileAPI.updatePhoto(photo);
-  if (res.resultCode === 0) {
-    dispatch(setUserPhotoAC(res.data.photos));
+    return rejectWithValue(messages[0] || "Failed to update profile photo");
   }
+);
 
-  dispatch(setIsUpdatingPhotoAC(false));
-};
+export const updateProfileAsync = createAsyncThunk<void, TProfile>(
+  UPDATE_PROFILE,
+  async (profileData, { dispatch, rejectWithValue, getState }) => {
+    const state = getState() as RootState;
+    const userId = state.auth.user?.id;
 
-export const updateUserProfile = (profileData) => async (dispatch, getState) => {
-  const userId = getCurrentUserId(getState());
+    const { messages, resultCode } = await profileAPI.updateProfile(
+      profileData
+    );
+    if (resultCode === SUCCESS_CODE && userId) {
+      dispatch(getProfileAsync(userId));
+      return;
+    }
 
-  const res = await profileAPI.updateProfile(profileData);
-  if (res.resultCode === 0) {
-    dispatch(getProfile(userId));
-  } else {
-    const message = res.messages.length > 0 ? res.messages[0] : 'Some error';
-    dispatch(stopSubmit('profile-edit', {_error: message}));
+    return rejectWithValue(messages[0] || "Failed to update profile");
+
+    // else {
+    //   const message = res.messages.length > 0 ? res.messages[0] : "Some error";
+    //   dispatch(stopSubmit("profile-edit", { _error: message }));
+    // }
   }
-};
+);

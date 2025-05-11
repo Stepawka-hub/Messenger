@@ -1,5 +1,5 @@
-import { openModalAC } from '../../redux/app/actions';
+// import { setIsOpenModal } from '@slices/app';
 
-export const handleError = (errorTitle, errorText, delay) => (dispatch) => {
-  dispatch(openModalAC(errorTitle, errorText, delay));
-};
+// export const handleError = (dispatch, errorTitle, errorText, delay) => {
+//   dispatch(setIsOpenModal(errorTitle, errorText, delay));
+// };

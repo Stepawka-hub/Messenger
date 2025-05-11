@@ -55,7 +55,7 @@ class ProfileAPI extends BaseAPI {
 
   updatePhoto = async (
     photoFile: File
-  ): Promise<TResponseWithData<TPhotos>> => {
+  ): Promise<TResponseWithData<{ photos: TPhotos }>> => {
     const formData = new FormData();
     formData.append("image", photoFile);
 
