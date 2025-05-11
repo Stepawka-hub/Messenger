@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { TAppState } from "./types";
 import { initializeApp } from "@thunks/app";
 
@@ -16,14 +16,8 @@ const appSlice = createSlice({
   name: "app",
   initialState,
   reducers: {
-    initializedSuccess: (state) => {
-      state.initialized = true;
-    },
-    openModal: (state) => {
-      state.modal.isOpen = true;
-    },
-    closeModal: (state) => {
-      state.modal.isOpen = false;
+    setIsOpenModal: (state, { payload }: PayloadAction<boolean>) => {
+      state.modal.isOpen = payload;
     },
   },
   selectors: {
@@ -46,3 +40,4 @@ const appSlice = createSlice({
 
 export const reducer = appSlice.reducer;
 export const { getInitializedSelector, getModalSelector } = appSlice.selectors;
+export const { setIsOpenModal } = appSlice.actions;

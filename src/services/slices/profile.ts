@@ -3,26 +3,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getUsersAsync } from "@thunks/users";
 import { TGetUsersData } from "@utils/api/types";
 import { TProfileState } from "./types";
+import { mockPosts } from '@utils/mock';
 
 const initialState: TProfileState = {
   profile: null,
   status: "Нет",
-  posts: [
-    {
-      postid: 1,
-      userid: 1,
-      message: "Привет! - Post 1",
-      username: "Stepawka",
-      avatar: avatarBlack,
-    },
-    {
-      postid: 2,
-      userid: 1,
-      message: "Привет! - Post 2",
-      username: "Stepawka",
-      avatar: avatarBlack,
-    },
-  ],
+  posts: [...mockPosts],
   isUpdatingPhoto: false,
 };
 
@@ -30,6 +16,7 @@ const profileSlice = createSlice({
   name: "profile",
   initialState,
   reducers: {
+    
         case ADD_POST: {
           return addPost(state, action.newPostText);
         }

@@ -1,18 +1,23 @@
-export type TUserId = {
-  id: number;
-};
+export type TUserId = number;
 
-export type TUser = TUserId & {
+export type TUser = {
+  id: TUserId;
   name: string;
   status?: string;
 };
 
-export type TAuthUserData = TUserId & {
+export type TAuthUserData = {
+  id: TUserId;
   login: string;
   email: string;
 };
 
-export type TProfile = TUserId & {
+export type TUserData = TAuthUserData & {
+  photos: TPhotos;
+}
+
+export type TProfile = {
+  id: TUserId;
   lookingForAJob: boolean;
   lookingForAJobDescription: string;
   fullName: string;
@@ -32,8 +37,9 @@ export type TProfile = TUserId & {
 export type TPhotos = {
   small: string | null;
   large: string | null;
-}
+};
 
+//
 export type TModal = {
   title: string;
   text: string;
@@ -46,10 +52,27 @@ export type TPagination = {
   pageSize: number;
 };
 
+//
 export type TPost = {
-  postid: number;
-  userid: number;
+  id: number;
+  userid: TUserId;
   message: string;
   username: string;
   avatar: string;
 };
+
+export type TMessage = {
+  id: number;
+  userid: TUserId;
+  username: string;
+  avatar: string;
+  text: string;
+};
+
+export type TDialog = {
+  id: number;
+  username: string;
+  avatar: string;
+};
+
+export type TFriend = TDialog;

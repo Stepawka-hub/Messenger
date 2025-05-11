@@ -1,52 +1,67 @@
-export const SET_USER_DATA = "AUTH/SET-USER-DATA";
-export const TOGGLE_IS_LOADING = "AUTH/TOGGLE-IS-LOADING";
-export const SET_CAPTCHA_URL = "AUTH/SET-CAPTCHA-URL";
+import { authAPI, profileAPI, securityAPI, SUCCESS_CODE } from "@api";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { setAuthUserData } from "@slices/auth";
+import { TLoginPayload } from "@utils/api/types";
+import { TUserData } from "src/types";
 
-export const getAuthUserData = () => async (dispatch) => {
-  dispatch(setLoadingAC(true));
+const GET_USER_DATA = "auth/get-user-data";
+const USER_LOGIN = "auth/login";
+const USER_LOGOUT = "auth/logout";
+const GET_CAPTCHA = "auth/get-captcha";
 
-  try {
-    const res = await authAPI.me();
-    if (res.resultCode === 0) {
-      const { id, login, email } = res.data;
-      const data = await profileAPI.getProfile(id);
-      dispatch(setAuthUserDataAC(id, login, email, data.photos, true));
+export const getAuthUserDataAsync = createAsyncThunk<TUserData>(
+  GET_USER_DATA,
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await authAPI.me();
+
+      if (res.resultCode === SUCCESS_CODE) {
+        const { id, login, email } = res.data;
+        const { photos } = await profileAPI.getProfile(id);
+        return { id, login, email, photos: photos };
+      }
+
+      return rejectWithValue(res.messages[0] || "Failed to get user data");
+    } catch (error) {
+      return rejectWithValue(error);
     }
-  } catch (error) {
-    console.error("Error in getAuthUserData:", error);
-  } finally {
-    dispatch(setLoadingAC(false));
   }
-};
+);
 
-export const loginUser = (email, password, rememberMe = false, captcha) => async (dispatch) => { 
-  const res = await authAPI.login({ email, password, rememberMe, captcha });
+export const loginUserAsync = createAsyncThunk<void, TLoginPayload>(
+  USER_LOGIN,
+  async ({ email, password, rememberMe = false, captcha }, { dispatch }) => {
+    const res = await authAPI.login({ email, password, rememberMe, captcha });
 
-  if (res.resultCode === 0) {
-    dispatch(getAuthUserData());
-  }
-  else {
-    // get captcha
-    if (res.resultCode === 10) {
-      dispatch(getCaptcha());
+    if (res.resultCode === SUCCESS_CODE) {
+      dispatch(getAuthUserDataAsync());
+    } else {
+      // get captcha
+      if (res.resultCode === 10) {
+        dispatch(getCaptchaAsync());
+      }
+
+      // const message = res.messages.length > 0 ? res.messages[0] : "Some error";
+      // dispatch(stopSubmit("login", { _error: message }));
     }
-
-    const message = res.messages.length > 0 ? res.messages[0] : 'Some error';
-    dispatch(stopSubmit('login', {_error: message}));
   }
-};
+);
 
-export const logoutUser = () => async (dispatch) => {
-  const res = await authAPI.logout()
+export const logoutUserAsync = createAsyncThunk(
+  USER_LOGOUT,
+  async (_, { dispatch }) => {
+    const res = await authAPI.logout();
 
-  if (res.resultCode === 0) {
-    dispatch(setAuthUserDataAC(null, null, null, null, false, null));
+    if (res.resultCode === SUCCESS_CODE) {
+      dispatch(setAuthUserData(null));
+    }
   }
-};
+);
 
-export const getCaptcha = () => async (dispatch) => {
-  const response = await securityAPI.getCaptchaURL();
-  const captchaUrl = response.url;
-
-  dispatch(setCaptchaUrlAC(captchaUrl));
-}
+export const getCaptchaAsync = createAsyncThunk<string, void>(
+  GET_CAPTCHA,
+  async () => {
+    const response = await securityAPI.getCaptchaURL();
+    return response.url;
+  }
+);

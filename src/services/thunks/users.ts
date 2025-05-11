@@ -1,8 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { usersAPI } from "@utils/api/api";
-import { followAC, setFollowingProgressAC, unfollowAC } from "./actions";
-import { TGetUsersData } from "@utils/api/types";
-import { TPagination } from "src/types";
+import { setFollowed, setFollowingProgress } from "@slices/users";
+import { SUCCESS_CODE, usersAPI } from "@utils/api/api";
+import { TGetUsersData, TResponse } from "@utils/api/types";
+import { TPagination, TUserId } from "src/types";
+import { ThunkAppDispatch } from "./types";
 
 const GET_USERS = "users/getAll";
 const FOLLOW_USER = "users/follow";
@@ -24,33 +25,33 @@ export const getUsersAsync = createAsyncThunk<TGetUsersData, TPagination>(
   }
 );
 
-export const followToUser = createAsyncThunk<void, number>(
+export const followToUserAsync = createAsyncThunk<void, TUserId>(
   FOLLOW_USER,
   async (userId, { dispatch }) => {
     const apiMethod = usersAPI.followUser.bind(usersAPI);
-    followUnfollowFlow(dispatch, userId, apiMethod, followAC);
+    followUnfollowFlow(dispatch, userId, apiMethod, true);
   }
 );
-export const unfollowFromUser = createAsyncThunk<void, number>(
+export const unfollowFromUserAsync = createAsyncThunk<void, TUserId>(
   UNFOLLOW_USER,
   async (userId, { dispatch }) => {
     const apiMethod = usersAPI.unfollowUser.bind(usersAPI);
-    followUnfollowFlow(dispatch, userId, apiMethod, unfollowAC);
+    followUnfollowFlow(dispatch, userId, apiMethod, false);
   }
 );
 
 const followUnfollowFlow = async (
-  dispatch,
-  userId: number,
-  apiMethod,
-  actionCreator
+  dispatch: ThunkAppDispatch,
+  userid: number,
+  apiMethod: (userid: TUserId) => Promise<TResponse>,
+  status: boolean
 ) => {
-  dispatch(setFollowingProgressAC(true, userId));
+  dispatch(setFollowingProgress({ followingInProgress: true, userid }));
 
-  const data = await apiMethod(userId);
-  if (data.resultCode === 0) {
-    dispatch(actionCreator(userId));
+  const data = await apiMethod(userid);
+  if (data.resultCode === SUCCESS_CODE) {
+    dispatch(setFollowed({ userid, status }));
   }
 
-  dispatch(setFollowingProgressAC(false, userId));
+  dispatch(setFollowingProgress({ followingInProgress: false, userid }));
 };

@@ -1,4 +1,14 @@
-import { TModal, TPost, TProfile, TUser } from "src/types";
+import {
+  TDialog,
+  TFriend,
+  TMessage,
+  TModal,
+  TPost,
+  TProfile,
+  TUser,
+  TUserData,
+  TUserId,
+} from "src/types";
 
 export type TAppState = {
   initialized: boolean;
@@ -6,7 +16,7 @@ export type TAppState = {
 };
 
 export type TFriendsState = {
-  friends: [];
+  friends: TFriend[];
 };
 
 export type TUsersState = {
@@ -26,13 +36,23 @@ export type TProfileState = {
 };
 
 export type TAuthState = {
-  user: {
-    id: null;
-    login: null;
-    email: null;
-    photos: null;
-  };
-  isLoading: false;
-  isAuth: false;
-  captchaUrl: null;
+  user: TUserData | null;
+  isLoading: boolean;
+  isAuth: boolean;
+  captchaUrl: string | null;
 };
+
+export type TDialogsState = {
+  dialogs: TDialog[];
+  messages: TMessage[];
+};
+
+export type TSetIsFollowingPayload = {
+  userid: TUserId;
+  followingInProgress: boolean;
+};
+
+export type TSetFollowePayload = {
+  userid: TUserId;
+  status: boolean;
+}
