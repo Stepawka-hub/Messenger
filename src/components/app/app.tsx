@@ -14,7 +14,7 @@ import Preloader from "./components/Preloader/Preloader";
 import withRouter from "./utils/withRouter";
 import { initializeApp } from "./redux/app/thunks";
 import { getInitialized, getModal } from "./redux/app/selectors";
-import Loader from "@components/common/Loader/Loader";
+import Loader from "@components/common/loader/loader";
 import NotFound from "@components/NotFound/NotFound";
 import ModalError from "@components/common/ModalError/ModalError";
 
