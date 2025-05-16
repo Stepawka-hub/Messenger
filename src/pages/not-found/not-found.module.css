@@ -1,0 +1,25 @@
+.notFound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+
+  margin: 4rem;
+  height: 100%;
+}
+
+.text {
+  font-size: 3rem;
+  font-weight: 600;
+  color: var(--title-color);
+  text-transform: uppercase;
+}
+
+.btn {
+  display: inline-block;
+  padding: 1rem 2rem;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--primary-color);
+  background-color: var(--orange-color);
+}

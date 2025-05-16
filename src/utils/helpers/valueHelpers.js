@@ -1,1 +1,0 @@
-export const getSafeValue = (safeValue) => (value) => value || safeValue;
