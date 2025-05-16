@@ -19,6 +19,7 @@ import { Loader } from "@components/common/loader";
 import { ModalError } from "@components/common/modal-error";
 import { Navbar } from "@components/navbar";
 import clsx from "clsx";
+import { Header } from "@components/header";
 
 // Lazy загрузка
 // const Dialogs = lazy(() => import("@pages/dialogs"));
@@ -42,7 +43,7 @@ export const App = () => {
   return (
     <div className={clsx("app-wrapper", modal.isOpen && "locked")}>
       <ModalError {...modal} />
-      {/* <Header /> */}
+      <Header />
       <Navbar />
       <div className="app-wrapper-content">
         <Suspense fallback={<Loader />}>

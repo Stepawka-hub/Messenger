@@ -23,16 +23,16 @@
   text-decoration: none;
 }
 
-.link:hover:not(.active) {
+.link:hover:not(.link_active) {
   color: var(--link-color-active);
   transform: translateX(0.5rem);
 }
 
-.link:active:not(.active) {
+.link:active:not(.link_active) {
   opacity: 0.8;
 }
 
-.link.active {
+.link_active {
   color: var(--link-color-active);
 }
 
