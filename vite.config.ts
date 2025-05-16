@@ -14,7 +14,7 @@ export default defineConfig({
       "@actions": path.resolve(__dirname, "src/services/actions"),
       "@selectors": path.resolve(__dirname, "src/services/selectors"),
       "@thunks": path.resolve(__dirname, "src/services/thunks"),
-      "@api": path.resolve(__dirname, "src/api"),
+      "@api": path.resolve(__dirname, "src/utils/api/api.ts"),
       "@utils": path.resolve(__dirname, "src/utils"),
       "@store": path.resolve(__dirname, "src/services/store/store.ts"),
     },

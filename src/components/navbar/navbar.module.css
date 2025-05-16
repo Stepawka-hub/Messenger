@@ -7,35 +7,35 @@
   background-color: var(--theme-primary-color);
 }
 
-.nav__links {
+.links {
   display: flex;
   flex-direction: column;
 }
 
-.nav__links {
+.links {
   margin-bottom: 2rem;
 }
 
-.nav__link {
+.link {
   color: var(--primary-color);
   font-size: 1.75rem;
   transition: all 0.1s linear;
   text-decoration: none;
 }
 
-.nav__link:hover:not(.active) {
+.link:hover:not(.active) {
   color: var(--link-color-active);
   transform: translateX(0.5rem);
 }
 
-.nav__link:active:not(.active) {
+.link:active:not(.active) {
   opacity: 0.8;
 }
 
-.nav__link.active {
+.link.active {
   color: var(--link-color-active);
 }
 
-.nav__friends {
+.friends {
   margin-top: 3rem;
 }

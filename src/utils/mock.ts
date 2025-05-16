@@ -1,6 +1,6 @@
 import { TDialog, TFriend, TMessage, TPost } from "src/types";
 import avatarBlack from "@images/black.png";
-import avatarOrange from "@images/orange.png";
+import avatarOrange from "@images/avatar_orange.jpg";
 
 export const mockDialogs: TDialog[] = [
   {

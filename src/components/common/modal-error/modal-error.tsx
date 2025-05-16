@@ -1,5 +1,5 @@
 import { Modal } from "@components/common/modal";
-import s from "./ModalError.module.css";
+import s from "./modal-error.module.css";
 import { FC } from "react";
 import { ModalErrorProps } from "./type";
 

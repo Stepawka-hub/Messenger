@@ -11,9 +11,9 @@ const friendsSlice = createSlice({
   initialState,
   reducers: {},
   selectors: {
-    getFriendsSelector: (state) => state.friends,
+    getFriends: (state) => state.friends,
   },
 });
 
 export const reducer = friendsSlice.reducer;
-export const { getFriendsSelector } = friendsSlice.selectors;
+export const { getFriends } = friendsSlice.selectors;

@@ -17,6 +17,8 @@ import { NotFound } from "@pages/not-found";
 import { Preloader } from "@components/preloader";
 import { Loader } from "@components/common/loader";
 import { ModalError } from "@components/common/modal-error";
+import { Navbar } from "@components/navbar";
+import clsx from "clsx";
 
 // Lazy загрузка
 // const Dialogs = lazy(() => import("@pages/dialogs"));
@@ -29,19 +31,19 @@ export const App = () => {
   const initialized = useSelector(getInitialized);
   const modal = useSelector(getModal);
 
-  useEffect(() => {
-    dispatch(initializeApp());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(initializeApp());
+  // }, []);
 
-  if (!initialized) {
-    return <Preloader />;
-  }
+  // if (!initialized) {
+  //   return <Preloader />;
+  // }
 
   return (
-    <div className={`app-wrapper ${modal.isOpen && "locked"}`}>
+    <div className={clsx("app-wrapper", modal.isOpen && "locked")}>
       <ModalError {...modal} />
       {/* <Header /> */}
-      {/* <Navbar /> */}
+      <Navbar />
       <div className="app-wrapper-content">
         <Suspense fallback={<Loader />}>
           <Routes>
