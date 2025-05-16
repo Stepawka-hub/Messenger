@@ -4,7 +4,7 @@ import { Loader } from "@components/common/loader";
 import { FC } from "react";
 import s from "./news.module.css";
 
-export const News: FC = () => {
+const News: FC = () => {
   useTitle("News");
 
   return (
@@ -14,3 +14,5 @@ export const News: FC = () => {
     </section>
   );
 };
+
+export default News;

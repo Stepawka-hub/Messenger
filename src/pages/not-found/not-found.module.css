@@ -8,14 +8,14 @@
   height: 100%;
 }
 
-.notFound__text {
+.text {
   font-size: 3rem;
   font-weight: 600;
   color: var(--title-color);
   text-transform: uppercase;
 }
 
-.notFound__btn {
+.btn {
   display: inline-block;
   padding: 1rem 2rem;
   font-size: 1.25rem;

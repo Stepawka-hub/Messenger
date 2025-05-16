@@ -5,13 +5,13 @@ import { ModalErrorProps } from "./type";
 
 export const ModalError: FC<ModalErrorProps> = ({
   title = "Произошла ошибка!",
-  errorText = "Текст ошибки",
+  text = "Текст ошибки",
   ...props
 }) => (
   <Modal {...props}>
     <div className={s.modalError}>
       <h2 className={s.title}>{title}</h2>
-      <p className={s.text}>{errorText}</p>
+      <p className={s.text}>{text}</p>
     </div>
   </Modal>
 );

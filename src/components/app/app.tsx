@@ -1,74 +1,62 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, Suspense } from "react";
+import { useEffect, Suspense, lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import "./App.css";
-import Navbar from "./components/Navbar/Navbar";
-import UsersContainer from "./components/Users/UsersContainer";
-import Header from "./components/Header/Header";
-import Login from "./components/Login/Login";
-import ProfileContainer from "./components/Profile/ProfileContainer";
-import Preloader from "./components/Preloader/Preloader";
 
-import withRouter from "./utils/withRouter";
-import { initializeApp } from "./redux/app/thunks";
-import { getInitialized, getModal } from "./redux/app/selectors";
-import Loader from "@components/common/loader/loader";
-import NotFound from "@components/NotFound/NotFound";
-import ModalError from "@components/common/ModalError/ModalError";
+import { useDispatch } from "@store";
+import { initializeApp } from "@thunks/app";
+import { getInitialized, getModal } from "@slices/app";
+
+import { NotFound } from "@pages/not-found";
+//import { Login, UsersContainer, ProfileContainer } from "@pages";
+
+// import { Navbar } from "@components/navbar";
+// import { Header } from "@/components/header";
+
+import { Preloader } from "@components/preloader";
+import { Loader } from "@components/common/loader";
+import { ModalError } from "@components/common/modal-error";
 
 // Lazy загрузка
-const Dialogs = React.lazy(() => import("./components/Dialogs/Dialogs"));
-const News = React.lazy(() => import("./components/News/News"));
-const Music = React.lazy(() => import("./components/Music/Music"));
-const Settings = React.lazy(() => import("./components/Settings/Settings"));
+// const Dialogs = lazy(() => import("@pages/dialogs"));
+const News = lazy(() => import("@pages/news"));
+const Music = lazy(() => import("@pages/music"));
+const Settings = lazy(() => import("@pages/settings"));
 
-export const App = withRouter(() => {
+export const App = () => {
   const dispatch = useDispatch();
   const initialized = useSelector(getInitialized);
   const modal = useSelector(getModal);
 
-  const catchAllUnhandledErrors = (promiseRejectionEvent) => {
-    console.error(promiseRejectionEvent);
-  };
-
   useEffect(() => {
     dispatch(initializeApp());
-    window.addEventListener("unhandledrejection", catchAllUnhandledErrors);
-
-    return () => {
-      window.removeEventListener("unhandledrejection", catchAllUnhandledErrors);
-    };
   }, []);
 
-  return !initialized ? (
-    <Preloader />
-  ) : (
+  if (!initialized) {
+    return <Preloader />;
+  }
+
+  return (
     <div className={`app-wrapper ${modal.isOpen && "locked"}`}>
-      <ModalError
-        isOpen={modal.isOpen}
-        title={modal.title}
-        text={modal.text}
-        delay={modal.delay}
-      />
-      <Header />
-      <Navbar />
+      <ModalError {...modal} />
+      {/* <Header /> */}
+      {/* <Navbar /> */}
       <div className="app-wrapper-content">
         <Suspense fallback={<Loader />}>
           <Routes>
             <Route path="/" element={<Navigate to="/profile" />} />
-            <Route path="/profile/:userId?" element={<ProfileContainer />} />
-            <Route path="/dialogs/*" element={<Dialogs />} />
+            {/* <Route path="/profile/:userId?" element={<ProfileContainer />} />
+            <Route path="/dialogs/*" element={<Dialogs />} /> */}
             <Route path="/news" element={<News />} />
-            <Route path="/users" element={<UsersContainer />} />
+            {/* <Route path="/users" element={<UsersContainer />} /> */}
             <Route path="/music" element={<Music />} />
             <Route path="/settings" element={<Settings />} />
-            <Route path="/login" element={<Login />} />
+            {/* <Route path="/login" element={<Login />} /> */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
       </div>
     </div>
   );
-});
+};

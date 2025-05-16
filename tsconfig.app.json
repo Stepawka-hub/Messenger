@@ -30,7 +30,7 @@
       "@images/*": ["src/assets/images/*"],
       "@components/*": ["src/components/*"],
       "@hooks/*": ["src/hooks/*"],
-      "@pages": ["src/pages"],
+      "@pages/*": ["src/pages/*"],
       "@slices/*": ["src/services/slices/*"],
       "@actions/*": ["src/services/actions/*"],
       "@selectors/*": ["src/services/selectors/*"],

@@ -21,8 +21,8 @@ const appSlice = createSlice({
     },
   },
   selectors: {
-    getInitializedSelector: (state) => state.initialized,
-    getModalSelector: (state) => state.modal,
+    getInitialized: (state) => state.initialized,
+    getModal: (state) => state.modal,
   },
   extraReducers: (builder) => {
     builder
@@ -39,5 +39,5 @@ const appSlice = createSlice({
 });
 
 export const reducer = appSlice.reducer;
-export const { getInitializedSelector, getModalSelector } = appSlice.selectors;
+export const { getInitialized, getModal } = appSlice.selectors;
 export const { setIsOpenModal } = appSlice.actions;
