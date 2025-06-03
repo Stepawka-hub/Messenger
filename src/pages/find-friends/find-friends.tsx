@@ -53,25 +53,25 @@ export const FindFriends: FC = () => {
     dispatch(unfollowFromUserAsync(userId));
   };
 
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <section className={s.section}>
       <h2 className={s.title}>Пользователи</h2>
 
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <div className={s.list}>
-          {userList.map((u) => (
-            <UserCard
-              user={u}
-              key={u.id}
-              followToUser={followToUser}
-              unfollowFromUser={unfollowFromUser}
-              followingInProgress={checkInProgress(followingInProgress, u.id)}
-            />
-          ))}
-        </div>
-      )}
+      <div className={s.list}>
+        {userList.map((u) => (
+          <UserCard
+            user={u}
+            key={u.id}
+            followToUser={followToUser}
+            unfollowFromUser={unfollowFromUser}
+            followingInProgress={checkInProgress(followingInProgress, u.id)}
+          />
+        ))}
+      </div>
 
       <Pagination
         totalCount={totalUsersCount}

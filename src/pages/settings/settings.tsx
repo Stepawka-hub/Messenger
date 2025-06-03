@@ -10,9 +10,7 @@ const Settings: FC = () => {
   return (
     <section className={s.settings}>
       <h2 className={s.title}>Здесь пока нет никаких настроек...</h2>
-      <div className={s.loader}>
-        <Loader />
-      </div>
+      <Loader />
     </section>
   );
 };

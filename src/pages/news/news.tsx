@@ -10,9 +10,7 @@ const News: FC = () => {
   return (
     <section className={s.news}>
       <h2 className={s.title}>Здесь пока нет никаких новостей...</h2>
-      <div className={s.loader}>
-        <Loader />
-      </div>
+      <Loader />
     </section>
   );
 };

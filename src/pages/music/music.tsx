@@ -9,9 +9,7 @@ const Music: FC = () => {
   return (
     <section className={s.music}>
       <h2 className={s.title}>Здесь пока нет никакой музыки...</h2>
-      <div className={s.loader}>
-        <Loader />
-      </div>
+      <Loader />
     </section>
   );
 };
