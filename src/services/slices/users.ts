@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getUsersAsync } from "@thunks/users";
 import { TGetUsersData } from "@utils/api/types";
+import { updateObjectInArray } from "@utils/helpers/array-helpers";
+import { TSocialUser } from "src/types";
 import {
-  TSetFollowePayload,
+  TSetFollowedPayload,
   TSetIsFollowingPayload,
   TUsersState,
 } from "./types";
-import { updateObjectInArray } from "@utils/helpers/objectHelpers";
-import { TUser } from "src/types";
 
 const initialState: TUsersState = {
   users: [],
@@ -22,9 +22,9 @@ const usersSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
-    setFollowed: (state, { payload }: PayloadAction<TSetFollowePayload>) => {
+    setFollowed: (state, { payload }: PayloadAction<TSetFollowedPayload>) => {
       const { userid, status } = payload;
-      state.users = updateObjectInArray<TUser, { followed: boolean }>(
+      state.users = updateObjectInArray<TSocialUser, { followed: boolean }>(
         state.users,
         userid,
         "id",

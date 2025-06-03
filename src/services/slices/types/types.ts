@@ -5,9 +5,9 @@ import {
   TModal,
   TPost,
   TProfile,
-  TUser,
+  TSocialUser,
   TUserData,
-  TUserId,
+  TUserId
 } from "src/types";
 
 export type TAppState = {
@@ -20,7 +20,7 @@ export type TFriendsState = {
 };
 
 export type TUsersState = {
-  users: TUser[];
+  users: TSocialUser[];
   totalUsersCount: number;
   pageSize: number;
   currentPage: number;
@@ -52,7 +52,7 @@ export type TSetIsFollowingPayload = {
   followingInProgress: boolean;
 };
 
-export type TSetFollowePayload = {
+export type TSetFollowedPayload = {
   userid: TUserId;
   status: boolean;
-}
+};

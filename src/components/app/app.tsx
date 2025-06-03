@@ -20,6 +20,7 @@ import { ModalError } from "@components/common/modal-error";
 import { Navbar } from "@components/navbar";
 import clsx from "clsx";
 import { Header } from "@components/header";
+import { FindFriends } from "@pages/find-friends/find-friends";
 
 // Lazy загрузка
 // const Dialogs = lazy(() => import("@pages/dialogs"));
@@ -32,13 +33,13 @@ export const App = () => {
   const initialized = useSelector(getInitialized);
   const modal = useSelector(getModal);
 
-  // useEffect(() => {
-  //   dispatch(initializeApp());
-  // }, []);
+  useEffect(() => {
+    dispatch(initializeApp());
+  }, []);
 
-  // if (!initialized) {
-  //   return <Preloader />;
-  // }
+  if (!initialized) {
+    return <Preloader />;
+  }
 
   return (
     <div className={clsx("app-wrapper", modal.isOpen && "locked")}>
@@ -52,7 +53,7 @@ export const App = () => {
             {/* <Route path="/profile/:userId?" element={<ProfileContainer />} />
             <Route path="/dialogs/*" element={<Dialogs />} /> */}
             <Route path="/news" element={<News />} />
-            {/* <Route path="/users" element={<UsersContainer />} /> */}
+            <Route path="/users" element={<FindFriends />} />
             <Route path="/music" element={<Music />} />
             <Route path="/settings" element={<Settings />} />
             {/* <Route path="/login" element={<Login />} /> */}

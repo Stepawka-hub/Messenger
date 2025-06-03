@@ -5,14 +5,18 @@
 }
 
 .item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
+  width: 2.5rem;
+  height: 2.5rem;
+
   font-size: 1.5rem;
   font-weight: 500;
-
-  padding: 0.5rem 1rem;
   border-radius: 50%;
   background-color: var(--theme-primary-color);
-  transition: opacity 0.1s linear;
+  transition: opacity 0.15s ease-in-out;
 }
 
 .item:hover {

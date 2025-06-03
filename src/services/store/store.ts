@@ -14,10 +14,10 @@ import { reducer as dialogsReducer } from "@slices/dialogs";
 const rootReducer = combineReducers({
   app: appReducer,
   auth: authReducer,
-  profilePage: profileReducer,
-  dialogsPage: dialogsReducer,
+  profile: profileReducer,
+  dialogs: dialogsReducer,
   friends: friendsReducer,
-  usersPage: usersReducer,
+  users: usersReducer,
   // form: formReducer,
 });
 

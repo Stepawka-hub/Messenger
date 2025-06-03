@@ -22,26 +22,27 @@ class BaseAPI {
 
 class UsersAPI extends BaseAPI {
   getUsers = async (currentPage = 1, pageSize = 10): Promise<TGetUsersData> => {
-    const { data } = await this.api.get(
+    const { data } = await this.api.get<TGetUsersData>(
       `users?page=${currentPage}&count=${pageSize}`
     );
+
     return data;
   };
 
   followUser = async (userid: TUserId): Promise<TResponse> => {
-    const { data } = await this.api.post(`follow/${userid}`);
+    const { data } = await this.api.post<TResponse>(`follow/${userid}`);
     return data;
   };
 
   unfollowUser = async (userid: TUserId): Promise<TResponse> => {
-    const { data } = await this.api.delete(`follow/${userid}`);
+    const { data } = await this.api.delete<TResponse>(`follow/${userid}`);
     return data;
   };
 }
 
 class ProfileAPI extends BaseAPI {
   getProfile = async (userid: TUserId): Promise<TProfile> => {
-    const { data } = await this.api.get(`profile/${userid}`);
+    const { data } = await this.api.get<TProfile>(`profile/${userid}`);
     return data;
   };
 
@@ -69,31 +70,37 @@ class ProfileAPI extends BaseAPI {
   };
 
   updateProfile = async (profileData: TProfile): Promise<TResponse> => {
-    const { data } = await this.api.put("profile", profileData);
+    const { data } = await this.api.put<TResponse>("profile", profileData);
     return data;
   };
 }
 
 class AuthAPI extends BaseAPI {
   me = async (): Promise<TResponseWithData<TAuthUserData>> => {
-    const { data } = await this.api.get("auth/me");
+    const { data } = await this.api.get<TResponseWithData<TAuthUserData>>(
+      "auth/me"
+    );
     return data;
   };
 
   login = async (formData: TLoginPayload): Promise<TResponse> => {
-    const { data } = await this.api.post("auth/login", { ...formData });
+    const { data } = await this.api.post<TResponse>("auth/login", {
+      ...formData,
+    });
     return data;
   };
 
   logout = async (): Promise<TResponse> => {
-    const { data } = await this.api.delete("auth/login");
+    const { data } = await this.api.delete<TResponse>("auth/login");
     return data;
   };
 }
 
 class SecurityAPI extends BaseAPI {
   getCaptchaURL = async (): Promise<TGetCaptchaData> => {
-    const { data } = await this.api.get("security/get-captcha-url");
+    const { data } = await this.api.get<TGetCaptchaData>(
+      "security/get-captcha-url"
+    );
     return data;
   };
 }

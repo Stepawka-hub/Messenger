@@ -11,3 +11,8 @@ export const updateObjectInArray = <T, K extends object>(
 
     return item;
   });
+
+export const checkInProgress = (
+  array: (number | string)[],
+  id: number | string
+) => array.includes(id);
