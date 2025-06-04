@@ -1,4 +1,4 @@
-.dialog-list__item {
+.dialog {
   display: block;
   position: relative;
   cursor: pointer;
@@ -14,7 +14,7 @@
   text-decoration: none;
 }
 
-.dialog-list__item::before {
+.dialog::before {
   content: '';
   position: absolute;
 
@@ -27,7 +27,8 @@
   background-color: var(--primary-color);
 }
 
-.dialog-list__item.active {
+.active {
+  pointer-events: none;
   cursor: default;
   background-color: var(--orange-color);
 }

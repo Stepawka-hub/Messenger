@@ -1,5 +1,5 @@
 import useTitle from "@hooks/useTitle";
-import s from "./Settings.module.css";
+import s from "./settings.module.css";
 
 import { Loader } from "@components/common/loader";
 import { FC } from "react";

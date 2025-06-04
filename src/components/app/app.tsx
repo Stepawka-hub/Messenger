@@ -1,32 +1,28 @@
 import { useEffect, Suspense, lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "@store";
 
-import "./App.css";
-
-import { useDispatch } from "@store";
 import { initializeApp } from "@thunks/app";
 import { getInitialized, getModal } from "@slices/app";
 
 import { NotFound } from "@pages/not-found";
 //import { Login, UsersContainer, ProfileContainer } from "@pages";
 
-// import { Navbar } from "@components/navbar";
-// import { Header } from "@/components/header";
-
 import { Preloader } from "@components/preloader";
 import { Loader } from "@components/common/loader";
 import { ModalError } from "@components/common/modal-error";
 import { Navbar } from "@components/navbar";
-import clsx from "clsx";
 import { Header } from "@components/header";
-import { FindFriends } from "@pages/find-friends/find-friends";
+import { FindFriends } from "@pages/find-friends";
 
 // Lazy загрузка
-// const Dialogs = lazy(() => import("@pages/dialogs"));
+const Dialogs = lazy(() => import("@pages/dialogs"));
 const News = lazy(() => import("@pages/news"));
 const Music = lazy(() => import("@pages/music"));
 const Settings = lazy(() => import("@pages/settings"));
+
+import "./App.css";
+import clsx from "clsx";
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -50,8 +46,8 @@ export const App = () => {
         <Suspense fallback={<Loader />}>
           <Routes>
             <Route path="/" element={<Navigate to="/profile" />} />
-            {/* <Route path="/profile/:userId?" element={<ProfileContainer />} />
-            <Route path="/dialogs/*" element={<Dialogs />} /> */}
+            {/* <Route path="/profile/:userId?" element={<ProfileContainer />} /> */}
+            <Route path="/dialogs/*" element={<Dialogs />} />
             <Route path="/news" element={<News />} />
             <Route path="/users" element={<FindFriends />} />
             <Route path="/music" element={<Music />} />

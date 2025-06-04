@@ -9,7 +9,7 @@
   background-color: var(--theme-secondary-color);
 }
 
-.message__author {
+.author {
   margin-bottom: 0.5rem;
 
   font-size: 1.2rem;
@@ -17,6 +17,6 @@
   color: var(--title-color);
 }
 
-.message__text {
+.text {
   font-size: 1.15rem;
 }

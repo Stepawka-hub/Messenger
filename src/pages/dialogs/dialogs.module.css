@@ -1,11 +1,11 @@
-.dialogs {
+.page {
   display: grid;
   grid-template-columns: 2fr 10fr;
   gap: 2rem;
   height: 100%;
 }
 
-.chat-container {
+.chatContainer {
   display: flex;
   justify-content: space-between;
   flex-direction: column;
