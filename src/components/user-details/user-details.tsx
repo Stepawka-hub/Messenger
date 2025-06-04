@@ -10,8 +10,8 @@ export const UserDetails: FC = () => {
   const { login, email, photos } = useSelector(getCurrentUser) || userDefault;
 
   return (
-    <div className="user-details">
-      <div className="user-details__avatar">
+    <div className={s.userDetails}>
+      <div className={s.avatar}>
         <img
           src={photos?.small || avatarDefault}
           className="avatar"
