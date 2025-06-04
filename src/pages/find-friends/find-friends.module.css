@@ -1,5 +1,4 @@
-.section,
-.list {
+.section {
   display: flex;
   flex-direction: column;
 }
@@ -10,8 +9,4 @@
   color: var(--title-color);
   text-align: center;
   margin-bottom: 1rem;
-}
-
-.list {
-  gap: 1rem;
 }

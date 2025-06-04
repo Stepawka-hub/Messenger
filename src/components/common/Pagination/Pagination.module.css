@@ -17,6 +17,7 @@
   border-radius: 50%;
   background-color: var(--theme-primary-color);
   transition: opacity 0.15s ease-in-out;
+  user-select: none;
 }
 
 .item:hover {

@@ -27,8 +27,6 @@ class UsersAPI extends BaseAPI {
       { withCredentials: true }
     );
 
-    console.log(data);
-
     return data;
   };
 

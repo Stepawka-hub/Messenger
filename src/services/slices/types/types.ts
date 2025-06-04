@@ -7,7 +7,7 @@ import {
   TProfile,
   TSocialUser,
   TUserData,
-  TUserId
+  TUserId,
 } from "src/types";
 
 export type TAppState = {
@@ -21,11 +21,13 @@ export type TFriendsState = {
 
 export type TUsersState = {
   users: TSocialUser[];
-  totalUsersCount: number;
-  pageSize: number;
-  currentPage: number;
   isLoading: boolean;
   followingInProgress: number[];
+  pagination: {
+    pageSize: number;
+    currentPage: number;
+    totalUsersCount: number;
+  };
 };
 
 export type TProfileState = {
