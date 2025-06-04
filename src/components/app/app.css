@@ -12,6 +12,7 @@
   font-family: 'Gilroy';
   color: var(--primary-color);
   height: 100vh;
+  overflow-x: hidden;
 }
 
 .app-wrapper-content {

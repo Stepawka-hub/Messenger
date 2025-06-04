@@ -1,9 +1,9 @@
-import { FC } from "react";
 import { Loader } from "@components/common/loader";
 import { Pagination } from "@components/common/pagination";
 import { UserList } from "@components/user-list";
 import { usePaginatedUsers } from "@hooks/usePaginatedUsers";
 import useTitle from "@hooks/useTitle";
+import { FC } from "react";
 import s from "./find-friends.module.css";
 
 export const FindFriends: FC = () => {
@@ -16,8 +16,6 @@ export const FindFriends: FC = () => {
     pagination,
   } = usePaginatedUsers();
   useTitle("Find friends");
-
-  console.log(isLoading);
 
   if (isLoading) {
     return <Loader />;

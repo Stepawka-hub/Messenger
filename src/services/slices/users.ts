@@ -14,7 +14,7 @@ const initialState: TUsersState = {
   isLoading: false,
   followingInProgress: [],
   pagination: {
-    pageSize: 4,
+    pageSize: 6,
     currentPage: 1,
     totalUsersCount: 1,
   },
