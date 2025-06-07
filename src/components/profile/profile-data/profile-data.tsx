@@ -13,25 +13,27 @@ export const ProfileData: FC<ProfileDataProps> = ({
   status,
   updateUserStatus,
 }) => {
+  const { fullName, aboutMe, lookingForAJob, lookingForAJobDescription } =
+    profile;
+    
   const profileInfo = [
-    // {
-    //   label: "Обо мне",
-    //   value: getValue(profile.aboutMe),
-    // },
+    {
+      label: "Обо мне",
+      value: getValue(aboutMe),
+    },
     {
       label: "Ищу работу",
-      value: profile.lookingForAJob ? "Да" : "Нет",
+      value: lookingForAJob ? "Да" : "Нет",
     },
     {
       label: "Описание поиска работы",
-      value: getValue(profile.lookingForAJobDescription),
+      value: getValue(lookingForAJobDescription),
     },
   ];
 
   return (
     <div>
-      <h2 className={s.title}>{profile.fullName || "Имя пользователя"}</h2>
-
+      <h2 className={s.title}>{fullName || "Имя пользователя"}</h2>
       <div>
         <ProfileStatus
           label="Статус: "

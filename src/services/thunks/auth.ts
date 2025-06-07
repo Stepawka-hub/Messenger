@@ -1,6 +1,5 @@
 import { authAPI, profileAPI, securityAPI, SUCCESS_CODE } from "@api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { setAuthUserData } from "@slices/auth";
 import { TLoginPayload } from "@utils/api/types";
 import { TUserData } from "src/types";
 
@@ -49,11 +48,11 @@ export const loginUserAsync = createAsyncThunk<void, TLoginPayload>(
 
 export const logoutUserAsync = createAsyncThunk(
   USER_LOGOUT,
-  async (_, { dispatch }) => {
+  async (_, { rejectWithValue }) => {
     const res = await authAPI.logout();
 
-    if (res.resultCode === SUCCESS_CODE) {
-      dispatch(setAuthUserData(null));
+    if (res.resultCode !== SUCCESS_CODE) {
+      rejectWithValue("Unknown error during logout");
     }
   }
 );

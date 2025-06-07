@@ -13,7 +13,7 @@
 }
 
 .links {
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 }
 
 .link {
@@ -34,8 +34,4 @@
 
 .link_active {
   color: var(--link-color-active);
-}
-
-.friends {
-  margin-top: 3rem;
 }

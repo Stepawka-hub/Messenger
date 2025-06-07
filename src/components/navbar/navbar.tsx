@@ -4,9 +4,10 @@ import { FC, useMemo } from "react";
 import s from "./navbar.module.css";
 import clsx from "clsx";
 import { useSelector } from "@store";
-import { getCurrentUser } from "@slices/auth";
+import { getCurrentUser, getIsAuth } from "@slices/auth";
 
 export const Navbar: FC = () => {
+  const isAuth = useSelector(getIsAuth);
   const currentUser = useSelector(getCurrentUser);
   const userId = currentUser?.id || "";
 
@@ -37,10 +38,7 @@ export const Navbar: FC = () => {
           </NavLink>
         ))}
       </div>
-
-      <div className={s.friends}>
-        <FriendList />
-      </div>
+      {isAuth && <FriendList />}
     </nav>
   );
 };
