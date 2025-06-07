@@ -1,4 +1,4 @@
-import { TUserData } from "src/types";
+import { TContacts, TUserData } from "@types";
 
 export const userDefault: TUserData = {
   id: -1,
@@ -9,3 +9,11 @@ export const userDefault: TUserData = {
     small: "/images/default-avatar.png",
   },
 } as const;
+
+export const profileContacts: TContacts = {
+  vk: "VK",
+  facebook: "Facebook",
+  twitter: "Twitter",
+  instagram: "Instagram",
+  github: "GitHub",
+};

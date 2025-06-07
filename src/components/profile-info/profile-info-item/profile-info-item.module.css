@@ -3,17 +3,17 @@
   line-height: 1.35;
 }
 
-.item__label {
+.label {
   font-weight: 500;
   color: var(--lighten-orange-color);
 }
 
-.contacts {
+.contact {
   position: relative;
   padding-left: 1.2rem;
 }
 
-.contacts::before {
+.contact::before {
   content: '';
 
   position: absolute;

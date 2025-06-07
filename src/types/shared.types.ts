@@ -19,3 +19,11 @@ export type TLocation = {
   country: string;
   city: string;
 };
+
+export type TContacts = {
+  vk: string;
+  facebook: string;
+  twitter: string;
+  instagram: string;
+  github: string;
+};
