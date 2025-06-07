@@ -22,6 +22,7 @@ export type TUserData = TAuthUserData & {
 // Profile
 export type TProfile = {
   id: TUserId;
+  aboutMe: string;
   lookingForAJob: boolean;
   lookingForAJobDescription: string;
   fullName: string;

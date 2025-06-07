@@ -48,11 +48,13 @@ class ProfileAPI extends BaseAPI {
   };
 
   getUserStatus = async (userid: TUserId): Promise<string> => {
-    return await this.api.get(`profile/status/${userid}`);
+    const { data } = await this.api.get<string>(`profile/status/${userid}`);
+    return data;
   };
 
   updateUserStatus = async (status: string): Promise<TResponse> => {
-    return await this.api.put(`profile/status`, { status });
+    const { data } = await this.api.put(`profile/status`, { status });
+    return data;
   };
 
   updatePhoto = async (

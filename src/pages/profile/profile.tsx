@@ -6,7 +6,7 @@ import { ProfileInfo } from "@components/profile";
 import { useTitle } from "@hooks/useTitle";
 import { getCurrentUser } from "@slices/auth";
 import { getProfile } from "@slices/profile";
-import { getProfileAsync, getUserStatusAsync } from "@thunks/profile";
+import { getProfileAsync, getProfileStatusAsync } from "@thunks/profile";
 import { useParams } from "react-router-dom";
 
 export const Profile = () => {
@@ -20,7 +20,7 @@ export const Profile = () => {
     const id = Number(userId);
     if (id) {
       dispatch(getProfileAsync(id));
-      dispatch(getUserStatusAsync(id));
+      dispatch(getProfileStatusAsync(id));
     }
   }, [dispatch, userId]);
 

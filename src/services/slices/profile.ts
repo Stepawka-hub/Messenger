@@ -2,7 +2,7 @@ import avatarBlack from "@images/black.png";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   getProfileAsync,
-  getUserStatusAsync,
+  getProfileStatusAsync,
   updateProfilePhotoAsync,
 } from "@thunks/profile";
 import { mockPosts } from "@utils/mock";
@@ -78,8 +78,9 @@ const profileSlice = createSlice({
       )
 
       .addCase(
-        getUserStatusAsync.fulfilled,
+        getProfileStatusAsync.fulfilled,
         (state, { payload }: PayloadAction<string>) => {
+          console.log(payload);
           state.status = payload;
         }
       );

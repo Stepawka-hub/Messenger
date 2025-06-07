@@ -14,7 +14,7 @@ import s from "./header.module.css";
 
 export const Header: FC = () => {
   const dispatch = useDispatch();
-
+  
   const isLoading = useSelector(getIsLoading);
   const isAuth = useSelector(getIsAuth);
 
