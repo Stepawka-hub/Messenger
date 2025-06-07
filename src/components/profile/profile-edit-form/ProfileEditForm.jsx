@@ -7,6 +7,14 @@ const Input = FormControl('input');
 const isValue = isValueValidate(['Да', 'Нет']);
 
 const ProfileEditForm = ({ handleSubmit, ref, error }) => {
+  const initialValues = {
+    fullName: profile.fullName,
+    aboutMe: profile.aboutMe,
+    lookingForAJobDescription: profile.lookingForAJobDescription,
+    lookingForAJob: profile.lookingForAJob ? "Да" : "Нет",
+    ...profile.contacts,
+  };
+
   const fields = [
     {
       label: 'Полное имя',

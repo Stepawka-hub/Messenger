@@ -47,10 +47,10 @@ const profileSlice = createSlice({
     },
   },
   selectors: {
-    getPostsSeletor: (state) => state.posts,
-    getProfileSelector: (state) => state.profile,
-    getStatusSelector: (state) => state.status,
-    getIsUpdatingPhotoSelector: (state) => state.isUpdatingPhoto,
+    getPosts: (state) => state.posts,
+    getProfile: (state) => state.profile,
+    getProfileStatus: (state) => state.status,
+    getIsUpdatingPhoto: (state) => state.isUpdatingPhoto,
   },
   extraReducers: (builder) => {
     builder
@@ -87,12 +87,8 @@ const profileSlice = createSlice({
 });
 
 export const reducer = profileSlice.reducer;
-export const {
-  getPostsSeletor,
-  getProfileSelector,
-  getStatusSelector,
-  getIsUpdatingPhotoSelector,
-} = profileSlice.selectors;
+export const { getPosts, getProfile, getProfileStatus, getIsUpdatingPhoto } =
+  profileSlice.selectors;
 export const {
   setProfile,
   setProfilePhoto,

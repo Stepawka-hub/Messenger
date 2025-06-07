@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useSelector } from "@store";
 import { Dialog, Message } from "@components/dialogs";
 import { getDialogs, getMessages } from "@slices/dialogs";
-import useTitle from "@hooks/useTitle";
+import { useTitle } from "@hooks/useTitle";
 import s from "./dialogs.module.css";
 
 const Dialogs: FC = () => {

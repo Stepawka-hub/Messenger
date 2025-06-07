@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { ProfileInfoItemProps } from "./type";
-import s from "./ProfileInfoItem.module.css";
+import s from "./profile-info-item.module.css";
 import clsx from "clsx";
 
 export const ProfileInfoItem: FC<ProfileInfoItemProps> = ({

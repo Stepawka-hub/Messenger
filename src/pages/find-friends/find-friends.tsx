@@ -2,7 +2,7 @@ import { Loader } from "@components/common/loader";
 import { Pagination } from "@components/common/pagination";
 import { UserList } from "@components/user-list";
 import { usePaginatedUsers } from "@hooks/usePaginatedUsers";
-import useTitle from "@hooks/useTitle";
+import { useTitle } from "@hooks/useTitle";
 import { FC } from "react";
 import s from "./find-friends.module.css";
 

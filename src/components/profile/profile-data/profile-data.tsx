@@ -1,9 +1,9 @@
-import ProfileInfoItem from "../ProfileInfoItem/ProfileInfoItem";
-import ProfileStatus from "./ProfileStatus/ProfileStatus";
-import s from "./ProfileData.module.css";
-import { getSafeValue } from "../../../../utils/helpers/valueHelpers";
 import { FC } from "react";
 import { ProfileDataProps } from "./type";
+import { getSafeValue } from "@utils/helpers/values-helpers";
+import { ProfileStatus } from "../profile-status";
+import { ProfileInfoItem } from "../profile-info-item";
+import s from "./profile-data.module.css";
 
 const getValue = getSafeValue("Нет");
 
@@ -14,10 +14,10 @@ export const ProfileData: FC<ProfileDataProps> = ({
   updateUserStatus,
 }) => {
   const profileInfo = [
-    {
-      label: "Обо мне",
-      value: getValue(profile.aboutMe),
-    },
+    // {
+    //   label: "Обо мне",
+    //   value: getValue(profile.aboutMe),
+    // },
     {
       label: "Ищу работу",
       value: profile.lookingForAJob ? "Да" : "Нет",
@@ -29,12 +29,10 @@ export const ProfileData: FC<ProfileDataProps> = ({
   ];
 
   return (
-    <div className={s.profileData}>
-      <h2 className={s.profileData__title}>
-        {profile.fullName || "Имя пользователя"}
-      </h2>
+    <div>
+      <h2 className={s.title}>{profile.fullName || "Имя пользователя"}</h2>
 
-      <div className={s.profileData__description}>
+      <div>
         <ProfileStatus
           label="Статус: "
           isOwner={isOwner}
@@ -42,7 +40,7 @@ export const ProfileData: FC<ProfileDataProps> = ({
           updateUserStatus={updateUserStatus}
         />
         {profileInfo.map((item, index) => (
-          <ProfileInfoItem label={item.label} value={item.value} key={index} />
+          <ProfileInfoItem key={index} label={item.label} value={item.value} />
         ))}
       </div>
     </div>

@@ -6,7 +6,7 @@ import { initializeApp } from "@thunks/app";
 import { getInitialized, getModal } from "@slices/app";
 
 import { NotFound } from "@pages/not-found";
-//import { Login, UsersContainer, ProfileContainer } from "@pages";
+//import { Login } from "@pages";
 
 import { Preloader } from "@components/preloader";
 import { Loader } from "@components/common/loader";
@@ -21,8 +21,9 @@ const News = lazy(() => import("@pages/news"));
 const Music = lazy(() => import("@pages/music"));
 const Settings = lazy(() => import("@pages/settings"));
 
-import "./App.css";
+import "./app.css";
 import clsx from "clsx";
+import { Profile } from "@pages/profile";
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -46,7 +47,7 @@ export const App = () => {
         <Suspense fallback={<Loader />}>
           <Routes>
             <Route path="/" element={<Navigate to="/profile" />} />
-            {/* <Route path="/profile/:userId?" element={<ProfileContainer />} /> */}
+            <Route path="/profile/:userId" element={<Profile />} />
             <Route path="/dialogs/*" element={<Dialogs />} />
             <Route path="/news" element={<News />} />
             <Route path="/users" element={<FindFriends />} />
