@@ -1,28 +1,33 @@
 import { LoginForm } from "@components/login-form";
+import { TLoginForm } from "@components/login-form/types";
 import { useTitle } from "@hooks/useTitle";
-import { getCaptchaUrl } from "@slices/auth";
+import { getCaptchaUrl, getIsLoggingIn, getLoginError } from "@slices/auth";
 import { useDispatch, useSelector } from "@store";
-import { getCaptchaAsync, loginUserAsync } from "@thunks/auth";
-import { TLoginPayload } from "@utils/api/types";
-import { FC, useEffect } from "react";
+import { loginUserAsync } from "@thunks/auth";
+import { FC } from "react";
+import { SubmitHandler } from "react-hook-form";
 import s from "./login.module.css";
 
 export const Login: FC = () => {
   const dispatch = useDispatch();
+  const isLogginIn = useSelector(getIsLoggingIn);
+  const error = useSelector(getLoginError);
   const captchaUrl = useSelector(getCaptchaUrl);
   useTitle("Login");
 
-  useEffect(() => {
-    dispatch(getCaptchaAsync());
-  }, []);
-
-  const onSubmit = (formData: TLoginPayload) => {
-    dispatch(loginUserAsync(formData));
+  const onSubmit: SubmitHandler<TLoginForm> = async (formData) => {
+    await dispatch(loginUserAsync(formData)).unwrap();
+    localStorage.setItem("login-email", formData.email);
   };
 
   return (
     <section className={s.page}>
-      <LoginForm captchaUrl={captchaUrl} />
+      <LoginForm
+        isLogginIn={isLogginIn}
+        error={error}
+        captchaUrl={captchaUrl}
+        onSubmit={onSubmit}
+      />
     </section>
   );
 };

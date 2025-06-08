@@ -1,21 +1,25 @@
 import { Button } from "@components/common/button";
-import { FC } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { LoginFormProps, TLoginForm } from "./types";
-import s from "./login-form.module.css";
 import { Input } from "@components/form-elements";
+import { FC } from "react";
+import { useForm } from "react-hook-form";
+import s from "./login-form.module.css";
+import { LoginFormProps, TLoginForm } from "./types";
 
-export const LoginForm: FC<LoginFormProps> = ({ captchaUrl }) => {
+export const LoginForm: FC<LoginFormProps> = ({
+  isLogginIn,
+  error,
+  captchaUrl,
+  onSubmit,
+}) => {
   const { register, handleSubmit, formState } = useForm<TLoginForm>({
     mode: "onChange",
+    defaultValues: {
+      email: localStorage.getItem("login-email") || "",
+    },
   });
   const { email, password } = formState.errors;
   const emailError = email?.message;
   const passwordError = password?.message;
-
-  const onSubmit: SubmitHandler<TLoginForm> = (data) => {
-    console.log(data);
-  };
 
   return (
     <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
@@ -68,9 +72,11 @@ export const LoginForm: FC<LoginFormProps> = ({ captchaUrl }) => {
         )}
       </fieldset>
 
-      {/* {error && <FormError error={error} />} */}
+      {error && <span className={s.formError}>{error}</span>}
 
-      <Button className={s.submit}>Login</Button>
+      <Button className={s.submit} disabled={isLogginIn}>
+        {isLogginIn ? "Logging in..." : "Login"}
+      </Button>
     </form>
   );
 };

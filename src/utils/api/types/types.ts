@@ -21,5 +21,5 @@ export type TLoginPayload = {
   email: string;
   password: string;
   rememberMe?: boolean;
-  captcha?: boolean;
+  captcha?: string;
 };

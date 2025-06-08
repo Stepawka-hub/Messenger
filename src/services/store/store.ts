@@ -17,8 +17,7 @@ const rootReducer = combineReducers({
   profile: profileReducer,
   dialogs: dialogsReducer,
   friends: friendsReducer,
-  users: usersReducer,
-  // form: formReducer,
+  users: usersReducer
 });
 
 export const store = configureStore({

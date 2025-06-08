@@ -1,12 +1,13 @@
 import { authAPI, profileAPI, securityAPI, SUCCESS_CODE } from "@api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { TLoginPayload } from "@utils/api/types";
-import { TUserData } from "src/types";
+import { TError, TUserData } from "@types";
 
 const GET_USER_DATA = "auth/get-user-data";
 const USER_LOGIN = "auth/login";
 const USER_LOGOUT = "auth/logout";
 const GET_CAPTCHA = "auth/get-captcha";
+const CAPTCHA_REQUIRED_CODE = 10;
 
 export const getAuthUserDataAsync = createAsyncThunk<TUserData>(
   GET_USER_DATA,
@@ -27,21 +28,37 @@ export const getAuthUserDataAsync = createAsyncThunk<TUserData>(
   }
 );
 
-export const loginUserAsync = createAsyncThunk<void, TLoginPayload>(
+export const loginUserAsync = createAsyncThunk<
+  void,
+  TLoginPayload,
+  { rejectValue: TError }
+>(
   USER_LOGIN,
-  async ({ email, password, rememberMe = false, captcha }, { dispatch }) => {
-    const res = await authAPI.login({ email, password, rememberMe, captcha });
+  async (
+    { email, password, rememberMe, captcha },
+    { dispatch, rejectWithValue }
+  ) => {
+    try {
+      const { resultCode, messages } = await authAPI.login({
+        email,
+        password,
+        rememberMe,
+        captcha,
+      });
 
-    if (res.resultCode === SUCCESS_CODE) {
-      dispatch(getAuthUserDataAsync());
-    } else {
-      // get captcha
-      if (res.resultCode === 10) {
-        dispatch(getCaptchaAsync());
+      if (resultCode === SUCCESS_CODE) {
+        dispatch(getAuthUserDataAsync());
+      } else {
+        // get captcha if required
+        if (resultCode === CAPTCHA_REQUIRED_CODE) {
+          dispatch(getCaptchaAsync());
+        }
+
+        const message = messages.length > 0 ? messages[0] : "Unknown error";
+        return rejectWithValue({ message });
       }
-
-      // const message = res.messages.length > 0 ? res.messages[0] : "Some error";
-      // dispatch(stopSubmit("login", { _error: message }));
+    } catch {
+      return rejectWithValue({ message: "An unexpected error occurred" });
     }
   }
 );

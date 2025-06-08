@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   getAuthUserDataAsync,
   getCaptchaAsync,
+  loginUserAsync,
   logoutUserAsync,
 } from "@thunks/auth";
 import { TUserData } from "src/types";
@@ -12,6 +13,8 @@ const initialState: TAuthState = {
   isLoading: false,
   isAuth: false,
   captchaUrl: null,
+  isLoggingIn: false,
+  loginError: null,
 };
 
 const authSlice = createSlice({
@@ -23,6 +26,8 @@ const authSlice = createSlice({
     getIsLoading: (state) => state.isLoading,
     getIsAuth: (state) => state.isAuth,
     getCaptchaUrl: (state) => state.captchaUrl,
+    getIsLoggingIn: (state) => state.isLoggingIn,
+    getLoginError: (state) => state.loginError,
   },
   extraReducers: (builder) => {
     builder
@@ -50,6 +55,18 @@ const authSlice = createSlice({
         state.user = null;
       })
 
+      .addCase(loginUserAsync.pending, (state) => {
+        state.loginError = null;
+        state.isLoggingIn = true;
+      })
+      .addCase(loginUserAsync.fulfilled, (state) => {
+        state.isLoggingIn = false;
+      })
+      .addCase(loginUserAsync.rejected, (state, action) => {
+        state.isLoggingIn = false;
+        state.loginError = action.payload?.message || "Unknown error";
+      })
+
       .addCase(logoutUserAsync.fulfilled, (state) => {
         state.user = null;
         state.isAuth = false;
@@ -58,5 +75,11 @@ const authSlice = createSlice({
 });
 
 export const reducer = authSlice.reducer;
-export const { getCaptchaUrl, getCurrentUser, getIsAuth, getIsLoading } =
-  authSlice.selectors;
+export const {
+  getLoginError,
+  getIsLoggingIn,
+  getCaptchaUrl,
+  getCurrentUser,
+  getIsAuth,
+  getIsLoading,
+} = authSlice.selectors;

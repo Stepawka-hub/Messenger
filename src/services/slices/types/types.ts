@@ -1,5 +1,6 @@
 import {
   TDialog,
+  TError,
   TFriend,
   TMessage,
   TModal,
@@ -42,6 +43,8 @@ export type TAuthState = {
   isLoading: boolean;
   isAuth: boolean;
   captchaUrl: string | null;
+  loginError: string | null;
+  isLoggingIn: boolean;
 };
 
 export type TDialogsState = {

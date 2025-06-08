@@ -27,3 +27,7 @@ export type TContacts = {
   instagram: string;
   github: string;
 };
+
+export type TError = {
+  message: string;
+}
