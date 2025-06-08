@@ -20,6 +20,7 @@ import { Navbar } from "@components/navbar";
 import { Header } from "@components/header";
 import "./app.css";
 import clsx from "clsx";
+import { ProtectedRoute } from "@components/protected-route/protected-route";
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -42,14 +43,35 @@ export const App = () => {
       <div className="app-wrapper-content">
         <Suspense fallback={<Loader />}>
           <Routes>
-            <Route path="/" element={<Navigate to="/profile" />} />
+            <Route path="/" element={<Navigate to="/news" />} />
             <Route path="/profile/:userId" element={<Profile />} />
-            <Route path="/dialogs/*" element={<Dialogs />} />
+            <Route
+              path="/dialogs/*"
+              element={
+                <ProtectedRoute>
+                  <Dialogs />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/news" element={<News />} />
             <Route path="/users" element={<FindFriends />} />
-            <Route path="/music" element={<Music />} />
+            <Route
+              path="/music"
+              element={
+                <ProtectedRoute>
+                  <Music />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/settings" element={<Settings />} />
-            <Route path="/login" element={<Login />} />
+            <Route
+              path="/login"
+              element={
+                <ProtectedRoute onlyUnAuth>
+                  <Login />
+                </ProtectedRoute>
+              }
+            />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>

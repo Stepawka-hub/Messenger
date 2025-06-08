@@ -13,30 +13,34 @@ export const Navbar: FC = () => {
 
   const navItems = useMemo(
     () => [
-      { to: `/profile/${userId}`, label: "Profile" },
-      { to: "/dialogs", label: "Messages" },
-      { to: "/users", label: "Find friends" },
+      { to: `/profile/${userId}`, label: "Profile", hide: !isAuth },
+      { to: "/dialogs", label: "Messages", hide: !isAuth },
+      { to: "/users", label: "Find friends", hide: !isAuth },
       { to: "/news", label: "News" },
-      { to: "/music", label: "Music" },
+      { to: "/music", label: "Music", hide: !isAuth },
       { to: "/settings", label: "Settings" },
     ],
-    [userId]
+    [isAuth, userId]
   );
 
   return (
     <nav className={s.nav}>
       <div className={s.links}>
-        {navItems.map(({ to, label }) => (
-          <NavLink
-            key={to}
-            to={to}
-            className={({ isActive }) =>
-              clsx(s.link, { [s.link_active]: isActive })
-            }
-          >
-            {label}
-          </NavLink>
-        ))}
+        {navItems
+          .filter((n) => !n.hide)
+          .map(({ to, label }) => (
+            <NavLink
+              key={to}
+              to={to}
+              className={({ isActive }) =>
+                clsx(s.link, {
+                  [s.active]: isActive,
+                })
+              }
+            >
+              {label}
+            </NavLink>
+          ))}
       </div>
       {isAuth && <FriendList />}
     </nav>
