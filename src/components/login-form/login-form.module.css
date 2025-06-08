@@ -1,0 +1,49 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 2rem;
+  margin: 0 auto;
+  max-width: 35rem;
+
+  border-radius: 1rem;
+  background-color: var(--theme-primary-color);
+}
+
+.title {
+  margin-bottom: 1.25rem;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--title-color);
+  text-align: center;
+}
+
+.fieldset {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.submit {
+  width: 100%;
+  margin-top: 0.75rem;
+  padding: 0.5rem 2rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  background-color: var(--login-btn-color);
+}
+
+.captchaContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.captcha {
+  border-radius: 1rem;
+  margin-top: 1rem;
+}

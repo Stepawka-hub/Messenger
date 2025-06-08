@@ -1,29 +1,25 @@
 import { useEffect, Suspense, lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { useDispatch, useSelector } from "@store";
-
 import { initializeApp } from "@thunks/app";
 import { getInitialized, getModal } from "@slices/app";
 
 import { NotFound } from "@pages/not-found";
-//import { Login } from "@pages";
+import { Profile } from "@pages/profile";
+import { Login } from "@pages/login";
+import { FindFriends } from "@pages/find-friends";
+const Dialogs = lazy(() => import("@pages/dialogs"));
+const News = lazy(() => import("@pages/news"));
+const Music = lazy(() => import("@pages/music"));
+const Settings = lazy(() => import("@pages/settings"));
 
 import { Preloader } from "@components/preloader";
 import { Loader } from "@components/common/loader";
 import { ModalError } from "@components/common/modal-error";
 import { Navbar } from "@components/navbar";
 import { Header } from "@components/header";
-import { FindFriends } from "@pages/find-friends";
-
-// Lazy загрузка
-const Dialogs = lazy(() => import("@pages/dialogs"));
-const News = lazy(() => import("@pages/news"));
-const Music = lazy(() => import("@pages/music"));
-const Settings = lazy(() => import("@pages/settings"));
-
 import "./app.css";
 import clsx from "clsx";
-import { Profile } from "@pages/profile";
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -53,7 +49,7 @@ export const App = () => {
             <Route path="/users" element={<FindFriends />} />
             <Route path="/music" element={<Music />} />
             <Route path="/settings" element={<Settings />} />
-            {/* <Route path="/login" element={<Login />} /> */}
+            <Route path="/login" element={<Login />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>

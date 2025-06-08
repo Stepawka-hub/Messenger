@@ -9,7 +9,6 @@
   grid-template-rows: 6rem 1fr;
   grid-template-columns: 3fr 11fr;
 
-  font-family: 'Gilroy';
   color: var(--primary-color);
   height: 100vh;
   overflow-x: hidden;
