@@ -1,4 +1,4 @@
-import { TUser } from "src/types";
+import { TSocialUser } from "src/types";
 
 export type TResponse = TResponseWithData<object>;
 
@@ -9,7 +9,7 @@ export type TResponseWithData<T extends object> = {
 };
 
 export type TGetUsersData = {
-  items: TUser[];
+  items: TSocialUser[];
   totalCount: number;
 };
 
@@ -21,5 +21,5 @@ export type TLoginPayload = {
   email: string;
   password: string;
   rememberMe?: boolean;
-  captcha?: boolean;
+  captcha?: string;
 };

@@ -21,7 +21,7 @@ export const getProfileAsync = createAsyncThunk<TProfile, number>(
   }
 );
 
-export const getUserStatusAsync = createAsyncThunk<string, number>(
+export const getProfileStatusAsync = createAsyncThunk<string, number>(
   GET_STATUS,
   async (userId, { rejectWithValue }) => {
     try {

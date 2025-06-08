@@ -1,14 +1,15 @@
-.user-details {
+.userDetails {
   display: flex;
   gap: 1rem;
   text-align: right;
 }
 
-.avatar {
+.avatarWrapper {
+  cursor: pointer;
   order: 2;
 }
 
-.login {
+.username {
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--title-color);

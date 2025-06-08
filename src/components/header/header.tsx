@@ -4,7 +4,7 @@ import { UserDetails } from "@components/user-details";
 import { Loader } from "@components/common/loader";
 import { Button } from "@components/common/button";
 
-import { getIsAuth, getIsLoading } from "@slices/auth";
+import { getCurrentUser, getIsAuth, getIsLoading } from "@slices/auth";
 import { logoutUserAsync } from "@thunks/auth";
 import { useDispatch, useSelector } from "@store";
 
@@ -17,6 +17,7 @@ export const Header: FC = () => {
 
   const isLoading = useSelector(getIsLoading);
   const isAuth = useSelector(getIsAuth);
+  const currentUser = useSelector(getCurrentUser);
 
   const logout = () => {
     dispatch(logoutUserAsync());
@@ -31,9 +32,14 @@ export const Header: FC = () => {
           <Loader />
         ) : (
           <div>
-            {isAuth ? (
+            {isAuth && currentUser ? (
               <div className={s.userDetails}>
-                <UserDetails />
+                <UserDetails
+                  userId={currentUser.id}
+                  username={currentUser.login}
+                  email={currentUser.email}
+                  photos={currentUser.photos}
+                />
                 <Button className={s.logout} onClick={logout}>
                   <img src={logoutIcon} alt="Logout"></img>
                 </Button>

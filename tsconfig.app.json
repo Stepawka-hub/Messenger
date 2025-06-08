@@ -37,7 +37,8 @@
       "@thunks/*": ["src/services/thunks/*"],
       "@api": ["src/utils/api/api.ts"],
       "@utils/*": ["src/utils/*"],
-      "@store": ["src/services/store/store.ts"]
+      "@store": ["src/services/store/store.ts"],
+      "@types": ["src/types"]
     }
   },
   "include": ["src"]

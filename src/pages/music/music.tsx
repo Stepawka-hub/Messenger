@@ -1,7 +1,7 @@
 import { FC } from "react";
-import useTitle from "@hooks/useTitle";
-import s from "./Music.module.css";
 import { Loader } from "@components/common/loader";
+import { useTitle } from "@hooks/useTitle";
+import s from "./music.module.css";
 
 const Music: FC = () => {
   useTitle("Music");

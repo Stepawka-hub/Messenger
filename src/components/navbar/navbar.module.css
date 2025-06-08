@@ -13,7 +13,7 @@
 }
 
 .links {
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 }
 
 .link {
@@ -23,19 +23,15 @@
   text-decoration: none;
 }
 
-.link:hover:not(.link_active) {
+.link:hover:not(.active) {
   color: var(--link-color-active);
   transform: translateX(0.5rem);
 }
 
-.link:active:not(.link_active) {
+.link:active:not(.active) {
   opacity: 0.8;
 }
 
-.link_active {
+.active {
   color: var(--link-color-active);
-}
-
-.friends {
-  margin-top: 3rem;
 }

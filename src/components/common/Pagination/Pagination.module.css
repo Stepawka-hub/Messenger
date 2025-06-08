@@ -5,14 +5,19 @@
 }
 
 .item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
-  font-size: 1.5rem;
-  font-weight: 500;
+  width: 2.5rem;
+  height: 2.5rem;
 
-  padding: 0.5rem 1rem;
+  font-size: 1.25rem;
+  font-weight: 500;
   border-radius: 50%;
   background-color: var(--theme-primary-color);
-  transition: opacity 0.1s linear;
+  transition: opacity 0.15s ease-in-out;
+  user-select: none;
 }
 
 .item:hover {

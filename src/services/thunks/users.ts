@@ -16,6 +16,7 @@ export const getUsersAsync = createAsyncThunk<TGetUsersData, TPagination>(
       currentPage,
       pageSize
     );
+    
     const users = items.map((u) => ({
       ...u,
       location: { country: "Russia", city: "Moscow" },

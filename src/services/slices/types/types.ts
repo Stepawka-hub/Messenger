@@ -1,11 +1,12 @@
 import {
   TDialog,
+  TError,
   TFriend,
   TMessage,
   TModal,
   TPost,
   TProfile,
-  TUser,
+  TSocialUser,
   TUserData,
   TUserId,
 } from "src/types";
@@ -20,12 +21,14 @@ export type TFriendsState = {
 };
 
 export type TUsersState = {
-  users: TUser[];
-  totalUsersCount: number;
-  pageSize: number;
-  currentPage: number;
+  users: TSocialUser[];
   isLoading: boolean;
   followingInProgress: number[];
+  pagination: {
+    pageSize: number;
+    currentPage: number;
+    totalUsersCount: number;
+  };
 };
 
 export type TProfileState = {
@@ -40,6 +43,8 @@ export type TAuthState = {
   isLoading: boolean;
   isAuth: boolean;
   captchaUrl: string | null;
+  loginError: string | null;
+  isLoggingIn: boolean;
 };
 
 export type TDialogsState = {
@@ -52,7 +57,7 @@ export type TSetIsFollowingPayload = {
   followingInProgress: boolean;
 };
 
-export type TSetFollowePayload = {
+export type TSetFollowedPayload = {
   userid: TUserId;
   status: boolean;
-}
+};

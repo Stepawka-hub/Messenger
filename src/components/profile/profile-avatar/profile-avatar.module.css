@@ -1,0 +1,23 @@
+.avatarWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 15%;
+
+  max-width: 10rem;
+  height: 10rem;
+}
+
+.avatar {
+  max-width: 8rem;
+  max-height: 8rem;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.updatePhoto {
+  margin-top: 0.75rem;
+}

@@ -1,44 +1,39 @@
 import { useEffect, Suspense, lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { useSelector } from "react-redux";
-
-import "./App.css";
-
-import { useDispatch } from "@store";
+import { useDispatch, useSelector } from "@store";
 import { initializeApp } from "@thunks/app";
 import { getInitialized, getModal } from "@slices/app";
 
 import { NotFound } from "@pages/not-found";
-//import { Login, UsersContainer, ProfileContainer } from "@pages";
-
-// import { Navbar } from "@components/navbar";
-// import { Header } from "@/components/header";
+import { Profile } from "@pages/profile";
+import { Login } from "@pages/login";
+import { FindFriends } from "@pages/find-friends";
+const Dialogs = lazy(() => import("@pages/dialogs"));
+const News = lazy(() => import("@pages/news"));
+const Music = lazy(() => import("@pages/music"));
+const Settings = lazy(() => import("@pages/settings"));
 
 import { Preloader } from "@components/preloader";
 import { Loader } from "@components/common/loader";
 import { ModalError } from "@components/common/modal-error";
 import { Navbar } from "@components/navbar";
-import clsx from "clsx";
 import { Header } from "@components/header";
-
-// Lazy загрузка
-// const Dialogs = lazy(() => import("@pages/dialogs"));
-const News = lazy(() => import("@pages/news"));
-const Music = lazy(() => import("@pages/music"));
-const Settings = lazy(() => import("@pages/settings"));
+import "./app.css";
+import clsx from "clsx";
+import { ProtectedRoute } from "@components/protected-route/protected-route";
 
 export const App = () => {
   const dispatch = useDispatch();
   const initialized = useSelector(getInitialized);
   const modal = useSelector(getModal);
 
-  // useEffect(() => {
-  //   dispatch(initializeApp());
-  // }, []);
+  useEffect(() => {
+    dispatch(initializeApp());
+  }, []);
 
-  // if (!initialized) {
-  //   return <Preloader />;
-  // }
+  if (!initialized) {
+    return <Preloader />;
+  }
 
   return (
     <div className={clsx("app-wrapper", modal.isOpen && "locked")}>
@@ -48,14 +43,35 @@ export const App = () => {
       <div className="app-wrapper-content">
         <Suspense fallback={<Loader />}>
           <Routes>
-            <Route path="/" element={<Navigate to="/profile" />} />
-            {/* <Route path="/profile/:userId?" element={<ProfileContainer />} />
-            <Route path="/dialogs/*" element={<Dialogs />} /> */}
+            <Route path="/" element={<Navigate to="/news" />} />
+            <Route path="/profile/:userId" element={<Profile />} />
+            <Route
+              path="/dialogs/*"
+              element={
+                <ProtectedRoute>
+                  <Dialogs />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/news" element={<News />} />
-            {/* <Route path="/users" element={<UsersContainer />} /> */}
-            <Route path="/music" element={<Music />} />
+            <Route path="/users" element={<FindFriends />} />
+            <Route
+              path="/music"
+              element={
+                <ProtectedRoute>
+                  <Music />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/settings" element={<Settings />} />
-            {/* <Route path="/login" element={<Login />} /> */}
+            <Route
+              path="/login"
+              element={
+                <ProtectedRoute onlyUnAuth>
+                  <Login />
+                </ProtectedRoute>
+              }
+            />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>

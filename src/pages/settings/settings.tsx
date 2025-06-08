@@ -1,8 +1,7 @@
-import useTitle from "@hooks/useTitle";
-import s from "./Settings.module.css";
-
+import { FC } from "react";
 import { Loader } from "@components/common/loader";
-import { FC } from 'react';
+import { useTitle } from "@hooks/useTitle";
+import s from "./settings.module.css";
 
 const Settings: FC = () => {
   useTitle("Settings");

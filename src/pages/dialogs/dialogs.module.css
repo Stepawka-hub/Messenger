@@ -1,0 +1,14 @@
+.page {
+  display: grid;
+  grid-template-columns: 2fr 10fr;
+  gap: 2rem;
+  height: 100%;
+}
+
+.chatContainer {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  border-radius: 1rem;
+  background-color: var(--theme-primary-color);
+}

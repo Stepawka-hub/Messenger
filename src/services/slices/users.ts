@@ -1,30 +1,32 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getUsersAsync } from "@thunks/users";
 import { TGetUsersData } from "@utils/api/types";
+import { updateObjectInArray } from "@utils/helpers/array-helpers";
+import { TSocialUser } from "src/types";
 import {
-  TSetFollowePayload,
+  TSetFollowedPayload,
   TSetIsFollowingPayload,
   TUsersState,
 } from "./types";
-import { updateObjectInArray } from "@utils/helpers/objectHelpers";
-import { TUser } from "src/types";
 
 const initialState: TUsersState = {
   users: [],
-  pageSize: 4,
-  currentPage: 1,
-  totalUsersCount: 1,
   isLoading: false,
   followingInProgress: [],
+  pagination: {
+    pageSize: 6,
+    currentPage: 1,
+    totalUsersCount: 1,
+  },
 };
 
 const usersSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
-    setFollowed: (state, { payload }: PayloadAction<TSetFollowePayload>) => {
+    setFollowed: (state, { payload }: PayloadAction<TSetFollowedPayload>) => {
       const { userid, status } = payload;
-      state.users = updateObjectInArray<TUser, { followed: boolean }>(
+      state.users = updateObjectInArray<TSocialUser, { followed: boolean }>(
         state.users,
         userid,
         "id",
@@ -42,14 +44,12 @@ const usersSlice = createSlice({
         : state.followingInProgress.filter((id) => id !== userid);
     },
     setCurrentPage: (state, { payload }: PayloadAction<number>) => {
-      state.currentPage = payload;
+      state.pagination.currentPage = payload;
     },
   },
   selectors: {
     getUserList: (state) => state.users,
-    getPageSize: (state) => state.pageSize,
-    getTotalUsersCount: (state) => state.totalUsersCount,
-    getCurrentPage: (state) => state.currentPage,
+    getPagination: (state) => state.pagination,
     getIsLoading: (state) => state.isLoading,
     getFollowingInProgress: (state) => state.followingInProgress,
   },
@@ -62,7 +62,7 @@ const usersSlice = createSlice({
         getUsersAsync.fulfilled,
         (state, { payload }: PayloadAction<TGetUsersData>) => {
           state.isLoading = false;
-          state.totalUsersCount = payload.totalCount;
+          state.pagination.totalUsersCount = payload.totalCount;
           state.users = payload.items;
         }
       )
@@ -75,9 +75,7 @@ const usersSlice = createSlice({
 export const reducer = usersSlice.reducer;
 export const {
   getUserList,
-  getPageSize,
-  getTotalUsersCount,
-  getCurrentPage,
+  getPagination,
   getIsLoading,
   getFollowingInProgress,
 } = usersSlice.selectors;

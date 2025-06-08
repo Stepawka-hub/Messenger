@@ -29,12 +29,11 @@ const dialogsSlice = createSlice({
     },
   },
   selectors: {
-    getDialogsSelector: (state) => state.dialogs,
-    getMessagesSelector: (state) => state.messages,
+    getDialogs: (state) => state.dialogs,
+    getMessages: (state) => state.messages,
   },
 });
 
 export const reducer = dialogsSlice.reducer;
-export const { getMessagesSelector, getDialogsSelector } =
-  dialogsSlice.selectors;
+export const { getMessages, getDialogs } = dialogsSlice.selectors;
 export const { sendMessage } = dialogsSlice.actions;
