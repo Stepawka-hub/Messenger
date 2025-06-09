@@ -1,11 +1,14 @@
-import { FC } from "react";
-import { useSelector } from "@store";
-import { Dialog, Message } from "@components/dialogs";
-import { getDialogs, getMessages } from "@slices/dialogs";
+import { Dialog, Message, SendMessageForm } from "@components/dialogs";
+import { TSendMessageForm } from "@components/dialogs/send-message-form/types";
 import { useTitle } from "@hooks/useTitle";
+import { getDialogs, getMessages, sendMessage } from "@slices/dialogs";
+import { useDispatch, useSelector } from "@store";
+import { FC } from "react";
+import { SubmitHandler } from "react-hook-form";
 import s from "./dialogs.module.css";
 
 const Dialogs: FC = () => {
+  const dispatch = useDispatch();
   const dialogs = useSelector(getDialogs);
   const messages = useSelector(getMessages);
   useTitle("Messages");
@@ -15,12 +18,17 @@ const Dialogs: FC = () => {
     <Message key={m.id} message={m} />
   ));
 
+  const onSubmit: SubmitHandler<TSendMessageForm> = (formData) => {
+    dispatch(sendMessage(formData.message));
+  };
+
   return (
     <section className={s.page}>
       <section>{dialogsElements}</section>
 
-      <div className={s.chatContainer}>
-        <section>{messagesElements}</section>
+      <div className={s.chat}>
+        <section className={s.messageList}>{messagesElements}</section>
+        <SendMessageForm onSubmit={onSubmit} />
       </div>
     </section>
   );
