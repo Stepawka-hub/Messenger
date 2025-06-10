@@ -1,6 +1,6 @@
-@import url('./vendor/reset.css');
-@import url('./vendor/variables.css');
-@import url('./vendor/fonts/Gilroy/index.css');
+@import url('./styles/reset.css');
+@import url('./styles/variables.css');
+@import url('./styles/fonts/Gilroy/index.css');
 
 body {
   margin: 0;
@@ -13,13 +13,6 @@ body {
 
 .locked {
   overflow: hidden;
-}
-
-.textarea {
-  padding: 1rem;
-  border-radius: 1rem;
-  resize: none;
-  outline: none;
 }
 
 .avatar {

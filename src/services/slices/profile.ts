@@ -80,7 +80,6 @@ const profileSlice = createSlice({
       .addCase(
         getProfileStatusAsync.fulfilled,
         (state, { payload }: PayloadAction<string>) => {
-          console.log(payload);
           state.status = payload;
         }
       );

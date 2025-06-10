@@ -1,9 +1,9 @@
+import { Button } from "@ui/button";
+import { Textarea } from "@ui/form-elements";
 import { FC } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { AddPostFormProps, TAddPostForm } from "./types";
 import s from "./add-post-form.module.css";
-import { Button } from "@ui/button";
-import { Input } from "@ui/form-elements";
+import { AddPostFormProps, TAddPostForm } from "./types";
 
 export const AddPostForm: FC<AddPostFormProps> = ({ onSubmit }) => {
   const { register, handleSubmit, reset, formState } = useForm<TAddPostForm>({
@@ -18,10 +18,9 @@ export const AddPostForm: FC<AddPostFormProps> = ({ onSubmit }) => {
 
   return (
     <form className={s.form} onSubmit={handleSubmit(handleFormSubmit)}>
-      <Input
+      <Textarea
         id="post-text"
-        type="text"
-        classes={{ input: s.input }}
+        classes={{ textarea: s.textarea }}
         placeholder="Что у вас нового?"
         error={error}
         {...register("postText", {
