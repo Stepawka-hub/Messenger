@@ -20,7 +20,7 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = ({
   return (
     <div className={s.avatarWrapper}>
       <img className={s.avatar} src={photos?.large || avatar} alt="Avatar" />
-      {isOwner && (
+      {!isOwner && (
         <InputFile
           className={s.updatePhoto}
           text="Сменить аватар"

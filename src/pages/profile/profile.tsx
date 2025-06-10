@@ -16,6 +16,7 @@ export const Profile = () => {
 
   const currentUser = useSelector(getCurrentUser);
   const { userId } = useParams();
+  const isOwner = Number(userId) === currentUser?.id;
 
   useEffect(() => {
     const id = Number(userId);
@@ -33,7 +34,7 @@ export const Profile = () => {
 
   return (
     <section>
-      <ProfileInfo isOwner={userId === currentUser?.id} profile={profile} />
+      <ProfileInfo isOwner={isOwner} profile={profile} />
       <MyPosts />
     </section>
   );
