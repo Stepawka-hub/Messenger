@@ -7,6 +7,7 @@ export default defineConfig({
     alias: {
       "@sounds": path.resolve(__dirname, "src/assets/sounds"),
       "@images": path.resolve(__dirname, "src/assets/images"),
+      "@ui": path.resolve(__dirname, "src/ui"),
       "@components": path.resolve(__dirname, "src/components"),
       "@hooks": path.resolve(__dirname, "src/hooks"),
       "@pages": path.resolve(__dirname, "src/pages"),

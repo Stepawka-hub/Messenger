@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "@store";
 import { useEffect } from "react";
 
-import { Loader } from "@components/common/loader";
+import { Loader } from "@ui/loader";
 import { ProfileInfo } from "@components/profile";
 import { useTitle } from "@hooks/useTitle";
 import { getCurrentUser } from "@slices/auth";

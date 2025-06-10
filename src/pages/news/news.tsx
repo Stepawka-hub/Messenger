@@ -1,5 +1,5 @@
 import { useTitle } from "@hooks/useTitle";
-import { Loader } from "@components/common/loader";
+import { Loader } from "@ui/loader";
 import { FC } from "react";
 import s from "./news.module.css";
 

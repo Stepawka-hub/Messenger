@@ -1,5 +1,5 @@
-import { Loader } from "@components/common/loader";
-import { Pagination } from "@components/common/pagination";
+import { Loader } from "@ui/loader";
+import { Pagination } from "@ui/pagination";
 import { UserList } from "@components/user-list";
 import { usePaginatedUsers } from "@hooks/usePaginatedUsers";
 import { useTitle } from "@hooks/useTitle";

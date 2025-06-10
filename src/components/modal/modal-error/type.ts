@@ -1,4 +1,4 @@
-import { ModalProps } from "../modal/types";
+import { ModalProps } from "../../modal/modal/types";
 
 export type ModalErrorProps = ModalProps & {
   title: string;

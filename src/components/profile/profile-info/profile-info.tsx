@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { Button } from "@components/common/button";
+import { Button } from "@ui/button";
 import { useSelector } from "@store";
 import { ProfileAvatar } from "../profile-avatar";
 import { ProfileContacts } from "../profile-contacts";

@@ -1,4 +1,4 @@
-import { Button } from "@components/common/button";
+import { Button } from "@ui/button";
 import { NavLink } from "react-router-dom";
 import { FC } from "react";
 

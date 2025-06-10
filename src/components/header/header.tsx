@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { NavLink } from "react-router-dom";
 import { UserDetails } from "@components/user-details";
-import { Loader } from "@components/common/loader";
-import { Button } from "@components/common/button";
+import { Loader } from "@ui/loader";
+import { Button } from "@ui/button";
 
 import { getCurrentUser, getIsAuth, getIsLoading } from "@slices/auth";
 import { logoutUserAsync } from "@thunks/auth";

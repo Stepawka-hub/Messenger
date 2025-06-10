@@ -1,9 +1,9 @@
-import { Button } from "@components/common/button";
+import { Button } from "@ui/button";
 import { FC } from "react";
 import { SendMessageFormProps, TSendMessageForm } from "./types";
 import s from "./send-message-form.module.css";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Input } from "@components/form-elements";
+import { Input } from "@ui/form-elements";
 
 export const SendMessageForm: FC<SendMessageFormProps> = ({ onSubmit }) => {
   const { register, handleSubmit, formState, reset } =

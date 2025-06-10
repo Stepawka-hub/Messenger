@@ -2,8 +2,8 @@ import { FC } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { AddPostFormProps, TAddPostForm } from "./types";
 import s from "./add-post-form.module.css";
-import { Button } from "@components/common/button";
-import { Input } from "@components/form-elements";
+import { Button } from "@ui/button";
+import { Input } from "@ui/form-elements";
 
 export const AddPostForm: FC<AddPostFormProps> = ({ onSubmit }) => {
   const { register, handleSubmit, reset, formState } = useForm<TAddPostForm>({
