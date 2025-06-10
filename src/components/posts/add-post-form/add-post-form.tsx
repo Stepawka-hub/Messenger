@@ -1,3 +1,4 @@
+import { useSubmitOnEnter } from "@hooks/useSubmitOnEnter";
 import { Button } from "@ui/button";
 import { Textarea } from "@ui/form-elements";
 import { FC } from "react";
@@ -16,8 +17,15 @@ export const AddPostForm: FC<AddPostFormProps> = ({ onSubmit }) => {
     onSubmit(formData);
   };
 
+  const { handleKeyDown } = useSubmitOnEnter({
+    onSubmit: () => handleSubmit(handleFormSubmit)(),
+  });
+
   return (
-    <form className={s.form} onSubmit={handleSubmit(handleFormSubmit)}>
+    <form
+      className={s.form}
+      onSubmit={handleSubmit(handleFormSubmit)}
+    >
       <Textarea
         id="post-text"
         classes={{ textarea: s.textarea }}
@@ -30,6 +38,7 @@ export const AddPostForm: FC<AddPostFormProps> = ({ onSubmit }) => {
             message: "Maximum number of characters exceeded",
           },
         })}
+        onKeyDown={handleKeyDown}
       />
 
       <Button className={s.submit}>Отправить</Button>

@@ -1,9 +1,10 @@
 import { Button } from "@ui/button";
+import { Textarea } from "@ui/form-elements";
 import { FC } from "react";
-import { SendMessageFormProps, TSendMessageForm } from "./types";
-import s from "./send-message-form.module.css";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Input } from "@ui/form-elements";
+import s from "./send-message-form.module.css";
+import { SendMessageFormProps, TSendMessageForm } from "./types";
+import { useSubmitOnEnter } from '@hooks/useSubmitOnEnter';
 
 export const SendMessageForm: FC<SendMessageFormProps> = ({ onSubmit }) => {
   const { register, handleSubmit, formState, reset } =
@@ -17,11 +18,14 @@ export const SendMessageForm: FC<SendMessageFormProps> = ({ onSubmit }) => {
     reset();
   };
 
+  const { handleKeyDown } = useSubmitOnEnter({
+    onSubmit: () => handleSubmit(handleFormSubmit)(),
+  });
+
   return (
     <form className={s.form} onSubmit={handleSubmit(handleFormSubmit)}>
-      <Input
+      <Textarea
         id="new-message"
-        type="text"
         placeholder="Send message..."
         error={error}
         {...register("message", {
@@ -31,8 +35,9 @@ export const SendMessageForm: FC<SendMessageFormProps> = ({ onSubmit }) => {
             message: "Maximum number of characters exceeded",
           },
         })}
+        onKeyDown={handleKeyDown}
       />
-      <Button children="Отправить" className={s.submit} />
+      <Button className={s.submit}>Отправить</Button>
     </form>
   );
 };
