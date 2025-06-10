@@ -1,8 +1,7 @@
 .card {
   display: flex;
   align-items: center;
-  gap: 2rem;
-  margin-bottom: 2rem;
+  gap: 1rem;
 }
 
 .header,

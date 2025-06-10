@@ -9,18 +9,16 @@ export const UserList: FC<UserListProps> = ({
   onFollow,
   onUnFollow,
   followingInProgress,
-}) => {
-  return (
-    <div className={s.list}>
-      {users.map((u) => (
-        <UserCard
-          user={u}
-          key={u.id}
-          followToUser={onFollow}
-          unfollowFromUser={onUnFollow}
-          followingInProgress={checkInProgress(followingInProgress, u.id)}
-        />
-      ))}
-    </div>
-  );
-};
+}) => (
+  <div className={s.list}>
+    {users.map((u) => (
+      <UserCard
+        user={u}
+        key={u.id}
+        followToUser={onFollow}
+        unfollowFromUser={onUnFollow}
+        followingInProgress={checkInProgress(followingInProgress, u.id)}
+      />
+    ))}
+  </div>
+);

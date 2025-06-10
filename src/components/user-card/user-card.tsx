@@ -49,4 +49,4 @@ export const UserCard: FC<UserCardProps> = ({
       </div>
     </article>
   );
-};
+}; 

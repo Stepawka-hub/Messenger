@@ -1,7 +1,7 @@
-import { TFindFriendUser, TUserId } from "src/types";
+import { TSocialUser, TUserId } from "@types";
 
 export type UserCardProps = {
-  user: TFindFriendUser;
+  user: TSocialUser;
   followToUser: (id: TUserId) => void;
   unfollowFromUser: (id: TUserId) => void;
   followingInProgress: boolean;

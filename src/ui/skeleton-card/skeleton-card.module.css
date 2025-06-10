@@ -1,0 +1,26 @@
+.card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 10rem;
+}
+
+.avatar {
+  width: 6rem;
+  height: 6rem;
+  background-color: var(--theme-primary-color);
+  border-radius: 50%;
+}
+
+.content {
+  width: 100%;
+  height: 5rem;
+  border-radius: 1rem;
+  background-color: var(--theme-primary-color);
+}
