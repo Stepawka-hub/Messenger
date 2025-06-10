@@ -8,6 +8,7 @@ import { getCurrentUser } from "@slices/auth";
 import { getProfile } from "@slices/profile";
 import { getProfileAsync, getProfileStatusAsync } from "@thunks/profile";
 import { useParams } from "react-router-dom";
+import { MyPosts } from "@components/posts/my-posts";
 
 export const Profile = () => {
   const dispatch = useDispatch();
@@ -33,7 +34,7 @@ export const Profile = () => {
   return (
     <section>
       <ProfileInfo isOwner={userId === currentUser?.id} profile={profile} />
-      {/* <MyPosts /> */}
+      <MyPosts />
     </section>
   );
 };
