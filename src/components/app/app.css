@@ -15,6 +15,7 @@
 }
 
 .app-wrapper-content {
+  overflow-x: hidden;
   padding: 2rem var(--side-padding);
   grid-area: c;
   background-color: var(--theme-secondary-color);
