@@ -8,9 +8,9 @@ import avatar from "@images/black.png";
 
 export const UserCard: FC<UserCardProps> = ({
   user,
+  followingInProgress,
   followToUser,
   unfollowFromUser,
-  followingInProgress,
 }) => {
   const { id, name, status, location, photos, followed } = user;
   const follow = () => followToUser(id);
@@ -49,4 +49,4 @@ export const UserCard: FC<UserCardProps> = ({
       </div>
     </article>
   );
-}; 
+};

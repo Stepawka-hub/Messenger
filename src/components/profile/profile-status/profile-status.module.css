@@ -1,11 +1,15 @@
-.status {
-  font-size: 1.25rem;
+.container {
   line-height: 1.35;
 }
 
 .label {
+  font-size: 1.2rem;
   font-weight: 500;
   color: var(--lighten-orange-color);
+}
+
+.status {
+  font-size: 1.15rem;
 }
 
 .input {

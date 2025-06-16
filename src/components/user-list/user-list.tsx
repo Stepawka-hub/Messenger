@@ -1,4 +1,4 @@
-import { UserCard } from "@components/user-card";
+import { UserCard } from "@components/user-list/user-card";
 import { checkInProgress } from "@utils/helpers/array-helpers";
 import { FC } from "react";
 import { UserListProps } from "./type";
@@ -10,7 +10,7 @@ export const UserList: FC<UserListProps> = ({
   onUnFollow,
   followingInProgress,
 }) => (
-  <div className={s.list}>
+  <section className={s.list}>
     {users.map((u) => (
       <UserCard
         user={u}
@@ -20,5 +20,5 @@ export const UserList: FC<UserListProps> = ({
         followingInProgress={checkInProgress(followingInProgress, u.id)}
       />
     ))}
-  </div>
+  </section>
 );

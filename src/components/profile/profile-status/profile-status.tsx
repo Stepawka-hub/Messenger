@@ -30,7 +30,7 @@ export const ProfileStatus: FC<ProfileStatusProps> = ({
   };
 
   return (
-    <div className={s.status}>
+    <div className={s.container}>
       <span className={s.label}>{label}</span>
       {editMode ? (
         <input
@@ -41,7 +41,9 @@ export const ProfileStatus: FC<ProfileStatusProps> = ({
           onBlur={deactivateEditMode}
         />
       ) : (
-        <span onDoubleClick={activateEditMode}>{userStatus || "Нет"}</span>
+        <span className={s.status} onDoubleClick={activateEditMode}>
+          {userStatus || "Нет"}
+        </span>
       )}
     </div>
   );

@@ -1,0 +1,39 @@
+.item {
+  position: relative;
+  padding-left: 1.2rem;
+  font-size: 1.2rem;
+  line-height: 1.35;
+}
+
+.item::before {
+  content: '';
+
+  position: absolute;
+  top: 0.5rem;
+  left: 0;
+
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: var(--lighten-orange-color);
+  border-radius: 50%;
+}
+
+.label {
+  font-weight: 500;
+  color: var(--lighten-orange-color);
+}
+
+.link {
+  font-size: 1.15rem;
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: .2s ease-in;
+}
+
+.link:hover {
+  opacity: 0.8;
+}
+
+.link:active {
+  opacity: 0.6;
+}
