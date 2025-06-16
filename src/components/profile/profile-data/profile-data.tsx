@@ -7,12 +7,7 @@ import s from "./profile-data.module.css";
 
 const getValue = getSafeValue("Нет");
 
-export const ProfileData: FC<ProfileDataProps> = ({
-  isOwner,
-  profile,
-  status,
-  updateUserStatus,
-}) => {
+export const ProfileData: FC<ProfileDataProps> = ({ isOwner, profile }) => {
   const { fullName, aboutMe, lookingForAJob, lookingForAJobDescription } =
     profile;
 
@@ -38,11 +33,7 @@ export const ProfileData: FC<ProfileDataProps> = ({
     <div>
       <h2 className={s.title}>{fullName || "Имя пользователя"}</h2>
       <section className={s.data}>
-        <ProfileStatus
-          isOwner={isOwner}
-          status={status}
-          updateUserStatus={updateUserStatus}
-        />
+        <ProfileStatus isOwner={isOwner} />
         {profileInfo.map((item, index) => (
           <ProfileDataItem key={index} label={item.label} value={item.value} />
         ))}

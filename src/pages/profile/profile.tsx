@@ -5,7 +5,7 @@ import { Loader } from "@ui/loader";
 import { ProfileInfo } from "@components/profile";
 import { useTitle } from "@hooks/useTitle";
 import { getCurrentUser } from "@slices/auth";
-import { getProfile } from "@slices/profile";
+import { getProfile, setProfile } from "@slices/profile";
 import { getProfileAsync, getProfileStatusAsync } from "@thunks/profile";
 import { useParams } from "react-router-dom";
 import { MyPosts } from "@components/posts/my-posts";
@@ -16,15 +16,19 @@ export const Profile = () => {
 
   const currentUser = useSelector(getCurrentUser);
   const { userId } = useParams();
-  const isOwner = Number(userId) === currentUser?.id;
+  const userIdNumber = Number(userId);
+  const isOwner = userIdNumber === currentUser?.id;
 
   useEffect(() => {
-    const id = Number(userId);
-    if (id) {
-      dispatch(getProfileAsync(id));
-      dispatch(getProfileStatusAsync(id));
+    if (userIdNumber) {
+      dispatch(getProfileAsync(userIdNumber));
+      dispatch(getProfileStatusAsync(userIdNumber));
     }
-  }, [dispatch, userId]);
+
+    return () => {
+      dispatch(setProfile(null));
+    };
+  }, [dispatch, userIdNumber]);
 
   useTitle(profile?.fullName);
 

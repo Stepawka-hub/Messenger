@@ -1,12 +1,15 @@
+import clsx from "clsx";
 import { ChangeEvent, FC, useEffect, useState } from "react";
 import s from "./profile-status.module.css";
 import { ProfileStatusProps } from "./type";
+import { getProfileStatus } from "@slices/profile";
+import { useSelector } from "react-redux";
+import { updateProfileStatusAsync } from "@thunks/profile";
+import { useDispatch } from "@store";
 
-export const ProfileStatus: FC<ProfileStatusProps> = ({
-  isOwner,
-  status,
-  updateUserStatus,
-}) => {
+export const ProfileStatus: FC<ProfileStatusProps> = ({ isOwner }) => {
+  const dispatch = useDispatch();
+  const status = useSelector(getProfileStatus);
   const [editMode, setEditMode] = useState(false);
   const [userStatus, setUserStatus] = useState(status);
 
@@ -21,7 +24,7 @@ export const ProfileStatus: FC<ProfileStatusProps> = ({
 
   const deactivateEditMode = () => {
     setEditMode(false);
-    updateUserStatus(userStatus);
+    dispatch(updateProfileStatusAsync(userStatus));
   };
 
   const onStatusChange = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -39,7 +42,10 @@ export const ProfileStatus: FC<ProfileStatusProps> = ({
           onBlur={deactivateEditMode}
         />
       ) : (
-        <span className={s.status} onClick={activateEditMode}>
+        <span
+          className={clsx(s.status, { [s.editable]: isOwner })}
+          onClick={activateEditMode}
+        >
           {userStatus || "Нет"}
         </span>
       )}

@@ -1,2 +1,3 @@
-export const isValidUrl = (value: string) =>
-  value && /^(ftp|http|https):\/\/[^ "]+$/.test(value);
+export const URL_REGEX = /^(ftp|http|https):\/\/[^ "]+$/;
+
+export const isValidUrl = (value: string) => value && URL_REGEX.test(value);

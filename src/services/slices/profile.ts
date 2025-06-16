@@ -34,7 +34,7 @@ const profileSlice = createSlice({
     deletePost: (state, { payload }: PayloadAction<number>) => {
       state.posts = state.posts.filter((post) => post.id !== payload);
     },
-    setProfile: (state, { payload }: PayloadAction<TProfile>) => {
+    setProfile: (state, { payload }: PayloadAction<TProfile | null>) => {
       state.profile = payload;
     },
     setProfileStatus: (state, { payload }: PayloadAction<string>) => {
