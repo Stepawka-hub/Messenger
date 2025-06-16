@@ -1,5 +1,5 @@
 .container {
-  line-height: 1.35;
+  min-height: 2rem;
 }
 
 .label {
@@ -9,12 +9,21 @@
 }
 
 .status {
+  line-height: 1.85rem;
   font-size: 1.15rem;
+  transition: .2s ease-in;
+}
+
+.status:hover {
+  cursor: pointer;
+  opacity: 0.8;
 }
 
 .input {
-  padding: 0.25rem 0.5rem;
+  width: 100%;
+  padding: 0.15rem 0.25rem;
   border-radius: 0.5rem;
+  font-size: 1.15rem;
   color: var(--primary-color);
   background-color: var(--theme-primary-color);
 }

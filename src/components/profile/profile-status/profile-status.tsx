@@ -5,7 +5,6 @@ import { ProfileStatusProps } from "./type";
 export const ProfileStatus: FC<ProfileStatusProps> = ({
   isOwner,
   status,
-  label,
   updateUserStatus,
 }) => {
   const [editMode, setEditMode] = useState(false);
@@ -31,7 +30,6 @@ export const ProfileStatus: FC<ProfileStatusProps> = ({
 
   return (
     <div className={s.container}>
-      <span className={s.label}>{label}</span>
       {editMode ? (
         <input
           className={s.input}
@@ -41,7 +39,7 @@ export const ProfileStatus: FC<ProfileStatusProps> = ({
           onBlur={deactivateEditMode}
         />
       ) : (
-        <span className={s.status} onDoubleClick={activateEditMode}>
+        <span className={s.status} onClick={activateEditMode}>
           {userStatus || "Нет"}
         </span>
       )}

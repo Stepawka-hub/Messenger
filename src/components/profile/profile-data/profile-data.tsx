@@ -37,9 +37,8 @@ export const ProfileData: FC<ProfileDataProps> = ({
   return (
     <div>
       <h2 className={s.title}>{fullName || "Имя пользователя"}</h2>
-      <section>
+      <section className={s.data}>
         <ProfileStatus
-          label="Статус: "
           isOwner={isOwner}
           status={status}
           updateUserStatus={updateUserStatus}
