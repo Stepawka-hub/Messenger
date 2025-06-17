@@ -1,16 +1,13 @@
-.container {
+.form {
   display: flex;
   justify-content: space-between;
-}
-
-.form {
-  flex: 70%;
 }
 
 .fields {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
+  flex: 70%;
 }
 
 .fieldContainer {

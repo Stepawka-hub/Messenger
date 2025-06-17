@@ -9,6 +9,12 @@ export const useProfileEdit = (profile: TProfile, isOwner: boolean) => {
   const dispatch = useDispatch();
   const [editMode, setEditMode] = useState(false);
 
+  const { contacts, ...rest } = profile;
+  const initialValues: TProfileEditForm = {
+    ...rest,
+    ...contacts,
+  };
+
   const activateEditMode = () => isOwner && setEditMode(true);
   const deactivateEditMode = () => {
     setEditMode(false);
@@ -32,9 +38,11 @@ export const useProfileEdit = (profile: TProfile, isOwner: boolean) => {
       },
     };
     dispatch(updateProfileAsync(updatedProfile));
+    deactivateEditMode();
   };
 
   return {
+    initialValues,
     editMode,
     activateEditMode,
     deactivateEditMode,

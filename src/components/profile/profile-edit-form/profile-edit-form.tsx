@@ -129,16 +129,16 @@ export const ProfileEditForm: FC<ProfileEditFormProps> = ({
             </div>
           ))}
         </fieldset>
-        {error && <span className={s.error}>{error}</span>}
+        <div className={s.buttons}>
+          <Button type="submit" className={s.saveBtn}>
+            Сохранить
+          </Button>
+          <Button type="button" className={s.cancelBtn} onClick={onCancel}>
+            Отменить
+          </Button>
+        </div>
       </form>
-      <div className={s.buttons}>
-        <Button type="submit" className={s.saveBtn}>
-          Сохранить
-        </Button>
-        <Button type="button" className={s.cancelBtn} onClick={onCancel}>
-          Отменить
-        </Button>
-      </div>
+      {error && <span className={s.error}>{error}</span>}
     </div>
   );
 };

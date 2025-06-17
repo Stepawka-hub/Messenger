@@ -12,8 +12,8 @@ import { TProfileState } from "./types";
 const initialState: TProfileState = {
   profile: null,
   status: "Нет",
-  posts: [...mockPosts],
   isUpdatingPhoto: false,
+  posts: [...mockPosts],
 };
 
 const profileSlice = createSlice({

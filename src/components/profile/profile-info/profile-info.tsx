@@ -1,32 +1,30 @@
-import { FC } from "react";
 import {
   ProfileAvatar,
   ProfileContacts,
   ProfileData,
   ProfileEditForm,
 } from "@components/profile";
-import { Button } from "@ui/button";
 import { useProfileEdit } from "@hooks/useProfileEdit";
-import { ProfileInfoProps } from "./type";
-import { TProfileEditForm } from "../profile-edit-form/types";
+import { Button } from "@ui/button";
+import { FC } from "react";
 import s from "./profile-info.module.css";
+import { ProfileInfoProps } from "./type";
 
 export const ProfileInfo: FC<ProfileInfoProps> = ({ isOwner, profile }) => {
-  const { photos, contacts, ...rest } = profile;
-  const initialValues: TProfileEditForm = {
-    ...rest,
-    ...contacts,
-  };
-
-  const { editMode, activateEditMode, deactivateEditMode, onSubmit } =
-    useProfileEdit(profile, isOwner);
+  const {
+    initialValues,
+    editMode,
+    activateEditMode,
+    deactivateEditMode,
+    onSubmit,
+  } = useProfileEdit(profile, isOwner);
 
   return (
     <div className={s.container}>
       <div className={s.info}>
         <div className={s.details}>
           <div className={s.avatar}>
-            <ProfileAvatar isOwner={isOwner} photos={photos} />
+            <ProfileAvatar isOwner={isOwner} photos={profile.photos} />
           </div>
 
           {editMode ? (
