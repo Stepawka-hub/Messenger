@@ -25,35 +25,29 @@ export const ProfileInfo: FC<ProfileInfoProps> = ({ isOwner, profile }) => {
     <div className={s.container}>
       <div className={s.info}>
         <div className={s.details}>
-          <ProfileAvatar isOwner={isOwner} photos={photos} />
+          <div className={s.avatar}>
+            <ProfileAvatar isOwner={isOwner} photos={photos} />
+          </div>
 
           {editMode ? (
             <ProfileEditForm
               initialValue={initialValues}
               error={""}
               onSubmit={onSubmit}
+              onCancel={deactivateEditMode}
             />
           ) : (
             <ProfileData isOwner={isOwner} profile={profile} />
           )}
         </div>
 
-        <div>
-          {isOwner && (
-            <Button
-              className={s.editBtn}
-              children={editMode ? "Сохранить" : "Редактировать профиль"}
-              onClick={editMode ? deactivateEditMode : activateEditMode}
-            />
-          )}
-          {editMode && (
-            <Button
-              className={s.cancelBtn}
-              children="Отменить"
-              onClick={deactivateEditMode}
-            />
-          )}
-        </div>
+        {isOwner && !editMode && (
+          <Button
+            className={s.editBtn}
+            children={"Редактировать профиль"}
+            onClick={activateEditMode}
+          />
+        )}
       </div>
 
       {!editMode && <ProfileContacts contacts={profile.contacts} />}

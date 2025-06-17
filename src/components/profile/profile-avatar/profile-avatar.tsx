@@ -21,7 +21,7 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = ({ isOwner, photos }) => {
   };
 
   return (
-    <div>
+    <div className={s.container}>
       <div className={s.avatarWrapper}>
         <img className={s.avatar} src={photos?.large || avatar} alt="Avatar" />
       </div>

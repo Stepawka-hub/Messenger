@@ -14,19 +14,18 @@
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  flex: 0 0 75%;
 }
 
-.editBtn,
-.cancelBtn {
+.avatar {
+  flex: 20%;
+}
+
+.editBtn {
+  align-self: flex-start;
   margin-left: 0.5rem;
   padding: 0.5rem 1rem;
-  color: var(--primary-color);
   font-size: 1.1rem;
   font-weight: 500;
+  color: var(--primary-color);
   background-color: var(--edit-btn-color);
-}
-
-.cancelBtn {
-  background-color: var(--disabled-btn-color);
 }

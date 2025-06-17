@@ -4,6 +4,7 @@ export type ProfileEditFormProps = {
   initialValue: TProfileEditForm;
   error: string | null;
   onSubmit: SubmitHandler<TProfileEditForm>;
+  onCancel: () => void;
 };
 
 export type TProfileEditForm = {

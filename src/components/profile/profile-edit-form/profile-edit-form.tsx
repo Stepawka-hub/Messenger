@@ -4,11 +4,13 @@ import { FC, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import s from "./profile-edit-form.module.css";
 import { FieldConfig, ProfileEditFormProps, TProfileEditForm } from "./types";
+import { Button } from "@ui/button";
 
 export const ProfileEditForm: FC<ProfileEditFormProps> = ({
   initialValue,
   error,
   onSubmit,
+  onCancel,
 }) => {
   const { register, handleSubmit, formState } = useForm<TProfileEditForm>({
     mode: "onChange",
@@ -106,27 +108,37 @@ export const ProfileEditForm: FC<ProfileEditFormProps> = ({
   );
 
   return (
-    <form className={s.profileData} onSubmit={handleSubmit(onSubmit)}>
-      <fieldset className={s.formFields}>
-        {fields.map(({ label, name, validate }) => (
-          <div className={s.fieldContainer} key={name}>
-            <Input
-              id={name}
-              type="text"
-              label={label}
-              classes={{
-                wrapper: s.field,
-                input: s.input,
-                label: s.label,
-              }}
-              error={errors[name]?.message}
-              placeholder={label}
-              {...register(name, validate)}
-            />
-          </div>
-        ))}
-      </fieldset>
-      {error && <span className={s.error}>{error}</span>}
-    </form>
+    <div className={s.container}>
+      <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
+        <fieldset className={s.fields}>
+          {fields.map(({ label, name, validate }) => (
+            <div className={s.fieldContainer} key={name}>
+              <Input
+                id={name}
+                type="text"
+                label={label}
+                classes={{
+                  wrapper: s.field,
+                  input: s.input,
+                  label: s.label,
+                }}
+                error={errors[name]?.message}
+                placeholder={label}
+                {...register(name, validate)}
+              />
+            </div>
+          ))}
+        </fieldset>
+        {error && <span className={s.error}>{error}</span>}
+      </form>
+      <div className={s.buttons}>
+        <Button type="submit" className={s.saveBtn}>
+          Сохранить
+        </Button>
+        <Button type="button" className={s.cancelBtn} onClick={onCancel}>
+          Отменить
+        </Button>
+      </div>
+    </div>
   );
 };
