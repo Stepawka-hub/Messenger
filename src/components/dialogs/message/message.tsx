@@ -7,9 +7,9 @@ export const Message: FC<MessageProps> = ({ message }) => {
   return (
     <article className={s.message}>
       <div>
-        <img src={avatar} className="avatar" alt="Avatar" />
+        <img className="avatar" src={avatar} alt="Avatar" />
       </div>
-      <div>
+      <div className={s.messageContent}>
         <h4 className={s.author}>{username}</h4>
         <span className={s.text}>{text}</span>
       </div>

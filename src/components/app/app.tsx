@@ -13,9 +13,9 @@ const News = lazy(() => import("@pages/news"));
 const Music = lazy(() => import("@pages/music"));
 const Settings = lazy(() => import("@pages/settings"));
 
-import { Preloader } from "@components/preloader";
-import { Loader } from "@components/common/loader";
-import { ModalError } from "@components/common/modal-error";
+import { Preloader } from "@ui/preloader";
+import { Loader } from "@ui/loader";
+import { ModalError } from "@components/modal";
 import { Navbar } from "@components/navbar";
 import { Header } from "@components/header";
 import "./app.css";

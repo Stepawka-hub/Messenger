@@ -1,0 +1,26 @@
+.textareaWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-size: 1.2rem;
+}
+
+.textarea {
+  padding: 1rem;
+  border-radius: 1rem;
+  color: var(--primary-color);
+  background-color: var(--input-bg-color);
+  resize: none;
+  outline: none;
+  overflow: hidden,
+}
+
+.label {
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+}
+
+.error {
+  margin-top: 0.25rem;
+  color: var(--error-color);
+}

@@ -1,0 +1,15 @@
+.post {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+
+  border-radius: 0.5rem;
+  background-color: var(--theme-primary-color);
+}
+
+.text {
+  font-size: 1.25rem;
+  word-wrap: break-word;
+  overflow-x: hidden;
+}

@@ -9,6 +9,10 @@
   background-color: var(--theme-secondary-color);
 }
 
+.messageContent {
+  overflow-x: hidden;
+}
+
 .author {
   margin-bottom: 0.5rem;
 
@@ -19,4 +23,6 @@
 
 .text {
   font-size: 1.15rem;
+  word-wrap: break-word;
+  overflow-x: hidden;
 }

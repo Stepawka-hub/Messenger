@@ -1,24 +1,40 @@
-import { InputFile } from "@components/common/input-file";
 import avatar from "@images/black.png";
-import { FC } from "react";
+import { useDispatch } from "@store";
+import { updateProfilePhotoAsync } from "@thunks/profile";
+import { InputFile } from "@ui/form-elements/input-file";
+import { ChangeEvent, FC } from "react";
 import s from "./profile-avatar.module.css";
 import { ProfileAvatarProps } from "./type";
+import { getIsUpdatingPhoto } from "@slices/profile";
+import { useSelector } from "react-redux";
 
-export const ProfileAvatar: FC<ProfileAvatarProps> = ({
-  isOwner,
-  photos,
-  isUpdating,
-  onUpdatePhoto,
-}) => (
-  <div className={s.avatarWrapper}>
-    <img className={s.avatar} src={photos?.large || avatar} alt="Avatar" />
-    {isOwner && (
-      <InputFile
-        className={s.updatePhoto}
-        text="Сменить аватар"
-        disabled={isUpdating}
-        onChange={onUpdatePhoto}
-      />
-    )}
-  </div>
-);
+export const ProfileAvatar: FC<ProfileAvatarProps> = ({ isOwner, photos }) => {
+  const dispatch = useDispatch();
+  const isUpdating = useSelector(getIsUpdatingPhoto);
+
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!isOwner) return;
+    const files = e.target.files;
+    if (files) {
+      dispatch(updateProfilePhotoAsync(files[0]));
+    }
+  };
+
+  return (
+    <div className={s.container}>
+      <div className={s.avatarWrapper}>
+        <img className={s.avatar} src={photos?.large || avatar} alt="Avatar" />
+      </div>
+      <div>
+        {isOwner && (
+          <InputFile
+            className={s.updatePhoto}
+            text="Сменить аватар"
+            disabled={isUpdating}
+            onChange={onChange}
+          />
+        )}
+      </div>
+    </div>
+  );
+};

@@ -1,23 +1,43 @@
-import { Button } from "@components/common/button";
+import { Button } from "@ui/button";
+import { Textarea } from "@ui/form-elements";
 import { FC } from "react";
-import { SendMessageFormProps } from "./type";
+import { SubmitHandler, useForm } from "react-hook-form";
 import s from "./send-message-form.module.css";
+import { SendMessageFormProps, TSendMessageForm } from "./types";
+import { useSubmitOnEnter } from '@hooks/useSubmitOnEnter';
 
-// const Textarea = FormControl("textarea");
-// const maxLength = maxLengthValidate(1024);
+export const SendMessageForm: FC<SendMessageFormProps> = ({ onSubmit }) => {
+  const { register, handleSubmit, formState, reset } =
+    useForm<TSendMessageForm>({
+      mode: "onChange",
+    });
+  const error = formState.errors.message?.message;
 
-export const SendMessageForm: FC<SendMessageFormProps> = ({ handleSubmit }) => {
+  const handleFormSubmit: SubmitHandler<TSendMessageForm> = (data) => {
+    onSubmit(data);
+    reset();
+  };
+
+  const { handleKeyDown } = useSubmitOnEnter({
+    onSubmit: () => handleSubmit(handleFormSubmit)(),
+  });
+
   return (
-    <form className={s.form} onSubmit={handleSubmit}>
-      {/* <Field
-        id="new-message-text"
-        name="new-message-text"
-        component={Textarea}
-        classElement={`textarea ${s.textarea}`}
-        placeholder="Введите сообщение..."
-        validate={[required, maxLength]}
-      /> */}
-      <Button children="Отправить" className={s.submit} />
+    <form className={s.form} onSubmit={handleSubmit(handleFormSubmit)}>
+      <Textarea
+        id="new-message"
+        placeholder="Send message..."
+        error={error}
+        {...register("message", {
+          required: "This field is required!",
+          maxLength: {
+            value: 1024,
+            message: "Maximum number of characters exceeded",
+          },
+        })}
+        onKeyDown={handleKeyDown}
+      />
+      <Button className={s.submit}>Отправить</Button>
     </form>
   );
 };

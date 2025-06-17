@@ -1,5 +1,5 @@
-import { Button } from "@components/common/button";
-import { Input } from "@components/form-elements";
+import { Button } from "@ui/button";
+import { Input } from "@ui/form-elements";
 import { FC } from "react";
 import { useForm } from "react-hook-form";
 import s from "./login-form.module.css";

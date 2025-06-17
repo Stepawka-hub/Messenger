@@ -5,10 +5,17 @@
   height: 100%;
 }
 
-.chatContainer {
+.chat {
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+  padding: 0.5rem 0;
   border-radius: 1rem;
   background-color: var(--theme-primary-color);
+  overflow-x: hidden;
+}
+
+.messageList {
+  max-height: 75vh;
+  overflow-y: auto;
 }

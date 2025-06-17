@@ -10,10 +10,10 @@ export const userDefault: TUserData = {
   },
 } as const;
 
-export const profileContacts: TContacts = {
+export const contactNames: TContacts = {
   vk: "VK",
   facebook: "Facebook",
   twitter: "Twitter",
   instagram: "Instagram",
   github: "GitHub",
-};
+} as const;

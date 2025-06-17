@@ -66,16 +66,12 @@ export const updateProfileAsync = createAsyncThunk<void, TProfile>(
     const { messages, resultCode } = await profileAPI.updateProfile(
       profileData
     );
+
     if (resultCode === SUCCESS_CODE && userId) {
       dispatch(getProfileAsync(userId));
       return;
     }
 
     return rejectWithValue(messages[0] || "Failed to update profile");
-
-    // else {
-    //   const message = res.messages.length > 0 ? res.messages[0] : "Some error";
-    //   dispatch(stopSubmit("profile-edit", { _error: message }));
-    // }
   }
 );

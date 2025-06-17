@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Loader } from "@components/common/loader";
+import { Loader } from "@ui/loader";
 import { useTitle } from "@hooks/useTitle";
 import s from "./music.module.css";
 

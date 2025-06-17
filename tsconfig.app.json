@@ -28,6 +28,7 @@
     "paths": {
       "@sounds/*": ["src/assets/sounds/*"],
       "@images/*": ["src/assets/images/*"],
+      "@ui/*": ["src/ui/*"],
       "@components/*": ["src/components/*"],
       "@hooks/*": ["src/hooks/*"],
       "@pages/*": ["src/pages/*"],
