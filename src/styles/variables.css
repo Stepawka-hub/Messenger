@@ -20,7 +20,12 @@
   --login-btn-color: #ff7b57;
   --logout-btn-color: #ff7b57;
   
-  --input-bg-color: #222222;
+  --input-bg-color: #222;
+  --checkbox-bg-color: #222;
+  --checkbox-checked-bg-color: #ff5b42;
+  --checkbox-pseudo-color: #fff;
+  --checkbox-border-color: #fff;
+  --checkbox-disabled-color: #ccc;
 
   --friend-card-bg-hover: rgba(34, 34, 34, 0.5);
 

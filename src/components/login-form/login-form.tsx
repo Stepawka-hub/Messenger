@@ -4,6 +4,7 @@ import { FC } from "react";
 import { useForm } from "react-hook-form";
 import s from "./login-form.module.css";
 import { LoginFormProps, TLoginForm } from "./types";
+import { EMAIL_REGEX } from "@utils/helpers/validate-helpers";
 
 export const LoginForm: FC<LoginFormProps> = ({
   isLogginIn,
@@ -36,7 +37,7 @@ export const LoginForm: FC<LoginFormProps> = ({
           {...register("email", {
             required: "This field is required!",
             pattern: {
-              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+              value: EMAIL_REGEX,
               message: "Invalid email address",
             },
           })}

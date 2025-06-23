@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import s from "./profile-edit-form.module.css";
 import { FieldConfig, ProfileEditFormProps, TProfileEditForm } from "./types";
 import { Button } from "@ui/button";
+import { Checkbox } from "@ui/form-elements/checkbox";
 
 export const ProfileEditForm: FC<ProfileEditFormProps> = ({
   initialValue,
@@ -35,11 +36,9 @@ export const ProfileEditForm: FC<ProfileEditFormProps> = ({
         },
       },
       {
-        label: "Ищу работу (Да/Нет)",
+        label: "Ищу работу",
         name: "lookingForAJob",
-        validate: {
-          required: "This field is required!",
-        },
+        type: "checkbox",
       },
       {
         label: "Описание поиска работы",
@@ -111,21 +110,30 @@ export const ProfileEditForm: FC<ProfileEditFormProps> = ({
     <div className={s.container}>
       <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
         <fieldset className={s.fields}>
-          {fields.map(({ label, name, validate }) => (
+          {fields.map(({ label, name, type, validate }) => (
             <div className={s.fieldContainer} key={name}>
-              <Input
-                id={name}
-                type="text"
-                label={label}
-                classes={{
-                  wrapper: s.field,
-                  input: s.input,
-                  label: s.label,
-                }}
-                error={errors[name]?.message}
-                placeholder={label}
-                {...register(name, validate)}
-              />
+              {type === "checkbox" ? (
+                <Checkbox
+                  id={name}
+                  label={label}
+                  classes={{ label: s.label }}
+                  error={errors[name]?.message}
+                  {...register(name, validate)}
+                />
+              ) : (
+                <Input
+                  id={name}
+                  label={label}
+                  classes={{
+                    wrapper: s.field,
+                    input: s.input,
+                    label: s.label,
+                  }}
+                  error={errors[name]?.message}
+                  placeholder={label}
+                  {...register(name, validate)}
+                />
+              )}
             </div>
           ))}
         </fieldset>

@@ -22,8 +22,9 @@ export type TProfileEditForm = {
 export type FieldConfig = {
   label: string;
   name: keyof TProfileEditForm;
-  validate: {
-    required: string;
+  type?: 'input' | 'checkbox';
+  validate?: {
+    required?: string;
     pattern?: {
       value: RegExp;
       message: string;
