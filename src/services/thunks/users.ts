@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { setFollowed, setFollowingProgress } from "@slices/users";
-import { SUCCESS_CODE, usersAPI } from "@utils/api/api";
+import { API_CODES, usersAPI } from "@utils/api/api";
 import { TGetUsersData, TResponse } from "@utils/api/types";
 import { TPagination, TUserId } from "src/types";
 import { ThunkAppDispatch } from "./types";
@@ -50,7 +50,7 @@ const followUnfollowFlow = async (
   dispatch(setFollowingProgress({ followingInProgress: true, userid }));
 
   const data = await apiMethod(userid);
-  if (data.resultCode === SUCCESS_CODE) {
+  if (data.resultCode === API_CODES.SUCCESS) {
     dispatch(setFollowed({ userid, status }));
   }
 

@@ -1,4 +1,4 @@
-import { profileAPI, SUCCESS_CODE } from "@api";
+import { API_CODES, profileAPI } from "@api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "@store";
 import { TPhotos, TProfile } from "src/types";
@@ -37,7 +37,7 @@ export const updateProfileStatusAsync = createAsyncThunk<string, string>(
   UPDATE_STATUS,
   async (status, { rejectWithValue }) => {
     const { resultCode, messages } = await profileAPI.updateUserStatus(status);
-    if (resultCode === SUCCESS_CODE) {
+    if (resultCode === API_CODES.SUCCESS) {
       return status;
     }
 
@@ -49,7 +49,7 @@ export const updateProfilePhotoAsync = createAsyncThunk<TPhotos, File>(
   UPDATE_PHOTO,
   async (photo, { rejectWithValue }) => {
     const { data, messages, resultCode } = await profileAPI.updatePhoto(photo);
-    if (resultCode === SUCCESS_CODE) {
+    if (resultCode === API_CODES.SUCCESS) {
       return data.photos;
     }
 
@@ -67,7 +67,7 @@ export const updateProfileAsync = createAsyncThunk<void, TProfile>(
       profileData
     );
 
-    if (resultCode === SUCCESS_CODE && userId) {
+    if (resultCode === API_CODES.SUCCESS && userId) {
       dispatch(getProfileAsync(userId));
       return;
     }

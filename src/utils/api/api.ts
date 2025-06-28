@@ -10,7 +10,10 @@ import {
 
 const API_URL = import.meta.env.VITE_API_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
-export const SUCCESS_CODE = 0;
+export const API_CODES = {
+  SUCCESS: 0,
+  CAPTCHA_REQUIRED: 10,
+} as const;
 
 class BaseAPI {
   protected api: AxiosInstance;
@@ -53,7 +56,9 @@ class ProfileAPI extends BaseAPI {
   };
 
   updateUserStatus = async (status: string): Promise<TResponse> => {
-    const { data } = await this.api.put(`profile/status`, { status });
+    const { data } = await this.api.put<TResponse>(`profile/status`, {
+      status,
+    });
     return data;
   };
 
@@ -63,11 +68,15 @@ class ProfileAPI extends BaseAPI {
     const formData = new FormData();
     formData.append("image", photoFile);
 
-    const { data } = await this.api.put(`profile/photo`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const { data } = await this.api.put<TResponseWithData<{ photos: TPhotos }>>(
+      `profile/photo`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
 
     return data;
   };
