@@ -1,6 +1,5 @@
 import {
   TDialog,
-  TError,
   TFriend,
   TMessage,
   TModal,
@@ -9,7 +8,7 @@ import {
   TSocialUser,
   TUserData,
   TUserId,
-} from "src/types";
+} from "@types";
 
 export type TAppState = {
   initialized: boolean;
@@ -34,8 +33,9 @@ export type TUsersState = {
 export type TProfileState = {
   profile: TProfile | null;
   status: string;
-  posts: TPost[];
+  isUpdatingProfile: boolean;
   isUpdatingPhoto: boolean;
+  posts: TPost[];
 };
 
 export type TAuthState = {
