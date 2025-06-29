@@ -1,8 +1,8 @@
 .header {
+  position: sticky;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  grid-area: h;
 
   padding: 1rem var(--side-padding);
   background-color: var(--theme-primary-color);

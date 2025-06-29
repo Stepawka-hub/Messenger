@@ -1,14 +1,17 @@
 .inputContainer {
-  width: 100%;
   display: flex;
-  gap: 0.5rem;
-  background-color: var(--search-bg-color);
+  width: 100%;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  background-color: var(--theme-primary-color);
 }
 
 .input {
   width: 100%;
-  color: var(--primary-text-color);
-  background-color: var(--search-bg-color);
+  font-size: 1.15rem;
+  color: var(--primary-color);
+  background-color: var(--theme-primary-color);
 }
 
 .input::placeholder {
@@ -16,9 +19,9 @@
 }
 
 .input:focus {
-  caret-color: var(--primary-color);
+  caret-color: var(--search-primary-color);
 }
 
 .inputContainer:focus-within .icon {
-  color: var(--loupe-icon-focus);
+  color: var(--search-primary-color);
 }

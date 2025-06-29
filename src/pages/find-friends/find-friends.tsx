@@ -20,25 +20,29 @@ export const FindFriends: FC = () => {
 
   return (
     <section className={s.section}>
-      <UserSearch />
       <h2 className={s.title}>Пользователи</h2>
-      {isLoading ? (
-        <div className={s.skeletonList}>
-          {[...Array(pagination.pageSize)].map((_, i) => (
-            <SkeletonCard key={i} />
-          ))}
-        </div>
-      ) : (
-        <>
-          <UserList
-            users={users}
-            onFollow={followToUser}
-            onUnFollow={unfollowFromUser}
-            followingInProgress={followingInProgress}
-          />
-          <Pagination {...pagination} />
-        </>
-      )}
+      <div className={s.search}>
+        <UserSearch />
+      </div>
+      <div className={s.users}>
+        {isLoading ? (
+          <div className={s.skeletonList}>
+            {[...Array(pagination.pageSize)].map((_, i) => (
+              <SkeletonCard key={i} />
+            ))}
+          </div>
+        ) : (
+          <>
+            <UserList
+              users={users}
+              onFollow={followToUser}
+              onUnFollow={unfollowFromUser}
+              followingInProgress={followingInProgress}
+            />
+            <Pagination {...pagination} />
+          </>
+        )}
+      </div>
     </section>
   );
 };
