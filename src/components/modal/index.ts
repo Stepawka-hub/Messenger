@@ -1,2 +1,1 @@
-export * from './modal';
-export * from './modal-error';
+export { Modal } from './modal';
