@@ -1,0 +1,4 @@
+.icon {
+  color: var(--default-icon-color);
+  transition: .2s ease-in-out;
+}

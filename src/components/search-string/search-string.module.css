@@ -1,0 +1,24 @@
+.inputContainer {
+  width: 100%;
+  display: flex;
+  gap: 0.5rem;
+  background-color: var(--search-bg-color);
+}
+
+.input {
+  width: 100%;
+  color: var(--primary-text-color);
+  background-color: var(--search-bg-color);
+}
+
+.input::placeholder {
+  color: var(--search-placeholder-color);
+}
+
+.input:focus {
+  caret-color: var(--primary-color);
+}
+
+.inputContainer:focus-within .icon {
+  color: var(--loupe-icon-focus);
+}

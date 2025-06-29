@@ -5,8 +5,8 @@ import path from "path";
 export default defineConfig({
   resolve: {
     alias: {
-      "@sounds": path.resolve(__dirname, "src/assets/sounds"),
       "@images": path.resolve(__dirname, "src/assets/images"),
+      "@icons": path.resolve(__dirname, "src/ui/icons"),
       "@ui": path.resolve(__dirname, "src/ui"),
       "@components": path.resolve(__dirname, "src/components"),
       "@hooks": path.resolve(__dirname, "src/hooks"),
