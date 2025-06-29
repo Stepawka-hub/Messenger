@@ -1,4 +1,4 @@
-import { IconSearch } from "@icons"
+import { SearchIcon } from "@icons"
 import { useDebounce } from "@hooks/useDebounce";
 import { ChangeEvent, FC, useState } from "react";
 import s from "./search-string.module.css";
@@ -14,7 +14,7 @@ export const SearchString: FC<SearchStringProps> = ({ initialValue, placeholder,
 
   return (
     <div className={s.inputContainer}>
-      <IconSearch className={s.icon} />
+      <SearchIcon className={s.icon} />
       <input
         className={s.input}
         placeholder={placeholder}

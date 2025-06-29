@@ -1,1 +1,2 @@
-export * from './icon-search';
+export * from './search-icon';
+export * from './filter-icon';

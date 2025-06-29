@@ -3,7 +3,7 @@ import { IconProps } from "../types";
 import s from "../styles/icons.module.css";
 import clsx from "clsx";
 
-export const IconSearch: FC<IconProps> = ({ className, size = 21 }) => (
+export const SearchIcon: FC<IconProps> = ({ className, size = 21 }) => (
   <svg
     className={clsx(s.icon, className)}
     width={size}
