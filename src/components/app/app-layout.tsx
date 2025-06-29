@@ -23,6 +23,7 @@ export const AppLayout: FC<PropsWithChildren> = ({ children }) => {
   }
 
   const toggleSidebar = () => setIsSidebarOpen((prevState) => !prevState);
+  const handleSidebarClose = () => setIsSidebarOpen(false);
 
   return (
     <div className={s.wrapper}>
@@ -33,7 +34,7 @@ export const AppLayout: FC<PropsWithChildren> = ({ children }) => {
         rightPart={<AuthDetails />}
       />
       <main className={s.main}>
-        <Sidebar isOpen={isSidebarOpen} />
+        <Sidebar isOpen={isSidebarOpen} onClose={handleSidebarClose} />
         <div className={s.content}>{children}</div>
       </main>
     </div>

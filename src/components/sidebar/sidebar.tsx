@@ -1,15 +1,17 @@
-import { NavLink } from "react-router-dom";
-import { FC, useMemo } from "react";
-import { useSelector } from "@store";
+import { useClickOutside } from "@hooks/useClickOutside";
 import { getCurrentUser, getIsAuth } from "@slices/auth";
-import s from "./sidebar.module.css";
+import { useSelector } from "@store";
 import clsx from "clsx";
+import { FC, useMemo } from "react";
+import { NavLink } from "react-router-dom";
+import s from "./sidebar.module.css";
 import { SidebarProps } from "./type";
 
-export const Sidebar: FC<SidebarProps> = ({ isOpen }) => {
+export const Sidebar: FC<SidebarProps> = ({ isOpen, onClose }) => {
   const isAuth = useSelector(getIsAuth);
   const currentUser = useSelector(getCurrentUser);
   const userId = currentUser?.id || "";
+  const ref = useClickOutside({ isActive: isOpen, callback: onClose });
 
   const navItems = useMemo(
     () => [
@@ -24,7 +26,7 @@ export const Sidebar: FC<SidebarProps> = ({ isOpen }) => {
   );
 
   return (
-    <aside className={clsx(s.sidebar, { [s.active]: isOpen })}>
+    <aside className={clsx(s.sidebar, { [s.active]: isOpen })} ref={ref}>
       <nav className={s.nav}>
         {navItems
           .filter((n) => !n.hide)
