@@ -1,11 +1,15 @@
+import { Button } from "@ui/button";
 import { Input } from "@ui/form-elements";
-import { URL_REGEX } from "@utils/helpers/validate-helpers";
+import { Checkbox } from "@ui/form-elements/checkbox";
+import {
+  maxLengthValidation,
+  requiredValidation,
+  urlValidation,
+} from "@utils/helpers/validate-helpers";
 import { FC, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import s from "./profile-edit-form.module.css";
 import { FieldConfig, ProfileEditFormProps, TProfileEditForm } from "./types";
-import { Button } from "@ui/button";
-import { Checkbox } from "@ui/form-elements/checkbox";
 
 export const ProfileEditForm: FC<ProfileEditFormProps> = ({
   initialValue,
@@ -24,15 +28,17 @@ export const ProfileEditForm: FC<ProfileEditFormProps> = ({
       {
         label: "Полное имя",
         name: "fullName",
-        validate: {
-          required: "This field is required!",
+        validation: {
+          ...requiredValidation(),
+          ...maxLengthValidation(64),
         },
       },
       {
         label: "Обо мне",
         name: "aboutMe",
-        validate: {
-          required: "This field is required!",
+        validation: {
+          ...requiredValidation(),
+          ...maxLengthValidation(128),
         },
       },
       {
@@ -43,63 +49,54 @@ export const ProfileEditForm: FC<ProfileEditFormProps> = ({
       {
         label: "Описание поиска работы",
         name: "lookingForAJobDescription",
-        validate: {
-          required: "This field is required!",
+        validation: {
+          ...requiredValidation(),
+          ...maxLengthValidation(64),
         },
       },
       {
         label: "VK",
         name: "vk",
-        validate: {
-          required: "This field is required!",
-          pattern: {
-            value: URL_REGEX,
-            message: "Invalid link",
-          },
+        validation: {
+          ...requiredValidation(),
+          ...urlValidation(),
+          ...maxLengthValidation(128),
         },
       },
       {
         label: "Facebook",
         name: "facebook",
-        validate: {
-          required: "This field is required!",
-          pattern: {
-            value: URL_REGEX,
-            message: "Invalid link",
-          },
+        validation: {
+          ...requiredValidation(),
+          ...urlValidation(),
+          ...maxLengthValidation(128),
         },
       },
       {
         label: "Twitter",
         name: "twitter",
-        validate: {
-          required: "This field is required!",
-          pattern: {
-            value: URL_REGEX,
-            message: "Invalid link",
-          },
+        validation: {
+          ...requiredValidation(),
+          ...urlValidation(),
+          ...maxLengthValidation(128),
         },
       },
       {
         label: "Instagram",
         name: "instagram",
-        validate: {
-          required: "This field is required!",
-          pattern: {
-            value: URL_REGEX,
-            message: "Invalid link",
-          },
+        validation: {
+          ...requiredValidation(),
+          ...urlValidation(),
+          ...maxLengthValidation(128),
         },
       },
       {
         label: "GitHub",
         name: "github",
-        validate: {
-          required: "This field is required!",
-          pattern: {
-            value: URL_REGEX,
-            message: "Invalid link",
-          },
+        validation: {
+          ...requiredValidation(),
+          ...urlValidation(),
+          ...maxLengthValidation(128),
         },
       },
     ],
@@ -110,7 +107,7 @@ export const ProfileEditForm: FC<ProfileEditFormProps> = ({
     <div className={s.container}>
       <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
         <fieldset className={s.fields}>
-          {fields.map(({ label, name, type, validate }) => (
+          {fields.map(({ label, name, type, validation }) => (
             <div className={s.fieldContainer} key={name}>
               {type === "checkbox" ? (
                 <Checkbox
@@ -118,20 +115,20 @@ export const ProfileEditForm: FC<ProfileEditFormProps> = ({
                   label={label}
                   classes={{ label: s.label }}
                   error={errors[name]?.message}
-                  {...register(name, validate)}
+                  {...register(name, validation)}
                 />
               ) : (
                 <Input
                   id={name}
                   label={label}
+                  placeholder={label}
                   classes={{
                     wrapper: s.field,
                     input: s.input,
                     label: s.label,
                   }}
                   error={errors[name]?.message}
-                  placeholder={label}
-                  {...register(name, validate)}
+                  {...register(name, validation)}
                 />
               )}
             </div>

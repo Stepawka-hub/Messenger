@@ -1,10 +1,13 @@
 import { Button } from "@ui/button";
 import { Input } from "@ui/form-elements";
+import {
+  emailValidation,
+  requiredValidation,
+} from "@utils/helpers/validate-helpers";
 import { FC } from "react";
 import { useForm } from "react-hook-form";
 import s from "./login-form.module.css";
 import { LoginFormProps, TLoginForm } from "./types";
-import { EMAIL_REGEX } from "@utils/helpers/validate-helpers";
 
 export const LoginForm: FC<LoginFormProps> = ({
   isLogginIn,
@@ -35,11 +38,8 @@ export const LoginForm: FC<LoginFormProps> = ({
           autoComplete="email"
           error={emailError}
           {...register("email", {
-            required: "This field is required!",
-            pattern: {
-              value: EMAIL_REGEX,
-              message: "Invalid email address",
-            },
+            ...requiredValidation(),
+            ...emailValidation(),
           })}
         />
 
@@ -51,11 +51,7 @@ export const LoginForm: FC<LoginFormProps> = ({
           autoComplete="current-password"
           error={passwordError}
           {...register("password", {
-            required: "This field is required!",
-            minLength: {
-              value: 5,
-              message: "The minimum length of this field is 5",
-            },
+            ...requiredValidation(),
           })}
         />
 
