@@ -6,8 +6,8 @@ import { initializeApp } from "@thunks/app";
 import { Preloader } from "@ui/preloader";
 import { FC, PropsWithChildren, useEffect, useState } from "react";
 import s from "./app.module.css";
-import { BurgerMenu } from "@components/burger-menu";
-import { AuthDetails } from "@components/auth-details/auth-details";
+import { BurgerMenu } from "@ui/burger-menu";
+import { AuthDetails } from "@components/auth-details";
 
 export const AppLayout: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
@@ -33,11 +33,7 @@ export const AppLayout: FC<PropsWithChildren> = ({ children }) => {
         rightPart={<AuthDetails />}
       />
       <main className={s.main}>
-        {isSidebarOpen && (
-          <div className={s.sidebar}>
-            <Sidebar isOpen={isSidebarOpen} />
-          </div>
-        )}
+        <Sidebar isOpen={isSidebarOpen} />
         <div className={s.content}>{children}</div>
       </main>
     </div>

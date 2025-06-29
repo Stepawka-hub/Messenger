@@ -1,10 +1,18 @@
 .sidebar {
+  position: absolute;
   display: flex;
   flex-direction: column;
   padding: 2rem var(--side-padding);
   background-color: var(--theme-primary-color);
   height: 100%;
   gap: 5rem;
+  z-index: 2;
+  transform: translateX(-100%);
+  transition: .25s ease-in-out;
+}
+
+.sidebar.active {
+  transform: translateX(0);
 }
 
 .nav {

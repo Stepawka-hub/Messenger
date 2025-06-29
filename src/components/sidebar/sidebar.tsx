@@ -5,7 +5,7 @@ import { useSelector } from "@store";
 import { getCurrentUser, getIsAuth } from "@slices/auth";
 import s from "./sidebar.module.css";
 import clsx from "clsx";
-import { SidebarProps } from './type';
+import { SidebarProps } from "./type";
 
 export const Sidebar: FC<SidebarProps> = ({ isOpen }) => {
   const isAuth = useSelector(getIsAuth);
@@ -25,7 +25,7 @@ export const Sidebar: FC<SidebarProps> = ({ isOpen }) => {
   );
 
   return (
-    <aside className={s.sidebar}>
+    <aside className={clsx(s.sidebar, { [s.active]: isOpen })}>
       <nav className={s.nav}>
         {navItems
           .filter((n) => !n.hide)

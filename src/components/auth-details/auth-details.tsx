@@ -1,4 +1,4 @@
-import { UserDetails } from "@components/user-details";
+import { UserDetails } from "@ui/user-details";
 import { getCurrentUser, getIsAuth, getIsLoading } from "@slices/auth";
 import { useDispatch, useSelector } from "@store";
 import { logoutUserAsync } from "@thunks/auth";
