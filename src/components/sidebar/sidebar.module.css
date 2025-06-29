@@ -2,7 +2,7 @@
   position: absolute;
   display: flex;
   flex-direction: column;
-  padding: 2rem var(--side-padding);
+  padding: 2rem 3rem 2rem 2rem;
   background-color: var(--theme-primary-color);
   height: 100%;
   gap: 5rem;

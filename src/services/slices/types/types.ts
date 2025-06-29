@@ -1,6 +1,5 @@
 import {
   TDialog,
-  TFriend,
   TMessage,
   TModal,
   TPost,
@@ -13,10 +12,6 @@ import {
 export type TAppState = {
   initialized: boolean;
   modal: TModal;
-};
-
-export type TFriendsState = {
-  friends: TFriend[];
 };
 
 export type TUsersState = {

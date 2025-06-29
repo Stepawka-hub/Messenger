@@ -1,5 +1,4 @@
 import { NavLink } from "react-router-dom";
-import { FriendList } from "@components/friend-list";
 import { FC, useMemo } from "react";
 import { useSelector } from "@store";
 import { getCurrentUser, getIsAuth } from "@slices/auth";
@@ -43,7 +42,6 @@ export const Sidebar: FC<SidebarProps> = ({ isOpen }) => {
             </NavLink>
           ))}
       </nav>
-      {isAuth && <FriendList />}
     </aside>
   );
 };

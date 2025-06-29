@@ -7,7 +7,6 @@ import {
 import { reducer as appReducer } from "@slices/app";
 import { reducer as usersReducer } from "@slices/users";
 import { reducer as profileReducer } from "@slices/profile";
-import { reducer as friendsReducer } from "@slices/friends";
 import { reducer as authReducer } from "@slices/auth";
 import { reducer as dialogsReducer } from "@slices/dialogs";
 
@@ -16,7 +15,6 @@ const rootReducer = combineReducers({
   auth: authReducer,
   profile: profileReducer,
   dialogs: dialogsReducer,
-  friends: friendsReducer,
   users: usersReducer
 });
 
