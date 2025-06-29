@@ -5,8 +5,9 @@ import { useSelector } from "@store";
 import { getCurrentUser, getIsAuth } from "@slices/auth";
 import s from "./sidebar.module.css";
 import clsx from "clsx";
+import { SidebarProps } from './type';
 
-export const Sidebar: FC = () => {
+export const Sidebar: FC<SidebarProps> = ({ isOpen }) => {
   const isAuth = useSelector(getIsAuth);
   const currentUser = useSelector(getCurrentUser);
   const userId = currentUser?.id || "";

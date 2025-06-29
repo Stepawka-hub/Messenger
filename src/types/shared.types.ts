@@ -30,4 +30,4 @@ export type TContacts = {
 
 export type TError = {
   message: string;
-}
+};

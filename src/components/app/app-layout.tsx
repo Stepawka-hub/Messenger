@@ -1,11 +1,13 @@
 import { Header } from "@components/header";
-import { Sidebar } from "@components/navbar";
+import { Sidebar } from "@components/sidebar";
 import { getInitialized } from "@slices/app";
 import { useDispatch, useSelector } from "@store";
 import { initializeApp } from "@thunks/app";
 import { Preloader } from "@ui/preloader";
 import { FC, PropsWithChildren, useEffect, useState } from "react";
 import s from "./app.module.css";
+import { BurgerMenu } from "@components/burger-menu";
+import { AuthDetails } from "@components/auth-details/auth-details";
 
 export const AppLayout: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
@@ -14,7 +16,7 @@ export const AppLayout: FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     dispatch(initializeApp());
-  }, []);
+  }, [dispatch]);
 
   if (!initialized) {
     return <Preloader />;
@@ -24,11 +26,18 @@ export const AppLayout: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <div className={s.wrapper}>
-      <Header />
+      <Header
+        leftPart={
+          <BurgerMenu isActive={isSidebarOpen} setIsActive={toggleSidebar} />
+        }
+        rightPart={<AuthDetails />}
+      />
       <main className={s.main}>
-        <div className={s.sidebar}>
-          <Sidebar />
-        </div>
+        {isSidebarOpen && (
+          <div className={s.sidebar}>
+            <Sidebar isOpen={isSidebarOpen} />
+          </div>
+        )}
         <div className={s.content}>{children}</div>
       </main>
     </div>

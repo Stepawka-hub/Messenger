@@ -1,0 +1,16 @@
+.userDetails {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logoutBtn {
+  padding: 0.65rem;
+  border-radius: 0.75rem;
+  background-color: var(--logout-btn-color);
+}
+
+.logoutIcon {
+  width: 2rem;
+  height: 2rem;
+}

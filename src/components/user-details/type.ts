@@ -1,8 +1,8 @@
-import { TPhotos } from '@types';
+import { TPhotos } from "@types";
 
 export type UserDetailsProps = {
-  userId: number;
   username: string;
   email: string;
   photos: TPhotos;
-}
+  onAvatarClick?: () => void;
+};
