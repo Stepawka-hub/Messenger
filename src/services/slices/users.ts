@@ -18,6 +18,7 @@ const initialState: TUsersState = {
     currentPage: 1,
     totalUsersCount: 1,
   },
+  searchQuery: "",
 };
 
 const usersSlice = createSlice({
@@ -46,12 +47,16 @@ const usersSlice = createSlice({
     setCurrentPage: (state, { payload }: PayloadAction<number>) => {
       state.pagination.currentPage = payload;
     },
+    setSearchQuery: (state, { payload }: PayloadAction<string>) => {
+      state.searchQuery = payload;
+    },
   },
   selectors: {
     getUserList: (state) => state.users,
     getPagination: (state) => state.pagination,
     getIsLoading: (state) => state.isLoading,
     getFollowingInProgress: (state) => state.followingInProgress,
+    getSearchQuery: (state) => state.searchQuery,
   },
   extraReducers: (builder) => {
     builder
@@ -78,6 +83,11 @@ export const {
   getPagination,
   getIsLoading,
   getFollowingInProgress,
+  getSearchQuery,
 } = usersSlice.selectors;
-export const { setFollowed, setFollowingProgress, setCurrentPage } =
-  usersSlice.actions;
+export const {
+  setFollowed,
+  setFollowingProgress,
+  setCurrentPage,
+  setSearchQuery,
+} = usersSlice.actions;

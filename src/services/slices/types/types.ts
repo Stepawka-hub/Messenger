@@ -23,6 +23,7 @@ export type TUsersState = {
     currentPage: number;
     totalUsersCount: number;
   };
+  searchQuery: string;
 };
 
 export type TProfileState = {
