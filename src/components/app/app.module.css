@@ -1,0 +1,17 @@
+.wrapper {
+  height: 100vh;
+  overflow-x: hidden;
+  color: var(--primary-color);
+}
+
+.main {
+  display: flex;
+  height: 100%;
+}
+
+.content {
+  flex-grow: 1;
+  overflow-x: hidden;
+  padding: 2rem var(--side-padding);
+  background-color: var(--theme-secondary-color);
+}

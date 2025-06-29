@@ -1,12 +1,12 @@
 import { NavLink } from "react-router-dom";
 import { FriendList } from "@components/friend-list";
 import { FC, useMemo } from "react";
-import s from "./navbar.module.css";
-import clsx from "clsx";
 import { useSelector } from "@store";
 import { getCurrentUser, getIsAuth } from "@slices/auth";
+import s from "./sidebar.module.css";
+import clsx from "clsx";
 
-export const Navbar: FC = () => {
+export const Sidebar: FC = () => {
   const isAuth = useSelector(getIsAuth);
   const currentUser = useSelector(getCurrentUser);
   const userId = currentUser?.id || "";
@@ -24,8 +24,8 @@ export const Navbar: FC = () => {
   );
 
   return (
-    <nav className={s.nav}>
-      <div className={s.links}>
+    <aside className={s.sidebar}>
+      <nav className={s.nav}>
         {navItems
           .filter((n) => !n.hide)
           .map(({ to, label }) => (
@@ -41,8 +41,8 @@ export const Navbar: FC = () => {
               {label}
             </NavLink>
           ))}
-      </div>
+      </nav>
       {isAuth && <FriendList />}
-    </nav>
+    </aside>
   );
 };

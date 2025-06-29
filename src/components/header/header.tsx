@@ -1,14 +1,13 @@
+import { UserDetails } from "@components/user-details";
+import { Button } from "@ui/button";
+import { Loader } from "@ui/loader";
 import { FC } from "react";
 import { NavLink } from "react-router-dom";
-import { UserDetails } from "@components/user-details";
-import { Loader } from "@ui/loader";
-import { Button } from "@ui/button";
 
 import { getCurrentUser, getIsAuth, getIsLoading } from "@slices/auth";
-import { logoutUserAsync } from "@thunks/auth";
 import { useDispatch, useSelector } from "@store";
+import { logoutUserAsync } from "@thunks/auth";
 
-import logo from "@images/logo.png";
 import logoutIcon from "@images/logout.svg";
 import s from "./header.module.css";
 
@@ -25,7 +24,7 @@ export const Header: FC = () => {
 
   return (
     <header className={s.header}>
-      <img src={logo} className={s.logo} alt="Logo" />
+      <button>Burger</button>
 
       <div>
         {isLoading ? (

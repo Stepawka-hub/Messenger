@@ -1,13 +1,13 @@
-.nav {
+.sidebar {
   display: flex;
   flex-direction: column;
   padding: 2rem var(--side-padding);
-
-  grid-area: n;
   background-color: var(--theme-primary-color);
+  height: 100%;
+  gap: 5rem;
 }
 
-.links {
+.nav {
   display: flex;
   flex-direction: column;
 }
