@@ -10,6 +10,10 @@
   --link-color-active: #ff7b57;
 
   --modal-bg-color: #24202c;
+  --modal-close-cross-color: #2e2b35;
+  --modal-close-btn-color: #F7F7F8;
+  --modal-shadow-color: rgba(0, 0, 0, 0.25);
+  --overlay-color: rgba(5, 5, 5, 0.3);
 
   --create-btn-color: #2fac7c;
   --follow-btn-color: #ff6d4c;

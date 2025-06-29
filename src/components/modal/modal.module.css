@@ -35,7 +35,7 @@
 .content {
   position: relative;
 
-  color: var(--primary-text-color);
+  color: var(--primary-color);
   background-color: var(--modal-bg-color);
   box-shadow: 0 2px 8px var(--modal-shadow-color);
 
@@ -55,8 +55,8 @@
 
   width: 1.75rem;
   height: 1.75rem;
-  top: 1.5rem;
-  right: 1.5rem;
+  top: 1rem;
+  right: 1rem;
 
   background-color: var(--modal-close-btn-color);
   border-radius: 50%;
@@ -78,7 +78,7 @@
   height: 1.1rem;
   border-radius: 0.5rem;
 
-  background-color: var(--modal-close-icon-color);
+  background-color: var(--modal-close-cross-color);
 }
 
 .btnClose::after {
