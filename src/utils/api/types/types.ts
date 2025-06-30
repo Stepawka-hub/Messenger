@@ -1,4 +1,4 @@
-import { TSocialUser } from "src/types";
+import { TPagination, TSocialUser } from "@types";
 
 export type TResponse = TResponseWithData<object>;
 
@@ -23,3 +23,8 @@ export type TLoginPayload = {
   rememberMe?: boolean;
   captcha?: string;
 };
+
+export type TGetUsersPayload = TPagination & {
+  term?: string;
+  friend?: boolean;
+}

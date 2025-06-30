@@ -1,9 +1,11 @@
 import {
+  getFilter,
   getFollowingInProgress,
   getIsLoading,
   getPagination,
+  getSearchQuery,
   getUserList,
-  setCurrentPage
+  setCurrentPage,
 } from "@slices/users";
 import { useDispatch, useSelector } from "@store";
 import {
@@ -12,7 +14,7 @@ import {
   unfollowFromUserAsync,
 } from "@thunks/users";
 import { useEffect } from "react";
-import { TUserId } from "src/types";
+import { TUserId } from "@types";
 
 export const usePaginatedUsers = () => {
   const dispatch = useDispatch();
@@ -20,10 +22,19 @@ export const usePaginatedUsers = () => {
   const isLoading = useSelector(getIsLoading);
   const followingInProgress = useSelector(getFollowingInProgress);
   const { totalUsersCount, currentPage, pageSize } = useSelector(getPagination);
+  const search = useSelector(getSearchQuery);
+  const filter = useSelector(getFilter);
 
   useEffect(() => {
-    dispatch(getUsersAsync({ currentPage, pageSize }));
-  }, [dispatch, currentPage, pageSize]);
+    dispatch(
+      getUsersAsync({
+        currentPage,
+        pageSize,
+        term: search,
+        friend: filter === "friends",
+      })
+    );
+  }, [dispatch, currentPage, pageSize, search, filter]);
 
   const handlePageChange = (pageNumber: number) => {
     dispatch(setCurrentPage(pageNumber));

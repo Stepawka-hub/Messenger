@@ -24,9 +24,14 @@ class BaseAPI {
 }
 
 class UsersAPI extends BaseAPI {
-  getUsers = async (currentPage = 1, pageSize = 10): Promise<TGetUsersData> => {
+  getUsers = async (
+    currentPage = 1,
+    pageSize = 10,
+    term: string,
+    friend: boolean
+  ): Promise<TGetUsersData> => {
     const { data } = await this.api.get<TGetUsersData>(
-      `users?page=${currentPage}&count=${pageSize}`,
+      `users?page=${currentPage}&count=${pageSize}&term=${term}&friend=${friend}`,
       { withCredentials: true }
     );
 
