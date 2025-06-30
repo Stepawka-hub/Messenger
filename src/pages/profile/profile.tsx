@@ -1,15 +1,15 @@
-import { useDispatch, useSelector } from "@store";
-import { useEffect } from "react";
 import { Helmet } from "@components/helmet";
 import { MyPosts } from "@components/posts/my-posts";
 import { ProfileInfo } from "@components/profile";
 import { getCurrentUser } from "@slices/auth";
-import { getIsLoadingProfile, getProfile, setProfile } from "@slices/profile";
+import { getIsLoadingProfile, getProfile } from "@slices/profile";
+import { useDispatch, useSelector } from "@store";
 import { getProfileAsync, getProfileStatusAsync } from "@thunks/profile";
-import { Loader } from "@ui/loader";
-import { useParams } from "react-router-dom";
-import { NoDataFound } from "@ui/no-data-found";
 import { BackButton } from "@ui/back-button";
+import { Loader } from "@ui/loader";
+import { NoDataFound } from "@ui/no-data-found";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 export const Profile = () => {
   const dispatch = useDispatch();
@@ -26,10 +26,6 @@ export const Profile = () => {
       dispatch(getProfileAsync(userIdNumber));
       dispatch(getProfileStatusAsync(userIdNumber));
     }
-
-    return () => {
-      dispatch(setProfile(null));
-    };
   }, [dispatch, userIdNumber]);
 
   if (isLoading) {
@@ -42,7 +38,7 @@ export const Profile = () => {
   }
 
   if (!profile) {
-    console.log('NOT PROFILE')
+    console.log("NOT PROFILE");
     return (
       <>
         <Helmet

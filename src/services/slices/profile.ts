@@ -86,13 +86,14 @@ const profileSlice = createSlice({
       })
 
       .addCase(getProfileAsync.pending, (state) => {
+        state.profile = null;
         state.isLoadingProfile = true;
       })
       .addCase(
         getProfileAsync.fulfilled,
         (state, { payload }: PayloadAction<TProfile>) => {
-          state.isLoadingProfile = false;
           state.profile = payload;
+          state.isLoadingProfile = false;
         }
       )
       .addCase(getProfileAsync.rejected, (state) => {
