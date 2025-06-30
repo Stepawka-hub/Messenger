@@ -1,0 +1,52 @@
+.burger {
+  position: relative;
+  cursor: pointer;
+  width: 3rem;
+  height: 3rem;
+  background-color: var(--theme-secondary-color);
+  border-radius: 50%;
+}
+
+.lines::before,
+.lines::after,
+.lines {
+  position: absolute;
+  width: 1.75rem;
+  height: 3px;
+  border-radius: 1rem;
+  background-color: #fff;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.lines {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.lines::before {
+  content: '';
+  top: -9px;
+}
+
+.lines::after {
+  content: '';
+  top: 9px;
+}
+
+.burger.active .lines {
+  background-color: transparent;
+}
+
+.burger.active .lines::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+
+.burger.active .lines::after {
+  top: 0;
+  transform: rotate(-45deg);
+}

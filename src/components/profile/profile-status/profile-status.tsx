@@ -35,6 +35,8 @@ export const ProfileStatus: FC<ProfileStatusProps> = ({ isOwner }) => {
     <div className={s.container}>
       {editMode ? (
         <input
+          id="user-status"
+          name="user-status"
           className={s.input}
           autoFocus
           value={userStatus}

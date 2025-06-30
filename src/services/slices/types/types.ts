@@ -1,23 +1,18 @@
 import {
   TDialog,
-  TError,
-  TFriend,
   TMessage,
   TModal,
   TPost,
   TProfile,
   TSocialUser,
   TUserData,
+  TUserFilter,
   TUserId,
-} from "src/types";
+} from "@types";
 
 export type TAppState = {
   initialized: boolean;
   modal: TModal;
-};
-
-export type TFriendsState = {
-  friends: TFriend[];
 };
 
 export type TUsersState = {
@@ -29,13 +24,16 @@ export type TUsersState = {
     currentPage: number;
     totalUsersCount: number;
   };
+  searchQuery: string;
+  filter: TUserFilter;
 };
 
 export type TProfileState = {
   profile: TProfile | null;
   status: string;
-  posts: TPost[];
+  isUpdatingProfile: boolean;
   isUpdatingPhoto: boolean;
+  posts: TPost[];
 };
 
 export type TAuthState = {

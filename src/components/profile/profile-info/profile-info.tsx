@@ -13,6 +13,7 @@ import { ProfileInfoProps } from "./type";
 export const ProfileInfo: FC<ProfileInfoProps> = ({ isOwner, profile }) => {
   const {
     initialValues,
+    isUpdatingProfile,
     editMode,
     activateEditMode,
     deactivateEditMode,
@@ -42,7 +43,10 @@ export const ProfileInfo: FC<ProfileInfoProps> = ({ isOwner, profile }) => {
         {isOwner && !editMode && (
           <Button
             className={s.editBtn}
-            children={"Редактировать профиль"}
+            children={
+              isUpdatingProfile ? "Сохранение..." : "Редактировать профиль"
+            }
+            disabled={isUpdatingProfile}
             onClick={activateEditMode}
           />
         )}

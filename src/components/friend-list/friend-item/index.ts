@@ -1,1 +1,0 @@
-export { FriendItem } from './friend-item';

@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   getProfileAsync,
   getProfileStatusAsync,
+  updateProfileAsync,
   updateProfilePhotoAsync,
 } from "@thunks/profile";
 import { mockPosts } from "@utils/mock";
@@ -12,6 +13,7 @@ import { TProfileState } from "./types";
 const initialState: TProfileState = {
   profile: null,
   status: "Нет",
+  isUpdatingProfile: false,
   isUpdatingPhoto: false,
   posts: [...mockPosts],
 };
@@ -50,6 +52,7 @@ const profileSlice = createSlice({
     getPosts: (state) => state.posts,
     getProfile: (state) => state.profile,
     getProfileStatus: (state) => state.status,
+    getIsUpdatingProfile: (state) => state.isUpdatingProfile,
     getIsUpdatingPhoto: (state) => state.isUpdatingPhoto,
   },
   extraReducers: (builder) => {
@@ -70,6 +73,16 @@ const profileSlice = createSlice({
         state.isUpdatingPhoto = false;
       })
 
+      .addCase(updateProfileAsync.pending, (state) => {
+        state.isUpdatingProfile = true;
+      })
+      .addCase(updateProfileAsync.fulfilled, (state) => {
+        state.isUpdatingProfile = false;
+      })
+      .addCase(updateProfileAsync.rejected, (state) => {
+        state.isUpdatingProfile = false;
+      })
+
       .addCase(
         getProfileAsync.fulfilled,
         (state, { payload }: PayloadAction<TProfile>) => {
@@ -87,8 +100,13 @@ const profileSlice = createSlice({
 });
 
 export const reducer = profileSlice.reducer;
-export const { getPosts, getProfile, getProfileStatus, getIsUpdatingPhoto } =
-  profileSlice.selectors;
+export const {
+  getPosts,
+  getProfile,
+  getProfileStatus,
+  getIsUpdatingProfile,
+  getIsUpdatingPhoto,
+} = profileSlice.selectors;
 export const {
   setProfile,
   setProfilePhoto,

@@ -29,7 +29,7 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = ({ isOwner, photos }) => {
         {isOwner && (
           <InputFile
             className={s.updatePhoto}
-            text="Сменить аватар"
+            text={isUpdating ? 'Сохранение...' : 'Сменить аватар'}
             disabled={isUpdating}
             onChange={onChange}
           />

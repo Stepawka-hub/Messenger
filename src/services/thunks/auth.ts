@@ -1,4 +1,4 @@
-import { authAPI, profileAPI, securityAPI, SUCCESS_CODE } from "@api";
+import { API_CODES, authAPI, profileAPI, securityAPI } from "@api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { TLoginPayload } from "@utils/api/types";
 import { TError, TUserData } from "@types";
@@ -7,7 +7,6 @@ const GET_USER_DATA = "auth/get-user-data";
 const USER_LOGIN = "auth/login";
 const USER_LOGOUT = "auth/logout";
 const GET_CAPTCHA = "auth/get-captcha";
-const CAPTCHA_REQUIRED_CODE = 10;
 
 export const getAuthUserDataAsync = createAsyncThunk<TUserData>(
   GET_USER_DATA,
@@ -15,7 +14,7 @@ export const getAuthUserDataAsync = createAsyncThunk<TUserData>(
     try {
       const res = await authAPI.me();
 
-      if (res.resultCode === SUCCESS_CODE) {
+      if (res.resultCode === API_CODES.SUCCESS) {
         const { id, login, email } = res.data;
         const { photos } = await profileAPI.getProfile(id);
         return { id, login, email, photos: photos };
@@ -46,11 +45,11 @@ export const loginUserAsync = createAsyncThunk<
         captcha,
       });
 
-      if (resultCode === SUCCESS_CODE) {
+      if (resultCode === API_CODES.SUCCESS) {
         dispatch(getAuthUserDataAsync());
       } else {
         // get captcha if required
-        if (resultCode === CAPTCHA_REQUIRED_CODE) {
+        if (resultCode === API_CODES.CAPTCHA_REQUIRED) {
           dispatch(getCaptchaAsync());
         }
 
@@ -68,7 +67,7 @@ export const logoutUserAsync = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     const res = await authAPI.logout();
 
-    if (res.resultCode !== SUCCESS_CODE) {
+    if (res.resultCode !== API_CODES.SUCCESS) {
       rejectWithValue("Unknown error during logout");
     }
   }

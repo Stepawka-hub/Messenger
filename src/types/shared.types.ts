@@ -30,4 +30,6 @@ export type TContacts = {
 
 export type TError = {
   message: string;
-}
+};
+
+export type TUserFilter = "all" | "friends";

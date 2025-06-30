@@ -26,12 +26,13 @@
     /* paths */
     "baseUrl": ".",
     "paths": {
-      "@sounds/*": ["src/assets/sounds/*"],
       "@images/*": ["src/assets/images/*"],
+      "@icons": ["src/ui/icons"],
       "@ui/*": ["src/ui/*"],
       "@components/*": ["src/components/*"],
       "@hooks/*": ["src/hooks/*"],
       "@pages/*": ["src/pages/*"],
+      "@providers/*": ["src/providers/*"],
       "@slices/*": ["src/services/slices/*"],
       "@actions/*": ["src/services/actions/*"],
       "@selectors/*": ["src/services/selectors/*"],

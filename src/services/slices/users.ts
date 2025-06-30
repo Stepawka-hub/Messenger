@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getUsersAsync } from "@thunks/users";
 import { TGetUsersData } from "@utils/api/types";
 import { updateObjectInArray } from "@utils/helpers/array-helpers";
-import { TSocialUser } from "src/types";
+import { TSocialUser, TUserFilter } from "@types";
 import {
   TSetFollowedPayload,
   TSetIsFollowingPayload,
@@ -18,6 +18,8 @@ const initialState: TUsersState = {
     currentPage: 1,
     totalUsersCount: 1,
   },
+  searchQuery: "",
+  filter: "all",
 };
 
 const usersSlice = createSlice({
@@ -46,12 +48,20 @@ const usersSlice = createSlice({
     setCurrentPage: (state, { payload }: PayloadAction<number>) => {
       state.pagination.currentPage = payload;
     },
+    setSearchQuery: (state, { payload }: PayloadAction<string>) => {
+      state.searchQuery = payload;
+    },
+    setFilter: (state, { payload }: PayloadAction<TUserFilter>) => {
+      state.filter = payload;
+    },
   },
   selectors: {
     getUserList: (state) => state.users,
     getPagination: (state) => state.pagination,
     getIsLoading: (state) => state.isLoading,
     getFollowingInProgress: (state) => state.followingInProgress,
+    getSearchQuery: (state) => state.searchQuery,
+    getFilter: (state) => state.filter,
   },
   extraReducers: (builder) => {
     builder
@@ -78,6 +88,13 @@ export const {
   getPagination,
   getIsLoading,
   getFollowingInProgress,
+  getSearchQuery,
+  getFilter,
 } = usersSlice.selectors;
-export const { setFollowed, setFollowingProgress, setCurrentPage } =
-  usersSlice.actions;
+export const {
+  setFollowed,
+  setFollowingProgress,
+  setCurrentPage,
+  setSearchQuery,
+  setFilter,
+} = usersSlice.actions;

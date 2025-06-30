@@ -1,0 +1,32 @@
+.userDetails {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logoutBtn {
+  padding: 0.65rem;
+  border-radius: 0.75rem;
+  background-color: var(--logout-btn-color);
+}
+
+.logoutIcon {
+  width: 2rem;
+  height: 2rem;
+}
+
+.link {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: all 0.2s ease-in;
+}
+
+.link:hover {
+  color: var(--orange-color);
+}
+
+.link:active {
+  opacity: 0.8;
+}

@@ -6,12 +6,14 @@
   --theme-primary-color: #141414;
   --theme-secondary-color: #222222;
 
-  --side-padding: 2.5rem;
-
   --title-color: #ff7b57;
   --link-color-active: #ff7b57;
 
   --modal-bg-color: #24202c;
+  --modal-close-cross-color: #2e2b35;
+  --modal-close-btn-color: #F7F7F8;
+  --modal-shadow-color: rgba(0, 0, 0, 0.25);
+  --overlay-color: rgba(5, 5, 5, 0.3);
 
   --create-btn-color: #2fac7c;
   --follow-btn-color: #ff6d4c;
@@ -19,10 +21,16 @@
   --disabled-btn-color: #695c58;
   --login-btn-color: #ff7b57;
   --logout-btn-color: #ff7b57;
-  
-  --input-bg-color: #222222;
 
-  --friend-card-bg-hover: rgba(34, 34, 34, 0.5);
+  --input-bg-color: #222;
+  --checkbox-bg-color: #222;
+  --checkbox-checked-bg-color: #ff5b42;
+  --checkbox-pseudo-color: #fff;
+  --checkbox-border-color: #fff;
+  --checkbox-disabled-color: #ccc;
+
+  --search-primary-color: #ff5b42;
+  --search-placeholder-color: #9b9b9b;
 
   --error-color: #ff5757;
 }

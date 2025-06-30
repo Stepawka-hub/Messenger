@@ -1,0 +1,19 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  color: var(--primary-color);
+  height: 100vh;
+}
+
+.main {
+  position: relative;
+  flex-grow: 1;
+  height: 100%;
+}
+
+.content {
+  min-height: 100%;
+  height: auto;
+  padding: 2rem;
+  background-color: var(--theme-secondary-color);
+}

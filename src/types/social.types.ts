@@ -6,9 +6,3 @@ export type TSocialUser = TUser & {
   location: TLocation;
   followed: boolean;
 };
-
-export type TFriend = {
-  id: number;
-  username: string;
-  avatar: string;
-};

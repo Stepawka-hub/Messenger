@@ -1,0 +1,45 @@
+.sidebar {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 3rem 2rem 2rem;
+  background-color: var(--theme-primary-color);
+  height: 100%;
+  gap: 5rem;
+  z-index: 2;
+  transform: translateX(-100%);
+  transition: .25s ease-in-out;
+}
+
+.sidebar.active {
+  transform: translateX(0);
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.links {
+  margin-bottom: 3rem;
+}
+
+.link {
+  color: var(--primary-color);
+  font-size: 1.75rem;
+  transition: all 0.1s linear;
+  text-decoration: none;
+}
+
+.link:hover:not(.active) {
+  color: var(--link-color-active);
+  transform: translateX(0.5rem);
+}
+
+.link:active:not(.active) {
+  opacity: 0.8;
+}
+
+.active {
+  color: var(--link-color-active);
+}

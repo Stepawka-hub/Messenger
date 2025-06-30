@@ -1,4 +1,4 @@
-import { SubmitHandler } from "react-hook-form";
+import { RegisterOptions, SubmitHandler } from "react-hook-form";
 
 export type ProfileEditFormProps = {
   initialValue: TProfileEditForm;
@@ -22,11 +22,6 @@ export type TProfileEditForm = {
 export type FieldConfig = {
   label: string;
   name: keyof TProfileEditForm;
-  validate: {
-    required: string;
-    pattern?: {
-      value: RegExp;
-      message: string;
-    };
-  };
+  type?: "input" | "checkbox";
+  validation?: RegisterOptions<TProfileEditForm>;
 };
