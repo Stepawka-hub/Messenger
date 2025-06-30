@@ -15,7 +15,15 @@ export const FindFriends: FC = () => {
     followToUser,
     unfollowFromUser,
     pagination,
+    filter,
   } = usePaginatedUsers();
+
+  const title =
+    filter === "all"
+      ? "Пользователи"
+      : filter === "friends"
+      ? `Мои друзья (${pagination.totalCount})`
+      : "Не в друзьях";
 
   return (
     <>
@@ -24,7 +32,7 @@ export const FindFriends: FC = () => {
         description="Найдите новых друзей и интересных людей, чтобы расширить свой круг общения"
       />
       <section className={s.section}>
-        <h2 className={s.title}>Пользователи</h2>
+        <h2 className={s.title}>{title}</h2>
         <div className={s.search}>
           <UserSearch />
         </div>

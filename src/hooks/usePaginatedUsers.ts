@@ -60,5 +60,6 @@ export const usePaginatedUsers = () => {
       pageSize,
       setCurrentPage: handlePageChange,
     },
+    filter
   };
 };
