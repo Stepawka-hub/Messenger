@@ -39,7 +39,7 @@ export const UserFilter: FC<UserFilterProps> = ({ callback }) => {
         <Radio
           id="nofriends"
           name="filter"
-          label="Показывать пользователей, на которых я не подписан"
+          label="Пользователей, на которых я не подписан"
           value="nofriends"
           onChange={handleChange}
           checked={filter === "nofriends"}
