@@ -1,5 +1,5 @@
 import { FilterIcon } from "@icons";
-import { getSearchQuery, setSearchQuery } from "@slices/users";
+import { getSearchQuery, setCurrentPage, setSearchQuery } from "@slices/users";
 import { useDispatch, useSelector } from "@store";
 import { SearchString } from "@ui/search-string";
 import { FC, memo, useCallback } from "react";
@@ -15,6 +15,7 @@ export const UserSearch: FC = memo(() => {
   const handleSearch = useCallback(
     (query: string) => {
       dispatch(setSearchQuery(query));
+      dispatch(setCurrentPage(1));
     },
     [dispatch]
   );
