@@ -6,6 +6,7 @@ import {
   TProfile,
   TSocialUser,
   TUserData,
+  TUserFilter,
   TUserId,
 } from "@types";
 
@@ -24,6 +25,7 @@ export type TUsersState = {
     totalUsersCount: number;
   };
   searchQuery: string;
+  filter: TUserFilter;
 };
 
 export type TProfileState = {

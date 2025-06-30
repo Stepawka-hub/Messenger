@@ -1,0 +1,38 @@
+.radio .input[type='radio'] {
+  display: none;
+}
+
+.label {
+  position: relative;
+  padding-left: 2.25rem;
+
+  font-weight: 500;
+  line-height: 1.25rem;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.label:before {
+  content: "";
+  position: absolute;
+
+  width: 1.25rem;
+  height: 1.25rem;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  border: 2px solid var(--primary-color);
+  transition: .2s ease-in-out;
+}
+
+.label:hover:before {
+  filter: brightness(120%);
+}
+
+.radio .input[type='radio']:checked+.label:before {
+  border: 6px solid var(--orange-color);
+}
+
+.radio .input[type='radio']:disabled+.label:before {
+  filter: grayscale(100%);
+}

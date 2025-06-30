@@ -5,11 +5,12 @@ import { SearchString } from "@ui/search-string";
 import { FC, memo, useCallback } from "react";
 import s from "./user-search.module.css";
 import { useModal } from "@hooks/useModal";
+import { UserFilter } from "@components/user-filter";
 
 export const UserSearch: FC = memo(() => {
   const dispatch = useDispatch();
   const searchQuery = useSelector(getSearchQuery);
-  const { showModal } = useModal();
+  const { showModal, hideModal } = useModal();
 
   const handleSearch = useCallback(
     (query: string) => {
@@ -19,13 +20,8 @@ export const UserSearch: FC = memo(() => {
   );
 
   const handleFilterClick = useCallback(() => {
-    showModal(
-      <ul>
-        <li>Все</li>
-        <li>Друзья</li>
-      </ul>
-    );
-  }, [showModal]);
+    showModal(<UserFilter callback={hideModal} />);
+  }, [showModal, hideModal]);
 
   return (
     <div className={s.search}>
