@@ -1,18 +1,20 @@
 import { useDispatch, useSelector } from "@store";
 import { useEffect } from "react";
-
 import { Helmet } from "@components/helmet";
 import { MyPosts } from "@components/posts/my-posts";
 import { ProfileInfo } from "@components/profile";
 import { getCurrentUser } from "@slices/auth";
-import { getProfile, setProfile } from "@slices/profile";
+import { getIsLoadingProfile, getProfile, setProfile } from "@slices/profile";
 import { getProfileAsync, getProfileStatusAsync } from "@thunks/profile";
 import { Loader } from "@ui/loader";
 import { useParams } from "react-router-dom";
+import { NoDataFound } from "@ui/no-data-found";
+import { BackButton } from "@ui/back-button";
 
 export const Profile = () => {
   const dispatch = useDispatch();
   const profile = useSelector(getProfile);
+  const isLoading = useSelector(getIsLoadingProfile);
 
   const currentUser = useSelector(getCurrentUser);
   const { userId } = useParams();
@@ -30,11 +32,26 @@ export const Profile = () => {
     };
   }, [dispatch, userIdNumber]);
 
-  if (!profile) {
+  if (isLoading) {
     return (
       <>
         <Helmet title="Профиль" description="Страница профиля" />
         <Loader />
+      </>
+    );
+  }
+
+  if (!profile) {
+    console.log('NOT PROFILE')
+    return (
+      <>
+        <Helmet
+          title="Профиль не найден"
+          description="Профиль не найден. Возможно, профиль был удален или не существует."
+        />
+        <NoDataFound label="Профиль не найден!">
+          <BackButton />
+        </NoDataFound>
       </>
     );
   }

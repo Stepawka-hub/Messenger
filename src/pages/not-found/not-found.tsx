@@ -1,13 +1,9 @@
 import { Helmet } from "@components/helmet";
-import { Button } from "@ui/button";
+import { BackButton } from "@ui/back-button";
 import { FC } from "react";
-import { useNavigate } from "react-router-dom";
 import s from "./not-found.module.css";
 
 export const NotFound: FC = () => {
-  const navigate = useNavigate();
-  const handleClick = () => navigate("/");
-
   return (
     <>
       <Helmet
@@ -16,11 +12,7 @@ export const NotFound: FC = () => {
       />
       <section className={s.notFound}>
         <span className={s.text}>404 - Not Found</span>
-        <Button
-          children="<- Вернуться назад"
-          className={s.btn}
-          onClick={handleClick}
-        />
+        <BackButton />
       </section>
     </>
   );

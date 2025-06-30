@@ -31,6 +31,7 @@ export type TUsersState = {
 export type TProfileState = {
   profile: TProfile | null;
   status: string;
+  isLoadingProfile: boolean;
   isUpdatingProfile: boolean;
   isUpdatingPhoto: boolean;
   posts: TPost[];

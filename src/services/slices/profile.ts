@@ -13,6 +13,7 @@ import { TProfileState } from "./types";
 const initialState: TProfileState = {
   profile: null,
   status: "Нет",
+  isLoadingProfile: false,
   isUpdatingProfile: false,
   isUpdatingPhoto: false,
   posts: [...mockPosts],
@@ -52,6 +53,7 @@ const profileSlice = createSlice({
     getPosts: (state) => state.posts,
     getProfile: (state) => state.profile,
     getProfileStatus: (state) => state.status,
+    getIsLoadingProfile: (state) => state.isLoadingProfile,
     getIsUpdatingProfile: (state) => state.isUpdatingProfile,
     getIsUpdatingPhoto: (state) => state.isUpdatingPhoto,
   },
@@ -83,12 +85,19 @@ const profileSlice = createSlice({
         state.isUpdatingProfile = false;
       })
 
+      .addCase(getProfileAsync.pending, (state) => {
+        state.isLoadingProfile = true;
+      })
       .addCase(
         getProfileAsync.fulfilled,
         (state, { payload }: PayloadAction<TProfile>) => {
+          state.isLoadingProfile = false;
           state.profile = payload;
         }
       )
+      .addCase(getProfileAsync.rejected, (state) => {
+        state.isLoadingProfile = false;
+      })
 
       .addCase(
         getProfileStatusAsync.fulfilled,
@@ -104,6 +113,7 @@ export const {
   getPosts,
   getProfile,
   getProfileStatus,
+  getIsLoadingProfile,
   getIsUpdatingProfile,
   getIsUpdatingPhoto,
 } = profileSlice.selectors;
