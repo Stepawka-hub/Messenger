@@ -3,6 +3,7 @@ import { TAuthUserData, TPhotos, TProfile, TUserId } from "src/types";
 import {
   TGetCaptchaData,
   TGetUsersData,
+  TGetUsersParams,
   TLoginPayload,
   TResponse,
   TResponseWithData,
@@ -28,12 +29,19 @@ class UsersAPI extends BaseAPI {
     currentPage = 1,
     pageSize = 10,
     term: string,
-    friend: boolean
+    friend: boolean | null
   ): Promise<TGetUsersData> => {
-    const { data } = await this.api.get<TGetUsersData>(
-      `users?page=${currentPage}&count=${pageSize}&term=${term}&friend=${friend}`,
-      { withCredentials: true }
-    );
+    const params: TGetUsersParams = {
+      page: currentPage,
+      count: pageSize,
+      ...(term ? { term } : {}),
+      ...(friend !== null ? { friend } : {}),
+    };
+
+    const { data } = await this.api.get<TGetUsersData>(`users`, {
+      params,
+      withCredentials: true,
+    });
 
     return data;
   };

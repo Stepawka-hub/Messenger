@@ -31,7 +31,7 @@ export const usePaginatedUsers = () => {
         currentPage,
         pageSize,
         term: search,
-        friend: filter === "friends",
+        friend: filter === "all" ? null : filter === "friends",
       })
     );
   }, [dispatch, currentPage, pageSize, search, filter]);

@@ -32,4 +32,4 @@ export type TError = {
   message: string;
 };
 
-export type TUserFilter = "all" | "friends";
+export type TUserFilter = "all" | "friends" | "nofriends";

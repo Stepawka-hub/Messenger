@@ -26,5 +26,12 @@ export type TLoginPayload = {
 
 export type TGetUsersPayload = TPagination & {
   term?: string;
+  friend?: boolean | null;
+};
+
+export type TGetUsersParams = {
+  page: number;
+  count: number;
+  term?: string;
   friend?: boolean;
-}
+};

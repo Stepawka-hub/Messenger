@@ -11,7 +11,7 @@ const UNFOLLOW_USER = "users/unfollow";
 
 export const getUsersAsync = createAsyncThunk<TGetUsersData, TGetUsersPayload>(
   GET_USERS,
-  async ({ currentPage, pageSize, term = '', friend = false }) => {
+  async ({ currentPage, pageSize, term = '', friend = null }) => {
     const { items, totalCount } = await usersAPI.getUsers(
       currentPage,
       pageSize,

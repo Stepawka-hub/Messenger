@@ -27,7 +27,14 @@ export const App = memo(() => (
         }
       />
       <Route path="/news" element={<News />} />
-      <Route path="/users" element={<FindFriends />} />
+      <Route
+        path="/users"
+        element={
+          <ProtectedRoute>
+            <FindFriends />
+          </ProtectedRoute>
+        }
+      />
       <Route
         path="/music"
         element={
