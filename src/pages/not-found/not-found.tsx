@@ -1,25 +1,27 @@
+import { Helmet } from "@components/helmet";
+import { Button } from "@ui/button";
+import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import s from "./not-found.module.css";
-import { useTitle } from "@hooks/useTitle";
-import { FC } from "react";
-import { Button } from "@ui/button";
 
 export const NotFound: FC = () => {
   const navigate = useNavigate();
-  useTitle("Not Found");
-
-  const handleClick = () => {
-    navigate("/");
-  };
+  const handleClick = () => navigate("/");
 
   return (
-    <section className={s.notFound}>
-      <span className={s.text}>404 - Not Found</span>
-      <Button
-        children="<- Вернуться назад"
-        className={s.btn}
-        onClick={handleClick}
+    <>
+      <Helmet
+        title="Страница не найдена"
+        description="К сожалению, запрошенная страница не найдена. Вернитесь на главную страницу"
       />
-    </section>
+      <section className={s.notFound}>
+        <span className={s.text}>404 - Not Found</span>
+        <Button
+          children="<- Вернуться назад"
+          className={s.btn}
+          onClick={handleClick}
+        />
+      </section>
+    </>
   );
 };

@@ -1,6 +1,6 @@
+import { Helmet } from "@components/helmet";
 import { LoginForm } from "@components/login-form";
 import { TLoginForm } from "@components/login-form/types";
-import { useTitle } from "@hooks/useTitle";
 import { getCaptchaUrl, getIsLoggingIn, getLoginError } from "@slices/auth";
 import { useDispatch, useSelector } from "@store";
 import { loginUserAsync } from "@thunks/auth";
@@ -13,7 +13,6 @@ export const Login: FC = () => {
   const isLogginIn = useSelector(getIsLoggingIn);
   const error = useSelector(getLoginError);
   const captchaUrl = useSelector(getCaptchaUrl);
-  useTitle("Login");
 
   const onSubmit: SubmitHandler<TLoginForm> = async (formData) => {
     await dispatch(loginUserAsync(formData)).unwrap();
@@ -21,13 +20,19 @@ export const Login: FC = () => {
   };
 
   return (
-    <section className={s.page}>
-      <LoginForm
-        isLogginIn={isLogginIn}
-        error={error}
-        captchaUrl={captchaUrl}
-        onSubmit={onSubmit}
+    <>
+      <Helmet
+        title="Вход"
+        description="Войдите, чтобы общаться с друзьями, делиться новостями и оставаться на связи с важными для вас людьми"
       />
-    </section>
+      <section className={s.page}>
+        <LoginForm
+          isLogginIn={isLogginIn}
+          error={error}
+          captchaUrl={captchaUrl}
+          onSubmit={onSubmit}
+        />
+      </section>
+    </>
   );
 };

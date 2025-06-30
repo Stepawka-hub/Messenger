@@ -1,14 +1,14 @@
 import { useDispatch, useSelector } from "@store";
 import { useEffect } from "react";
 
-import { Loader } from "@ui/loader";
+import { Helmet } from "@components/helmet";
+import { MyPosts } from "@components/posts/my-posts";
 import { ProfileInfo } from "@components/profile";
-import { useTitle } from "@hooks/useTitle";
 import { getCurrentUser } from "@slices/auth";
 import { getProfile, setProfile } from "@slices/profile";
 import { getProfileAsync, getProfileStatusAsync } from "@thunks/profile";
+import { Loader } from "@ui/loader";
 import { useParams } from "react-router-dom";
-import { MyPosts } from "@components/posts/my-posts";
 
 export const Profile = () => {
   const dispatch = useDispatch();
@@ -30,16 +30,22 @@ export const Profile = () => {
     };
   }, [dispatch, userIdNumber]);
 
-  useTitle(profile?.fullName);
-
   if (!profile) {
-    return <Loader />;
+    return (
+      <>
+        <Helmet title="Профиль" description="Страница профиля" />
+        <Loader />
+      </>
+    );
   }
 
   return (
-    <section>
-      <ProfileInfo isOwner={isOwner} profile={profile} />
-      <MyPosts />
-    </section>
+    <>
+      <Helmet title={profile?.fullName} description="Страница профиля" />
+      <section>
+        <ProfileInfo isOwner={isOwner} profile={profile} />
+        <MyPosts />
+      </section>
+    </>
   );
 };
