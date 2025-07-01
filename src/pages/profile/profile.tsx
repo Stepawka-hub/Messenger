@@ -1,5 +1,4 @@
 import { Helmet } from "@components/helmet";
-import { MyPosts } from "@components/posts/my-posts";
 import { ProfileInfo } from "@components/profile";
 import { getCurrentUser } from "@slices/auth";
 import { getIsLoadingProfile, getProfile } from "@slices/profile";
@@ -66,7 +65,6 @@ export const Profile = () => {
           isOwner={profileId === currentUser?.id}
           profile={profile}
         />
-        <MyPosts />
       </section>
     </>
   );

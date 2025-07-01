@@ -1,4 +1,3 @@
-import avatarBlack from "@images/black.png";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   getProfileAsync,
@@ -6,7 +5,6 @@ import {
   updateProfileAsync,
   updateProfilePhotoAsync,
 } from "@thunks/profile";
-import { mockPosts } from "@utils/mock";
 import { TPhotos, TProfile } from "src/types";
 import { TProfileState } from "./types";
 
@@ -16,27 +14,12 @@ const initialState: TProfileState = {
   isLoadingProfile: false,
   isUpdatingProfile: false,
   isUpdatingPhoto: false,
-  posts: [...mockPosts],
 };
 
 const profileSlice = createSlice({
   name: "profile",
   initialState,
   reducers: {
-    addPost: (state, { payload }: PayloadAction<string>) => {
-      const post = {
-        id: state.posts.length + 1,
-        userid: 1,
-        message: payload,
-        username: "Stepawka",
-        avatar: avatarBlack,
-      };
-
-      state.posts.push(post);
-    },
-    deletePost: (state, { payload }: PayloadAction<number>) => {
-      state.posts = state.posts.filter((post) => post.id !== payload);
-    },
     setProfile: (state, { payload }: PayloadAction<TProfile | null>) => {
       state.profile = payload;
     },
@@ -50,7 +33,6 @@ const profileSlice = createSlice({
     },
   },
   selectors: {
-    getPosts: (state) => state.posts,
     getProfile: (state) => state.profile,
     getProfileStatus: (state) => state.status,
     getIsLoadingProfile: (state) => state.isLoadingProfile,
@@ -111,17 +93,11 @@ const profileSlice = createSlice({
 
 export const reducer = profileSlice.reducer;
 export const {
-  getPosts,
   getProfile,
   getProfileStatus,
   getIsLoadingProfile,
   getIsUpdatingProfile,
   getIsUpdatingPhoto,
 } = profileSlice.selectors;
-export const {
-  setProfile,
-  setProfilePhoto,
-  setProfileStatus,
-  addPost,
-  deletePost,
-} = profileSlice.actions;
+export const { setProfile, setProfilePhoto, setProfileStatus } =
+  profileSlice.actions;

@@ -1,8 +1,7 @@
 import {
-  TDialog,
   TChatMessage,
+  TDialog,
   TModal,
-  TPost,
   TProfile,
   TSocialUser,
   TUserData,
@@ -34,7 +33,6 @@ export type TProfileState = {
   isLoadingProfile: boolean;
   isUpdatingProfile: boolean;
   isUpdatingPhoto: boolean;
-  posts: TPost[];
 };
 
 export type TAuthState = {
