@@ -4,19 +4,24 @@ import { Message } from "@ui/message";
 import { FC, useEffect } from "react";
 import s from "./message-list.module.css";
 import { TChatMessage } from "@types";
-
-const ws = new WebSocket(import.meta.env.VITE_WS_API_URL);
+import { useWebSocket } from "@hooks/useWebSocket";
 
 export const MessageList: FC = () => {
   const dispatch = useDispatch();
   const messages = useSelector(getMessages);
+  const { wsChannel } = useWebSocket();
 
   useEffect(() => {
-    ws.addEventListener("message", (e: MessageEvent<string>) => {
+    if (!wsChannel) return;
+    const onMessage = (e: MessageEvent<string>) => {
       const parsedData: TChatMessage[] = JSON.parse(e.data);
       dispatch(addMessages(parsedData));
-    });
-  }, [dispatch]);
+    };
+
+    wsChannel.addEventListener("message", onMessage);
+
+    return () => wsChannel.removeEventListener("message", onMessage);
+  }, [dispatch, wsChannel]);
 
   return (
     <section className={s.list}>

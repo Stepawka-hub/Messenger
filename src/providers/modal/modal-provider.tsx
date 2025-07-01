@@ -1,9 +1,17 @@
 import { Modal } from "@components/modal";
-import { memo, ReactNode, useCallback, useMemo, useRef, useState } from "react";
+import {
+  FC,
+  memo,
+  PropsWithChildren,
+  ReactNode,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { ModalContext } from "./modal-context";
-import { ModalProviderProps } from './types';
 
-export const ModalProvider = memo(({ children }: ModalProviderProps) => {
+export const ModalProvider: FC<PropsWithChildren> = memo(({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState<ReactNode | null>(null);
   const nodeRef = useRef<HTMLDivElement>(null);
@@ -25,11 +33,7 @@ export const ModalProvider = memo(({ children }: ModalProviderProps) => {
   return (
     <ModalContext.Provider value={contextValue}>
       {children}
-      <Modal
-        isOpen={isOpen}
-        nodeRef={nodeRef}
-        onClose={hideModal}
-      >
+      <Modal isOpen={isOpen} nodeRef={nodeRef} onClose={hideModal}>
         {modalContent}
       </Modal>
     </ModalContext.Provider>

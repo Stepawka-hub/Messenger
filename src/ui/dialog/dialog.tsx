@@ -5,7 +5,7 @@ import s from "./dialog.module.css";
 import clsx from "clsx";
 
 export const Dialog: FC<DialogProps> = ({ id, username }) => {
-  const path = "/dialogs/" + id;
+  const path = "/chat/" + id;
 
   return (
     <article>

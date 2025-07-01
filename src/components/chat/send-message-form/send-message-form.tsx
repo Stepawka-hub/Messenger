@@ -1,5 +1,5 @@
 import { useSubmitOnEnter } from "@hooks/useSubmitOnEnter";
-import { useDispatch } from "@store";
+import { useWebSocket } from "@hooks/useWebSocket";
 import { Button } from "@ui/button";
 import { Textarea } from "@ui/form-elements";
 import {
@@ -12,14 +12,15 @@ import s from "./send-message-form.module.css";
 import { TSendMessageForm } from "./types";
 
 export const SendMessageForm: FC = () => {
-  const dispatch = useDispatch();
+  const { isConnected } = useWebSocket();
+
   const { register, handleSubmit, formState, reset } =
     useForm<TSendMessageForm>({
       mode: "onChange",
     });
   const error = formState.errors.message?.message;
 
-  const onSubmit: SubmitHandler<TSendMessageForm> = (formData) => {
+  const onSubmit: SubmitHandler<TSendMessageForm> = () => {
     // dispatch(addMessage(formData.message));
     reset();
   };
@@ -40,7 +41,9 @@ export const SendMessageForm: FC = () => {
         })}
         onKeyDown={handleKeyDown}
       />
-      <Button className={s.submit}>Отправить</Button>
+      <Button className={s.submit} disabled={!isConnected}>
+        Отправить
+      </Button>
     </form>
   );
 };

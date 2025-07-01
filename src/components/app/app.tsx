@@ -11,6 +11,7 @@ const Settings = lazy(() => import("@pages/settings"));
 
 import { ProtectedRoute } from "@components/protected-route";
 import { Loader } from "@ui/loader";
+import { WebSocketProvider } from "@providers/websocket/websocket-provider";
 
 export const App = memo(() => (
   <Suspense fallback={<Loader />}>
@@ -18,10 +19,12 @@ export const App = memo(() => (
       <Route path="/" element={<Navigate to="/news" />} />
       <Route path="/profile/:userId" element={<Profile />} />
       <Route
-        path="/dialogs/*"
+        path="/chat/*"
         element={
           <ProtectedRoute>
-            <Chat />
+            <WebSocketProvider>
+              <Chat />
+            </WebSocketProvider>
           </ProtectedRoute>
         }
       />
