@@ -9,24 +9,30 @@ import { BackButton } from "@ui/back-button";
 import { Loader } from "@ui/loader";
 import { NoDataFound } from "@ui/no-data-found";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export const Profile = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const profile = useSelector(getProfile);
   const isLoading = useSelector(getIsLoadingProfile);
-
   const currentUser = useSelector(getCurrentUser);
-  const { userId } = useParams();
-  const userIdNumber = Number(userId);
-  const isOwner = userIdNumber === currentUser?.id;
+
+  const { userId: routeUserId } = useParams<{ userId?: string }>();
+  const profileId = routeUserId ? Number(routeUserId) : currentUser?.id;
 
   useEffect(() => {
-    if (userIdNumber) {
-      dispatch(getProfileAsync(userIdNumber));
-      dispatch(getProfileStatusAsync(userIdNumber));
+    // Если в URL не указан ID и есть текущий пользователь
+    if (!routeUserId && currentUser?.id) {
+      navigate(`/profile/${currentUser?.id}`, { replace: true });
+      return;
     }
-  }, [dispatch, userIdNumber]);
+
+    if (profileId) {
+      dispatch(getProfileAsync(profileId));
+      dispatch(getProfileStatusAsync(profileId));
+    }
+  }, [dispatch, navigate, profileId, currentUser, routeUserId]);
 
   if (isLoading) {
     return (
@@ -56,7 +62,10 @@ export const Profile = () => {
     <>
       <Helmet title={profile?.fullName} description="Страница профиля" />
       <section>
-        <ProfileInfo isOwner={isOwner} profile={profile} />
+        <ProfileInfo
+          isOwner={profileId === currentUser?.id}
+          profile={profile}
+        />
         <MyPosts />
       </section>
     </>

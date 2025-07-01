@@ -20,7 +20,9 @@ export const MessageList: FC = () => {
 
     wsChannel.addEventListener("message", onMessage);
 
-    return () => wsChannel.removeEventListener("message", onMessage);
+    return () => {
+      wsChannel.removeEventListener("message", onMessage);
+    }
   }, [dispatch, wsChannel]);
 
   return (

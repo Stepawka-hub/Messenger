@@ -1,7 +1,14 @@
-import { FC, PropsWithChildren, useEffect, useRef, useState } from "react";
+import {
+  FC,
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { TWebSocketState, WebSocketProviderProps } from "./types";
 import { WebSocketContext } from "./websocket-context";
-import { WS_CODES, WS_URL } from "./constants";
+import { RECONNECT_DELAY, WS_CODES, WS_URL } from "./constants";
 
 export const WebSocketProvider: FC<
   PropsWithChildren<WebSocketProviderProps>
@@ -9,8 +16,12 @@ export const WebSocketProvider: FC<
   const wsRef = useRef<WebSocket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
 
-  useEffect(() => {
+  const createChannel = useCallback(() => {
     wsRef.current = new WebSocket(url);
+  }, [url]);
+
+  useEffect(() => {
+    createChannel();
     const socket = wsRef.current;
 
     const handleOpen = () => {
@@ -22,6 +33,7 @@ export const WebSocketProvider: FC<
       console.log("Disconnected from WebSocket");
       setIsConnected(false);
       wsRef.current = null;
+      setTimeout(createChannel, RECONNECT_DELAY);
     };
 
     const handleError = (error: Event) => {
@@ -30,22 +42,20 @@ export const WebSocketProvider: FC<
       wsRef.current = null;
     };
 
-    socket.addEventListener("open", handleOpen);
-    socket.addEventListener("close", handleClose);
-    socket.addEventListener("error", handleError);
+    socket?.addEventListener("open", handleOpen);
+    socket?.addEventListener("close", handleClose);
+    socket?.addEventListener("error", handleError);
 
     return () => {
-      if (socket) {
-        socket.removeEventListener("open", handleOpen);
-        socket.removeEventListener("close", handleClose);
-        socket.removeEventListener("error", handleError);
+      socket?.removeEventListener("open", handleOpen);
+      socket?.removeEventListener("close", handleClose);
+      socket?.removeEventListener("error", handleError);
 
-        if (socket.readyState === WS_CODES.OPEN) {
-          socket.close();
-        }
+      if (socket?.readyState === WS_CODES.OPEN) {
+        socket?.close();
       }
     };
-  }, [url]);
+  }, [createChannel]);
 
   const contextValue: TWebSocketState = {
     wsChannel: wsRef.current,

@@ -3,7 +3,7 @@ import { BackButton } from "@ui/back-button";
 import { FC } from "react";
 import s from "./not-found.module.css";
 
-export const NotFound: FC = () => {
+const NotFound: FC = () => {
   return (
     <>
       <Helmet
@@ -18,3 +18,5 @@ export const NotFound: FC = () => {
     </>
   );
 };
+
+export default NotFound;
