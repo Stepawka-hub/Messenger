@@ -9,6 +9,7 @@ export const NotFound: FC = () => {
       <Helmet
         title="Страница не найдена"
         description="К сожалению, запрошенная страница не найдена. Вернитесь на главную страницу"
+        noIndex
       />
       <section className={s.notFound}>
         <span className={s.text}>404 - Not Found</span>

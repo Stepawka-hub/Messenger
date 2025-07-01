@@ -31,7 +31,7 @@ export const Profile = () => {
   if (isLoading) {
     return (
       <>
-        <Helmet title="Профиль" description="Страница профиля" />
+        <Helmet title="Профиль" description="Страница профиля" noIndex />
         <Loader />
       </>
     );
@@ -43,6 +43,7 @@ export const Profile = () => {
         <Helmet
           title="Профиль не найден"
           description="Профиль не найден. Возможно, профиль был удален или не существует."
+          noIndex
         />
         <NoDataFound label="Профиль не найден!">
           <BackButton />
