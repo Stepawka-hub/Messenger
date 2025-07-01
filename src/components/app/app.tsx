@@ -5,9 +5,8 @@ import { FindFriends } from "@pages/find-friends";
 import { Login } from "@pages/login";
 import { NotFound } from "@pages/not-found";
 import { Profile } from "@pages/profile";
-const Dialogs = lazy(() => import("@pages/dialogs"));
+const Chat = lazy(() => import("@pages/chat"));
 const News = lazy(() => import("@pages/news"));
-const Music = lazy(() => import("@pages/music"));
 const Settings = lazy(() => import("@pages/settings"));
 
 import { ProtectedRoute } from "@components/protected-route";
@@ -22,7 +21,7 @@ export const App = memo(() => (
         path="/dialogs/*"
         element={
           <ProtectedRoute>
-            <Dialogs />
+            <Chat />
           </ProtectedRoute>
         }
       />
@@ -32,14 +31,6 @@ export const App = memo(() => (
         element={
           <ProtectedRoute>
             <FindFriends />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/music"
-        element={
-          <ProtectedRoute>
-            <Music />
           </ProtectedRoute>
         }
       />

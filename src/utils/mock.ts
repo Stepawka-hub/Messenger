@@ -1,6 +1,6 @@
 import avatarOrange from "@images/avatar_orange.jpg";
 import avatarBlack from "@images/black.png";
-import { TDialog, TMessage, TPost } from "src/types";
+import { TDialog, TPost } from "@types";
 
 export const mockDialogs: TDialog[] = [
   {
@@ -27,30 +27,6 @@ export const mockDialogs: TDialog[] = [
     id: 5,
     username: "Ruslan",
     avatar: avatarBlack,
-  },
-];
-
-export const mockMessages: TMessage[] = [
-  {
-    id: 1,
-    userid: 1,
-    username: "Stepawka",
-    avatar: avatarBlack,
-    text: "Привет!",
-  },
-  {
-    id: 2,
-    userid: 2,
-    username: "Maxim",
-    avatar: avatarOrange,
-    text: "*Какое-то сообщение*",
-  },
-  {
-    id: 3,
-    userid: 1,
-    username: "Stepawka",
-    avatar: avatarBlack,
-    text: "*Какой-то классный ответ*",
   },
 ];
 

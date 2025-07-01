@@ -8,12 +8,12 @@ export type TPost = {
   avatar: string;
 };
 
-export type TMessage = {
+export type TChatMessage = {
   id: number;
-  userid: TUserId;
-  username: string;
-  avatar: string;
-  text: string;
+  userId: TUserId;
+  userName: string;
+  message: string;
+  photo: string;
 };
 
 export type TDialog = {

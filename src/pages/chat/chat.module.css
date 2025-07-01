@@ -14,8 +14,3 @@
   background-color: var(--theme-primary-color);
   overflow-x: hidden;
 }
-
-.messageList {
-  max-height: 75vh;
-  overflow-y: auto;
-}

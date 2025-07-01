@@ -1,39 +1,43 @@
+import { useSubmitOnEnter } from "@hooks/useSubmitOnEnter";
+import { sendMessage } from "@slices/chat";
 import { Button } from "@ui/button";
 import { Textarea } from "@ui/form-elements";
 import { FC } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import s from "./send-message-form.module.css";
-import { SendMessageFormProps, TSendMessageForm } from "./types";
-import { useSubmitOnEnter } from '@hooks/useSubmitOnEnter';
+import { TSendMessageForm } from "./types";
+import { useDispatch } from "@store";
+import {
+  maxLengthValidation,
+  requiredValidation,
+} from "@utils/helpers/validate-helpers";
 
-export const SendMessageForm: FC<SendMessageFormProps> = ({ onSubmit }) => {
+export const SendMessageForm: FC = () => {
+  const dispatch = useDispatch();
   const { register, handleSubmit, formState, reset } =
     useForm<TSendMessageForm>({
       mode: "onChange",
     });
   const error = formState.errors.message?.message;
 
-  const handleFormSubmit: SubmitHandler<TSendMessageForm> = (data) => {
-    onSubmit(data);
+  const onSubmit: SubmitHandler<TSendMessageForm> = (formData) => {
+    dispatch(sendMessage(formData.message));
     reset();
   };
 
   const { handleKeyDown } = useSubmitOnEnter({
-    onSubmit: () => handleSubmit(handleFormSubmit)(),
+    onSubmit: () => handleSubmit(onSubmit)(),
   });
 
   return (
-    <form className={s.form} onSubmit={handleSubmit(handleFormSubmit)}>
+    <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
       <Textarea
         id="new-message"
         placeholder="Send message..."
         error={error}
         {...register("message", {
-          required: "This field is required!",
-          maxLength: {
-            value: 1024,
-            message: "Maximum number of characters exceeded",
-          },
+          ...requiredValidation(),
+          ...maxLengthValidation(1024),
         })}
         onKeyDown={handleKeyDown}
       />

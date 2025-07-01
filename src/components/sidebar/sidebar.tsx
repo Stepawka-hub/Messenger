@@ -19,7 +19,6 @@ export const Sidebar: FC<SidebarProps> = ({ isOpen, onClose }) => {
       { to: "/dialogs", label: "Messages", hide: !isAuth },
       { to: "/users", label: "Find friends", hide: !isAuth },
       { to: "/news", label: "News" },
-      { to: "/music", label: "Music", hide: !isAuth },
       { to: "/settings", label: "Settings" },
     ],
     [isAuth, userId]
