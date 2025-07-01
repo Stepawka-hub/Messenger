@@ -1,13 +1,24 @@
 import { DialogList, MessageList, SendMessageForm } from "@components/chat";
 import { Helmet } from "@components/helmet";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import s from "./chat.module.css";
+import { useDispatch } from "@store";
+import { startMessagesListening, stopMessagesListening } from "@thunks/chat";
 
 const Chat: FC = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(startMessagesListening());
+    return () => {
+      dispatch(stopMessagesListening());
+    };
+  }, [dispatch]);
+
   return (
     <>
       <Helmet
-        title="Диалоги"
+        title="Сообщения"
         description="Общайтесь с друзьями и близкими в личном пространств"
       />
       <section className={s.page}>

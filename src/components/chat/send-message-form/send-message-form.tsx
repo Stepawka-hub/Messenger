@@ -10,8 +10,11 @@ import { FC } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import s from "./send-message-form.module.css";
 import { TSendMessageForm } from "./types";
+import { sendMessageAsync } from "@thunks/chat";
+import { useDispatch } from "@store";
 
 export const SendMessageForm: FC = () => {
+  const dispatch = useDispatch();
   const { isConnected } = useWebSocket();
 
   const { register, handleSubmit, formState, reset } =
@@ -20,8 +23,8 @@ export const SendMessageForm: FC = () => {
     });
   const error = formState.errors.message?.message;
 
-  const onSubmit: SubmitHandler<TSendMessageForm> = () => {
-    // dispatch(addMessage(formData.message));
+  const onSubmit: SubmitHandler<TSendMessageForm> = ({ message }) => {
+    dispatch(sendMessageAsync(message));
     reset();
   };
 
