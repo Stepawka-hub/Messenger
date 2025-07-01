@@ -1,5 +1,5 @@
-import avatarBlack from "@images/black.png";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { TChatMessage } from "@types";
 import { mockDialogs } from "@utils/mock";
 import { TChatState } from "./types";
 
@@ -12,19 +12,8 @@ const chatSlice = createSlice({
   name: "chat",
   initialState,
   reducers: {
-    sendMessage: (state, { payload }: PayloadAction<string>) => {
-      const message = {
-        id: state.messages.length + 1,
-        userId: 1,
-        userName: "Stepawka",
-        photo: avatarBlack,
-        message: payload,
-      };
-
-      return {
-        ...state,
-        messages: [...state.messages, message],
-      };
+    addMessages: (state, { payload }: PayloadAction<TChatMessage[]>) => {
+      state.messages.push(...payload);
     },
   },
   selectors: {
@@ -35,4 +24,4 @@ const chatSlice = createSlice({
 
 export const reducer = chatSlice.reducer;
 export const { getMessages, getDialogs } = chatSlice.selectors;
-export const { sendMessage } = chatSlice.actions;
+export const { addMessages } = chatSlice.actions;

@@ -1,16 +1,15 @@
 import { useSubmitOnEnter } from "@hooks/useSubmitOnEnter";
-import { sendMessage } from "@slices/chat";
+import { useDispatch } from "@store";
 import { Button } from "@ui/button";
 import { Textarea } from "@ui/form-elements";
-import { FC } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import s from "./send-message-form.module.css";
-import { TSendMessageForm } from "./types";
-import { useDispatch } from "@store";
 import {
   maxLengthValidation,
   requiredValidation,
 } from "@utils/helpers/validate-helpers";
+import { FC } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import s from "./send-message-form.module.css";
+import { TSendMessageForm } from "./types";
 
 export const SendMessageForm: FC = () => {
   const dispatch = useDispatch();
@@ -21,7 +20,7 @@ export const SendMessageForm: FC = () => {
   const error = formState.errors.message?.message;
 
   const onSubmit: SubmitHandler<TSendMessageForm> = (formData) => {
-    dispatch(sendMessage(formData.message));
+    // dispatch(addMessage(formData.message));
     reset();
   };
 

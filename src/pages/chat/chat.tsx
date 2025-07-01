@@ -1,19 +1,9 @@
 import { DialogList, MessageList, SendMessageForm } from "@components/chat";
 import { Helmet } from "@components/helmet";
-import { FC, useEffect } from "react";
-import s from "./dialogs.module.css";
-
-const ws = new WebSocket(
-  "wss://social-network.samuraijs.com/handlers/ChatHandler.ashx"
-);
+import { FC } from "react";
+import s from "./chat.module.css";
 
 const Chat: FC = () => {
-  useEffect(() => {
-    ws.addEventListener("message", (e) => {
-      console.log(JSON.parse(e.data));
-    });
-  }, []);
-
   return (
     <>
       <Helmet
