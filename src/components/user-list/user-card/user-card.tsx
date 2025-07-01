@@ -8,6 +8,7 @@ import avatar from "@images/black.png";
 
 export const UserCard: FC<UserCardProps> = ({
   user,
+  isCurrentUser,
   followingInProgress,
   followToUser,
   unfollowFromUser,
@@ -28,12 +29,14 @@ export const UserCard: FC<UserCardProps> = ({
             />
           </NavLink>
         </div>
-        <Button
-          children={followed ? "Unfollowed" : "Follow"}
-          className={s.button}
-          disabled={followingInProgress}
-          onClick={followed ? unfollow : follow}
-        />
+        {!isCurrentUser && (
+          <Button
+            children={followed ? "Unfollowed" : "Follow"}
+            className={s.button}
+            disabled={followingInProgress}
+            onClick={followed ? unfollow : follow}
+          />
+        )}
       </header>
 
       <div className={s.info}>

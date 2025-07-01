@@ -6,6 +6,8 @@ import { Pagination } from "@ui/pagination";
 import { SkeletonCard } from "@ui/skeleton-card";
 import { FC } from "react";
 import s from "./find-friends.module.css";
+import { useSelector } from "@store";
+import { getCurrentUser } from "@slices/auth";
 
 export const FindFriends: FC = () => {
   const {
@@ -17,6 +19,7 @@ export const FindFriends: FC = () => {
     pagination,
     filter,
   } = usePaginatedUsers();
+  const currentUser = useSelector(getCurrentUser);
 
   const title =
     filter === "all"
@@ -46,6 +49,7 @@ export const FindFriends: FC = () => {
           ) : (
             <>
               <UserList
+                currentUserId={currentUser?.id || null}
                 users={users}
                 onFollow={followToUser}
                 onUnFollow={unfollowFromUser}

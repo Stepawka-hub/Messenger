@@ -67,6 +67,7 @@ const usersSlice = createSlice({
     builder
       .addCase(getUsersAsync.pending, (state) => {
         state.isLoading = true;
+        state.pagination.totalUsersCount = 0;
       })
       .addCase(
         getUsersAsync.fulfilled,

@@ -38,7 +38,6 @@ export const Profile = () => {
   }
 
   if (!profile) {
-    console.log("NOT PROFILE");
     return (
       <>
         <Helmet

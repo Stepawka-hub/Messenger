@@ -6,6 +6,7 @@ import s from "./user-list.module.css";
 import { NoDataFound } from "@ui/no-data-found";
 
 export const UserList: FC<UserListProps> = ({
+  currentUserId,
   users,
   onFollow,
   onUnFollow,
@@ -21,6 +22,7 @@ export const UserList: FC<UserListProps> = ({
         <UserCard
           user={u}
           key={u.id}
+          isCurrentUser={u.id === currentUserId}
           followToUser={onFollow}
           unfollowFromUser={onUnFollow}
           followingInProgress={checkInProgress(followingInProgress, u.id)}
