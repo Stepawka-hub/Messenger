@@ -1,4 +1,5 @@
-import { API_CODES, profileAPI } from "@api";
+import { profileAPI } from "@api/api";
+import { API_CODES } from "@api/constants";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "@store";
 import { TPhotos, TProfile } from "src/types";
