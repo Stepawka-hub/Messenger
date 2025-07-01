@@ -1,17 +1,33 @@
-import { profileAPI } from "@api/api";
+import { chatAPI } from "@api/chat.api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { TProfile } from "src/types";
+import { setMessages } from "@slices/chat";
+import { ThunkAppDispatch, TNewMessageHandler } from "./types";
+import { TChatMessage } from "@types";
 
-const GET_PROFILE = "profile/get";
+const START_MESSAGES_LISTENING = "chat/start-messages-listening";
+const STOP_MESSAGES_LISTENING = "chat/stop-messages-listening";
 
-export const startMessagesListening = createAsyncThunk<TProfile, number>(
-  GET_PROFILE,
-  async (userId, { rejectWithValue }) => {
-    try {
-      const profile = await profileAPI.getProfile(userId);
-      return profile;
-    } catch (err) {
-      return rejectWithValue(err || "Failed to get profile");
-    }
+let _newMessageHandler: TNewMessageHandler = null;
+const newMessageHandlerCreator = (dispatch: ThunkAppDispatch) => {
+  if (_newMessageHandler === null) {
+    _newMessageHandler = (messages: TChatMessage[]) => {
+      dispatch(setMessages(messages));
+    };
+  }
+
+  return _newMessageHandler;
+};
+
+export const startMessagesListening = createAsyncThunk(
+  START_MESSAGES_LISTENING,
+  async (_, { dispatch }) => {
+    chatAPI.subscribe(newMessageHandlerCreator(dispatch));
+  }
+);
+
+export const stopMessagesListening = createAsyncThunk(
+  STOP_MESSAGES_LISTENING,
+  async (_, { dispatch }) => {
+    chatAPI.unsubscribe(newMessageHandlerCreator(dispatch));
   }
 );

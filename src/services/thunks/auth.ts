@@ -1,5 +1,7 @@
-import { authAPI, profileAPI, securityAPI } from "@api/api";
-import { API_CODES } from '@api/constants';
+import { authAPI } from "@api/auth.api";
+import { API_CODES } from "@api/constants";
+import { profileAPI } from "@api/profile.api";
+import { securityAPI } from "@api/security.api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { TError, TUserData } from "@types";
 import { TLoginPayload } from "@utils/api/types";

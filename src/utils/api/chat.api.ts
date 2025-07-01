@@ -24,13 +24,8 @@ const handleMessage = (e: MessageEvent<string>) => {
 class ChatAPI {
   subscribe(callback: TSubscriber) {
     subscribers.push(callback);
-    // Variant 1
-    return () => {
-      subscribers = subscribers.filter((s) => s !== callback);
-    };
   }
 
-  // Variant 2
   unsubscribe(callback: TSubscriber) {
     subscribers = subscribers.filter((s) => s !== callback);
   }
