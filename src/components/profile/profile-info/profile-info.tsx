@@ -31,9 +31,7 @@ export const ProfileInfo: FC<ProfileInfoProps> = ({ id, isOwner, profile }) => {
     <div className={s.container}>
       <div className={s.info}>
         <div className={s.details}>
-          <div className={s.avatar}>
-            <ProfileAvatar isOwner={isOwner} photos={profile.photos} />
-          </div>
+          <ProfileAvatar isOwner={isOwner} photos={profile.photos} />
 
           {editMode ? (
             <ProfileEditForm

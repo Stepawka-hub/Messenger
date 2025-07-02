@@ -1,4 +1,3 @@
-import avatar from "@images/black.png";
 import { useDispatch } from "@store";
 import { updateProfilePhotoAsync } from "@thunks/profile";
 import { InputFile } from "@ui/form-elements/input-file";
@@ -7,6 +6,7 @@ import s from "./profile-avatar.module.css";
 import { ProfileAvatarProps } from "./type";
 import { getIsUpdatingPhoto } from "@slices/profile";
 import { useSelector } from "react-redux";
+import { Avatar } from "@ui/avatar";
 
 export const ProfileAvatar: FC<ProfileAvatarProps> = ({ isOwner, photos }) => {
   const dispatch = useDispatch();
@@ -22,14 +22,12 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = ({ isOwner, photos }) => {
 
   return (
     <div className={s.container}>
-      <div className={s.avatarWrapper}>
-        <img className={s.avatar} src={photos?.large || avatar} alt="Avatar" />
-      </div>
+      <Avatar image={photos.large} size="large" />
       <div>
         {isOwner && (
           <InputFile
             className={s.updatePhoto}
-            text={isUpdating ? 'Сохранение...' : 'Сменить аватар'}
+            text={isUpdating ? "Сохранение..." : "Сменить аватар"}
             disabled={isUpdating}
             onChange={onChange}
           />

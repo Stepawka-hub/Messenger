@@ -1,10 +1,9 @@
 import { Button } from "@ui/button";
-import { NavLink } from "react-router-dom";
 import { FC } from "react";
-
+import { NavLink } from "react-router-dom";
+import { Avatar } from "@ui/avatar";
 import { UserCardProps } from "./type";
 import s from "./user-card.module.css";
-import avatar from "@images/black.png";
 
 export const UserCard: FC<UserCardProps> = ({
   user,
@@ -20,15 +19,9 @@ export const UserCard: FC<UserCardProps> = ({
   return (
     <article className={s.card}>
       <header className={s.header}>
-        <div className={s.avatarWrapper}>
-          <NavLink to={`/profile/${id}`}>
-            <img
-              className={s.avatar}
-              src={photos?.small ?? avatar}
-              alt="Avatar"
-            />
-          </NavLink>
-        </div>
+        <NavLink to={`/profile/${id}`}>
+          <Avatar image={photos.small} size="medium" />
+        </NavLink>
         {!isCurrentUser && (
           <Button
             children={followed ? "Unfollowed" : "Follow"}

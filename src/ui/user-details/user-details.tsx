@@ -1,6 +1,5 @@
 import { FC } from "react";
-
-import avatarDefault from "@images/black.png";
+import { Avatar } from "@ui/avatar";
 import { UserDetailsProps } from "./type";
 import s from "./user-details.module.css";
 
@@ -11,13 +10,12 @@ export const UserDetails: FC<UserDetailsProps> = ({
   onAvatarClick,
 }) => (
   <div className={s.userDetails}>
-    <div className={s.avatarWrapper} onClick={onAvatarClick}>
-      <img
-        src={photos?.small || avatarDefault}
-        className="avatar"
-        alt="Avatar"
-      />
-    </div>
+    <Avatar
+      className={s.avatar}
+      image={photos.small}
+      size="small"
+      onClick={onAvatarClick}
+    />
     <div>
       <h4 className={s.username}>{username}</h4>
       <p className={s.email}>{email}</p>
