@@ -4,7 +4,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { FindFriends } from "@pages/find-friends";
 import { Login } from "@pages/login";
 import { Profile } from "@pages/profile";
-const DialogsPage = lazy(() => import("@pages/dialogs"));
+const DialogsPage = lazy(() => import("@pages/dialog-page"));
 const Settings = lazy(() => import("@pages/settings"));
 const NotFound = lazy(() => import("@pages/not-found"));
 

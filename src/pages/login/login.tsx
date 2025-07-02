@@ -1,12 +1,11 @@
-import { Helmet } from "@components/helmet";
 import { LoginForm } from "@components/login-form";
 import { TLoginForm } from "@components/login-form/types";
 import { getCaptchaUrl, getIsLoggingIn, getLoginError } from "@slices/auth";
 import { useDispatch, useSelector } from "@store";
 import { loginUserAsync } from "@thunks/auth";
+import { PageWrapper } from "@ui/page-wrapper";
 import { FC } from "react";
 import { SubmitHandler } from "react-hook-form";
-import s from "./login.module.css";
 
 export const Login: FC = () => {
   const dispatch = useDispatch();
@@ -20,19 +19,16 @@ export const Login: FC = () => {
   };
 
   return (
-    <>
-      <Helmet
-        title="Вход"
-        description="Войдите, чтобы общаться с друзьями, делиться новостями и оставаться на связи с важными для вас людьми"
+    <PageWrapper
+      title="Вход"
+      description="Войдите, чтобы общаться с друзьями, делиться новостями и оставаться на связи с важными для вас людьми"
+    >
+      <LoginForm
+        isLogginIn={isLogginIn}
+        error={error}
+        captchaUrl={captchaUrl}
+        onSubmit={onSubmit}
       />
-      <section className={s.page}>
-        <LoginForm
-          isLogginIn={isLogginIn}
-          error={error}
-          captchaUrl={captchaUrl}
-          onSubmit={onSubmit}
-        />
-      </section>
-    </>
+    </PageWrapper>
   );
 };

@@ -1,13 +1,13 @@
-import { Helmet } from "@components/helmet";
 import { UserList } from "@components/user-list";
 import { UserSearch } from "@components/user-search";
 import { usePaginatedUsers } from "@hooks/usePaginatedUsers";
+import { getCurrentUser } from "@slices/auth";
+import { useSelector } from "@store";
+import { PageWrapper } from "@ui/page-wrapper";
 import { Pagination } from "@ui/pagination";
 import { SkeletonCard } from "@ui/skeleton-card";
 import { FC } from "react";
 import s from "./find-friends.module.css";
-import { useSelector } from "@store";
-import { getCurrentUser } from "@slices/auth";
 
 export const FindFriends: FC = () => {
   const {
@@ -29,37 +29,35 @@ export const FindFriends: FC = () => {
       : "Не в друзьях";
 
   return (
-    <>
-      <Helmet
-        title="Поиск друзей"
-        description="Найдите новых друзей и интересных людей, чтобы расширить свой круг общения"
-      />
-      <section className={s.section}>
-        <h2 className={s.title}>{title}</h2>
-        <div className={s.search}>
-          <UserSearch />
-        </div>
-        <div className={s.users}>
-          {isLoading ? (
-            <div className={s.skeletonList}>
-              {[...Array(pagination.pageSize)].map((_, i) => (
-                <SkeletonCard key={i} />
-              ))}
-            </div>
-          ) : (
-            <>
-              <UserList
-                currentUserId={currentUser?.id || null}
-                users={users}
-                onFollow={followToUser}
-                onUnFollow={unfollowFromUser}
-                followingInProgress={followingInProgress}
-              />
-              <Pagination {...pagination} />
-            </>
-          )}
-        </div>
-      </section>
-    </>
+    <PageWrapper
+      className={s.section}
+      pageTitle={title}
+      title={title}
+      description="Найдите новых друзей и интересных людей, чтобы расширить свой круг общения"
+    >
+      <div className={s.search}>
+        <UserSearch />
+      </div>
+      <div className={s.users}>
+        {isLoading ? (
+          <div className={s.skeletonList}>
+            {[...Array(pagination.pageSize)].map((_, i) => (
+              <SkeletonCard key={i} />
+            ))}
+          </div>
+        ) : (
+          <>
+            <UserList
+              currentUserId={currentUser?.id || null}
+              users={users}
+              onFollow={followToUser}
+              onUnFollow={unfollowFromUser}
+              followingInProgress={followingInProgress}
+            />
+            <Pagination {...pagination} />
+          </>
+        )}
+      </div>
+    </PageWrapper>
   );
 };

@@ -10,6 +10,7 @@ const DialogsPage: FC = () => {
 
   return (
     <PageWrapper
+      pageTitle="Диалоги"
       title="Сообщения"
       description="Общайтесь с друзьями и близкими в личном пространств"
     >

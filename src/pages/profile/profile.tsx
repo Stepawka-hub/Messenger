@@ -1,4 +1,3 @@
-import { Helmet } from "@components/helmet";
 import { ProfileInfo } from "@components/profile";
 import { getCurrentUser } from "@slices/auth";
 import { getIsLoadingProfile, getProfile } from "@slices/profile";
@@ -7,6 +6,7 @@ import { getProfileAsync, getProfileStatusAsync } from "@thunks/profile";
 import { BackButton } from "@ui/back-button";
 import { Loader } from "@ui/loader";
 import { NoDataFound } from "@ui/no-data-found";
+import { PageWrapper } from "@ui/page-wrapper";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -35,38 +35,33 @@ export const Profile = () => {
 
   if (isLoading) {
     return (
-      <>
-        <Helmet title="Профиль" description="Страница профиля" noIndex />
+      <PageWrapper title="Профиль" description="Страница профиля" noIndex>
         <Loader />
-      </>
+      </PageWrapper>
     );
   }
 
   if (!profile || !profileId) {
     return (
-      <>
-        <Helmet
-          title="Профиль не найден"
-          description="Профиль не найден. Возможно, профиль был удален или не существует."
-          noIndex
-        />
+      <PageWrapper
+        title="Профиль не найден"
+        description="Профиль не найден. Возможно, профиль был удален или не существует."
+        noIndex
+      >
         <NoDataFound label="Профиль не найден!">
           <BackButton />
         </NoDataFound>
-      </>
+      </PageWrapper>
     );
   }
 
   return (
-    <>
-      <Helmet title={profile?.fullName} description="Страница профиля" />
-      <section>
-        <ProfileInfo
-          id={profileId}
-          isOwner={profileId === currentUser?.id}
-          profile={profile}
-        />
-      </section>
-    </>
+    <PageWrapper title={profile?.fullName} description="Страница профиля">
+      <ProfileInfo
+        id={profileId}
+        isOwner={profileId === currentUser?.id}
+        profile={profile}
+      />
+    </PageWrapper>
   );
 };
