@@ -9,10 +9,9 @@ const Settings = lazy(() => import("@pages/settings"));
 const NotFound = lazy(() => import("@pages/not-found"));
 
 import { ProtectedRoute } from "@components/protected-route";
-import { WebSocketProvider } from "@providers/websocket/websocket-provider";
-import { Loader } from "@ui/loader";
-import { useSelector } from "@store";
 import { getIsAuth } from "@slices/auth";
+import { useSelector } from "@store";
+import { Loader } from "@ui/loader";
 
 export const App = memo(() => {
   const isAuth = useSelector(getIsAuth);
@@ -27,9 +26,7 @@ export const App = memo(() => {
           path="/chat/*"
           element={
             <ProtectedRoute>
-              <WebSocketProvider>
-                <Chat />
-              </WebSocketProvider>
+              <Chat />
             </ProtectedRoute>
           }
         />

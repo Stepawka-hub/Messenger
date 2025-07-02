@@ -1,25 +1,59 @@
 import { RECONNECT_DELAY, WS_URL } from "./constants";
-import { TSubscriber } from "./types";
+import {
+  TEventDataTypes,
+  TEventNames,
+  TSubscriber,
+  TSubscribers,
+} from "./types";
 
 let ws: WebSocket | null = null;
-let subscribers: TSubscriber[] = [];
+const subscribers: TSubscribers = {
+  "message-received": [],
+  "status-changed": [],
+};
 
 const createChannel = () => {
-  ws?.removeEventListener("close", handleClose);
+  cleanUp();
   ws?.close();
   ws = new WebSocket(WS_URL);
+  notifySubscribers("status-changed", "pending");
+  ws.addEventListener("open", handleOpen);
   ws.addEventListener("close", handleClose);
   ws.addEventListener("message", handleMessage);
+  ws.addEventListener("error", handleError);
+};
+
+const cleanUp = () => {
+  ws?.removeEventListener("open", handleOpen);
+  ws?.removeEventListener("close", handleClose);
+  ws?.removeEventListener("message", handleMessage);
+  ws?.removeEventListener("error", handleError);
+};
+
+const notifySubscribers = <E extends TEventNames>(
+  event: E,
+  data: TEventDataTypes[E]
+) => {
+  subscribers[event].forEach((s) => s(data));
+};
+
+const handleOpen = () => {
+  notifySubscribers("status-changed", "ready");
 };
 
 const handleClose = () => {
-  console.log("Close WS");
+  notifySubscribers("status-changed", "pending");
   setTimeout(createChannel, RECONNECT_DELAY);
+};
+
+const handleError = () => {
+  notifySubscribers("status-changed", "error");
+  console.error("REFRESH PAGE");
 };
 
 const handleMessage = (e: MessageEvent<string>) => {
   const messages = JSON.parse(e.data);
-  subscribers.forEach((s) => s(messages));
+  notifySubscribers("message-received", messages);
 };
 
 class ChatAPI {
@@ -28,18 +62,21 @@ class ChatAPI {
   }
 
   stop() {
-    subscribers = [];
+    const events = Object.keys(subscribers) as (keyof TSubscribers)[];
+    events.forEach((k) => (subscribers[k] = []));
+
     ws?.close();
-    ws?.removeEventListener("close", handleClose);
-    ws?.removeEventListener("message", handleMessage);
+    cleanUp();
   }
 
-  subscribe(callback: TSubscriber) {
-    subscribers.push(callback);
+  subscribe<E extends TEventNames>(eventName: E, callback: TSubscriber<E>) {
+    subscribers[eventName].push(callback);
   }
 
-  unsubscribe(callback: TSubscriber) {
-    subscribers = subscribers.filter((s) => s !== callback);
+  unsubscribe<E extends TEventNames>(eventName: E, callback: TSubscriber<E>) {
+    subscribers[eventName] = subscribers[eventName].filter(
+      (s) => s !== callback
+    ) as TSubscribers[E];
   }
 
   sendMessage(message: string) {

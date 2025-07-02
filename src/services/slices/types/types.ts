@@ -4,6 +4,7 @@ import {
   TModal,
   TProfile,
   TSocialUser,
+  TSocketStatus,
   TUserData,
   TUserFilter,
   TUserId,
@@ -47,6 +48,7 @@ export type TAuthState = {
 export type TChatState = {
   dialogs: TDialog[];
   messages: TChatMessage[];
+  status: TSocketStatus;
 };
 
 export type TSetIsFollowingPayload = {

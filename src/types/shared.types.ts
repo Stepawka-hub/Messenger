@@ -33,3 +33,5 @@ export type TError = {
 };
 
 export type TUserFilter = "all" | "friends" | "nofriends";
+
+export type TSocketStatus = "pending" | "ready" | 'error';
