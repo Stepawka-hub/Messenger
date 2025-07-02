@@ -8,7 +8,7 @@ import { reducer as appReducer } from "@slices/app";
 import { reducer as usersReducer } from "@slices/users";
 import { reducer as profileReducer } from "@slices/profile";
 import { reducer as authReducer } from "@slices/auth";
-import { reducer as chatReducer } from "@slices/chat";
+import { reducer as chatReducer } from "@slices/dialogs";
 
 const rootReducer = combineReducers({
   app: appReducer,

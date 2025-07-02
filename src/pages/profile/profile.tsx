@@ -42,7 +42,7 @@ export const Profile = () => {
     );
   }
 
-  if (!profile) {
+  if (!profile || !profileId) {
     return (
       <>
         <Helmet
@@ -62,6 +62,7 @@ export const Profile = () => {
       <Helmet title={profile?.fullName} description="Страница профиля" />
       <section>
         <ProfileInfo
+          id={profileId}
           isOwner={profileId === currentUser?.id}
           profile={profile}
         />

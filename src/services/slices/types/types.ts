@@ -45,10 +45,18 @@ export type TAuthState = {
   isLoggingIn: boolean;
 };
 
-export type TChatState = {
+export type TDialogsState = {
   dialogs: TDialog[];
   messages: TChatMessage[];
   status: TSocketStatus;
+  loading: {
+    dialogs: boolean;
+    messages: boolean;
+  };
+  error: {
+    dialogs: string | null;
+    messages: string | null;
+  };
 };
 
 export type TSetIsFollowingPayload = {

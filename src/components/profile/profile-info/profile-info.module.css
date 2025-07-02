@@ -21,6 +21,12 @@
   flex: 20%;
 }
 
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 .editBtn {
   align-self: flex-start;
   margin-left: 0.5rem;

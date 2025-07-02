@@ -1,4 +1,5 @@
-import { TUserId } from './user.types';
+import { TPhotos } from "./shared.types";
+import { TUserId } from "./user.types";
 
 export type TChatMessage = {
   id: number;
@@ -10,6 +11,10 @@ export type TChatMessage = {
 
 export type TDialog = {
   id: number;
-  username: string;
-  avatar: string;
+  userName: string;
+  hasNewMessages: boolean;
+  lastDialogActivityDate: string;
+  lastUserActivityDate: string;
+  newMessagesCount: number;
+  photos: TPhotos;
 };

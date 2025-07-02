@@ -1,5 +1,5 @@
 import { useSubmitOnEnter } from "@hooks/useSubmitOnEnter";
-import { getStatus } from "@slices/chat";
+import { getStatus } from "@slices/dialogs";
 import { useDispatch, useSelector } from "@store";
 import { sendMessageAsync } from "@thunks/chat";
 import { Button } from "@ui/button";

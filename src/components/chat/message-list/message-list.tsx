@@ -1,4 +1,4 @@
-import { getMessages } from "@slices/chat";
+import { getMessages } from "@slices/dialogs";
 import { useSelector } from "@store";
 import { Message } from "@ui/message";
 import { FC } from "react";
