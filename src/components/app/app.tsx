@@ -3,49 +3,45 @@ import { Navigate, Route, Routes } from "react-router-dom";
 
 import { FindFriends } from "@pages/find-friends";
 import { Login } from "@pages/login";
-import { NotFound } from "@pages/not-found";
 import { Profile } from "@pages/profile";
-const Dialogs = lazy(() => import("@pages/dialogs"));
-const News = lazy(() => import("@pages/news"));
-const Music = lazy(() => import("@pages/music"));
+const DialogsPage = lazy(() => import("@pages/dialog-page"));
 const Settings = lazy(() => import("@pages/settings"));
+const NotFound = lazy(() => import("@pages/not-found"));
 
 import { ProtectedRoute } from "@components/protected-route";
+import { getIsAuth } from "@slices/auth";
+import { useSelector } from "@store";
 import { Loader } from "@ui/loader";
 
-export const App = memo(() => (
-  <Suspense fallback={<Loader />}>
-    <Routes>
-      <Route path="/" element={<Navigate to="/news" />} />
-      <Route path="/profile/:userId" element={<Profile />} />
-      <Route
-        path="/dialogs/*"
-        element={
-          <ProtectedRoute>
-            <Dialogs />
-          </ProtectedRoute>
-        }
-      />
-      <Route path="/news" element={<News />} />
-      <Route path="/users" element={<FindFriends />} />
-      <Route
-        path="/music"
-        element={
-          <ProtectedRoute>
-            <Music />
-          </ProtectedRoute>
-        }
-      />
-      <Route path="/settings" element={<Settings />} />
-      <Route
-        path="/login"
-        element={
-          <ProtectedRoute onlyUnAuth>
-            <Login />
-          </ProtectedRoute>
-        }
-      />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
-  </Suspense>
-));
+export const App = memo(() => {
+  const isAuth = useSelector(getIsAuth);
+  const initialRedirect = isAuth ? "/profile" : "/login";
+
+  return (
+    <Suspense fallback={<Loader />}>
+      <Routes>
+        <Route path="/" element={<Navigate to={initialRedirect} replace />} />
+        <Route path="/profile/:userId?" element={<Profile />} />
+        <Route path="/dialogs/:userId?" element={<DialogsPage />} />
+        <Route
+          path="/users"
+          element={
+            <ProtectedRoute>
+              <FindFriends />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/settings" element={<Settings />} />
+        <Route
+          path="/login"
+          element={
+            <ProtectedRoute onlyUnAuth>
+              <Login />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Suspense>
+  );
+});

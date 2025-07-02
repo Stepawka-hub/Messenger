@@ -1,0 +1,12 @@
+.button {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 1.15rem;
+  font-weight: 500;
+  padding: 0.25rem 0.75rem;
+}
+
+.icon {
+  color: var(--secondary-color);
+}

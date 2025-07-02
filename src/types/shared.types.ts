@@ -32,4 +32,6 @@ export type TError = {
   message: string;
 };
 
-export type TUserFilter = "all" | "friends";
+export type TUserFilter = "all" | "friends" | "nofriends";
+
+export type TSocketStatus = "pending" | "ready" | 'error';

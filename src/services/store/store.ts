@@ -8,14 +8,14 @@ import { reducer as appReducer } from "@slices/app";
 import { reducer as usersReducer } from "@slices/users";
 import { reducer as profileReducer } from "@slices/profile";
 import { reducer as authReducer } from "@slices/auth";
-import { reducer as dialogsReducer } from "@slices/dialogs";
+import { reducer as chatReducer } from "@slices/dialogs";
 
 const rootReducer = combineReducers({
   app: appReducer,
   auth: authReducer,
   profile: profileReducer,
-  dialogs: dialogsReducer,
-  users: usersReducer
+  chat: chatReducer,
+  users: usersReducer,
 });
 
 export const store = configureStore({

@@ -14,12 +14,3 @@ body {
 .locked {
   overflow: hidden;
 }
-
-.avatar {
-  width: 3rem;
-  height: 3rem;
-  min-width: 3rem;
-  min-height: 3rem;
-  border-radius: 50%;
-  object-fit: cover;
-}

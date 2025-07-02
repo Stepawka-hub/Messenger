@@ -1,7 +1,9 @@
 import { UserList } from "@components/user-list";
 import { UserSearch } from "@components/user-search";
 import { usePaginatedUsers } from "@hooks/usePaginatedUsers";
-import { useTitle } from "@hooks/useTitle";
+import { getCurrentUser } from "@slices/auth";
+import { useSelector } from "@store";
+import { PageWrapper } from "@ui/page-wrapper";
 import { Pagination } from "@ui/pagination";
 import { SkeletonCard } from "@ui/skeleton-card";
 import { FC } from "react";
@@ -15,12 +17,24 @@ export const FindFriends: FC = () => {
     followToUser,
     unfollowFromUser,
     pagination,
+    filter,
   } = usePaginatedUsers();
-  useTitle("Find friends");
+  const currentUser = useSelector(getCurrentUser);
+
+  const title =
+    filter === "all"
+      ? "Пользователи"
+      : filter === "friends"
+      ? `Мои друзья (${pagination.totalCount})`
+      : "Не в друзьях";
 
   return (
-    <section className={s.section}>
-      <h2 className={s.title}>Пользователи</h2>
+    <PageWrapper
+      className={s.section}
+      pageTitle={title}
+      title={title}
+      description="Найдите новых друзей и интересных людей, чтобы расширить свой круг общения"
+    >
       <div className={s.search}>
         <UserSearch />
       </div>
@@ -34,6 +48,7 @@ export const FindFriends: FC = () => {
         ) : (
           <>
             <UserList
+              currentUserId={currentUser?.id || null}
               users={users}
               onFollow={followToUser}
               onUnFollow={unfollowFromUser}
@@ -43,6 +58,6 @@ export const FindFriends: FC = () => {
           </>
         )}
       </div>
-    </section>
+    </PageWrapper>
   );
 };

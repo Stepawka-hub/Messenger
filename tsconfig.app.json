@@ -37,7 +37,7 @@
       "@actions/*": ["src/services/actions/*"],
       "@selectors/*": ["src/services/selectors/*"],
       "@thunks/*": ["src/services/thunks/*"],
-      "@api": ["src/utils/api/api.ts"],
+      "@api/*": ["src/utils/api/*"],
       "@utils/*": ["src/utils/*"],
       "@store": ["src/services/store/store.ts"],
       "@types": ["src/types"]

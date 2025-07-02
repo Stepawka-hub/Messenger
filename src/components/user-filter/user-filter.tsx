@@ -1,4 +1,4 @@
-import { getFilter, setFilter } from "@slices/users";
+import { getFilter, setCurrentPage, setFilter } from "@slices/users";
 import { useDispatch, useSelector } from "@store";
 import { ChangeEvent, FC } from "react";
 import { UserFilterProps } from "./types";
@@ -13,6 +13,7 @@ export const UserFilter: FC<UserFilterProps> = ({ callback }) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value as TUserFilter;
     dispatch(setFilter(value));
+    dispatch(setCurrentPage(1));
     callback();
   };
 
@@ -35,6 +36,14 @@ export const UserFilter: FC<UserFilterProps> = ({ callback }) => {
           value="friends"
           onChange={handleChange}
           checked={filter === "friends"}
+        />
+        <Radio
+          id="nofriends"
+          name="filter"
+          label="Пользователей, на которых я не подписан"
+          value="nofriends"
+          onChange={handleChange}
+          checked={filter === "nofriends"}
         />
       </fieldset>
     </div>

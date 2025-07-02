@@ -9,8 +9,10 @@ import { Button } from "@ui/button";
 import { FC } from "react";
 import s from "./profile-info.module.css";
 import { ProfileInfoProps } from "./type";
+import { useDispatch } from "@store";
+import { startDialogAsync } from "@thunks/dialogs";
 
-export const ProfileInfo: FC<ProfileInfoProps> = ({ isOwner, profile }) => {
+export const ProfileInfo: FC<ProfileInfoProps> = ({ id, isOwner, profile }) => {
   const {
     initialValues,
     isUpdatingProfile,
@@ -20,13 +22,16 @@ export const ProfileInfo: FC<ProfileInfoProps> = ({ isOwner, profile }) => {
     onSubmit,
   } = useProfileEdit(profile, isOwner);
 
+  const dispatch = useDispatch();
+  const startDialog = () => {
+    dispatch(startDialogAsync(id));
+  };
+
   return (
     <div className={s.container}>
       <div className={s.info}>
         <div className={s.details}>
-          <div className={s.avatar}>
-            <ProfileAvatar isOwner={isOwner} photos={profile.photos} />
-          </div>
+          <ProfileAvatar isOwner={isOwner} photos={profile.photos} />
 
           {editMode ? (
             <ProfileEditForm
@@ -39,17 +44,22 @@ export const ProfileInfo: FC<ProfileInfoProps> = ({ isOwner, profile }) => {
             <ProfileData isOwner={isOwner} profile={profile} />
           )}
         </div>
-
-        {isOwner && !editMode && (
-          <Button
-            className={s.editBtn}
-            children={
-              isUpdatingProfile ? "Сохранение..." : "Редактировать профиль"
-            }
-            disabled={isUpdatingProfile}
-            onClick={activateEditMode}
-          />
-        )}
+        <div className={s.actions}>
+          {isOwner && !editMode && (
+            <Button
+              className={s.editBtn}
+              disabled={isUpdatingProfile}
+              onClick={activateEditMode}
+            >
+              {isUpdatingProfile ? "Сохранение..." : "Редактировать профиль"}
+            </Button>
+          )}
+          {!isOwner && (
+            <Button className={s.editBtn} onClick={startDialog}>
+              {"Начать переписку"}
+            </Button>
+          )}
+        </div>
       </div>
 
       {!editMode && <ProfileContacts contacts={profile.contacts} />}

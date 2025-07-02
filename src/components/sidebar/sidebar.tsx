@@ -5,7 +5,7 @@ import clsx from "clsx";
 import { FC, useMemo } from "react";
 import { NavLink } from "react-router-dom";
 import s from "./sidebar.module.css";
-import { SidebarProps } from "./type";
+import { SidebarProps, TNavItems } from "./type";
 
 export const Sidebar: FC<SidebarProps> = ({ isOpen, onClose }) => {
   const isAuth = useSelector(getIsAuth);
@@ -13,13 +13,11 @@ export const Sidebar: FC<SidebarProps> = ({ isOpen, onClose }) => {
   const userId = currentUser?.id || "";
   const ref = useClickOutside({ isActive: isOpen, callback: onClose });
 
-  const navItems = useMemo(
+  const navItems: TNavItems[] = useMemo(
     () => [
       { to: `/profile/${userId}`, label: "Profile", hide: !isAuth },
-      { to: "/dialogs", label: "Messages", hide: !isAuth },
+      { to: "/dialogs", label: "Messenger", hide: !isAuth },
       { to: "/users", label: "Find friends", hide: !isAuth },
-      { to: "/news", label: "News" },
-      { to: "/music", label: "Music", hide: !isAuth },
       { to: "/settings", label: "Settings" },
     ],
     [isAuth, userId]

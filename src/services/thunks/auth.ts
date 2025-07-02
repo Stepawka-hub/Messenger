@@ -1,7 +1,10 @@
-import { API_CODES, authAPI, profileAPI, securityAPI } from "@api";
+import { authAPI } from "@api/auth.api";
+import { API_CODES } from "@api/constants";
+import { profileAPI } from "@api/profile.api";
+import { securityAPI } from "@api/security.api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { TLoginPayload } from "@utils/api/types";
 import { TError, TUserData } from "@types";
+import { TLoginPayload } from "@utils/api/types";
 
 const GET_USER_DATA = "auth/get-user-data";
 const USER_LOGIN = "auth/login";

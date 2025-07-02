@@ -1,10 +1,10 @@
 import {
+  TChatMessage,
   TDialog,
-  TMessage,
   TModal,
-  TPost,
   TProfile,
   TSocialUser,
+  TSocketStatus,
   TUserData,
   TUserFilter,
   TUserId,
@@ -31,9 +31,9 @@ export type TUsersState = {
 export type TProfileState = {
   profile: TProfile | null;
   status: string;
+  isLoadingProfile: boolean;
   isUpdatingProfile: boolean;
   isUpdatingPhoto: boolean;
-  posts: TPost[];
 };
 
 export type TAuthState = {
@@ -47,7 +47,16 @@ export type TAuthState = {
 
 export type TDialogsState = {
   dialogs: TDialog[];
-  messages: TMessage[];
+  messages: TChatMessage[];
+  status: TSocketStatus;
+  loading: {
+    dialogs: boolean;
+    messages: boolean;
+  };
+  error: {
+    dialogs: string | null;
+    messages: string | null;
+  };
 };
 
 export type TSetIsFollowingPayload = {

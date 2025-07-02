@@ -31,6 +31,7 @@
 
   --search-primary-color: #ff5b42;
   --search-placeholder-color: #9b9b9b;
+  --no-data-found-color: #9b9b9b;
 
   --error-color: #ff5757;
 }

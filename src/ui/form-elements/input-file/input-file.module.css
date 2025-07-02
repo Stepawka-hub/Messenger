@@ -13,7 +13,7 @@
   background-color: var(--edit-btn-color);
   text-align: center;
 
-	transition: all 0.2s ease-in;
+	transition: .2s ease-in;
 }
 
 .input {
@@ -27,7 +27,7 @@
  
 /* Hover/active */
 .inputFile:hover .text {
-	transform: scale(1.05);
+	transform: translateY(-0.1rem);
 }
 .inputFile:active .text {
 	opacity: 0.6;

@@ -1,23 +1,20 @@
-import { TUserId } from './user.types';
+import { TPhotos } from "./shared.types";
+import { TUserId } from "./user.types";
 
-export type TPost = {
+export type TChatMessage = {
   id: number;
-  userid: TUserId;
+  userId: TUserId;
+  userName: string;
   message: string;
-  username: string;
-  avatar: string;
-};
-
-export type TMessage = {
-  id: number;
-  userid: TUserId;
-  username: string;
-  avatar: string;
-  text: string;
+  photo: string;
 };
 
 export type TDialog = {
   id: number;
-  username: string;
-  avatar: string;
+  userName: string;
+  hasNewMessages: boolean;
+  lastDialogActivityDate: string;
+  lastUserActivityDate: string;
+  newMessagesCount: number;
+  photos: TPhotos;
 };

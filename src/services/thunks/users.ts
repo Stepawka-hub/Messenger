@@ -1,7 +1,8 @@
+import { API_CODES } from "@api/constants";
+import { usersAPI } from "@api/users.api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { setFollowed, setFollowingProgress } from "@slices/users";
 import { TUserId } from "@types";
-import { API_CODES, usersAPI } from "@utils/api/api";
 import { TGetUsersData, TGetUsersPayload, TResponse } from "@utils/api/types";
 import { ThunkAppDispatch } from "./types";
 
@@ -11,7 +12,7 @@ const UNFOLLOW_USER = "users/unfollow";
 
 export const getUsersAsync = createAsyncThunk<TGetUsersData, TGetUsersPayload>(
   GET_USERS,
-  async ({ currentPage, pageSize, term = '', friend = false }) => {
+  async ({ currentPage, pageSize, term = "", friend = null }) => {
     const { items, totalCount } = await usersAPI.getUsers(
       currentPage,
       pageSize,

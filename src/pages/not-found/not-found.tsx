@@ -1,25 +1,21 @@
-import { useNavigate } from "react-router-dom";
-import s from "./not-found.module.css";
-import { useTitle } from "@hooks/useTitle";
+import { BackButton } from "@ui/back-button";
+import { PageWrapper } from "@ui/page-wrapper";
 import { FC } from "react";
-import { Button } from "@ui/button";
+import s from "./not-found.module.css";
 
-export const NotFound: FC = () => {
-  const navigate = useNavigate();
-  useTitle("Not Found");
-
-  const handleClick = () => {
-    navigate("/");
-  };
-
+const NotFound: FC = () => {
   return (
-    <section className={s.notFound}>
-      <span className={s.text}>404 - Not Found</span>
-      <Button
-        children="<- Вернуться назад"
-        className={s.btn}
-        onClick={handleClick}
-      />
-    </section>
+    <PageWrapper
+      title="Страница не найдена"
+      description="К сожалению, запрошенная страница не найдена. Вернитесь на главную страницу"
+      noIndex
+    >
+      <section className={s.notFound}>
+        <span className={s.text}>404 - Not Found</span>
+        <BackButton />
+      </section>
+    </PageWrapper>
   );
 };
+
+export default NotFound;
