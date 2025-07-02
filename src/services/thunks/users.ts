@@ -20,12 +20,9 @@ export const getUsersAsync = createAsyncThunk<TGetUsersData, TGetUsersPayload>(
       friend
     );
 
-    const users = items.map((u) => ({
-      ...u,
-      location: { country: "Russia", city: "Moscow" },
-    }));
+    console.log(items);
 
-    return { items: users, totalCount };
+    return { items, totalCount };
   }
 );
 

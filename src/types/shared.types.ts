@@ -15,11 +15,6 @@ export type TPhotos = {
   large: string | null;
 };
 
-export type TLocation = {
-  country: string;
-  city: string;
-};
-
 export type TContacts = {
   vk: string;
   facebook: string;

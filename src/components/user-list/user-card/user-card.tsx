@@ -12,7 +12,7 @@ export const UserCard: FC<UserCardProps> = ({
   followToUser,
   unfollowFromUser,
 }) => {
-  const { id, name, status, location, photos, followed } = user;
+  const { id, name, status, photos, followed } = user;
   const follow = () => followToUser(id);
   const unfollow = () => unfollowFromUser(id);
 
@@ -36,11 +36,6 @@ export const UserCard: FC<UserCardProps> = ({
         <div className={s.description}>
           <h3 className={s.name}>{name}</h3>
           <p className={s.status}>{status || "There is no description..."}</p>
-        </div>
-
-        <div className={s.location}>
-          <span className={s.country}>{location.country}</span>
-          <span className={s.city}>{location.city}</span>
         </div>
       </div>
     </article>

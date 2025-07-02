@@ -22,7 +22,14 @@ export const App = memo(() => {
       <Routes>
         <Route path="/" element={<Navigate to={initialRedirect} replace />} />
         <Route path="/profile/:userId?" element={<Profile />} />
-        <Route path="/dialogs/:userId?" element={<DialogsPage />} />
+        <Route
+          path="/dialogs/:userId?"
+          element={
+            <ProtectedRoute>
+              <DialogsPage />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/users"
           element={
