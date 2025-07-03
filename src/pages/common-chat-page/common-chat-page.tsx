@@ -1,5 +1,5 @@
-import { ChatWrapper } from "@components/common-chat";
-import { TSendMessageForm } from "@components/common-chat/send-message-form/types";
+import { Message } from "@components/common-chat";
+import { TSendMessageForm } from "@components/send-message-form/types";
 import { getMessages } from "@slices/chat";
 import { useDispatch, useSelector } from "@store";
 import {
@@ -7,9 +7,12 @@ import {
   startMessagesListening,
   stopMessagesListening,
 } from "@thunks/chat";
+import { ChatWrapper } from "@ui/chat-wrapper";
+import { List } from "@ui/list";
 import { PageWrapper } from "@ui/page-wrapper";
 import { FC, useEffect } from "react";
 import { SubmitHandler } from "react-hook-form";
+import s from './common-chat-page.module.css';
 
 export const CommonChatPage: FC = () => {
   const dispatch = useDispatch();
@@ -33,7 +36,18 @@ export const CommonChatPage: FC = () => {
       title="Общий чат"
       description="Общий чат для общения"
     >
-      <ChatWrapper messages={messages} handleSendMessage={onSubmit} />
+      <ChatWrapper className={s.chatWrapper} handleSendMessage={onSubmit}>
+        <List>
+          {messages.map(({ id, userName, message, photo }) => (
+            <Message
+              key={id}
+              username={userName}
+              content={message}
+              photo={photo}
+            />
+          ))}
+        </List>
+      </ChatWrapper>
     </PageWrapper>
   );
 };

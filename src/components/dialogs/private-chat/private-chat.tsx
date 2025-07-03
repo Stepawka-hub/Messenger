@@ -1,12 +1,13 @@
-import { FC, useEffect } from "react";
-import { MessageList } from "../../common-chat/message-list";
-import { SendMessageForm } from "../../common-chat/send-message-form";
-import { SubmitHandler } from "react-hook-form";
-import { TSendMessageForm } from "../../common-chat/send-message-form/types";
-import { getMessagesAsync, sendMessageAsync } from "@thunks/dialogs";
-import { useDispatch, useSelector } from "@store";
-import { PrivateChatProps } from "./type";
+import { Message } from "@components/common-chat";
+import { TSendMessageForm } from "@components/send-message-form/types";
 import { getMessages } from "@slices/dialogs";
+import { useDispatch, useSelector } from "@store";
+import { getMessagesAsync, sendMessageAsync } from "@thunks/dialogs";
+import { ChatWrapper } from "@ui/chat-wrapper";
+import { List } from "@ui/list";
+import { FC, useEffect } from "react";
+import { SubmitHandler } from "react-hook-form";
+import { PrivateChatProps } from "./type";
 
 export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
   const dispatch = useDispatch();
@@ -20,12 +21,13 @@ export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
     dispatch(getMessagesAsync(userId));
   }, [dispatch, userId]);
 
-  console.log(messages);
-
   return (
-    <div>
-      <MessageList messages={messages} />
-      <SendMessageForm onSubmit={onSubmit} />
-    </div>
+    <ChatWrapper handleSendMessage={onSubmit}>
+      <List>
+        {messages.map(({ id, body, senderName }) => (
+          <Message key={id} content={body} username={senderName} photo="" />
+        ))}
+      </List>
+    </ChatWrapper>
   );
 };

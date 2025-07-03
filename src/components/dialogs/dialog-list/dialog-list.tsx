@@ -2,6 +2,7 @@ import { getDialogs, getIsLoadingDialogs } from "@slices/dialogs";
 import { useDispatch, useSelector } from "@store";
 import { getDialogsAsync } from "@thunks/dialogs";
 import { Dialog } from "@ui/dialog";
+import { List } from "@ui/list";
 import { Loader } from "@ui/loader";
 import { FC, useEffect } from "react";
 
@@ -19,11 +20,10 @@ export const DialogList: FC = () => {
   }
 
   return (
-    <section>
-      <Dialog id="common" username="Общий чат" />
+    <List>
       {dialogs.map(({ id, userName }) => (
         <Dialog key={id} id={id} username={userName} />
       ))}
-    </section>
+    </List>
   );
 };

@@ -1,24 +1,19 @@
-import { CommonChat, DialogList, PrivateChat } from "@components/dialogs";
-import { FC } from "react";
-import { useParams } from "react-router-dom";
+import { DialogList, PrivateChat } from "@components/dialogs";
 import { DialogsLayout } from "@components/layouts";
+import { FC } from "react";
 import { useMediaQuery } from "react-responsive";
+import { useParams } from "react-router-dom";
 import s from "./dialogs-page.module.css";
 
 const DialogsPage: FC = () => {
-  const isMobile = useMediaQuery({ maxWidth: 768 });
+  const isMobile = useMediaQuery({ maxWidth: 992 });
   const { userId } = useParams<{ userId?: string }>();
-  const isCommonChat = userId === "common";
-
-  const ChatComponent = isCommonChat ? (
-    <CommonChat />
-  ) : (
-    <PrivateChat userId={Number(userId)} />
-  );
 
   if (isMobile) {
     return (
-      <DialogsLayout>{!userId ? <DialogList /> : ChatComponent}</DialogsLayout>
+      <DialogsLayout>
+        {!userId ? <DialogList /> : <PrivateChat userId={Number(userId)} />}
+      </DialogsLayout>
     );
   }
 
@@ -32,7 +27,7 @@ const DialogsPage: FC = () => {
           {!userId ? (
             <div className={s.selectChat}>Выберите чат</div>
           ) : (
-            ChatComponent
+            <PrivateChat userId={Number(userId)} />
           )}
         </div>
       </div>
