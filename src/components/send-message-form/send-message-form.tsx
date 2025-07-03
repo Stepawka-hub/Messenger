@@ -11,14 +11,18 @@ import s from "./send-message-form.module.css";
 import { SendMessageFormProps, TSendMessageForm } from "./types";
 import { SendIcon } from "@icons";
 
-export const SendMessageForm: FC<SendMessageFormProps> = ({ onSubmit }) => {
+export const SendMessageForm: FC<SendMessageFormProps> = ({
+  disabled = false,
+  onSubmit,
+}) => {
   const { register, handleSubmit, formState, reset } =
     useForm<TSendMessageForm>({
       mode: "onChange",
     });
-  const error = formState.errors.message?.message;
+  const { isValid } = formState;
 
   const handleSubmitForm = handleSubmit((formData) => {
+    console.log("SUBMIT");
     onSubmit(formData);
     reset();
   });
@@ -33,14 +37,13 @@ export const SendMessageForm: FC<SendMessageFormProps> = ({ onSubmit }) => {
         <Textarea
           id="new-message"
           placeholder="Send message..."
-          error={error}
           {...register("message", {
             ...requiredValidation(),
             ...maxLengthValidation(1024),
           })}
           onKeyDown={handleKeyDown}
         />
-        <Button className={s.submit}>
+        <Button className={s.submit} disabled={!isValid || disabled}>
           <SendIcon />
         </Button>
       </div>
