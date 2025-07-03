@@ -13,3 +13,12 @@
   color: var(--primary-color);
   background-color: var(--create-btn-color);
 }
+
+.textareaContainer {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  width: 100%;
+  background-color: var(--theme-secondary-color);
+  border-radius: 1.25rem;
+}

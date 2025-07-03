@@ -28,17 +28,19 @@ export const SendMessageForm: FC<SendMessageFormProps> = ({ onSubmit }) => {
 
   return (
     <form className={s.form} onSubmit={handleSubmitForm}>
-      <Textarea
-        id="new-message"
-        placeholder="Send message..."
-        error={error}
-        {...register("message", {
-          ...requiredValidation(),
-          ...maxLengthValidation(1024),
-        })}
-        onKeyDown={handleKeyDown}
-      />
-      <Button className={s.submit}>Отправить</Button>
+      <div className={s.textareaContainer}>
+        <Textarea
+          id="new-message"
+          placeholder="Send message..."
+          error={error}
+          {...register("message", {
+            ...requiredValidation(),
+            ...maxLengthValidation(1024),
+          })}
+          onKeyDown={handleKeyDown}
+        />
+        <Button className={s.submit}>Отправить</Button>
+      </div>
     </form>
   );
 };
