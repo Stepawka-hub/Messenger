@@ -9,6 +9,7 @@ import { FC } from "react";
 import { useForm } from "react-hook-form";
 import s from "./send-message-form.module.css";
 import { SendMessageFormProps, TSendMessageForm } from "./types";
+import { SendIcon } from "@icons";
 
 export const SendMessageForm: FC<SendMessageFormProps> = ({ onSubmit }) => {
   const { register, handleSubmit, formState, reset } =
@@ -39,7 +40,9 @@ export const SendMessageForm: FC<SendMessageFormProps> = ({ onSubmit }) => {
           })}
           onKeyDown={handleKeyDown}
         />
-        <Button className={s.submit}>Отправить</Button>
+        <Button className={s.submit}>
+          <SendIcon />
+        </Button>
       </div>
     </form>
   );
