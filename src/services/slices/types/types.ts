@@ -1,6 +1,7 @@
 import {
   TChatMessage,
   TDialog,
+  TMessage,
   TModal,
   TProfile,
   TSocialUser,
@@ -47,8 +48,7 @@ export type TAuthState = {
 
 export type TDialogsState = {
   dialogs: TDialog[];
-  messages: TChatMessage[];
-  status: TSocketStatus;
+  messages: TMessage[];
   loading: {
     dialogs: boolean;
     messages: boolean;
@@ -57,6 +57,11 @@ export type TDialogsState = {
     dialogs: string | null;
     messages: string | null;
   };
+};
+
+export type TChatState = {
+  status: TSocketStatus;
+  messages: TChatMessage[];
 };
 
 export type TSetIsFollowingPayload = {

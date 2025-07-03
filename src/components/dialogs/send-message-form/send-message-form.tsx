@@ -1,7 +1,4 @@
 import { useSubmitOnEnter } from "@hooks/useSubmitOnEnter";
-import { getStatus } from "@slices/dialogs";
-import { useDispatch, useSelector } from "@store";
-import { sendMessageAsync } from "@thunks/chat";
 import { Button } from "@ui/button";
 import { Textarea } from "@ui/form-elements";
 import {
@@ -9,31 +6,28 @@ import {
   requiredValidation,
 } from "@utils/helpers/validate-helpers";
 import { FC } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import s from "./send-message-form.module.css";
-import { TSendMessageForm } from "./types";
+import { SendMessageFormProps, TSendMessageForm } from "./types";
 
-export const SendMessageForm: FC = () => {
-  const dispatch = useDispatch();
-  const status = useSelector(getStatus);
-
+export const SendMessageForm: FC<SendMessageFormProps> = ({ onSubmit }) => {
   const { register, handleSubmit, formState, reset } =
     useForm<TSendMessageForm>({
       mode: "onChange",
     });
   const error = formState.errors.message?.message;
 
-  const onSubmit: SubmitHandler<TSendMessageForm> = ({ message }) => {
-    dispatch(sendMessageAsync(message));
+  const handleSubmitForm = handleSubmit((formData) => {
+    onSubmit(formData);
     reset();
-  };
+  });
 
   const { handleKeyDown } = useSubmitOnEnter({
-    onSubmit: () => handleSubmit(onSubmit)(),
+    onSubmit: handleSubmitForm,
   });
 
   return (
-    <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
+    <form className={s.form} onSubmit={handleSubmitForm}>
       <Textarea
         id="new-message"
         placeholder="Send message..."
@@ -44,9 +38,7 @@ export const SendMessageForm: FC = () => {
         })}
         onKeyDown={handleKeyDown}
       />
-      <Button className={s.submit} disabled={status !== "ready"}>
-        Отправить
-      </Button>
+      <Button className={s.submit}>Отправить</Button>
     </form>
   );
 };

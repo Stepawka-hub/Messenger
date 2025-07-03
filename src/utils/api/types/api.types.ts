@@ -1,4 +1,4 @@
-import { TPagination, TSocialUser } from "@types";
+import { TMessage, TPagination, TSocialUser, TUserId } from "@types";
 
 export type TResponse = TResponseWithData<object>;
 
@@ -35,3 +35,14 @@ export type TGetUsersParams = {
   term?: string;
   friend?: boolean;
 };
+
+export type TSendMessagePayload = {
+  userId: TUserId;
+  message: string;
+};
+
+export type TGetMessageResponse = {
+  totalCount: number;
+  items: TMessage[];
+  error: null | string;
+}

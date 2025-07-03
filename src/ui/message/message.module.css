@@ -9,7 +9,7 @@
   background-color: var(--theme-secondary-color);
 }
 
-.messageContent {
+.content {
   overflow-x: hidden;
 }
 

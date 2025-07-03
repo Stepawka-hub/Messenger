@@ -1,4 +1,4 @@
-import { CommonChat, DialogList, PrivateChat } from "@components/chat";
+import { CommonChat, DialogList, PrivateChat } from "@components/dialogs";
 import { FC } from "react";
 import { useParams } from "react-router-dom";
 import { DialogsLayout } from "@components/layouts";
@@ -10,7 +10,11 @@ const DialogsPage: FC = () => {
   const { userId } = useParams<{ userId?: string }>();
   const isCommonChat = userId === "common";
 
-  const ChatComponent = isCommonChat ? <CommonChat /> : <PrivateChat />;
+  const ChatComponent = isCommonChat ? (
+    <CommonChat />
+  ) : (
+    <PrivateChat userId={Number(userId)} />
+  );
 
   if (isMobile) {
     return (
@@ -21,9 +25,15 @@ const DialogsPage: FC = () => {
   return (
     <DialogsLayout>
       <div className={s.content}>
-        <DialogList />
+        <div className={s.dialogs}>
+          <DialogList />
+        </div>
         <div className={s.chat}>
-          {!userId ? <div>Выберите чат</div> : ChatComponent}
+          {!userId ? (
+            <div className={s.selectChat}>Выберите чат</div>
+          ) : (
+            ChatComponent
+          )}
         </div>
       </div>
     </DialogsLayout>

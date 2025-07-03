@@ -18,3 +18,18 @@ export type TDialog = {
   newMessagesCount: number;
   photos: TPhotos;
 };
+
+export type TMessage = {
+  id: string;
+  body: string;
+  addedAt: string;
+  senderId: TUserId;
+  senderName: string;
+  recipientId: TUserId;
+  viewed: boolean;
+
+  recipientName?: string;
+  deletedBySender?: boolean;
+  deletedByRecipient?: boolean;
+  isSpam?: boolean;
+};
