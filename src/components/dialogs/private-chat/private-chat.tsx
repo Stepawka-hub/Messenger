@@ -1,8 +1,8 @@
 import { FC, useEffect } from "react";
-import { MessageList } from "../message-list";
-import { SendMessageForm } from "../send-message-form";
+import { MessageList } from "../../common-chat/message-list";
+import { SendMessageForm } from "../../common-chat/send-message-form";
 import { SubmitHandler } from "react-hook-form";
-import { TSendMessageForm } from "../send-message-form/types";
+import { TSendMessageForm } from "../../common-chat/send-message-form/types";
 import { getMessagesAsync, sendMessageAsync } from "@thunks/dialogs";
 import { useDispatch, useSelector } from "@store";
 import { PrivateChatProps } from "./type";
