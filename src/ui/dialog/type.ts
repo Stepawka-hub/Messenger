@@ -1,4 +1,6 @@
-export type DialogProps = {
-  id: number | string;
-  username: string;
-};
+import { TDialog } from "@types";
+
+export type DialogProps = Omit<
+  TDialog,
+  "lastDialogActivityDate" | "lastUserActivityDate"
+>;

@@ -5,6 +5,7 @@ import { Dialog } from "@ui/dialog";
 import { List } from "@ui/list";
 import { Loader } from "@ui/loader";
 import { FC, useEffect } from "react";
+import s from "./dialog-list.module.css";
 
 export const DialogList: FC = () => {
   const dispatch = useDispatch();
@@ -20,9 +21,9 @@ export const DialogList: FC = () => {
   }
 
   return (
-    <List>
-      {dialogs.map(({ id, userName }) => (
-        <Dialog key={id} id={id} username={userName} />
+    <List className={s.list}>
+      {dialogs.map((d) => (
+        <Dialog key={d.id} {...d} />
       ))}
     </List>
   );

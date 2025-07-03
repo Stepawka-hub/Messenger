@@ -1,33 +1,34 @@
 .dialog {
-  display: block;
-  position: relative;
+  display: flex;
   cursor: pointer;
 
-  padding: 0.75rem 0.75rem 0.75rem 2rem;
-  border-radius: 1rem;
+  padding: 0.75rem 1rem; 
+  border-radius: 0.75rem;
   background-color: var(--theme-primary-color);
+  transition: opacity .2s;
+}
 
-  font-size: 1.1rem;
+.dialog:hover {
+  opacity: 0.8;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.userName {
+  font-size: 1.25rem;
   font-weight: 500;
   color: var(--primary-color);
-  text-decoration: none;
 }
 
-.dialog::before {
-  content: '';
-  position: absolute;
-
-  top: 1.1rem;
-  left: 0.75rem;
-
-  width: 0.7rem;
-  height: 0.7rem;
-  border-radius: 50%;
-  background-color: var(--primary-color);
-}
-
-.active {
+.dialog.active {
   pointer-events: none;
   cursor: default;
-  background-color: var(--orange-color);
+}
+
+.dialog.active .userName {
+  color: var(--orange-color);
 }
