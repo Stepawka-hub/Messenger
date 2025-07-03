@@ -1,4 +1,4 @@
-import { Message } from "@components/common-chat";
+import { Message } from "@components/message";
 import { TSendMessageForm } from "@components/send-message-form/types";
 import { getMessages } from "@slices/dialogs";
 import { useDispatch, useSelector } from "@store";
