@@ -1,8 +1,8 @@
 import { Helmet } from "@components/helmet";
-import { FC, PropsWithChildren } from "react";
-import { PageWrapperProps } from "./type";
 import clsx from "clsx";
-import s from './page-wrapper.module.css';
+import { FC, PropsWithChildren } from "react";
+import s from "./page-wrapper.module.css";
+import { PageWrapperProps } from "./type";
 
 export const PageWrapper: FC<PropsWithChildren<PageWrapperProps>> = ({
   pageTitle,

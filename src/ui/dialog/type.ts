@@ -1,3 +1,4 @@
-import { TDialog } from "@types";
-
-export type DialogProps = Pick<TDialog, "id" | "userName">;
+export type DialogProps = {
+  id: number | string;
+  username: string;
+};

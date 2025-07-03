@@ -30,7 +30,6 @@ export const FindFriends: FC = () => {
 
   return (
     <PageWrapper
-      className={s.section}
       pageTitle={title}
       title={title}
       description="Найдите новых друзей и интересных людей, чтобы расширить свой круг общения"

@@ -1,22 +1,32 @@
-import { DialogList } from "@components/chat";
-import { PageWrapper } from "@ui/page-wrapper";
-import { FC, useState } from "react";
+import { CommonChat, DialogList, PrivateChat } from "@components/chat";
+import { FC } from "react";
 import { useParams } from "react-router-dom";
+import { DialogsLayout } from "@components/layouts";
+import { useMediaQuery } from "react-responsive";
+import s from "./dialogs-page.module.css";
 
 const DialogsPage: FC = () => {
-  const [isMobile, setIsMobile] = useState(false);
+  const isMobile = useMediaQuery({ maxWidth: 768 });
   const { userId } = useParams<{ userId?: string }>();
-  const isPublicChat = userId === "common";
+  const isCommonChat = userId === "common";
+
+  const ChatComponent = isCommonChat ? <CommonChat /> : <PrivateChat />;
+
+  if (isMobile) {
+    return (
+      <DialogsLayout>{!userId ? <DialogList /> : ChatComponent}</DialogsLayout>
+    );
+  }
 
   return (
-    <PageWrapper
-      pageTitle="Диалоги"
-      title="Сообщения"
-      description="Общайтесь с друзьями и близкими в личном пространств"
-    >
-      <DialogList />
-      {isPublicChat ? <div>Common chat</div> : <div>Private chat</div>}
-    </PageWrapper>
+    <DialogsLayout>
+      <div className={s.content}>
+        <DialogList />
+        <div className={s.chat}>
+          {!userId ? <div>Выберите чат</div> : ChatComponent}
+        </div>
+      </div>
+    </DialogsLayout>
   );
 };
 

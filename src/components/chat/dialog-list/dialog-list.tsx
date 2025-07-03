@@ -20,8 +20,9 @@ export const DialogList: FC = () => {
 
   return (
     <section>
+      <Dialog id="common" username="Общий чат" />
       {dialogs.map(({ id, userName }) => (
-        <Dialog key={id} id={id} userName={userName} />
+        <Dialog key={id} id={id} username={userName} />
       ))}
     </section>
   );

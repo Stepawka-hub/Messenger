@@ -4,8 +4,8 @@ import { FC } from "react";
 import s from "./dialog.module.css";
 import clsx from "clsx";
 
-export const Dialog: FC<DialogProps> = ({ id, userName }) => {
-  const path = "/dialog/" + id;
+export const Dialog: FC<DialogProps> = ({ id, username }) => {
+  const path = "/dialogs/" + id;
 
   return (
     <article>
@@ -13,7 +13,7 @@ export const Dialog: FC<DialogProps> = ({ id, userName }) => {
         to={path}
         className={({ isActive }) => clsx(s.dialog, { [s.active]: isActive })}
       >
-        {userName}
+        {username}
       </NavLink>
     </article>
   );
