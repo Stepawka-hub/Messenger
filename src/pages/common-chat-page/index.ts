@@ -1,0 +1,1 @@
+export { CommonChatPage } from './common-chat-page';

@@ -12,6 +12,7 @@ import { ProtectedRoute } from "@components/protected-route";
 import { getIsAuth } from "@slices/auth";
 import { useSelector } from "@store";
 import { Loader } from "@ui/loader";
+import { CommonChatPage } from "@pages/common-chat-page";
 
 export const App = memo(() => {
   const isAuth = useSelector(getIsAuth);
@@ -27,6 +28,14 @@ export const App = memo(() => {
           element={
             <ProtectedRoute>
               <DialogsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/chat"
+          element={
+            <ProtectedRoute>
+              <CommonChatPage />
             </ProtectedRoute>
           }
         />
