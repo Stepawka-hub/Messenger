@@ -12,7 +12,8 @@ import { List } from "@ui/list";
 import { PageWrapper } from "@ui/page-wrapper";
 import { FC, useEffect } from "react";
 import { SubmitHandler } from "react-hook-form";
-import s from './common-chat-page.module.css';
+import s from "./common-chat-page.module.css";
+import { TChatMessage } from "@types";
 
 export const CommonChatPage: FC = () => {
   const dispatch = useDispatch();
@@ -30,6 +31,10 @@ export const CommonChatPage: FC = () => {
     dispatch(sendMessageAsync(message));
   };
 
+  const renderMessage = ({ id, userName, message, photo }: TChatMessage) => (
+    <Message key={id} username={userName} content={message} photo={photo} />
+  );
+
   return (
     <PageWrapper
       pageTitle="Общий чат"
@@ -37,16 +42,12 @@ export const CommonChatPage: FC = () => {
       description="Общий чат для общения"
     >
       <ChatWrapper className={s.chatWrapper} handleSendMessage={onSubmit}>
-        <List>
-          {messages.map(({ id, userName, message, photo }) => (
-            <Message
-              key={id}
-              username={userName}
-              content={message}
-              photo={photo}
-            />
-          ))}
-        </List>
+        <List
+          items={messages}
+          renderItem={renderMessage}
+          emptyMessage="Список сообщений пуст"
+          classes={{ list: s.list }}
+        />
       </ChatWrapper>
     </PageWrapper>
   );

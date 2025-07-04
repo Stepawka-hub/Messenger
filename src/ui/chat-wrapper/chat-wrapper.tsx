@@ -10,7 +10,7 @@ export const ChatWrapper: FC<PropsWithChildren<ChatWrapperProps>> = ({
   handleSendMessage,
 }) => (
   <div className={clsx(s.wrapper, className)}>
-    {children}
+    <div className={s.body}>{children}</div>
     <SendMessageForm onSubmit={handleSendMessage} />
   </div>
 );

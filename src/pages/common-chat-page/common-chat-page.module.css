@@ -1,3 +1,7 @@
 .chatWrapper {
   width: 80%;
 }
+
+.list> :first-child {
+  margin-top: auto;
+}
