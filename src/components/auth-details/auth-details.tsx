@@ -1,12 +1,12 @@
-import { UserDetails } from "@ui/user-details";
+import { ExitIcon } from "@icons";
 import { getCurrentUser, getIsAuth, getIsLoading } from "@slices/auth";
 import { useDispatch, useSelector } from "@store";
 import { logoutUserAsync } from "@thunks/auth";
 import { Button } from "@ui/button";
 import { Loader } from "@ui/loader";
+import { UserDetails } from "@ui/user-details";
 import { FC } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import logoutIcon from "@images/logout.svg";
 import s from "./auth-details.module.css";
 
 export const AuthDetails: FC = () => {
@@ -43,7 +43,7 @@ export const AuthDetails: FC = () => {
           onAvatarClick={handleAvatarClick}
         />
         <Button className={s.logoutBtn} onClick={logout}>
-          <img className={s.logoutIcon} src={logoutIcon} alt="Logout" />
+          <ExitIcon size={32} />
         </Button>
       </div>
     </div>
