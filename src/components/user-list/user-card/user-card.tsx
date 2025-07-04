@@ -1,22 +1,11 @@
-import { Button } from "@ui/button";
+import { Avatar } from "@ui/avatar";
 import { FC } from "react";
 import { NavLink } from "react-router-dom";
-import { Avatar } from "@ui/avatar";
 import { UserCardProps } from "./type";
 import s from "./user-card.module.css";
-import clsx from "clsx";
-import { StartDialogButton } from "@components/dialogs";
 
-export const UserCard: FC<UserCardProps> = ({
-  user,
-  isCurrentUser,
-  followingInProgress,
-  followToUser,
-  unfollowFromUser,
-}) => {
-  const { id, name, status, photos, followed } = user;
-  const follow = () => followToUser(id);
-  const unfollow = () => unfollowFromUser(id);
+export const UserCard: FC<UserCardProps> = ({ user, actions }) => {
+  const { id, name, status, photos } = user;
 
   return (
     <article className={s.card}>
@@ -31,20 +20,7 @@ export const UserCard: FC<UserCardProps> = ({
           <h3 className={s.name}>{name}</h3>
           <p className={s.status}>{status || "There is no description..."}</p>
         </div>
-        <div className={s.actions}>
-          {!isCurrentUser && (
-            <>
-              <StartDialogButton userId={id} className={s.button} />
-              <Button
-                className={clsx(s.button, { [s.followed]: followed })}
-                disabled={followingInProgress}
-                onClick={followed ? unfollow : follow}
-              >
-                {followed ? "Отписаться" : "Подписаться"}
-              </Button>
-            </>
-          )}
-        </div>
+        <div className={s.actions}>{actions}</div>
       </div>
     </article>
   );

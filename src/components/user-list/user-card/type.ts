@@ -1,9 +1,7 @@
-import { TSocialUser, TUserId } from "@types";
+import { TSocialUser } from "@types";
+import { ReactNode } from 'react';
 
 export type UserCardProps = {
   user: TSocialUser;
-  isCurrentUser: boolean;
-  followingInProgress: boolean;
-  followToUser: (id: TUserId) => void;
-  unfollowFromUser: (id: TUserId) => void;
+  actions?: ReactNode;
 };

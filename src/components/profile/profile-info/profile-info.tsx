@@ -45,7 +45,7 @@ export const ProfileInfo: FC<ProfileInfoProps> = ({ id, isOwner, profile }) => {
           <div className={s.actions}>
             {isOwner && !editMode && (
               <Button
-                className={s.editBtn}
+                className={s.button}
                 disabled={isUpdatingProfile}
                 onClick={activateEditMode}
               >

@@ -4,10 +4,13 @@ import { Button } from "@ui/button";
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { StartDialogButtonProps } from "./type";
+import { MessageIcon } from "@icons";
+import clsx from "clsx";
+import s from "./start-dialog-button.module.css";
 
 export const StartDialogButton: FC<StartDialogButtonProps> = ({
   userId,
-  children = "Начать переписку",
+  className,
   ...props
 }) => {
   const dispatch = useDispatch();
@@ -23,8 +26,12 @@ export const StartDialogButton: FC<StartDialogButtonProps> = ({
   };
 
   return (
-    <Button {...props} onClick={startDialog}>
-      {children}
+    <Button
+      className={clsx(s.button, className)}
+      onClick={startDialog}
+      {...props}
+    >
+      <MessageIcon />
     </Button>
   );
 };

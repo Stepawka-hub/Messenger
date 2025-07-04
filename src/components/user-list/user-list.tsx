@@ -1,32 +1,21 @@
 import { UserCard } from "@components/user-list/user-card";
-import { TSocialUser, TUserId } from "@types";
+import { getIsLoading } from "@slices/users";
+import { TSocialUser } from "@types";
 import { List } from "@ui/list";
 import { SkeletonCard } from "@ui/skeleton-card";
-import { checkInProgress } from "@utils/helpers/array-helpers";
 import { FC } from "react";
+import { useSelector } from "react-redux";
 import { UserListProps } from "./type";
 import s from "./user-list.module.css";
-import { useSelector } from "react-redux";
-import { getFollowingInProgress, getIsLoading } from "@slices/users";
-import { useDispatch } from "@store";
-import { followToUserAsync, unfollowFromUserAsync } from "@thunks/users";
+import { StartDialogButton } from "@components/dialogs";
+import { FollowButton } from "./follow-button";
 
 export const UserList: FC<UserListProps> = ({
   users,
   currentUserId,
   pageSize,
 }) => {
-  const dispatch = useDispatch();
   const isLoading = useSelector(getIsLoading);
-  const followingInProgress = useSelector(getFollowingInProgress);
-
-  const followToUser = (userId: TUserId) => {
-    dispatch(followToUserAsync(userId));
-  };
-
-  const unfollowFromUser = (userId: TUserId) => {
-    dispatch(unfollowFromUserAsync(userId));
-  };
 
   const customLoader = (
     <div className={s.skeletonList}>
@@ -40,10 +29,14 @@ export const UserList: FC<UserListProps> = ({
     <UserCard
       user={u}
       key={u.id}
-      isCurrentUser={u.id === currentUserId}
-      followToUser={followToUser}
-      unfollowFromUser={unfollowFromUser}
-      followingInProgress={checkInProgress(followingInProgress, u.id)}
+      actions={
+        u.id !== currentUserId && (
+          <>
+            <StartDialogButton userId={u.id} />
+            <FollowButton userId={u.id} followed={u.followed} />
+          </>
+        )
+      }
     />
   );
 
