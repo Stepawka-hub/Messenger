@@ -5,6 +5,7 @@ import { Avatar } from "@ui/avatar";
 import { UserCardProps } from "./type";
 import s from "./user-card.module.css";
 import clsx from "clsx";
+import { StartDialogButton } from "@components/dialogs";
 
 export const UserCard: FC<UserCardProps> = ({
   user,
@@ -32,13 +33,16 @@ export const UserCard: FC<UserCardProps> = ({
         </div>
         <div className={s.actions}>
           {!isCurrentUser && (
-            <Button
-              className={clsx(s.followBtn, { [s.followed]: followed })}
-              disabled={followingInProgress}
-              onClick={followed ? unfollow : follow}
-            >
-              {followed ? "Отписаться" : "Подписаться"}
-            </Button>
+            <>
+              <StartDialogButton userId={id} className={s.button} />
+              <Button
+                className={clsx(s.button, { [s.followed]: followed })}
+                disabled={followingInProgress}
+                onClick={followed ? unfollow : follow}
+              >
+                {followed ? "Отписаться" : "Подписаться"}
+              </Button>
+            </>
           )}
         </div>
       </div>

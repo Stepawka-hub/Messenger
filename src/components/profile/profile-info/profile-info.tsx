@@ -1,3 +1,4 @@
+import { StartDialogButton } from "@components/dialogs";
 import {
   ProfileAvatar,
   ProfileContacts,
@@ -9,8 +10,6 @@ import { Button } from "@ui/button";
 import { FC } from "react";
 import s from "./profile-info.module.css";
 import { ProfileInfoProps } from "./type";
-import { useDispatch } from "@store";
-import { startDialogAsync } from "@thunks/dialogs";
 
 export const ProfileInfo: FC<ProfileInfoProps> = ({ id, isOwner, profile }) => {
   const {
@@ -21,11 +20,6 @@ export const ProfileInfo: FC<ProfileInfoProps> = ({ id, isOwner, profile }) => {
     deactivateEditMode,
     onSubmit,
   } = useProfileEdit(profile, isOwner);
-
-  const dispatch = useDispatch();
-  const startDialog = () => {
-    dispatch(startDialogAsync(id));
-  };
 
   return (
     <div className={s.container}>
@@ -54,11 +48,7 @@ export const ProfileInfo: FC<ProfileInfoProps> = ({ id, isOwner, profile }) => {
               {isUpdatingProfile ? "Сохранение..." : "Редактировать профиль"}
             </Button>
           )}
-          {!isOwner && (
-            <Button className={s.editBtn} onClick={startDialog}>
-              {"Начать переписку"}
-            </Button>
-          )}
+          {!isOwner && <StartDialogButton userId={id} />}
         </div>
       </div>
 

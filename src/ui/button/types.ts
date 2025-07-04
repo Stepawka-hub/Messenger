@@ -1,1 +1,3 @@
-export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
+import { ButtonHTMLAttributes } from 'react';
+
+export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
