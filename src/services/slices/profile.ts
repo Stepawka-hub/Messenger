@@ -1,19 +1,29 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   getProfileAsync,
-  getProfileStatusAsync,
   updateProfileAsync,
   updateProfilePhotoAsync,
+  updateProfileStatusAsync,
 } from "@thunks/profile";
 import { TPhotos, TProfile } from "src/types";
 import { TProfileState } from "./types";
+import { TProfileWithStatus } from "../types";
 
 const initialState: TProfileState = {
   profile: null,
   status: "Нет",
-  isLoadingProfile: false,
-  isUpdatingProfile: false,
-  isUpdatingPhoto: false,
+  loading: {
+    isGetProfile: false,
+    isUpdateProfile: false,
+    isUpdatePhoto: false,
+    isUpdateStatus: false,
+  },
+  error: {
+    getProfile: null,
+    updateProfile: null,
+    updatePhoto: null,
+    updateStatus: null,
+  },
 };
 
 const profileSlice = createSlice({
@@ -35,59 +45,67 @@ const profileSlice = createSlice({
   selectors: {
     getProfile: (state) => state.profile,
     getProfileStatus: (state) => state.status,
-    getIsLoadingProfile: (state) => state.isLoadingProfile,
-    getIsUpdatingProfile: (state) => state.isUpdatingProfile,
-    getIsUpdatingPhoto: (state) => state.isUpdatingPhoto,
+    getIsLoadingProfile: (state) => state.loading.isGetProfile,
+    getIsUpdatingProfile: (state) => state.loading.isUpdateProfile,
+    getIsUpdatingPhoto: (state) => state.loading.isUpdatePhoto,
   },
   extraReducers: (builder) => {
     builder
+      .addCase(getProfileAsync.pending, (state) => {
+        state.profile = null;
+        state.loading.isGetProfile = true;
+      })
+      .addCase(
+        getProfileAsync.fulfilled,
+        (state, { payload }: PayloadAction<TProfileWithStatus>) => {
+          state.profile = payload.profile;
+          state.status = payload.status;
+          state.loading.isGetProfile = false;
+        }
+      )
+      .addCase(getProfileAsync.rejected, (state, action) => {
+        state.loading.isGetProfile = false;
+      })
+
       .addCase(updateProfilePhotoAsync.pending, (state) => {
-        state.isUpdatingPhoto = true;
+        state.loading.isUpdatePhoto = true;
       })
       .addCase(
         updateProfilePhotoAsync.fulfilled,
         (state, { payload }: PayloadAction<TPhotos>) => {
-          state.isUpdatingPhoto = false;
+          state.loading.isUpdatePhoto = false;
           if (state.profile) {
             state.profile.photos = payload;
           }
         }
       )
-      .addCase(updateProfilePhotoAsync.rejected, (state) => {
-        state.isUpdatingPhoto = false;
+      .addCase(updateProfilePhotoAsync.rejected, (state, action) => {
+        state.loading.isUpdatePhoto = false;
       })
 
       .addCase(updateProfileAsync.pending, (state) => {
-        state.isUpdatingProfile = true;
+        state.loading.isUpdateProfile = true;
       })
       .addCase(updateProfileAsync.fulfilled, (state) => {
-        state.isUpdatingProfile = false;
+        state.loading.isUpdateProfile = false;
       })
-      .addCase(updateProfileAsync.rejected, (state) => {
-        state.isUpdatingProfile = false;
-      })
-
-      .addCase(getProfileAsync.pending, (state) => {
-        state.profile = null;
-        state.isLoadingProfile = true;
-      })
-      .addCase(
-        getProfileAsync.fulfilled,
-        (state, { payload }: PayloadAction<TProfile>) => {
-          state.profile = payload;
-          state.isLoadingProfile = false;
-        }
-      )
-      .addCase(getProfileAsync.rejected, (state) => {
-        state.isLoadingProfile = false;
+      .addCase(updateProfileAsync.rejected, (state, action) => {
+        state.loading.isUpdateProfile = false;
       })
 
+      .addCase(updateProfileStatusAsync.pending, (state) => {
+        state.loading.isUpdateStatus = true;
+      })
       .addCase(
-        getProfileStatusAsync.fulfilled,
+        updateProfileStatusAsync.fulfilled,
         (state, { payload }: PayloadAction<string>) => {
+          state.loading.isUpdateStatus = false;
           state.status = payload;
         }
-      );
+      )
+      .addCase(updateProfileStatusAsync.rejected, (state, action) => {
+        state.loading.isUpdateStatus = false;
+      });
   },
 });
 

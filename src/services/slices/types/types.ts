@@ -1,8 +1,8 @@
 import {
   TChatMessage,
   TDialog,
+  TError,
   TMessage,
-  TModal,
   TProfile,
   TSocialUser,
   TSocketStatus,
@@ -13,7 +13,6 @@ import {
 
 export type TAppState = {
   initialized: boolean;
-  modal: TModal;
 };
 
 export type TUsersState = {
@@ -32,9 +31,18 @@ export type TUsersState = {
 export type TProfileState = {
   profile: TProfile | null;
   status: string;
-  isLoadingProfile: boolean;
-  isUpdatingProfile: boolean;
-  isUpdatingPhoto: boolean;
+  loading: {
+    isGetProfile: boolean;
+    isUpdateProfile: boolean;
+    isUpdatePhoto: boolean;
+    isUpdateStatus: boolean;
+  };
+  error: {
+    getProfile: TError;
+    updateProfile: TError;
+    updatePhoto: TError;
+    updateStatus: TError;
+  };
 };
 
 export type TAuthState = {

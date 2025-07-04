@@ -1,10 +1,3 @@
-export type TModal = {
-  title: string;
-  text: string;
-  delay: number;
-  isOpen: boolean;
-};
-
 export type TPagination = {
   currentPage: number;
   pageSize: number;
@@ -23,9 +16,7 @@ export type TContacts = {
   github: string;
 };
 
-export type TError = {
-  message: string;
-};
+export type TError = string | null;
 
 export type TUserFilter = "all" | "friends" | "nofriends";
 

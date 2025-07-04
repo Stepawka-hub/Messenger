@@ -1,28 +1,17 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TAppState } from "./types";
+import { createSlice } from "@reduxjs/toolkit";
 import { initializeApp } from "@thunks/app";
+import { TAppState } from "./types";
 
 const initialState: TAppState = {
   initialized: false,
-  modal: {
-    isOpen: false,
-    title: "",
-    text: "",
-    delay: 3000,
-  },
 };
 
 const appSlice = createSlice({
   name: "app",
   initialState,
-  reducers: {
-    setIsOpenModal: (state, { payload }: PayloadAction<boolean>) => {
-      state.modal.isOpen = payload;
-    },
-  },
+  reducers: {},
   selectors: {
     getInitialized: (state) => state.initialized,
-    getModal: (state) => state.modal,
   },
   extraReducers: (builder) => {
     builder
@@ -39,5 +28,4 @@ const appSlice = createSlice({
 });
 
 export const reducer = appSlice.reducer;
-export const { getInitialized, getModal } = appSlice.selectors;
-export const { setIsOpenModal } = appSlice.actions;
+export const { getInitialized } = appSlice.selectors;

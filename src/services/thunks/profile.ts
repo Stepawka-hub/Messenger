@@ -2,34 +2,29 @@ import { API_CODES } from "@api/constants";
 import { profileAPI } from "@api/profile.api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "@store";
-import { TPhotos, TProfile } from "src/types";
+import { TPhotos, TProfile, TUserId } from "src/types";
+import { TProfileWithStatus } from "../types";
 
 const GET_PROFILE = "profile/get";
 const UPDATE_PROFILE = "profile/update";
-const GET_STATUS = "profile/get-status";
 const UPDATE_STATUS = "profile/update-status";
 const UPDATE_PHOTO = "profile/update-photo";
 
-export const getProfileAsync = createAsyncThunk<TProfile, number>(
+export const getProfileAsync = createAsyncThunk<TProfileWithStatus, TUserId>(
   GET_PROFILE,
   async (userId, { rejectWithValue }) => {
     try {
-      const profile = await profileAPI.getProfile(userId);
-      return profile;
+      const getProfilePromise = profileAPI.getProfile(userId);
+      const getStatusPromise = profileAPI.getUserStatus(userId);
+
+      const [profile, status] = await Promise.all([
+        getProfilePromise,
+        getStatusPromise,
+      ]);
+
+      return { profile, status };
     } catch (err) {
       return rejectWithValue(err || "Failed to get profile");
-    }
-  }
-);
-
-export const getProfileStatusAsync = createAsyncThunk<string, number>(
-  GET_STATUS,
-  async (userId, { rejectWithValue }) => {
-    try {
-      const status = await profileAPI.getUserStatus(userId);
-      return status;
-    } catch (err) {
-      return rejectWithValue(err || "Failed to get status");
     }
   }
 );

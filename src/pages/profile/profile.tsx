@@ -2,7 +2,7 @@ import { ProfileInfo } from "@components/profile";
 import { getCurrentUser } from "@slices/auth";
 import { getIsLoadingProfile, getProfile } from "@slices/profile";
 import { useDispatch, useSelector } from "@store";
-import { getProfileAsync, getProfileStatusAsync } from "@thunks/profile";
+import { getProfileAsync } from "@thunks/profile";
 import { BackButton } from "@ui/back-button";
 import { Loader } from "@ui/loader";
 import { NoDataFound } from "@ui/no-data-found";
@@ -29,7 +29,6 @@ export const Profile = () => {
 
     if (profileId) {
       dispatch(getProfileAsync(profileId));
-      dispatch(getProfileStatusAsync(profileId));
     }
   }, [dispatch, navigate, profileId, currentUser, routeUserId]);
 
