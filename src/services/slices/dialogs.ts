@@ -43,17 +43,17 @@ const dialogsSlice = createSlice({
       })
 
       .addCase(getMessagesAsync.pending, (state) => {
-        state.loading.dialogs = true;
+        state.loading.messages = true;
       })
       .addCase(
         getMessagesAsync.fulfilled,
         (state, { payload }: PayloadAction<TMessage[]>) => {
           state.messages = payload;
-          state.loading.dialogs = false;
+          state.loading.messages = false;
         }
       )
       .addCase(getMessagesAsync.rejected, (state) => {
-        state.loading.dialogs = false;
+        state.loading.messages = false;
       });
   },
 });

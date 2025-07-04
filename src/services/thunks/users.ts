@@ -20,8 +20,6 @@ export const getUsersAsync = createAsyncThunk<TGetUsersData, TGetUsersPayload>(
       friend
     );
 
-    console.log(items);
-
     return { items, totalCount };
   }
 );

@@ -22,7 +22,6 @@ export const SendMessageForm: FC<SendMessageFormProps> = ({
   const { isValid } = formState;
 
   const handleSubmitForm = handleSubmit((formData) => {
-    console.log("SUBMIT");
     onSubmit(formData);
     reset();
   });
