@@ -2,8 +2,9 @@ import { API_CODES } from "@api/constants";
 import { profileAPI } from "@api/profile.api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "@store";
-import { TPhotos, TProfile, TUserId } from "src/types";
+import { TErrorPayload, TPhotos, TProfile, TUserId } from "src/types";
 import { TProfileWithStatus } from "../types";
+import { getErrorMessage } from "@utils/helpers/error-helpers";
 
 const GET_PROFILE = "profile/get";
 const UPDATE_PROFILE = "profile/update";
@@ -24,7 +25,11 @@ export const getProfileAsync = createAsyncThunk<TProfileWithStatus, TUserId>(
 
       return { profile, status };
     } catch (err) {
-      return rejectWithValue(err || "Failed to get profile");
+      const error: TErrorPayload = {
+        type: "TOAST",
+        message: getErrorMessage(err) || "Failed to get profile",
+      };
+      return rejectWithValue(error);
     }
   }
 );

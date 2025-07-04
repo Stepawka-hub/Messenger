@@ -10,6 +10,7 @@ import { reducer as profileReducer } from "@slices/profile";
 import { reducer as authReducer } from "@slices/auth";
 import { reducer as dialogsReducer } from "@slices/dialogs";
 import { reducer as chatReducer } from "@slices/chat";
+import toastListenerMiddleware from "./middlewares/toastMiddleware";
 
 const rootReducer = combineReducers({
   app: appReducer,
@@ -22,6 +23,8 @@ const rootReducer = combineReducers({
 
 export const store = configureStore({
   reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().prepend(toastListenerMiddleware.middleware),
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
