@@ -2,9 +2,9 @@ import { API_CODES } from "@api/constants";
 import { profileAPI } from "@api/profile.api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "@store";
-import { TErrorPayload, TPhotos, TProfile, TUserId } from "src/types";
+import { createErrorPayload } from "@utils/helpers/error-helpers";
+import { TPhotos, TProfile, TUserId } from "src/types";
 import { TProfileWithStatus } from "../types";
-import { getErrorMessage } from "@utils/helpers/error-helpers";
 
 const GET_PROFILE = "profile/get";
 const UPDATE_PROFILE = "profile/update";
@@ -25,11 +25,8 @@ export const getProfileAsync = createAsyncThunk<TProfileWithStatus, TUserId>(
 
       return { profile, status };
     } catch (err) {
-      const error: TErrorPayload = {
-        type: "TOAST",
-        message: getErrorMessage(err) || "Failed to get profile",
-      };
-      return rejectWithValue(error);
+      console.error("Error fetching profile:", err);
+      return rejectWithValue(createErrorPayload());
     }
   }
 );
@@ -37,42 +34,73 @@ export const getProfileAsync = createAsyncThunk<TProfileWithStatus, TUserId>(
 export const updateProfileStatusAsync = createAsyncThunk<string, string>(
   UPDATE_STATUS,
   async (status, { rejectWithValue }) => {
-    const { resultCode, messages } = await profileAPI.updateUserStatus(status);
-    if (resultCode === API_CODES.SUCCESS) {
-      return status;
-    }
+    try {
+      const { resultCode, messages } = await profileAPI.updateUserStatus(
+        status
+      );
+      if (resultCode === API_CODES.SUCCESS) {
+        return status;
+      }
 
-    return rejectWithValue(messages[0] || "Failed to update profile status");
+      return rejectWithValue(
+        createErrorPayload({
+          message: messages[0] || "Не удалось обновить статус профиля",
+        })
+      );
+    } catch (err) {
+      console.error("Error updating profile status:", err);
+      return rejectWithValue(createErrorPayload());
+    }
   }
 );
 
 export const updateProfilePhotoAsync = createAsyncThunk<TPhotos, File>(
   UPDATE_PHOTO,
   async (photo, { rejectWithValue }) => {
-    const { data, messages, resultCode } = await profileAPI.updatePhoto(photo);
-    if (resultCode === API_CODES.SUCCESS) {
-      return data.photos;
-    }
+    try {
+      const { data, messages, resultCode } = await profileAPI.updatePhoto(
+        photo
+      );
+      if (resultCode === API_CODES.SUCCESS) {
+        return data.photos;
+      }
 
-    return rejectWithValue(messages[0] || "Failed to update profile photo");
+      return rejectWithValue(
+        createErrorPayload({
+          message: messages[0] || "Не удалось обновить фотографию профиля",
+        })
+      );
+    } catch (err) {
+      console.error("Error updating profile photo:", err);
+      return rejectWithValue(createErrorPayload());
+    }
   }
 );
 
 export const updateProfileAsync = createAsyncThunk<void, TProfile>(
   UPDATE_PROFILE,
   async (profileData, { dispatch, rejectWithValue, getState }) => {
-    const state = getState() as RootState;
-    const userId = state.auth.user?.id;
+    try {
+      const state = getState() as RootState;
+      const userId = state.auth.user?.id;
 
-    const { messages, resultCode } = await profileAPI.updateProfile(
-      profileData
-    );
+      const { messages, resultCode } = await profileAPI.updateProfile(
+        profileData
+      );
 
-    if (resultCode === API_CODES.SUCCESS && userId) {
-      dispatch(getProfileAsync(userId));
-      return;
+      if (resultCode === API_CODES.SUCCESS && userId) {
+        dispatch(getProfileAsync(userId));
+        return;
+      }
+
+      return rejectWithValue(
+        createErrorPayload({
+          message: messages[0] || "Не удалось обновить профиль",
+        })
+      );
+    } catch (err) {
+      console.error("Error updating profile:", err);
+      return rejectWithValue(createErrorPayload());
     }
-
-    return rejectWithValue(messages[0] || "Failed to update profile");
   }
 );

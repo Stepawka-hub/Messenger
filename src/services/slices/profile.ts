@@ -18,12 +18,6 @@ const initialState: TProfileState = {
     isUpdatePhoto: false,
     isUpdateStatus: false,
   },
-  error: {
-    getProfile: null,
-    updateProfile: null,
-    updatePhoto: null,
-    updateStatus: null,
-  },
 };
 
 const profileSlice = createSlice({
@@ -63,7 +57,7 @@ const profileSlice = createSlice({
           state.loading.isGetProfile = false;
         }
       )
-      .addCase(getProfileAsync.rejected, (state, action) => {
+      .addCase(getProfileAsync.rejected, (state) => {
         state.loading.isGetProfile = false;
       })
 
@@ -79,7 +73,7 @@ const profileSlice = createSlice({
           }
         }
       )
-      .addCase(updateProfilePhotoAsync.rejected, (state, action) => {
+      .addCase(updateProfilePhotoAsync.rejected, (state) => {
         state.loading.isUpdatePhoto = false;
       })
 
@@ -89,7 +83,7 @@ const profileSlice = createSlice({
       .addCase(updateProfileAsync.fulfilled, (state) => {
         state.loading.isUpdateProfile = false;
       })
-      .addCase(updateProfileAsync.rejected, (state, action) => {
+      .addCase(updateProfileAsync.rejected, (state) => {
         state.loading.isUpdateProfile = false;
       })
 
@@ -103,7 +97,7 @@ const profileSlice = createSlice({
           state.status = payload;
         }
       )
-      .addCase(updateProfileStatusAsync.rejected, (state, action) => {
+      .addCase(updateProfileStatusAsync.rejected, (state) => {
         state.loading.isUpdateStatus = false;
       });
   },

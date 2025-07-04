@@ -4,7 +4,15 @@ export const ErrorType = {
   NONE: "NONE",
 } as const;
 
+export type ErrorTypeValue = keyof typeof ErrorType;
+
 export type TErrorPayload = {
   message: string;
-  type: keyof typeof ErrorType;
+  type: ErrorTypeValue;
 };
+
+export type TErrorWithMessage = {
+  message: string;
+};
+
+export type TErrorMessage = string | null;

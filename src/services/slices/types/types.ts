@@ -37,12 +37,6 @@ export type TProfileState = {
     isUpdatePhoto: boolean;
     isUpdateStatus: boolean;
   };
-  error: {
-    getProfile: TError;
-    updateProfile: TError;
-    updatePhoto: TError;
-    updateStatus: TError;
-  };
 };
 
 export type TAuthState = {
