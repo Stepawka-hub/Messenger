@@ -1,15 +1,15 @@
+import { AuthDetails } from "@components/auth-details";
 import { Header } from "@components/header";
 import { Sidebar } from "@components/sidebar";
+import { ModalProvider } from "@providers/modal/modal-provider";
 import { getInitialized } from "@slices/app";
 import { useDispatch, useSelector } from "@store";
 import { initializeApp } from "@thunks/app";
+import { BurgerMenu } from "@ui/burger-menu";
 import { Preloader } from "@ui/preloader";
 import { FC, PropsWithChildren, useEffect, useState } from "react";
+import { ToastContainer } from "react-toastify";
 import s from "./app.module.css";
-import { BurgerMenu } from "@ui/burger-menu";
-import { AuthDetails } from "@components/auth-details";
-import { ModalProvider } from "@providers/modal/modal-provider";
-import { toast, ToastContainer } from "react-toastify";
 
 export const AppLayout: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
@@ -41,7 +41,6 @@ export const AppLayout: FC<PropsWithChildren> = ({ children }) => {
           <div className={s.content}>{children}</div>
         </main>
       </div>
-      <button onClick={() => toast("Wow so easy!")}>123</button>
       <ToastContainer />
     </ModalProvider>
   );

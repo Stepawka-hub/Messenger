@@ -1,7 +1,7 @@
 import { API_CODES } from "@api/constants";
 import { usersAPI } from "@api/users.api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { setFollowed, setFollowingProgress } from "@slices/users";
+import { setFollowed, setFollowingProgressIds } from "@slices/users";
 import { TUserId } from "@types";
 import { TGetUsersData, TGetUsersPayload } from "@utils/api/types";
 import { createErrorPayload } from "@utils/helpers/error-helpers";
@@ -66,7 +66,7 @@ export const followUnfollowFlow = createAsyncThunk<
 
     try {
       dispatch(
-        setFollowingProgress({ followingInProgress: true, userid: userId })
+        setFollowingProgressIds({ followingInProgress: true, userid: userId })
       );
 
       const data = await apiMethod(userId);
@@ -88,7 +88,7 @@ export const followUnfollowFlow = createAsyncThunk<
       return rejectWithValue(createErrorPayload());
     } finally {
       dispatch(
-        setFollowingProgress({ followingInProgress: false, userid: userId })
+        setFollowingProgressIds({ followingInProgress: false, userid: userId })
       );
     }
   }

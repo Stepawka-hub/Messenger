@@ -13,10 +13,10 @@ const initialState: TProfileState = {
   profile: null,
   status: "Нет",
   loading: {
-    isGetProfile: false,
-    isUpdateProfile: false,
-    isUpdatePhoto: false,
-    isUpdateStatus: false,
+    isGettingProfile: false,
+    isUpdatingProfile: false,
+    isUpdatingPhoto: false,
+    isUpdatingStatus: false,
   },
 };
 
@@ -39,66 +39,67 @@ const profileSlice = createSlice({
   selectors: {
     getProfile: (state) => state.profile,
     getProfileStatus: (state) => state.status,
-    getIsLoadingProfile: (state) => state.loading.isGetProfile,
-    getIsUpdatingProfile: (state) => state.loading.isUpdateProfile,
-    getIsUpdatingPhoto: (state) => state.loading.isUpdatePhoto,
+    getIsLoadingProfile: (state) => state.loading.isGettingProfile,
+    getIsUpdatingProfile: (state) => state.loading.isUpdatingProfile,
+    getIsUpdatingPhoto: (state) => state.loading.isUpdatingPhoto,
+    getIsUpdatingStatus: (state) => state.loading.isUpdatingStatus,
   },
   extraReducers: (builder) => {
     builder
       .addCase(getProfileAsync.pending, (state) => {
         state.profile = null;
-        state.loading.isGetProfile = true;
+        state.loading.isGettingProfile = true;
       })
       .addCase(
         getProfileAsync.fulfilled,
         (state, { payload }: PayloadAction<TProfileWithStatus>) => {
           state.profile = payload.profile;
           state.status = payload.status;
-          state.loading.isGetProfile = false;
+          state.loading.isGettingProfile = false;
         }
       )
       .addCase(getProfileAsync.rejected, (state) => {
-        state.loading.isGetProfile = false;
+        state.loading.isGettingProfile = false;
       })
 
       .addCase(updateProfilePhotoAsync.pending, (state) => {
-        state.loading.isUpdatePhoto = true;
+        state.loading.isUpdatingPhoto = true;
       })
       .addCase(
         updateProfilePhotoAsync.fulfilled,
         (state, { payload }: PayloadAction<TPhotos>) => {
-          state.loading.isUpdatePhoto = false;
+          state.loading.isUpdatingPhoto = false;
           if (state.profile) {
             state.profile.photos = payload;
           }
         }
       )
       .addCase(updateProfilePhotoAsync.rejected, (state) => {
-        state.loading.isUpdatePhoto = false;
+        state.loading.isUpdatingPhoto = false;
       })
 
       .addCase(updateProfileAsync.pending, (state) => {
-        state.loading.isUpdateProfile = true;
+        state.loading.isUpdatingProfile = true;
       })
       .addCase(updateProfileAsync.fulfilled, (state) => {
-        state.loading.isUpdateProfile = false;
+        state.loading.isUpdatingProfile = false;
       })
       .addCase(updateProfileAsync.rejected, (state) => {
-        state.loading.isUpdateProfile = false;
+        state.loading.isUpdatingProfile = false;
       })
 
       .addCase(updateProfileStatusAsync.pending, (state) => {
-        state.loading.isUpdateStatus = true;
+        state.loading.isUpdatingStatus = true;
       })
       .addCase(
         updateProfileStatusAsync.fulfilled,
         (state, { payload }: PayloadAction<string>) => {
-          state.loading.isUpdateStatus = false;
+          state.loading.isUpdatingStatus = false;
           state.status = payload;
         }
       )
       .addCase(updateProfileStatusAsync.rejected, (state) => {
-        state.loading.isUpdateStatus = false;
+        state.loading.isUpdatingStatus = false;
       });
   },
 });

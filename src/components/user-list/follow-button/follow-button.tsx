@@ -1,5 +1,5 @@
 import { FollowIcon, UnfollowIcon } from "@icons";
-import { getFollowingInProgress } from "@slices/users";
+import { getFollowingInProgressIds } from "@slices/users";
 import { useDispatch, useSelector } from "@store";
 import { followToUserAsync, unfollowFromUserAsync } from "@thunks/users";
 import { Button } from "@ui/button";
@@ -16,7 +16,7 @@ export const FollowButton: FC<FollowButtonProps> = ({
   ...props
 }) => {
   const dispatch = useDispatch();
-  const followingInProgress = useSelector(getFollowingInProgress);
+  const followingInProgressIds = useSelector(getFollowingInProgressIds);
 
   const follow = () => {
     dispatch(followToUserAsync(userId));
@@ -29,7 +29,7 @@ export const FollowButton: FC<FollowButtonProps> = ({
   return (
     <Button
       className={clsx(s.button, className, { [s.followed]: followed })}
-      disabled={checkInProgress(followingInProgress, userId)}
+      disabled={checkInProgress(followingInProgressIds, userId)}
       onClick={followed ? unfollow : follow}
       {...props}
     >

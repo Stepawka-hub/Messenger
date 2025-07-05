@@ -17,7 +17,7 @@ export type TAppState = {
 export type TUsersState = {
   users: TSocialUser[];
   isLoading: boolean;
-  followingInProgress: number[];
+  followingInProgressIds: TUserId[];
   pagination: {
     pageSize: number;
     currentPage: number;
@@ -31,10 +31,10 @@ export type TProfileState = {
   profile: TProfile | null;
   status: string;
   loading: {
-    isGetProfile: boolean;
-    isUpdateProfile: boolean;
-    isUpdatePhoto: boolean;
-    isUpdateStatus: boolean;
+    isGettingProfile: boolean;
+    isUpdatingProfile: boolean;
+    isUpdatingPhoto: boolean;
+    isUpdatingStatus: boolean;
   };
 };
 
@@ -51,12 +51,10 @@ export type TDialogsState = {
   dialogs: TDialog[];
   messages: TMessage[];
   loading: {
-    dialogs: boolean;
-    messages: boolean;
-  };
-  error: {
-    dialogs: string | null;
-    messages: string | null;
+    isGettingDialogs: boolean;
+    isStartingDialogIds: TUserId[];
+    isGettingMessages: boolean;
+    isSendingMessage: boolean;
   };
 };
 

@@ -1,5 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getDialogsAsync, getMessagesAsync } from "@thunks/dialogs";
+import {
+  getDialogsAsync,
+  getMessagesAsync,
+  sendMessageAsync,
+} from "@thunks/dialogs";
 import { TDialog, TMessage } from "@types";
 import { TDialogsState } from "./types";
 
@@ -7,12 +11,10 @@ const initialState: TDialogsState = {
   dialogs: [],
   messages: [],
   loading: {
-    dialogs: false,
-    messages: false,
-  },
-  error: {
-    dialogs: null,
-    messages: null,
+    isGettingDialogs: false,
+    isStartingDialogIds: [],
+    isGettingMessages: false,
+    isSendingMessage: false,
   },
 };
 
@@ -23,37 +25,52 @@ const dialogsSlice = createSlice({
   selectors: {
     getDialogs: (state) => state.dialogs,
     getMessages: (state) => state.messages,
-    getIsLoadingMessages: (state) => state.loading.messages,
-    getIsLoadingDialogs: (state) => state.loading.dialogs,
+    getIsLoadingMessages: (state) => state.loading.isGettingMessages,
+    getIsLoadingDialogs: (state) => state.loading.isGettingDialogs,
+    getIsSendingMessage: (state) => state.loading.isSendingMessage,
   },
   extraReducers(builder) {
     builder
       .addCase(getDialogsAsync.pending, (state) => {
-        state.loading.dialogs = true;
+        state.loading.isGettingDialogs = true;
       })
       .addCase(
         getDialogsAsync.fulfilled,
         (state, { payload }: PayloadAction<TDialog[]>) => {
           state.dialogs = payload;
-          state.loading.dialogs = false;
+          state.loading.isGettingDialogs = false;
         }
       )
       .addCase(getDialogsAsync.rejected, (state) => {
-        state.loading.dialogs = false;
+        state.loading.isGettingDialogs = false;
       })
 
       .addCase(getMessagesAsync.pending, (state) => {
-        state.loading.messages = true;
+        state.loading.isGettingMessages = true;
       })
       .addCase(
         getMessagesAsync.fulfilled,
         (state, { payload }: PayloadAction<TMessage[]>) => {
           state.messages = payload;
-          state.loading.messages = false;
+          state.loading.isGettingMessages = false;
         }
       )
       .addCase(getMessagesAsync.rejected, (state) => {
-        state.loading.messages = false;
+        state.loading.isGettingMessages = false;
+      })
+
+      .addCase(sendMessageAsync.pending, (state) => {
+        state.loading.isSendingMessage = true;
+      })
+      .addCase(
+        sendMessageAsync.fulfilled,
+        (state, { payload }: PayloadAction<TMessage>) => {
+          state.messages.push(payload);
+          state.loading.isSendingMessage = false;
+        }
+      )
+      .addCase(sendMessageAsync.rejected, (state) => {
+        state.loading.isSendingMessage = false;
       });
   },
 });

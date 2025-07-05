@@ -40,7 +40,7 @@ export const updateProfileStatusAsync = createAsyncThunk<
 >(UPDATE_STATUS, async (status, { rejectWithValue }) => {
   try {
     const { resultCode, messages } = await profileAPI.updateUserStatus(status);
-    if (resultCode !== API_CODES.SUCCESS) {
+    if (resultCode === API_CODES.SUCCESS) {
       return status;
     }
 

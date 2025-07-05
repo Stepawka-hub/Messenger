@@ -1,13 +1,11 @@
 import { TDialog, TMessage, TUserId } from "@types";
 import api from "./api";
 import { BaseAPI } from "./base.api";
-import { TGetMessageResponse } from "./types";
+import { TGetMessageResponse, TResponse, TResponseWithData } from "./types";
 
 class DialogsAPI extends BaseAPI {
-  // responseCode === 0
-  startDialog = async (userId: TUserId) => {
-    const { data } = await this.api.put(`dialogs/${userId}`);
-    console.log(data);
+  startDialog = async (userId: TUserId): Promise<TResponse> => {
+    const { data } = await this.api.put<TResponse>(`dialogs/${userId}`);
     return data;
   };
 
@@ -20,14 +18,19 @@ class DialogsAPI extends BaseAPI {
     const { data } = await this.api.get<TGetMessageResponse>(
       `dialogs/${userId}/messages`
     );
-    console.log(data.items);
     return data.items;
   };
 
-  sendMessage = async (userId: TUserId, message: string) => {
-    const { data } = await this.api.post(`dialogs/${userId}/messages`, {
-      body: message,
-    });
+  sendMessage = async (
+    userId: TUserId,
+    message: string
+  ): Promise<TResponseWithData<TMessage>> => {
+    const { data } = await this.api.post<TResponseWithData<TMessage>>(
+      `dialogs/${userId}/messages`,
+      {
+        body: message,
+      }
+    );
     console.log(data);
     return data;
   };

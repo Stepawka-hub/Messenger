@@ -12,7 +12,7 @@ import {
 const initialState: TUsersState = {
   users: [],
   isLoading: false,
-  followingInProgress: [],
+  followingInProgressIds: [],
   pagination: {
     pageSize: 6,
     currentPage: 1,
@@ -35,15 +35,15 @@ const usersSlice = createSlice({
         { followed: status }
       );
     },
-    setFollowingProgress: (
+    setFollowingProgressIds: (
       state,
       { payload }: PayloadAction<TSetIsFollowingPayload>
     ) => {
       const { userid, followingInProgress } = payload;
 
-      state.followingInProgress = followingInProgress
-        ? [...state.followingInProgress, userid]
-        : state.followingInProgress.filter((id) => id !== userid);
+      state.followingInProgressIds = followingInProgress
+        ? [...state.followingInProgressIds, userid]
+        : state.followingInProgressIds.filter((id) => id !== userid);
     },
     setCurrentPage: (state, { payload }: PayloadAction<number>) => {
       state.pagination.currentPage = payload;
@@ -59,7 +59,7 @@ const usersSlice = createSlice({
     getUserList: (state) => state.users,
     getPagination: (state) => state.pagination,
     getIsLoading: (state) => state.isLoading,
-    getFollowingInProgress: (state) => state.followingInProgress,
+    getFollowingInProgressIds: (state) => state.followingInProgressIds,
     getSearchQuery: (state) => state.searchQuery,
     getFilter: (state) => state.filter,
   },
@@ -88,13 +88,13 @@ export const {
   getUserList,
   getPagination,
   getIsLoading,
-  getFollowingInProgress,
+  getFollowingInProgressIds,
   getSearchQuery,
   getFilter,
 } = usersSlice.selectors;
 export const {
   setFollowed,
-  setFollowingProgress,
+  setFollowingProgressIds,
   setCurrentPage,
   setSearchQuery,
   setFilter,
