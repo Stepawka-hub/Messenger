@@ -1,7 +1,6 @@
 import {
   TChatMessage,
   TDialog,
-  TError,
   TMessage,
   TProfile,
   TSocialUser,

@@ -11,7 +11,10 @@ toastListenerMiddleware.startListening({
       const payload: TErrorPayload = action.payload as TErrorPayload;
 
       if (payload.type === ErrorType.TOAST) {
-        toast.error(payload.message);
+        toast.error(payload.message, {
+          theme: "dark",
+          autoClose: 2500,
+        });
       } else if (payload.type === ErrorType.NONE) {
         console.error(`The error has been caught: ${payload.message}`);
       }
