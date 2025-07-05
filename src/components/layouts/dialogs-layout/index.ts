@@ -1,0 +1,1 @@
+export { DialogsLayout } from './dialogs-layout'

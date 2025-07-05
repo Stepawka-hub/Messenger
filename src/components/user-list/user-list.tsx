@@ -1,33 +1,52 @@
 import { UserCard } from "@components/user-list/user-card";
-import { checkInProgress } from "@utils/helpers/array-helpers";
+import { getIsLoading } from "@slices/users";
+import { TSocialUser } from "@types";
+import { List } from "@ui/list";
+import { SkeletonCard } from "@ui/skeleton-card";
 import { FC } from "react";
+import { useSelector } from "react-redux";
 import { UserListProps } from "./type";
 import s from "./user-list.module.css";
-import { NoDataFound } from "@ui/no-data-found";
+import { StartDialogButton } from "@components/dialogs";
+import { FollowButton } from "./follow-button";
 
 export const UserList: FC<UserListProps> = ({
-  currentUserId,
   users,
-  onFollow,
-  onUnFollow,
-  followingInProgress,
+  currentUserId,
+  pageSize,
 }) => {
-  if (!users.length) {
-    return <NoDataFound label="По запросу ничего не найдено" />;
-  }
+  const isLoading = useSelector(getIsLoading);
+
+  const customLoader = (
+    <div className={s.skeletonList}>
+      {[...Array(pageSize)].map((_, i) => (
+        <SkeletonCard key={i} />
+      ))}
+    </div>
+  );
+
+  const renderUsers = (u: TSocialUser) => (
+    <UserCard
+      user={u}
+      key={u.id}
+      actions={
+        u.id !== currentUserId && (
+          <>
+            <StartDialogButton userId={u.id} />
+            <FollowButton userId={u.id} followed={u.followed} />
+          </>
+        )
+      }
+    />
+  );
 
   return (
-    <section className={s.list}>
-      {users.map((u) => (
-        <UserCard
-          user={u}
-          key={u.id}
-          isCurrentUser={u.id === currentUserId}
-          followToUser={onFollow}
-          unfollowFromUser={onUnFollow}
-          followingInProgress={checkInProgress(followingInProgress, u.id)}
-        />
-      ))}
-    </section>
+    <List
+      items={users}
+      renderItem={renderUsers}
+      isLoading={isLoading}
+      emptyMessage="По запросу ничего не найдено"
+      customLoader={customLoader}
+    />
   );
 };

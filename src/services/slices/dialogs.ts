@@ -1,64 +1,84 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getDialogsAsync } from "@thunks/dialogs";
-import { TChatMessage, TDialog, TSocketStatus } from "@types";
+import {
+  getDialogsAsync,
+  getMessagesAsync,
+  sendMessageAsync,
+} from "@thunks/dialogs";
+import { TDialog, TMessage } from "@types";
 import { TDialogsState } from "./types";
 
 const initialState: TDialogsState = {
   dialogs: [],
   messages: [],
-  status: "pending",
   loading: {
-    dialogs: false,
-    messages: false,
-  },
-  error: {
-    dialogs: null,
-    messages: null,
+    isGettingDialogs: false,
+    isStartingDialogIds: [],
+    isGettingMessages: false,
+    isSendingMessage: false,
   },
 };
 
-const chatSlice = createSlice({
-  name: "chat",
+const dialogsSlice = createSlice({
+  name: "dialogs",
   initialState,
-  reducers: {
-    setMessages: (state, { payload }: PayloadAction<TChatMessage[]>) => {
-      state.messages = [...state.messages, ...payload];
-    },
-    setStatus: (state, { payload }: PayloadAction<TSocketStatus>) => {
-      state.status = payload;
-    },
-  },
+  reducers: {},
   selectors: {
     getDialogs: (state) => state.dialogs,
     getMessages: (state) => state.messages,
-    getStatus: (state) => state.status,
-    getIsLoadingMessages: (state) => state.loading.messages,
-    getIsLoadingDialogs: (state) => state.loading.dialogs,
+    getIsLoadingMessages: (state) => state.loading.isGettingMessages,
+    getIsLoadingDialogs: (state) => state.loading.isGettingDialogs,
+    getIsSendingMessage: (state) => state.loading.isSendingMessage,
   },
   extraReducers(builder) {
     builder
       .addCase(getDialogsAsync.pending, (state) => {
-        state.loading.dialogs = true;
+        state.loading.isGettingDialogs = true;
       })
       .addCase(
         getDialogsAsync.fulfilled,
         (state, { payload }: PayloadAction<TDialog[]>) => {
           state.dialogs = payload;
-          state.loading.dialogs = false;
+          state.loading.isGettingDialogs = false;
         }
       )
       .addCase(getDialogsAsync.rejected, (state) => {
-        state.loading.dialogs = false;
+        state.loading.isGettingDialogs = false;
+      })
+
+      .addCase(getMessagesAsync.pending, (state) => {
+        state.loading.isGettingMessages = true;
+      })
+      .addCase(
+        getMessagesAsync.fulfilled,
+        (state, { payload }: PayloadAction<TMessage[]>) => {
+          state.messages = payload;
+          state.loading.isGettingMessages = false;
+        }
+      )
+      .addCase(getMessagesAsync.rejected, (state) => {
+        state.loading.isGettingMessages = false;
+      })
+
+      .addCase(sendMessageAsync.pending, (state) => {
+        state.loading.isSendingMessage = true;
+      })
+      .addCase(
+        sendMessageAsync.fulfilled,
+        (state, { payload }: PayloadAction<TMessage>) => {
+          state.messages.push(payload);
+          state.loading.isSendingMessage = false;
+        }
+      )
+      .addCase(sendMessageAsync.rejected, (state) => {
+        state.loading.isSendingMessage = false;
       });
   },
 });
 
-export const reducer = chatSlice.reducer;
+export const reducer = dialogsSlice.reducer;
 export const {
   getMessages,
   getDialogs,
-  getStatus,
   getIsLoadingDialogs,
   getIsLoadingMessages,
-} = chatSlice.selectors;
-export const { setMessages, setStatus } = chatSlice.actions;
+} = dialogsSlice.selectors;

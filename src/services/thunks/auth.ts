@@ -3,37 +3,59 @@ import { API_CODES } from "@api/constants";
 import { profileAPI } from "@api/profile.api";
 import { securityAPI } from "@api/security.api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { TError, TUserData } from "@types";
+import { TPhotos, TUserData } from "@types";
 import { TLoginPayload } from "@utils/api/types";
+import { createErrorPayload } from "@utils/helpers/error-helpers";
+import { TBaseRejectValue } from "./types";
+import { toast } from "react-toastify";
 
 const GET_USER_DATA = "auth/get-user-data";
 const USER_LOGIN = "auth/login";
 const USER_LOGOUT = "auth/logout";
 const GET_CAPTCHA = "auth/get-captcha";
 
-export const getAuthUserDataAsync = createAsyncThunk<TUserData>(
-  GET_USER_DATA,
-  async (_, { rejectWithValue }) => {
-    try {
-      const res = await authAPI.me();
+export const getAuthUserDataAsync = createAsyncThunk<
+  TUserData,
+  void,
+  TBaseRejectValue
+>(GET_USER_DATA, async (_, { rejectWithValue }) => {
+  try {
+    const { resultCode, data, messages } = await authAPI.me();
 
-      if (res.resultCode === API_CODES.SUCCESS) {
-        const { id, login, email } = res.data;
-        const { photos } = await profileAPI.getProfile(id);
-        return { id, login, email, photos: photos };
+    if (resultCode === API_CODES.SUCCESS) {
+      const { id, login, email } = data;
+      let photos: TPhotos | null = null;
+
+      try {
+        const profileData = await profileAPI.getProfile(id);
+        photos = profileData.photos;
+      } catch (err) {
+        console.warn("Error getting profile, setting photos to null: ", err);
+        toast.error("Не удалось загрузить аватар профиля", {
+          theme: "dark",
+          autoClose: 2500,
+        });
       }
 
-      return rejectWithValue(res.messages[0] || "Failed to get user data");
-    } catch (error) {
-      return rejectWithValue(error);
+      return { id, login, email, photos };
     }
+
+    return rejectWithValue(
+      createErrorPayload({
+        type: "NONE",
+        message: messages[0] || "Не удалось получить данные пользователя",
+      })
+    );
+  } catch (err) {
+    console.error("Error getting user data: ", err);
+    return rejectWithValue(createErrorPayload());
   }
-);
+});
 
 export const loginUserAsync = createAsyncThunk<
   void,
   TLoginPayload,
-  { rejectValue: TError }
+  TBaseRejectValue
 >(
   USER_LOGIN,
   async (
@@ -49,6 +71,7 @@ export const loginUserAsync = createAsyncThunk<
       });
 
       if (resultCode === API_CODES.SUCCESS) {
+        localStorage.setItem("login-email", email);
         dispatch(getAuthUserDataAsync());
       } else {
         // get captcha if required
@@ -56,30 +79,49 @@ export const loginUserAsync = createAsyncThunk<
           dispatch(getCaptchaAsync());
         }
 
-        const message = messages.length > 0 ? messages[0] : "Unknown error";
-        return rejectWithValue({ message });
+        return rejectWithValue(
+          createErrorPayload({
+            type: "INLINE",
+            message: messages[0] || "Не удалось войти в аккаунт",
+          })
+        );
       }
-    } catch {
-      return rejectWithValue({ message: "An unexpected error occurred" });
+    } catch (err) {
+      console.error("Login error: ", err);
+      return rejectWithValue(createErrorPayload());
     }
   }
 );
 
-export const logoutUserAsync = createAsyncThunk(
+export const logoutUserAsync = createAsyncThunk<void, void, TBaseRejectValue>(
   USER_LOGOUT,
   async (_, { rejectWithValue }) => {
-    const res = await authAPI.logout();
+    try {
+      const { resultCode, messages } = await authAPI.logout();
 
-    if (res.resultCode !== API_CODES.SUCCESS) {
-      rejectWithValue("Unknown error during logout");
+      if (resultCode !== API_CODES.SUCCESS) {
+        return rejectWithValue(
+          createErrorPayload({
+            message: messages[0] || "Произошла ошибка при выходе из аккаунта",
+          })
+        );
+      }
+    } catch (err) {
+      console.error("Logout error: ", err);
+      return rejectWithValue(createErrorPayload());
     }
   }
 );
 
-export const getCaptchaAsync = createAsyncThunk<string, void>(
+export const getCaptchaAsync = createAsyncThunk<string, void, TBaseRejectValue>(
   GET_CAPTCHA,
-  async () => {
-    const response = await securityAPI.getCaptchaURL();
-    return response.url;
+  async (_, { rejectWithValue }) => {
+    try {
+      const { url } = await securityAPI.getCaptchaURL();
+      return url;
+    } catch (err) {
+      console.error("Error getting captcha: ", err);
+      return rejectWithValue(createErrorPayload());
+    }
   }
 );

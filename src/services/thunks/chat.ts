@@ -1,6 +1,6 @@
 import { chatAPI } from "@api/chat.api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { setMessages, setStatus } from "@slices/dialogs";
+import { setMessages, setStatus } from "@slices/chat";
 import {
   ThunkAppDispatch,
   TNewMessageHandler,

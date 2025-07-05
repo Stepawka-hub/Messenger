@@ -13,9 +13,8 @@ export const Login: FC = () => {
   const error = useSelector(getLoginError);
   const captchaUrl = useSelector(getCaptchaUrl);
 
-  const onSubmit: SubmitHandler<TLoginForm> = async (formData) => {
-    await dispatch(loginUserAsync(formData)).unwrap();
-    localStorage.setItem("login-email", formData.email);
+  const onSubmit: SubmitHandler<TLoginForm> = (formData) => {
+    dispatch(loginUserAsync(formData));
   };
 
   return (

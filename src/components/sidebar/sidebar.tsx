@@ -16,7 +16,8 @@ export const Sidebar: FC<SidebarProps> = ({ isOpen, onClose }) => {
   const navItems: TNavItems[] = useMemo(
     () => [
       { to: `/profile/${userId}`, label: "Profile", hide: !isAuth },
-      { to: "/dialogs", label: "Messenger", hide: !isAuth },
+      { to: "/dialogs", label: "Dialogs", hide: !isAuth },
+      { to: "/chat", label: "Common chat", hide: !isAuth },
       { to: "/users", label: "Find friends", hide: !isAuth },
       { to: "/settings", label: "Settings" },
     ],

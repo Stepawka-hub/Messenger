@@ -5,20 +5,11 @@ import { getCurrentUser } from "@slices/auth";
 import { useSelector } from "@store";
 import { PageWrapper } from "@ui/page-wrapper";
 import { Pagination } from "@ui/pagination";
-import { SkeletonCard } from "@ui/skeleton-card";
 import { FC } from "react";
 import s from "./find-friends.module.css";
 
 export const FindFriends: FC = () => {
-  const {
-    users,
-    isLoading,
-    followingInProgress,
-    followToUser,
-    unfollowFromUser,
-    pagination,
-    filter,
-  } = usePaginatedUsers();
+  const { users, pagination, filter } = usePaginatedUsers();
   const currentUser = useSelector(getCurrentUser);
 
   const title =
@@ -30,7 +21,6 @@ export const FindFriends: FC = () => {
 
   return (
     <PageWrapper
-      className={s.section}
       pageTitle={title}
       title={title}
       description="Найдите новых друзей и интересных людей, чтобы расширить свой круг общения"
@@ -39,24 +29,12 @@ export const FindFriends: FC = () => {
         <UserSearch />
       </div>
       <div className={s.users}>
-        {isLoading ? (
-          <div className={s.skeletonList}>
-            {[...Array(pagination.pageSize)].map((_, i) => (
-              <SkeletonCard key={i} />
-            ))}
-          </div>
-        ) : (
-          <>
-            <UserList
-              currentUserId={currentUser?.id || null}
-              users={users}
-              onFollow={followToUser}
-              onUnFollow={unfollowFromUser}
-              followingInProgress={followingInProgress}
-            />
-            <Pagination {...pagination} />
-          </>
-        )}
+        <UserList
+          users={users}
+          currentUserId={currentUser?.id || null}
+          pageSize={pagination.pageSize}
+        />
+        <Pagination {...pagination} />
       </div>
     </PageWrapper>
   );

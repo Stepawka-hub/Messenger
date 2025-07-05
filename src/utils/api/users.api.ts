@@ -1,7 +1,7 @@
 import { TUserId } from "@types";
 import { BaseAPI } from "./base.api";
 import { TGetUsersData, TGetUsersParams, TResponse } from "./types";
-import api from './api';
+import api from "./api";
 
 class UsersAPI extends BaseAPI {
   getUsers = async (

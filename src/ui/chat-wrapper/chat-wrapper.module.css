@@ -1,0 +1,15 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 75vh;
+  margin: 0 auto;
+  padding: 0.25rem 0;
+  border-radius: 1rem;
+  background-color: var(--theme-primary-color);
+}
+
+.body {
+  height: 100%;
+  overflow-y: auto;
+}

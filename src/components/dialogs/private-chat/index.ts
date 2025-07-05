@@ -1,0 +1,1 @@
+export { PrivateChat } from './private-chat';

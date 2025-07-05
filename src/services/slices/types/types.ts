@@ -1,7 +1,7 @@
 import {
   TChatMessage,
   TDialog,
-  TModal,
+  TMessage,
   TProfile,
   TSocialUser,
   TSocketStatus,
@@ -12,13 +12,12 @@ import {
 
 export type TAppState = {
   initialized: boolean;
-  modal: TModal;
 };
 
 export type TUsersState = {
   users: TSocialUser[];
   isLoading: boolean;
-  followingInProgress: number[];
+  followingInProgressIds: TUserId[];
   pagination: {
     pageSize: number;
     currentPage: number;
@@ -31,32 +30,42 @@ export type TUsersState = {
 export type TProfileState = {
   profile: TProfile | null;
   status: string;
-  isLoadingProfile: boolean;
-  isUpdatingProfile: boolean;
-  isUpdatingPhoto: boolean;
+  loading: {
+    isGettingProfile: boolean;
+    isUpdatingProfile: boolean;
+    isUpdatingPhoto: boolean;
+    isUpdatingStatus: boolean;
+  };
 };
 
 export type TAuthState = {
   user: TUserData | null;
-  isLoading: boolean;
   isAuth: boolean;
   captchaUrl: string | null;
-  loginError: string | null;
-  isLoggingIn: boolean;
+  loading: {
+    isGettingUserData: boolean;
+    isLoggingIn: boolean;
+    isLoggingOut: boolean;
+  };
+  error: {
+    loginError: string | null;
+  };
 };
 
 export type TDialogsState = {
   dialogs: TDialog[];
-  messages: TChatMessage[];
-  status: TSocketStatus;
+  messages: TMessage[];
   loading: {
-    dialogs: boolean;
-    messages: boolean;
+    isGettingDialogs: boolean;
+    isStartingDialogIds: TUserId[];
+    isGettingMessages: boolean;
+    isSendingMessage: boolean;
   };
-  error: {
-    dialogs: string | null;
-    messages: string | null;
-  };
+};
+
+export type TChatState = {
+  status: TSocketStatus;
+  messages: TChatMessage[];
 };
 
 export type TSetIsFollowingPayload = {

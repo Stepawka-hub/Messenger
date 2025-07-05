@@ -14,7 +14,7 @@ const subscribers: TSubscribers = {
 
 const createChannel = () => {
   cleanUp();
-  ws?.close();
+  console.log("CONNECTED");
   ws = new WebSocket(WS_URL);
   notifySubscribers("status-changed", "pending");
   ws.addEventListener("open", handleOpen);
@@ -24,6 +24,8 @@ const createChannel = () => {
 };
 
 const cleanUp = () => {
+  console.log("DISCONNECTED");
+  ws?.close();
   ws?.removeEventListener("open", handleOpen);
   ws?.removeEventListener("close", handleClose);
   ws?.removeEventListener("message", handleMessage);
@@ -64,8 +66,6 @@ class ChatAPI {
   stop() {
     const events = Object.keys(subscribers) as (keyof TSubscribers)[];
     events.forEach((k) => (subscribers[k] = []));
-
-    ws?.close();
     cleanUp();
   }
 

@@ -12,7 +12,7 @@ export const UserDetails: FC<UserDetailsProps> = ({
   <div className={s.userDetails}>
     <Avatar
       className={s.avatar}
-      image={photos.small}
+      image={photos?.small || null}
       size="small"
       onClick={onAvatarClick}
     />

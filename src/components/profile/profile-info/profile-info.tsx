@@ -1,3 +1,4 @@
+import { StartDialogButton } from "@components/dialogs";
 import {
   ProfileAvatar,
   ProfileContacts,
@@ -9,10 +10,11 @@ import { Button } from "@ui/button";
 import { FC } from "react";
 import s from "./profile-info.module.css";
 import { ProfileInfoProps } from "./type";
-import { useDispatch } from "@store";
-import { startDialogAsync } from "@thunks/dialogs";
+import { useSelector } from "@store";
+import { getIsAuth } from "@slices/auth";
 
 export const ProfileInfo: FC<ProfileInfoProps> = ({ id, isOwner, profile }) => {
+  const isAuth = useSelector(getIsAuth);
   const {
     initialValues,
     isUpdatingProfile,
@@ -21,11 +23,6 @@ export const ProfileInfo: FC<ProfileInfoProps> = ({ id, isOwner, profile }) => {
     deactivateEditMode,
     onSubmit,
   } = useProfileEdit(profile, isOwner);
-
-  const dispatch = useDispatch();
-  const startDialog = () => {
-    dispatch(startDialogAsync(id));
-  };
 
   return (
     <div className={s.container}>
@@ -44,22 +41,20 @@ export const ProfileInfo: FC<ProfileInfoProps> = ({ id, isOwner, profile }) => {
             <ProfileData isOwner={isOwner} profile={profile} />
           )}
         </div>
-        <div className={s.actions}>
-          {isOwner && !editMode && (
-            <Button
-              className={s.editBtn}
-              disabled={isUpdatingProfile}
-              onClick={activateEditMode}
-            >
-              {isUpdatingProfile ? "Сохранение..." : "Редактировать профиль"}
-            </Button>
-          )}
-          {!isOwner && (
-            <Button className={s.editBtn} onClick={startDialog}>
-              {"Начать переписку"}
-            </Button>
-          )}
-        </div>
+        {isAuth && (
+          <div className={s.actions}>
+            {isOwner && !editMode && (
+              <Button
+                className={s.button}
+                disabled={isUpdatingProfile}
+                onClick={activateEditMode}
+              >
+                {isUpdatingProfile ? "Сохранение..." : "Редактировать профиль"}
+              </Button>
+            )}
+            {!isOwner && <StartDialogButton userId={id} />}
+          </div>
+        )}
       </div>
 
       {!editMode && <ProfileContacts contacts={profile.contacts} />}
