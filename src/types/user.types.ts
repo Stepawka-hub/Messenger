@@ -16,7 +16,7 @@ export type TAuthUserData = {
 };
 
 export type TUserData = TAuthUserData & {
-  photos: TPhotos;
+  photos: TPhotos | null;
 };
 
 // Profile

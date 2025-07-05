@@ -3,10 +3,11 @@ import { API_CODES } from "@api/constants";
 import { profileAPI } from "@api/profile.api";
 import { securityAPI } from "@api/security.api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { TUserData } from "@types";
+import { TPhotos, TUserData } from "@types";
 import { TLoginPayload } from "@utils/api/types";
 import { createErrorPayload } from "@utils/helpers/error-helpers";
 import { TBaseRejectValue } from "./types";
+import { toast } from "react-toastify";
 
 const GET_USER_DATA = "auth/get-user-data";
 const USER_LOGIN = "auth/login";
@@ -23,7 +24,19 @@ export const getAuthUserDataAsync = createAsyncThunk<
 
     if (resultCode === API_CODES.SUCCESS) {
       const { id, login, email } = data;
-      const { photos } = await profileAPI.getProfile(id);
+      let photos: TPhotos | null = null;
+
+      try {
+        const profileData = await profileAPI.getProfile(id);
+        photos = profileData.photos;
+      } catch (err) {
+        console.warn("Error getting profile, setting photos to null: ", err);
+        toast.error("Не удалось загрузить аватар профиля", {
+          theme: "dark",
+          autoClose: 2500,
+        });
+      }
+
       return { id, login, email, photos };
     }
 
