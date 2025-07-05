@@ -10,11 +10,16 @@ import { TAuthState } from "./types";
 
 const initialState: TAuthState = {
   user: null,
-  isLoading: false,
   isAuth: false,
   captchaUrl: null,
-  isLoggingIn: false,
-  loginError: null,
+  loading: {
+    isGettingUserData: false,
+    isLoggingIn: false,
+    isLoggingOut: false,
+  },
+  error: {
+    loginError: null,
+  },
 };
 
 const authSlice = createSlice({
@@ -23,11 +28,12 @@ const authSlice = createSlice({
   reducers: {},
   selectors: {
     getCurrentUser: (state) => state.user,
-    getIsLoading: (state) => state.isLoading,
     getIsAuth: (state) => state.isAuth,
     getCaptchaUrl: (state) => state.captchaUrl,
-    getIsLoggingIn: (state) => state.isLoggingIn,
-    getLoginError: (state) => state.loginError,
+    getIsLoadingUserData: (state) => state.loading.isGettingUserData,
+    getIsLoggingIn: (state) => state.loading.isLoggingIn,
+    getIsLoggingOut: (state) => state.loading.isLoggingOut,
+    getLoginError: (state) => state.error.loginError,
   },
   extraReducers: (builder) => {
     builder
@@ -39,37 +45,46 @@ const authSlice = createSlice({
       )
 
       .addCase(getAuthUserDataAsync.pending, (state) => {
-        state.isLoading = true;
+        state.loading.isGettingUserData = true;
       })
       .addCase(
         getAuthUserDataAsync.fulfilled,
         (state, { payload }: PayloadAction<TUserData>) => {
-          state.isLoading = false;
+          state.loading.isGettingUserData = false;
           state.user = payload;
           state.isAuth = true;
         }
       )
       .addCase(getAuthUserDataAsync.rejected, (state) => {
-        state.isLoading = false;
+        state.loading.isGettingUserData = false;
         state.isAuth = false;
         state.user = null;
       })
 
       .addCase(loginUserAsync.pending, (state) => {
-        state.loginError = null;
-        state.isLoggingIn = true;
+        state.error.loginError = null;
+        state.loading.isLoggingIn = true;
       })
       .addCase(loginUserAsync.fulfilled, (state) => {
-        state.isLoggingIn = false;
+        state.loading.isLoggingIn = false;
+        state.captchaUrl = null;
       })
       .addCase(loginUserAsync.rejected, (state, action) => {
-        state.isLoggingIn = false;
-        state.loginError = action.payload?.message || "Unknown error";
+        state.loading.isLoggingIn = false;
+        state.error.loginError =
+          action.payload?.message || "Произошла неизвестная ошибка!";
       })
 
+      .addCase(logoutUserAsync.pending, (state) => {
+        state.loading.isLoggingOut = true;
+      })
       .addCase(logoutUserAsync.fulfilled, (state) => {
         state.user = null;
         state.isAuth = false;
+        state.loading.isLoggingOut = false;
+      })
+      .addCase(logoutUserAsync.rejected, (state) => {
+        state.loading.isLoggingOut = false;
       });
   },
 });
@@ -77,9 +92,10 @@ const authSlice = createSlice({
 export const reducer = authSlice.reducer;
 export const {
   getLoginError,
-  getIsLoggingIn,
   getCaptchaUrl,
   getCurrentUser,
   getIsAuth,
-  getIsLoading,
+  getIsLoadingUserData,
+  getIsLoggingOut,
+  getIsLoggingIn,
 } = authSlice.selectors;

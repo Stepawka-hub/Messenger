@@ -5,7 +5,7 @@ import api from './api';
 
 class ProfileAPI extends BaseAPI {
   getProfile = async (userid: TUserId): Promise<TProfile> => {
-    const { data } = await this.api.get<TProfile>(`profile3/${userid}`);
+    const { data } = await this.api.get<TProfile>(`profile/${userid}`);
     return data;
   };
 

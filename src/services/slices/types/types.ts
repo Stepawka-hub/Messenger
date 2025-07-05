@@ -40,11 +40,16 @@ export type TProfileState = {
 
 export type TAuthState = {
   user: TUserData | null;
-  isLoading: boolean;
   isAuth: boolean;
   captchaUrl: string | null;
-  loginError: string | null;
-  isLoggingIn: boolean;
+  loading: {
+    isGettingUserData: boolean;
+    isLoggingIn: boolean;
+    isLoggingOut: boolean;
+  };
+  error: {
+    loginError: string | null;
+  };
 };
 
 export type TDialogsState = {

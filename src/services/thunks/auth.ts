@@ -42,6 +42,7 @@ export const getAuthUserDataAsync = createAsyncThunk<
 
     return rejectWithValue(
       createErrorPayload({
+        type: "NONE",
         message: messages[0] || "Не удалось получить данные пользователя",
       })
     );
@@ -70,6 +71,7 @@ export const loginUserAsync = createAsyncThunk<
       });
 
       if (resultCode === API_CODES.SUCCESS) {
+        localStorage.setItem("login-email", email);
         dispatch(getAuthUserDataAsync());
       } else {
         // get captcha if required
@@ -79,6 +81,7 @@ export const loginUserAsync = createAsyncThunk<
 
         return rejectWithValue(
           createErrorPayload({
+            type: "INLINE",
             message: messages[0] || "Не удалось войти в аккаунт",
           })
         );
