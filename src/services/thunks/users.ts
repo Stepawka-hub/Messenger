@@ -3,17 +3,15 @@ import { usersAPI } from "@api/users.api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { setFollowed, setFollowingProgress } from "@slices/users";
 import { TUserId } from "@types";
-import { TGetUsersData, TGetUsersPayload, TResponse } from "@utils/api/types";
+import { TGetUsersData, TGetUsersPayload } from "@utils/api/types";
 import { createErrorPayload } from "@utils/helpers/error-helpers";
-import {
-  TBaseRejectValue,
-  ThunkAppDispatch,
-  TRejectWithValueFn,
-} from "./types";
+import { TBaseRejectValue } from "./types";
+import { TFollowUnfollowPayload } from "../types";
 
 const GET_USERS = "users/getAll";
 const FOLLOW_USER = "users/follow";
 const UNFOLLOW_USER = "users/unfollow";
+const FOLLOW_UNFOLLOW_FLOW = "users/followUnfollowFlow";
 
 export const getUsersAsync = createAsyncThunk<
   TGetUsersData,
@@ -43,48 +41,55 @@ export const getUsersAsync = createAsyncThunk<
 
 export const followToUserAsync = createAsyncThunk<void, TUserId>(
   FOLLOW_USER,
-  async (userId, { dispatch, rejectWithValue }) => {
-    const apiMethod = usersAPI.followUser.bind(usersAPI);
-    followUnfollowFlow(userId, true, apiMethod, dispatch, rejectWithValue);
+  async (userId, { dispatch }) => {
+    dispatch(followUnfollowFlow({ userId, status: true }));
   }
 );
 
 export const unfollowFromUserAsync = createAsyncThunk<void, TUserId>(
   UNFOLLOW_USER,
-  async (userId, { dispatch, rejectWithValue }) => {
-    const apiMethod = usersAPI.unfollowUser.bind(usersAPI);
-    followUnfollowFlow(userId, false, apiMethod, dispatch, rejectWithValue);
+  async (userId, { dispatch }) => {
+    dispatch(followUnfollowFlow({ userId, status: false }));
   }
 );
 
-const followUnfollowFlow = async (
-  userId: TUserId,
-  status: boolean,
-  apiMethod: (userid: TUserId) => Promise<TResponse>,
-  dispatch: ThunkAppDispatch,
-  rejectWithValue: TRejectWithValueFn
-) => {
-  try {
-    dispatch(
-      setFollowingProgress({ followingInProgress: true, userid: userId })
-    );
+export const followUnfollowFlow = createAsyncThunk<
+  void,
+  TFollowUnfollowPayload,
+  TBaseRejectValue
+>(
+  FOLLOW_UNFOLLOW_FLOW,
+  async ({ userId, status }, { dispatch, rejectWithValue }) => {
+    const apiMethod = status
+      ? usersAPI.followUser.bind(usersAPI)
+      : usersAPI.unfollowUser.bind(usersAPI);
 
-    const { resultCode, messages } = await apiMethod(userId);
-    if (resultCode !== API_CODES.SUCCESS) {
-      return rejectWithValue(
-        createErrorPayload({
-          message: messages[0] || "Failed to follow/unfollow user",
-        })
+    try {
+      dispatch(
+        setFollowingProgress({ followingInProgress: true, userid: userId })
+      );
+
+      const data = await apiMethod(userId);
+      if (data.resultCode !== API_CODES.SUCCESS) {
+        const actionText = status ? "подписки на" : "отписки от";
+        return rejectWithValue(
+          createErrorPayload({
+            message: data.messages[0] || `Ошибка ${actionText} пользователя`,
+          })
+        );
+      }
+
+      dispatch(setFollowed({ userid: userId, status: status }));
+    } catch (err) {
+      console.error(
+        status ? "Error follow to user" : "Error unfollow from user",
+        err
+      );
+      return rejectWithValue(createErrorPayload());
+    } finally {
+      dispatch(
+        setFollowingProgress({ followingInProgress: false, userid: userId })
       );
     }
-
-    dispatch(setFollowed({ userid: userId, status: status }));
-  } catch (err) {
-    console.error("Error following/unfollowing user:", err);
-    return rejectWithValue(createErrorPayload());
-  } finally {
-    dispatch(
-      setFollowingProgress({ followingInProgress: false, userid: userId })
-    );
   }
-};
+);
