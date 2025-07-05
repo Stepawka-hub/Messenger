@@ -72,7 +72,7 @@ export const sendMessageAsync = createAsyncThunk<
     );
 
     if (resultCode === API_CODES.SUCCESS) {
-      return data;
+      return data.message;
     }
 
     return rejectWithValue(

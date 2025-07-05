@@ -24,14 +24,12 @@ class DialogsAPI extends BaseAPI {
   sendMessage = async (
     userId: TUserId,
     message: string
-  ): Promise<TResponseWithData<TMessage>> => {
-    const { data } = await this.api.post<TResponseWithData<TMessage>>(
-      `dialogs/${userId}/messages`,
-      {
-        body: message,
-      }
-    );
-    console.log(data);
+  ): Promise<TResponseWithData<{ message: TMessage }>> => {
+    const { data } = await this.api.post<
+      TResponseWithData<{ message: TMessage }>
+    >(`dialogs/${userId}/messages`, {
+      body: message,
+    });
     return data;
   };
 }
