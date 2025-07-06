@@ -7,6 +7,10 @@
   background-color: var(--theme-secondary-color);
 }
 
+.avatar {
+  cursor: pointer;
+}
+
 .content {
   overflow-x: hidden;
 }

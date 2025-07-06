@@ -31,6 +31,7 @@ export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
   const renderMessage = ({ id, body, senderName, senderId }: TMessage) => (
     <Message
       key={id}
+      senderId={senderId}
       content={body}
       username={senderName}
       photo={

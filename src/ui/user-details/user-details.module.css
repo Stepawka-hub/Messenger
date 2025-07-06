@@ -4,8 +4,7 @@
   text-align: right;
 }
 
-.avatar {
-  cursor: pointer;
+.avatarLink {
   order: 2;
 }
 

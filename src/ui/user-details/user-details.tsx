@@ -2,20 +2,18 @@ import { FC } from "react";
 import { Avatar } from "@ui/avatar";
 import { UserDetailsProps } from "./type";
 import s from "./user-details.module.css";
+import { NavLink } from "react-router-dom";
 
 export const UserDetails: FC<UserDetailsProps> = ({
   username,
   email,
   photos,
-  onAvatarClick,
+  linkPath,
 }) => (
   <div className={s.userDetails}>
-    <Avatar
-      className={s.avatar}
-      image={photos?.small || null}
-      size="small"
-      onClick={onAvatarClick}
-    />
+    <NavLink className={s.avatarLink} to={linkPath}>
+      <Avatar image={photos?.small || null} size="small" />
+    </NavLink>
     <div>
       <h4 className={s.username}>{username}</h4>
       <p className={s.email}>{email}</p>
