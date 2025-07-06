@@ -1,5 +1,6 @@
 import { Message } from "@components/message";
 import { TSendMessageForm } from "@components/send-message-form/types";
+import { getSelectedDialog } from "@selectors/dialogs";
 import { getIsLoadingMessages, getMessages } from "@slices/dialogs";
 import { useDispatch, useSelector } from "@store";
 import { getMessagesAsync, sendMessageAsync } from "@thunks/dialogs";
@@ -8,11 +9,14 @@ import { ChatWrapper } from "@ui/chat-wrapper";
 import { List } from "@ui/list";
 import { FC, useEffect } from "react";
 import { SubmitHandler } from "react-hook-form";
-import { PrivateChatProps } from "./type";
 import s from "./private-chat.module.css";
+import { PrivateChatProps } from "./type";
+import { getCurrentUser } from "@slices/auth";
 
 export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
   const dispatch = useDispatch();
+  const currentUser = useSelector(getCurrentUser);
+  const dialog = useSelector((state) => getSelectedDialog(state, userId));
   const messages = useSelector(getMessages);
   const isLoading = useSelector(getIsLoadingMessages);
 
@@ -24,12 +28,16 @@ export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
     dispatch(sendMessageAsync({ userId, message }));
   };
 
-  const renderMessage = (message: TMessage) => (
+  const renderMessage = ({ id, body, senderName, senderId }: TMessage) => (
     <Message
-      key={message.id}
-      content={message.body}
-      username={message.senderName}
-      photo=""
+      key={id}
+      content={body}
+      username={senderName}
+      photo={
+        senderId === currentUser?.id
+          ? currentUser.photos?.small
+          : dialog?.photos.small
+      }
     />
   );
 

@@ -1,5 +1,5 @@
 export type MessageProps = {
-  photo: string;
+  photo?: string | null;
   username: string;
   content: string;
 };
