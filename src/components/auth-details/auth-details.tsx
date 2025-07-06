@@ -42,7 +42,12 @@ export const AuthDetails: FC = () => {
           photos={photos}
           onAvatarClick={handleAvatarClick}
         />
-        <Button className={s.logoutBtn} onClick={logout}>
+        <Button
+          aria-label="Выход из аккаунта"
+          title="Выйти из аккаунта"
+          className={s.logoutBtn}
+          onClick={logout}
+        >
           <ExitIcon size={32} />
         </Button>
       </div>

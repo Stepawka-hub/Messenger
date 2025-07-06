@@ -27,6 +27,8 @@ export const StartDialogButton: FC<StartDialogButtonProps> = ({
 
   return (
     <Button
+      aria-label="Написать сообщение"
+      title="Написать сообщение"
       className={clsx(s.button, className)}
       onClick={startDialog}
       {...props}

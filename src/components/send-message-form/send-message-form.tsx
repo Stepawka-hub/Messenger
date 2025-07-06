@@ -42,7 +42,12 @@ export const SendMessageForm: FC<SendMessageFormProps> = ({
           })}
           onKeyDown={handleKeyDown}
         />
-        <Button className={s.submit} disabled={!isValid || disabled}>
+        <Button
+          aria-label="Отправить"
+          title="Отправить"
+          className={s.submit}
+          disabled={!isValid || disabled}
+        >
           <SendIcon />
         </Button>
       </div>

@@ -31,7 +31,12 @@ export const UserSearch: FC = memo(() => {
         placeholder="Enter username..."
         onSearch={handleSearch}
       />
-      <button className={s.filterBtn} onClick={handleFilterClick}>
+      <button
+        aria-label="Фильтр"
+        title="Фильтр"
+        className={s.filterBtn}
+        onClick={handleFilterClick}
+      >
         <FilterIcon className={s.filterIcon} />
       </button>
     </div>
