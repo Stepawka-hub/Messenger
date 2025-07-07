@@ -4,12 +4,12 @@ import { InputFileProps } from "./types";
 import clsx from "clsx";
 
 export const InputFile: FC<InputFileProps> = ({
-  text,
+  children,
   className,
   ...props
 }) => (
   <label className={clsx(s.inputFile, className)}>
     <input type="file" className={s.input} {...props} />
-    <span className={s.text}>{text}</span>
+    {children}
   </label>
 );

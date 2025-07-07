@@ -1,3 +1,1 @@
-export type InputFileProps = React.InputHTMLAttributes<HTMLInputElement> & {
-  text: string;
-};
+export type InputFileProps = React.InputHTMLAttributes<HTMLInputElement>;
