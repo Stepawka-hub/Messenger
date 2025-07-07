@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getUsersAsync } from "@thunks/users";
-import { TGetUsersData } from "@utils/api/types";
+import { TGetUsersDataResponse } from "@utils/api/types";
 import { updateObjectInArray } from "@utils/helpers/array-helpers";
 import { TSocialUser, TUserFilter } from "@types";
 import {
@@ -71,7 +71,7 @@ const usersSlice = createSlice({
       })
       .addCase(
         getUsersAsync.fulfilled,
-        (state, { payload }: PayloadAction<TGetUsersData>) => {
+        (state, { payload }: PayloadAction<TGetUsersDataResponse>) => {
           state.isLoading = false;
           state.pagination.totalUsersCount = payload.totalCount;
           state.users = payload.items;

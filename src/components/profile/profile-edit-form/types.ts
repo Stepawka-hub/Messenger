@@ -1,8 +1,9 @@
+import { TErrorMessage } from '@types';
 import { RegisterOptions, SubmitHandler } from "react-hook-form";
 
 export type ProfileEditFormProps = {
   initialValue: TProfileEditForm;
-  error: string | null;
+  error: TErrorMessage;
   onSubmit: SubmitHandler<TProfileEditForm>;
   onCancel: () => void;
 };

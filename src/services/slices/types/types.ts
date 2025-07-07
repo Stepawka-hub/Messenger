@@ -1,6 +1,7 @@
 import {
   TChatMessage,
   TDialog,
+  TErrorMessage,
   TMessage,
   TProfile,
   TSocialUser,
@@ -48,7 +49,7 @@ export type TAuthState = {
     isLoggingOut: boolean;
   };
   error: {
-    loginError: string | null;
+    loginError: TErrorMessage;
   };
 };
 

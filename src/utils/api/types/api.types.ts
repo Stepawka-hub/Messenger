@@ -1,5 +1,6 @@
-import { TMessage, TPagination, TSocialUser, TUserId } from "@types";
+import { TErrorMessage, TMessage, TPagination, TSocialUser, TUserId } from "@types";
 
+// Base
 export type TResponse = TResponseWithData<object>;
 
 export type TResponseWithData<T extends object> = {
@@ -8,12 +9,26 @@ export type TResponseWithData<T extends object> = {
   data: T;
 };
 
-export type TGetUsersData = {
+// Users
+export type TGetUsersDataResponse = {
   items: TSocialUser[];
   totalCount: number;
 };
 
-export type TGetCaptchaData = {
+export type TGetUsersParams = {
+  page: number;
+  count: number;
+  term?: string;
+  friend?: boolean;
+};
+
+export type TGetUsersPayload = TPagination & {
+  term?: string;
+  friend?: boolean | null;
+};
+
+// Login
+export type TGetCaptchaDataResponse = {
   url: string;
 };
 
@@ -24,18 +39,7 @@ export type TLoginPayload = {
   captcha?: string;
 };
 
-export type TGetUsersPayload = TPagination & {
-  term?: string;
-  friend?: boolean | null;
-};
-
-export type TGetUsersParams = {
-  page: number;
-  count: number;
-  term?: string;
-  friend?: boolean;
-};
-
+// Dialogs
 export type TSendMessagePayload = {
   userId: TUserId;
   message: string;
@@ -44,5 +48,5 @@ export type TSendMessagePayload = {
 export type TGetMessageResponse = {
   totalCount: number;
   items: TMessage[];
-  error: null | string;
+  error: TErrorMessage;
 }

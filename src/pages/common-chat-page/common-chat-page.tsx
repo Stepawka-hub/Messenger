@@ -1,5 +1,6 @@
 import { Message } from "@components/message";
 import { TSendMessageForm } from "@components/send-message-form/types";
+import { getCurrentUser } from "@slices/auth";
 import { getMessages } from "@slices/chat";
 import { useDispatch, useSelector } from "@store";
 import {
@@ -18,6 +19,7 @@ import s from "./common-chat-page.module.css";
 export const CommonChatPage: FC = () => {
   const dispatch = useDispatch();
   const messages = useSelector(getMessages);
+  const currentUser = useSelector(getCurrentUser);
 
   useEffect(() => {
     dispatch(startMessagesListening());
@@ -44,6 +46,7 @@ export const CommonChatPage: FC = () => {
       username={userName}
       content={message}
       photo={photo}
+      isOwnMessage={currentUser?.id === userId}
     />
   );
 
