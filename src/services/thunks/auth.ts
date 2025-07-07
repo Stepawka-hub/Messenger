@@ -23,18 +23,23 @@ export const getAuthUserDataAsync = createAsyncThunk<
     const { resultCode, data, messages } = await authAPI.me();
 
     if (resultCode === API_CODES.SUCCESS) {
-      const { id, login, email } = data;
+      const { id, email } = data;
+      let login = "None";
       let photos: TPhotos | null = null;
 
       try {
         const profileData = await profileAPI.getProfile(id);
         photos = profileData.photos;
+        login = profileData.fullName;
       } catch (err) {
-        console.warn("Error getting profile, setting photos to null: ", err);
-        toast.error("Не удалось загрузить аватар профиля", {
-          theme: "dark",
-          autoClose: 2500,
-        });
+        console.warn("Error getting profile: ", err);
+        toast.error(
+          "Возникла ошибка при загрузке профиля. Некоторые данные могут быть недоступны",
+          {
+            theme: "dark",
+            autoClose: 2500,
+          }
+        );
       }
 
       return { id, login, email, photos };

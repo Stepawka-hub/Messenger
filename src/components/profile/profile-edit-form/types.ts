@@ -17,6 +17,9 @@ export type TProfileEditForm = {
   twitter: string;
   instagram: string;
   github: string;
+  website: string;
+  youtube: string;
+  mainLink: string;
 };
 
 export type FieldConfig = {

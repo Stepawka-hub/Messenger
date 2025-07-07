@@ -22,7 +22,17 @@ export const useProfileEdit = (profile: TProfile, isOwner: boolean) => {
   const deactivateEditMode = () => setEditMode(false);
 
   const onSubmit: SubmitHandler<TProfileEditForm> = (formData) => {
-    const { vk, github, facebook, instagram, twitter, ...rest } = formData;
+    const {
+      vk,
+      github,
+      facebook,
+      instagram,
+      twitter,
+      website,
+      youtube,
+      mainLink,
+      ...rest
+    } = formData;
 
     const updatedProfile: TProfile = {
       ...profile,
@@ -33,11 +43,12 @@ export const useProfileEdit = (profile: TProfile, isOwner: boolean) => {
         facebook,
         instagram,
         twitter,
-        website: "",
-        youtube: "",
-        mainLink: "",
+        website,
+        youtube,
+        mainLink,
       },
     };
+
     dispatch(updateProfileAsync(updatedProfile));
     deactivateEditMode();
   };

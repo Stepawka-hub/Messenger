@@ -5,7 +5,7 @@ import {
   loginUserAsync,
   logoutUserAsync,
 } from "@thunks/auth";
-import { TUserData } from "src/types";
+import { TPhotos, TUserData } from "src/types";
 import { TAuthState } from "./types";
 
 const initialState: TAuthState = {
@@ -25,7 +25,18 @@ const initialState: TAuthState = {
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    setUserPhoto: (state, { payload }: PayloadAction<TPhotos>) => {
+      if (state.user) {
+        state.user.photos = payload;
+      }
+    },
+    setUserLogin: (state, { payload }: PayloadAction<string>) => {
+      if (state.user) {
+        state.user.login = payload;
+      }
+    },
+  },
   selectors: {
     getCurrentUser: (state) => state.user,
     getIsAuth: (state) => state.isAuth,
@@ -99,3 +110,4 @@ export const {
   getIsLoggingOut,
   getIsLoggingIn,
 } = authSlice.selectors;
+export const { setUserLogin, setUserPhoto } = authSlice.actions;
