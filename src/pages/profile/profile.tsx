@@ -1,6 +1,6 @@
 import { ProfileInfo } from "@components/profile";
 import { getCurrentUser } from "@slices/auth";
-import { getIsLoadingProfile, getProfile } from "@slices/profile";
+import { getIsLoadingProfile, getProfile, setProfile } from "@slices/profile";
 import { useDispatch, useSelector } from "@store";
 import { getProfileAsync } from "@thunks/profile";
 import { BackButton } from "@ui/back-button";
@@ -23,14 +23,19 @@ export const Profile = () => {
   useEffect(() => {
     // Если в URL не указан ID и есть текущий пользователь
     if (!routeUserId && currentUser?.id) {
-      navigate(`/profile/${currentUser?.id}`, { replace: true });
-      return;
+      navigate(`/profile/${currentUser.id}`, { replace: true });
     }
+  }, [navigate, routeUserId, currentUser]);
 
+  useEffect(() => {
     if (profileId) {
       dispatch(getProfileAsync(profileId));
     }
-  }, [dispatch, navigate, profileId, currentUser, routeUserId]);
+
+    return () => {
+      dispatch(setProfile(null));
+    };
+  }, [dispatch, profileId]);
 
   if (isLoading) {
     return (
@@ -48,7 +53,7 @@ export const Profile = () => {
         noIndex
       >
         <NoDataFound label="Профиль не найден!">
-          <BackButton />
+          <BackButton label="Вернуться к списку пользователей" path="/users" />
         </NoDataFound>
       </PageWrapper>
     );
