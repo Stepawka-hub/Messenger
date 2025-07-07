@@ -1,5 +1,10 @@
 import { ExitIcon } from "@icons";
-import { getCurrentUser, getIsAuth, getIsLoadingUserData } from "@slices/auth";
+import {
+  getCurrentUser,
+  getIsAuth,
+  getIsLoadingUserData,
+  getIsLoggingOut,
+} from "@slices/auth";
 import { useDispatch, useSelector } from "@store";
 import { logoutUserAsync } from "@thunks/auth";
 import { Button } from "@ui/button";
@@ -12,6 +17,7 @@ import s from "./auth-details.module.css";
 export const AuthDetails: FC = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector(getIsLoadingUserData);
+  const isLoggingOut = useSelector(getIsLoggingOut);
   const isAuth = useSelector(getIsAuth);
   const currentUser = useSelector(getCurrentUser);
 
@@ -28,7 +34,9 @@ export const AuthDetails: FC = () => {
   }
 
   const { id, login, email, photos } = currentUser;
-  const logout = () => dispatch(logoutUserAsync());
+  const logout = () => {
+    dispatch(logoutUserAsync());
+  };
 
   return (
     <div>
@@ -43,6 +51,7 @@ export const AuthDetails: FC = () => {
           aria-label="Выход из аккаунта"
           title="Выйти из аккаунта"
           className={s.logoutBtn}
+          disabled={isLoggingOut}
           onClick={logout}
         >
           <ExitIcon size={32} />
