@@ -58,7 +58,7 @@ export type TDialogsState = {
   messages: TMessage[];
   loading: {
     isGettingDialogs: boolean;
-    isStartingDialogIds: TUserId[];
+    isStartingDialog: boolean;
     isGettingMessages: boolean;
     isSendingMessage: boolean;
   };

@@ -1,4 +1,4 @@
-import { useDispatch } from "@store";
+import { useDispatch, useSelector } from "@store";
 import { startDialogAsync } from "@thunks/dialogs";
 import { Button } from "@ui/button";
 import { FC } from "react";
@@ -7,6 +7,7 @@ import { StartDialogButtonProps } from "./type";
 import { MessageIcon } from "@icons";
 import clsx from "clsx";
 import s from "./start-dialog-button.module.css";
+import { getIsStartingDialog } from '@slices/dialogs';
 
 export const StartDialogButton: FC<StartDialogButtonProps> = ({
   userId,
@@ -15,6 +16,7 @@ export const StartDialogButton: FC<StartDialogButtonProps> = ({
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const isStartingDialog = useSelector(getIsStartingDialog);
 
   const startDialog = async () => {
     try {
@@ -30,6 +32,7 @@ export const StartDialogButton: FC<StartDialogButtonProps> = ({
       aria-label="Написать сообщение"
       title="Написать сообщение"
       className={clsx(s.button, className)}
+      disabled={isStartingDialog}
       onClick={startDialog}
       {...props}
     >
