@@ -1,23 +1,23 @@
 .message {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 1rem;
   padding: 1rem;
   border-radius: 1rem;
-  background-color: var(--theme-secondary-color);
+  background-color: var(--message-bg-color);
+}
+
+.message.own {
+  align-self: flex-end;
+  background-color: var(--own-message-bg-color);
 }
 
 .avatar {
   cursor: pointer;
 }
 
-.content {
-  overflow-x: hidden;
-}
-
-.author {
+.sender {
   margin-bottom: 0.5rem;
-
   font-size: 1.2rem;
   font-family: 500;
   color: var(--title-color);
@@ -25,6 +25,14 @@
 
 .text {
   font-size: 1.15rem;
-  word-wrap: break-word;
-  overflow-x: hidden;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 600px) {
+  .message {
+    padding: 0.5rem 0.75rem;
+    max-width: 75%;
+    min-width: 20%;
+    width: fit-content;
+  }
 }

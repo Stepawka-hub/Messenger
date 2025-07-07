@@ -6,13 +6,17 @@ import { useParams } from "react-router-dom";
 import s from "./dialogs-page.module.css";
 
 const DialogsPage: FC = () => {
-  const isMobile = useMediaQuery({ maxWidth: 992 });
+  const smallScreen = useMediaQuery({ maxWidth: 992 });
   const { userId } = useParams<{ userId?: string }>();
 
-  if (isMobile) {
+  if (smallScreen) {
     return (
       <DialogsLayout>
-        {!userId ? <DialogList /> : <PrivateChat userId={Number(userId)} />}
+        {!userId ? (
+          <DialogList />
+        ) : (
+          <PrivateChat userId={Number(userId)} />
+        )}
       </DialogsLayout>
     );
   }

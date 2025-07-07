@@ -1,6 +1,7 @@
 import { Message } from "@components/message";
 import { TSendMessageForm } from "@components/send-message-form/types";
 import { getSelectedDialog } from "@selectors/dialogs";
+import { getCurrentUser } from "@slices/auth";
 import { getIsLoadingMessages, getMessages } from "@slices/dialogs";
 import { useDispatch, useSelector } from "@store";
 import { getMessagesAsync, sendMessageAsync } from "@thunks/dialogs";
@@ -11,7 +12,7 @@ import { FC, useEffect } from "react";
 import { SubmitHandler } from "react-hook-form";
 import s from "./private-chat.module.css";
 import { PrivateChatProps } from "./type";
-import { getCurrentUser } from "@slices/auth";
+import { useMediaQuery } from 'react-responsive';
 
 export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
   const dialog = useSelector((state) => getSelectedDialog(state, userId));
   const messages = useSelector(getMessages);
   const isLoading = useSelector(getIsLoadingMessages);
+  const isMobile = useMediaQuery({ maxWidth: 600 });
 
   useEffect(() => {
     dispatch(getMessagesAsync(userId));
@@ -28,19 +30,22 @@ export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
     dispatch(sendMessageAsync({ userId, message }));
   };
 
-  const renderMessage = ({ id, body, senderName, senderId }: TMessage) => (
-    <Message
-      key={id}
-      senderId={senderId}
-      content={body}
-      username={senderName}
-      photo={
-        senderId === currentUser?.id
-          ? currentUser.photos?.small
-          : dialog?.photos.small
-      }
-    />
-  );
+  const renderMessage = ({ id, body, senderName, senderId }: TMessage) => {
+    const isMessageOwner = senderId === currentUser?.id;
+    return (
+      <Message
+        key={id}
+        senderId={senderId}
+        content={body}
+        username={senderName}
+        photo={
+          isMessageOwner ? currentUser.photos?.small : dialog?.photos.small
+        }
+        isOwnMessage={isMessageOwner}
+        isMobile={isMobile}
+      />
+    );
+  };
 
   return (
     <ChatWrapper handleSendMessage={onSubmit}>

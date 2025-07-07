@@ -5,4 +5,6 @@ export type MessageProps = {
   photo?: string | null;
   username: string;
   content: string;
+  isOwnMessage?: boolean;
+  isMobile?: boolean;
 };

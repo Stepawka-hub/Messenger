@@ -4,7 +4,7 @@
   --lighten-orange-color: #ffa454;
   --orange-color: #ff5b42;
   --theme-primary-color: #141414;
-  --theme-secondary-color: #222222;
+  --theme-secondary-color: #222;
 
   --title-color: #ff7b57;
   --link-color-active: #ff7b57;
@@ -35,6 +35,9 @@
   --search-placeholder-color: #9b9b9b;
   --no-data-found-color: #9b9b9b;
   --select-chat-color: #9b9b9b;
+
+  --message-bg-color: #202020;
+  --own-message-bg-color: #2e2e2e;
 
   --error-color: #ff5757;
 }
