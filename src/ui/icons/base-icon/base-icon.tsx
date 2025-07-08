@@ -1,7 +1,7 @@
-import clsx from "clsx";
 import { FC } from "react";
 import s from "./base-icon.module.css";
 import { BaseIconProps } from "./type";
+import clsx from 'clsx';
 
 export const BaseIcon: FC<BaseIconProps> = ({
   className,
@@ -12,7 +12,7 @@ export const BaseIcon: FC<BaseIconProps> = ({
   ...props
 }) => (
   <svg
-    className={clsx(s.icon, className)}
+    className={clsx(s.baseIcon, className)}
     width={size}
     height={size}
     viewBox={viewBox}

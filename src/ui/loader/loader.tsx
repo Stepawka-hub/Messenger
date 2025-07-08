@@ -1,13 +1,13 @@
+import { LoaderIcon } from "@icons";
+import clsx from "clsx";
 import { FC } from "react";
-import { LoaderProps } from "./types";
 import s from "./loader.module.css";
-import loaderDefault from "@images/loader.svg";
+import { LoaderProps } from "./types";
 
-export const Loader: FC<LoaderProps> = ({
-  loader = loaderDefault,
-  className,
-}) => (
-  <div className={s.container}>
-    <img src={loader} className={className || s.loader} alt="Loader" />
+export const Loader: FC<LoaderProps> = ({ loader, size = 96, classes }) => (
+  <div className={clsx(s.container, classes?.container)}>
+    {loader || (
+      <LoaderIcon size={size} className={clsx(s.loader, classes?.loader)} />
+    )}
   </div>
 );

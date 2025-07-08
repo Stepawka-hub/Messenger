@@ -1,4 +1,8 @@
 export type LoaderProps = {
   loader?: string;
-  className?: string;
+  size?: number;
+  classes?: {
+    container?: string;
+    loader?: string;
+  }
 };

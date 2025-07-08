@@ -32,3 +32,16 @@
 .inputPhoto:hover .iconWrapper {
   opacity: 1;
 }
+
+/* Disabled */
+.inputPhoto.disabled {
+  background-color: rgba(0, 0, 0, .5);
+}
+
+.inputPhoto.disabled .iconWrapper {
+  opacity: 1;
+}
+
+.loader {
+  color: var(--default-icon-color);
+}

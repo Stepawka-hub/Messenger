@@ -6,6 +6,8 @@ export type IconProps = {
   strokeWidth?: number;
   strokeLinecap?: "butt" | "round" | "square" | "inherit";
   strokeLinejoin?: "round" | "inherit" | "miter" | "bevel";
+  strokeDasharray?: string;
+  strokeDashoffset?: string;
   clipRule?: "inherit" | "evenodd" | "nonzero";
   fillRule?: "inherit" | "evenodd" | "nonzero";
 };

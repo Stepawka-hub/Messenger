@@ -7,7 +7,9 @@ import { ProfileAvatarProps } from "./type";
 import { getIsUpdatingPhoto } from "@slices/profile";
 import { useSelector } from "react-redux";
 import { Avatar } from "@ui/avatar";
-import { CameraIcon } from "@ui/icons/camera-icon/camera-icon";
+import { CameraIcon } from "@icons";
+import { Loader } from "@ui/loader";
+import clsx from "clsx";
 
 export const ProfileAvatar: FC<ProfileAvatarProps> = ({ isOwner, photos }) => {
   const dispatch = useDispatch();
@@ -26,12 +28,16 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = ({ isOwner, photos }) => {
       <Avatar image={photos.large} size="large" />
       {isOwner && (
         <InputFile
-          className={s.inputPhoto}
+          className={clsx(s.inputPhoto, { [s.disabled]: isUpdating })}
           disabled={isUpdating}
           onChange={onChange}
         >
           <span className={s.iconWrapper}>
-            <CameraIcon />
+            {isUpdating ? (
+              <Loader size={64} classes={{ loader: s.loader }} />
+            ) : (
+              <CameraIcon />
+            )}
           </span>
         </InputFile>
       )}
