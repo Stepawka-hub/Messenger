@@ -10,7 +10,7 @@ export const List = <T,>({
   classes,
   isLoading = false,
   emptyMessage = "Список пуст",
-  customLoader = <Loader />,
+  customLoader = <Loader />
 }: ListProps<T>) => {
   if (isLoading) {
     return customLoader;

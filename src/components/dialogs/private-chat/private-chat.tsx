@@ -21,8 +21,11 @@ import { PrivateChatProps } from "./type";
 export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
   const dispatch = useDispatch();
   const currentUser = useSelector(getCurrentUser);
-  const dialog = useSelector((state) => getSelectedDialog(state, userId));
+  const selectedDialog = useSelector((state) =>
+    getSelectedDialog(state, userId)
+  );
   const messages = useSelector(getMessages);
+
   const isSendingMessage = useSelector(getIsSendingMessage);
   const isLoading = useSelector(getIsLoadingMessages);
   const isMobile = useMediaQuery({ maxWidth: 600 });
@@ -44,7 +47,9 @@ export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
         content={body}
         username={senderName}
         photo={
-          isMessageOwner ? currentUser.photos?.small : dialog?.photos.small
+          isMessageOwner
+            ? currentUser.photos?.small
+            : selectedDialog?.photos.small
         }
         isOwnMessage={isMessageOwner}
         isMobile={isMobile}

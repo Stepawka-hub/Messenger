@@ -22,7 +22,11 @@ const initialState: TDialogsState = {
 const dialogsSlice = createSlice({
   name: "dialogs",
   initialState,
-  reducers: {},
+  reducers: {
+    setMessages: (state, { payload }: PayloadAction<TMessage[]>) => {
+      state.messages = payload;
+    }
+  },
   selectors: {
     getDialogs: (state) => state.dialogs,
     getMessages: (state) => state.messages,
@@ -94,5 +98,6 @@ export const {
   getIsLoadingDialogs,
   getIsLoadingMessages,
   getIsStartingDialog,
-  getIsSendingMessage
+  getIsSendingMessage,
 } = dialogsSlice.selectors;
+export const { setMessages } = dialogsSlice.actions;
