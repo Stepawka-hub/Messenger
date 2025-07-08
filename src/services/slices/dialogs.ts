@@ -94,4 +94,5 @@ export const {
   getIsLoadingDialogs,
   getIsLoadingMessages,
   getIsStartingDialog,
+  getIsSendingMessage
 } = dialogsSlice.selectors;

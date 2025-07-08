@@ -2,7 +2,11 @@ import { Message } from "@components/message";
 import { TSendMessageForm } from "@components/send-message-form/types";
 import { getSelectedDialog } from "@selectors/dialogs";
 import { getCurrentUser } from "@slices/auth";
-import { getIsLoadingMessages, getMessages } from "@slices/dialogs";
+import {
+  getIsLoadingMessages,
+  getIsSendingMessage,
+  getMessages,
+} from "@slices/dialogs";
 import { useDispatch, useSelector } from "@store";
 import { getMessagesAsync, sendMessageAsync } from "@thunks/dialogs";
 import { TMessage } from "@types";
@@ -10,15 +14,16 @@ import { ChatWrapper } from "@ui/chat-wrapper";
 import { List } from "@ui/list";
 import { FC, useEffect } from "react";
 import { SubmitHandler } from "react-hook-form";
+import { useMediaQuery } from "react-responsive";
 import s from "./private-chat.module.css";
 import { PrivateChatProps } from "./type";
-import { useMediaQuery } from 'react-responsive';
 
 export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
   const dispatch = useDispatch();
   const currentUser = useSelector(getCurrentUser);
   const dialog = useSelector((state) => getSelectedDialog(state, userId));
   const messages = useSelector(getMessages);
+  const isSendingMessage = useSelector(getIsSendingMessage);
   const isLoading = useSelector(getIsLoadingMessages);
   const isMobile = useMediaQuery({ maxWidth: 600 });
 
@@ -48,7 +53,7 @@ export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
   };
 
   return (
-    <ChatWrapper handleSendMessage={onSubmit}>
+    <ChatWrapper disabled={isSendingMessage} onSubmit={onSubmit}>
       <List
         items={messages}
         renderItem={renderMessage}
