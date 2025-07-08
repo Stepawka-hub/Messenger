@@ -15,14 +15,10 @@
   --modal-shadow-color: rgba(0, 0, 0, 0.25);
   --overlay-color: rgba(5, 5, 5, 0.3);
 
-  --create-btn-color: #2fac7c;
-  --unfollow-btn-color: #ff6d4c;
-  --follow-btn-color: #2fac7c;
-  --start-dialog-btn-color: #2fac7c;
-  --edit-btn-color: #f65041;
+  --success-color: #2fac7c;
+  --action-primary-color: #ff7b57;
+  --action-secondary-color: #f65041;
   --disabled-btn-color: #695c58;
-  --login-btn-color: #ff7b57;
-  --logout-btn-color: #ff7b57;
 
   --input-bg-color: #222;
   --checkbox-bg-color: #222;

@@ -10,7 +10,7 @@
   height: 3rem;
   margin: 0.5rem;
   border-radius: 50%;
-  background-color: var(--create-btn-color);
+  background-color: var(--success-color);
 }
 
 .textareaContainer {
