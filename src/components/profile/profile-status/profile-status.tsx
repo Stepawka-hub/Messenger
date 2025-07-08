@@ -1,21 +1,20 @@
-import clsx from "clsx";
-import { ChangeEvent, FC, useEffect, useState } from "react";
-import s from "./profile-status.module.css";
-import { ProfileStatusProps } from "./type";
-import { getProfileStatus } from "@slices/profile";
+import { FC, useState } from "react";
 import { useSelector } from "react-redux";
-import { updateProfileStatusAsync } from "@thunks/profile";
-import { useDispatch } from "@store";
+import { getIsUpdatingStatus, getProfileStatus } from "@slices/profile";
+import { ProfileStatusForm } from "../profile-status-form";
+import { ProfileStatusProps } from "./type";
+import s from "./profile-status.module.css";
+import clsx from "clsx";
+import { Loader } from "@ui/loader";
 
 export const ProfileStatus: FC<ProfileStatusProps> = ({ isOwner }) => {
-  const dispatch = useDispatch();
   const status = useSelector(getProfileStatus);
+  const isUpdatingStatus = useSelector(getIsUpdatingStatus);
   const [editMode, setEditMode] = useState(false);
-  const [userStatus, setUserStatus] = useState(status);
 
-  useEffect(() => {
-    setUserStatus(status);
-  }, [status]);
+  if (isUpdatingStatus) {
+    return <Loader size={32} classes={{ container: s.loaderContainer }} />;
+  }
 
   const activateEditMode = () => {
     if (!isOwner) return;
@@ -24,31 +23,21 @@ export const ProfileStatus: FC<ProfileStatusProps> = ({ isOwner }) => {
 
   const deactivateEditMode = () => {
     setEditMode(false);
-    dispatch(updateProfileStatusAsync(userStatus));
-  };
-
-  const onStatusChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    setUserStatus(evt.currentTarget.value);
   };
 
   return (
     <div className={s.container}>
       {editMode ? (
-        <input
-          id="user-status"
-          name="user-status"
-          className={s.input}
-          autoFocus
-          value={userStatus}
-          onChange={onStatusChange}
-          onBlur={deactivateEditMode}
+        <ProfileStatusForm
+          initialValue={status}
+          callback={deactivateEditMode}
         />
       ) : (
         <span
           className={clsx(s.status, { [s.editable]: isOwner })}
           onClick={activateEditMode}
         >
-          {userStatus || "Нет"}
+          {status || "Нет"}
         </span>
       )}
     </div>

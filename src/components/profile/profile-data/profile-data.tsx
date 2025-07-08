@@ -30,8 +30,8 @@ export const ProfileData: FC<ProfileDataProps> = ({ isOwner, profile }) => {
   );
 
   return (
-    <div>
-      <h2 className={s.title}>{fullName || "Имя пользователя"}</h2>
+    <div className={s.container}>
+      <h2 className={s.title}>{fullName}</h2>
       <section className={s.data}>
         <ProfileStatus isOwner={isOwner} />
         {profileInfo.map((item, index) => (

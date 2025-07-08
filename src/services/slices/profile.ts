@@ -111,6 +111,7 @@ export const {
   getIsLoadingProfile,
   getIsUpdatingProfile,
   getIsUpdatingPhoto,
+  getIsUpdatingStatus
 } = profileSlice.selectors;
 export const { setProfile, setProfilePhoto, setProfileStatus } =
   profileSlice.actions;

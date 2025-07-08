@@ -33,7 +33,6 @@ export const ProfileInfo: FC<ProfileInfoProps> = ({ id, isOwner, profile }) => {
           {editMode ? (
             <ProfileEditForm
               initialValue={initialValues}
-              error={""}
               onSubmit={onSubmit}
               onCancel={deactivateEditMode}
             />
