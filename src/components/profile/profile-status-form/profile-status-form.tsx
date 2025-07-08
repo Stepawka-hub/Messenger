@@ -8,6 +8,7 @@ import { FC } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import s from "./profile-status-form.module.css";
 import { ProfileStatusFormProps, TProfileStatusForm } from "./type";
+import { CheckIcon, CrossIcon } from "@icons";
 
 export const ProfileStatusForm: FC<ProfileStatusFormProps> = ({
   initialValue,
@@ -39,10 +40,10 @@ export const ProfileStatusForm: FC<ProfileStatusFormProps> = ({
       />
       <div className={s.buttons}>
         <Button className={clsx(s.button, s.submit)} type="submit">
-          OK
+          <CheckIcon />
         </Button>
         <Button className={clsx(s.button, s.cancel)} onClick={callback}>
-          Cancel
+          <CrossIcon />
         </Button>
       </div>
     </form>

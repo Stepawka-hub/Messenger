@@ -8,3 +8,5 @@ export * from './unfollow-icon';
 export * from './message-icon';
 export * from './camera-icon';
 export * from './loader-icon';
+export * from './cross-icon';
+export * from './check-icon';
