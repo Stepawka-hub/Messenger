@@ -14,13 +14,13 @@
 .link {
   font-size: 1.5rem;
   font-weight: 500;
-  color: var(--primary-color);
+  color: var(--primary-text-color);
   text-decoration: none;
   transition: all 0.2s ease-in;
 }
 
 .link:hover {
-  color: var(--orange-color);
+  color: var(--primary-color);
 }
 
 .link:active {

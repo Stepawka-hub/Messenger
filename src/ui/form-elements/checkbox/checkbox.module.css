@@ -10,7 +10,7 @@
   appearance: none;
   width: 1.75rem;
   height: 1.75rem;
-  background-color: var(--checkbox-bg-color);
+  background-color: var(--secondary-bg-color);
   border-radius: 0.5rem;
   border: 1px solid var(--checkbox-border-color);
   transition: .5s;

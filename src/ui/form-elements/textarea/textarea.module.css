@@ -8,8 +8,8 @@
 .textarea {
   padding: 1rem;
   border-radius: 1rem;
-  color: var(--primary-color);
-  background-color: var(--input-bg-color);
+  color: var(--primary-text-color);
+  background-color: var(--secondary-bg-color);
   resize: none;
   outline: none;
   overflow: hidden,

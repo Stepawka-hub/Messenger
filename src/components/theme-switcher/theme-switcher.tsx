@@ -19,7 +19,7 @@ export const ThemeSwitcher: FC = () => {
       onChange={handleChange}
     >
       <optgroup label="Выбор темы">
-        <option value="light">Светлтая</option>
+        <option value="light">Светлая</option>
         <option value="dark">Тёмная</option>
         <option value="system">Системная</option>
       </optgroup>

@@ -19,6 +19,6 @@
   padding: 0.5rem 2rem;
   font-size: 1.25rem;
   font-weight: 500;
-  color: var(--primary-color);
-  background-color: var(--orange-color);
+  color: var(--primary-text-color);
+  background-color: var(--primary-color);
 }
