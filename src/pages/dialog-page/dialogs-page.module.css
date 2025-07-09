@@ -4,12 +4,12 @@
 }
 
 .dialogs {
-  flex: 30%
+  flex: 35%
 }
 
 .chat {
   margin-top: 0.5rem;
-  flex: 70%;
+  flex: 65%;
 }
 
 .selectChat {

@@ -5,7 +5,7 @@ import { Theme, ThemeProviderProps } from "./types";
 export const ThemeProvider = ({
   children,
   defaultTheme = "system",
-  storageKey = "vite-ui-theme",
+  storageKey = "messager-ui-theme",
 }: ThemeProviderProps) => {
   const [theme, setTheme] = useState<Theme>(
     () => (localStorage.getItem(storageKey) as Theme) || defaultTheme

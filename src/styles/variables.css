@@ -3,8 +3,6 @@
   --secondary-color: #000;
   --lighten-orange-color: #ffa454;
   --orange-color: #ff5b42;
-  --theme-primary-color: #141414;
-  --theme-secondary-color: #222;
 
   --title-color: #ff7b57;
   --link-color-active: #ff7b57;
@@ -38,4 +36,14 @@
   --default-icon-color: #fff;
 
   --error-color: #ff5757;
+}
+
+.light {
+  --theme-primary-color: #dbdbdb;
+  --theme-secondary-color: #fff;
+}
+
+.dark {
+  --theme-primary-color: #141414;
+  --theme-secondary-color: #222;
 }

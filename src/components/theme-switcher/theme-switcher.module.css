@@ -1,0 +1,11 @@
+.select {
+  cursor: pointer;
+  padding: 0.25rem 1rem;
+  outline: none;
+  border-radius: 0.5rem;
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  text-align-last: center;
+}
