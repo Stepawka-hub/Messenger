@@ -1,3 +1,5 @@
+import { Id, ToastContent, ToastOptions } from "react-toastify";
+
 export type TPagination = {
   currentPage: number;
   pageSize: number;
@@ -18,4 +20,14 @@ export type TContacts = {
 
 export type TUserFilter = "all" | "friends" | "nofriends";
 
-export type TSocketStatus = "pending" | "ready" | 'error';
+export type TSocketStatus = "pending" | "ready" | "error";
+
+export type TToast = {
+  type: "error" | "info" | "success" | "warning";
+  content?: ToastContent;
+  options?: ToastOptions;
+};
+export type TToastId = Id;
+export type TToastWithKey = TToast & {
+  id: TToastId;
+};

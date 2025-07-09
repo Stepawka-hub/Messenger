@@ -6,6 +6,7 @@ import {
   TProfile,
   TSocialUser,
   TSocketStatus,
+  TToastWithKey,
   TUserData,
   TUserFilter,
   TUserId,
@@ -13,6 +14,10 @@ import {
 
 export type TAppState = {
   initialized: boolean;
+};
+
+export type TToastState = {
+  toasts: TToastWithKey[];
 };
 
 export type TUsersState = {

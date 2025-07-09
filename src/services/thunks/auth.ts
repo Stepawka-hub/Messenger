@@ -3,11 +3,11 @@ import { API_CODES } from "@api/constants";
 import { profileAPI } from "@api/profile.api";
 import { securityAPI } from "@api/security.api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { addToast } from "@slices/toast";
 import { TPhotos, TUserData } from "@types";
 import { TLoginPayload } from "@utils/api/types";
 import { createErrorPayload } from "@utils/helpers/error-helpers";
 import { TBaseRejectValue } from "./types";
-import { toast } from "react-toastify";
 
 const GET_USER_DATA = "auth/get-user-data";
 const USER_LOGIN = "auth/login";
@@ -18,7 +18,7 @@ export const getAuthUserDataAsync = createAsyncThunk<
   TUserData,
   void,
   TBaseRejectValue
->(GET_USER_DATA, async (_, { rejectWithValue }) => {
+>(GET_USER_DATA, async (_, { dispatch, rejectWithValue }) => {
   try {
     const { resultCode, data, messages } = await authAPI.me();
 
@@ -33,12 +33,12 @@ export const getAuthUserDataAsync = createAsyncThunk<
         login = profileData.fullName;
       } catch (err) {
         console.warn("Error getting profile: ", err);
-        toast.error(
-          "Возникла ошибка при загрузке профиля. Некоторые данные могут быть недоступны",
-          {
-            theme: "dark",
-            autoClose: 2500,
-          }
+        dispatch(
+          addToast({
+            type: "error",
+            content:
+              "Возникла ошибка при загрузке профиля. Некоторые данные могут быть недоступны",
+          })
         );
       }
 
