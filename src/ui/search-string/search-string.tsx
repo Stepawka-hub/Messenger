@@ -3,6 +3,7 @@ import { useDebounce } from "@hooks/useDebounce";
 import { ChangeEvent, FC, useState } from "react";
 import s from "./search-string.module.css";
 import { SearchStringProps } from './types';
+import { Input } from '@ui/form-elements';
 
 export const SearchString: FC<SearchStringProps> = ({ initialValue, placeholder, onSearch }) => {
   const debouncedSearch = useDebounce(onSearch, 1000);
@@ -15,7 +16,7 @@ export const SearchString: FC<SearchStringProps> = ({ initialValue, placeholder,
   return (
     <div className={s.inputContainer}>
       <SearchIcon className={s.icon} />
-      <input
+      <Input
         className={s.input}
         placeholder={placeholder}
         value={value}

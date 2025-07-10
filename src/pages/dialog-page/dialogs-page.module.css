@@ -23,5 +23,5 @@
   background-color: var(--primary-bg-color);
   font-size: 1.25rem;
   font-weight: 500;
-  color: var(--select-chat-prompt-color);
+  color: var(--hint-color);
 }

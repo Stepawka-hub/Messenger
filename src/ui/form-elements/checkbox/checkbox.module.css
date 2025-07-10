@@ -12,12 +12,12 @@
   height: 1.75rem;
   background-color: var(--secondary-bg-color);
   border-radius: 0.5rem;
-  border: 1px solid var(--checkbox-border-color);
+  border: 1px solid var(--primary-text-color);
   transition: .5s;
 }
 
 .checkboxInput:checked {
-  background-color: var(--checkbox-checked-bg-color);
+  background-color: var(--primary-color);
 }
 
 .checkboxInput::after {
@@ -40,8 +40,8 @@
 
 .checkboxInput:disabled {
   cursor: default;
-  background: var(--checkbox-disabled-color);
-  border-color: var(--checkbox-disabled-color);
+  background: var(--disabled-btn-color);
+  border-color: var(--disabled-btn-color);
 }
 
 .label {

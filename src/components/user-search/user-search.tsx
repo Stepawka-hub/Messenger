@@ -6,6 +6,7 @@ import { FC, memo, useCallback } from "react";
 import s from "./user-search.module.css";
 import { useModal } from "@hooks/useModal";
 import { UserFilter } from "@components/user-filter";
+import { Button } from '@ui/button';
 
 export const UserSearch: FC = memo(() => {
   const dispatch = useDispatch();
@@ -31,14 +32,14 @@ export const UserSearch: FC = memo(() => {
         placeholder="Enter username..."
         onSearch={handleSearch}
       />
-      <button
+      <Button
         aria-label="Фильтр"
         title="Фильтр"
         className={s.filterBtn}
         onClick={handleFilterClick}
       >
         <FilterIcon className={s.filterIcon} />
-      </button>
+      </Button>
     </div>
   );
 });

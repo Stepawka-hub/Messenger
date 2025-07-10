@@ -5,17 +5,9 @@
   --action-secondary-color: #ff5b42;
   --disabled-btn-color: #74706e;
 
-  --checkbox-checked-bg-color: #ff5b42;
   --checkbox-pseudo-color: #fff;
-  --checkbox-border-color: #fff;
-  --checkbox-disabled-color: #ccc;
-
-  --search-primary-color: #ff5b42;
-  --search-placeholder-color: #9b9b9b;
-  --no-data-found-color: #9b9b9b;
-  --select-chat-prompt-color: #9b9b9b;
-
   --default-icon-color: #fff;
+  --hint-color: #9b9b9b;
   --error-color: #ff5757;
 }
 
@@ -25,10 +17,10 @@
   --primary-bg-color: #fff;
   --secondary-bg-color: #f1f3f4;
   --primary-color: #ff5b42;
-  --secondary-color: #ff843d;
+  --secondary-color: #ff8914;
 
   --title-color: #000;
-  --subtitle-color: #ff7b57;
+  --subtitle-color: #ff8234;
   --link-color-active: #ff653b;
 
   --modal-bg-color: #f1f3f4;

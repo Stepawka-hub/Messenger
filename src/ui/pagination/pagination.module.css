@@ -15,6 +15,7 @@
   font-size: 1.25rem;
   font-weight: 500;
   border-radius: 50%;
+  color: var(--primary-text-color);
   background-color: var(--primary-bg-color);
   transition: opacity 0.15s ease-in-out;
   user-select: none;
@@ -30,6 +31,7 @@
 
 .item.active {
   cursor: default;
+  color: var(--primary-btn-text-color);
   background-color: var(--primary-color);
 }
 

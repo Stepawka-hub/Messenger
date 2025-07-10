@@ -14,10 +14,10 @@
   background-color: transparent;
 }
 
-.filterBtn:hover .filterIcon {
-  color: var(--search-primary-color);
+.filterBtn:hover {
+  transform: none;
 }
 
-.filterBtn:active {
-  opacity: 0.8;
+.filterBtn:hover .filterIcon {
+  color: var(--search-primary-color);
 }
