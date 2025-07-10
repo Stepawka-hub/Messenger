@@ -27,7 +27,8 @@
   --primary-color: #ff5b42;
   --secondary-color: #ff843d;
 
-  --title-color: #000000;
+  --title-color: #000;
+  --subtitle-color: #ff7b57;
   --link-color-active: #ff653b;
 
   --modal-bg-color: #f1f3f4;
@@ -36,8 +37,8 @@
   --modal-shadow-color: rgba(0, 0, 0, 0.25);
   --overlay-color: rgba(5, 5, 5, 0.3);
 
-  --message-bg-color: #fcfbfb;
-  --own-message-bg-color: #f4f3f3;
+  --message-bg-color: #ecedf1;
+  --own-message-bg-color: #ffddbe;
 
   --burger-line-color: #000;
 
@@ -52,6 +53,7 @@
   --secondary-color: #ffa454;
 
   --title-color: #ff7b57;
+  --subtitle-color: #ff7b57;
   --link-color-active: #ff7b57;
 
   --modal-bg-color: #24202c;

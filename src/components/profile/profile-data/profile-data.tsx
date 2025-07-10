@@ -31,7 +31,7 @@ export const ProfileData: FC<ProfileDataProps> = ({ isOwner, profile }) => {
 
   return (
     <div className={s.container}>
-      <h2 className={s.title}>{fullName}</h2>
+      <h3 className={s.username}>{fullName}</h3>
       <section className={s.data}>
         <ProfileStatus isOwner={isOwner} />
         {profileInfo.map((item, index) => (

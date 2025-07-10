@@ -16,7 +16,7 @@ class DialogsAPI extends BaseAPI {
 
   getMessages = async (userId: TUserId): Promise<TMessage[]> => {
     const { data } = await this.api.get<TGetMessageResponse>(
-      `dialogs/${userId}/messages`
+      `dialogs/${userId}/messages?page=1&count=20`
     );
     return data.items;
   };
