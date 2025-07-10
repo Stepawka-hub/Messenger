@@ -1,6 +1,6 @@
-import BaseSelect, { GroupBase, Props } from "react-select";
-import s from "./select.module.css";
-import clsx from "clsx";
+import BaseSelect, { GroupBase } from "react-select";
+import "./select.css";
+import { SelectProps } from "./type";
 
 export const Select = <
   Option,
@@ -8,7 +8,12 @@ export const Select = <
   Group extends GroupBase<Option> = GroupBase<Option>
 >({
   className,
+  classNamePrefix,
   ...props
-}: Props<Option, IsMulti, Group>) => (
-  <BaseSelect className={clsx(className, s.select)} {...props} />
+}: SelectProps<Option, IsMulti, Group>) => (
+  <BaseSelect
+    className={className || "react-select-container"}
+    classNamePrefix={classNamePrefix || "react-select"}
+    {...props}
+  />
 );

@@ -1,7 +1,8 @@
 import { useTheme } from "@hooks/useTheme";
 import { Select } from "@ui/form-elements";
-import { FC } from "react";
+import { FC, useRef } from "react";
 import { TOption } from "./types";
+import { SelectInstance } from "react-select";
 
 const themeOptions: TOption[] = [
   { value: "light", label: "Светлая" },
@@ -10,7 +11,9 @@ const themeOptions: TOption[] = [
 ];
 
 export const ThemeSwitcher: FC = () => {
+  const selectRef = useRef<SelectInstance<TOption | null>>(null);
   const { theme, setTheme } = useTheme();
+  const selectedOption = themeOptions.find((option) => option.value === theme);
 
   const onChange = (option: TOption | null) => {
     if (option) {
@@ -18,15 +21,19 @@ export const ThemeSwitcher: FC = () => {
     }
   };
 
-  const selectedOption = themeOptions.find((option) => option.value === theme);
+  const onMenuClose = () => {
+    selectRef.current?.blur();
+  };
 
   return (
     <Select
+      ref={selectRef}
       isSearchable={false}
       placeholder="Выберите тему"
       defaultValue={selectedOption}
-      onChange={onChange}
       options={themeOptions}
+      onChange={onChange}
+      onMenuClose={onMenuClose}
     />
   );
 };
