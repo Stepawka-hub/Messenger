@@ -21,31 +21,31 @@ export const AppLayout: FC<PropsWithChildren> = ({ children }) => {
     dispatch(initializeApp());
   }, [dispatch]);
 
-  if (!initialized) {
-    return <Preloader />;
-  }
-
   const toggleSidebar = () => setIsSidebarOpen((prevState) => !prevState);
   const handleSidebarClose = () => setIsSidebarOpen(false);
 
   return (
     <ThemeProvider>
       <ModalProvider>
-        <div className={s.wrapper}>
-          <Header
-            leftPart={
-              <BurgerMenu
-                isActive={isSidebarOpen}
-                setIsActive={toggleSidebar}
-              />
-            }
-            rightPart={<AuthDetails />}
-          />
-          <main className={s.main}>
-            <Sidebar isOpen={isSidebarOpen} onClose={handleSidebarClose} />
-            <div className={s.content}>{children}</div>
-          </main>
-        </div>
+        {!initialized ? (
+          <Preloader />
+        ) : (
+          <div className={s.wrapper}>
+            <Header
+              leftPart={
+                <BurgerMenu
+                  isActive={isSidebarOpen}
+                  setIsActive={toggleSidebar}
+                />
+              }
+              rightPart={<AuthDetails />}
+            />
+            <main className={s.main}>
+              <Sidebar isOpen={isSidebarOpen} onClose={handleSidebarClose} />
+              <div className={s.content}>{children}</div>
+            </main>
+          </div>
+        )}
         <ToastContainer />
       </ModalProvider>
     </ThemeProvider>

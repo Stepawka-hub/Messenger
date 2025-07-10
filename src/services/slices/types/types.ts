@@ -42,6 +42,9 @@ export type TProfileState = {
     isUpdatingPhoto: boolean;
     isUpdatingStatus: boolean;
   };
+  errors: {
+    fetchProfileError: TErrorMessage;
+  }
 };
 
 export type TAuthState = {
@@ -53,7 +56,7 @@ export type TAuthState = {
     isLoggingIn: boolean;
     isLoggingOut: boolean;
   };
-  error: {
+  errors: {
     loginError: TErrorMessage;
   };
 };

@@ -17,7 +17,7 @@ const initialState: TAuthState = {
     isLoggingIn: false,
     isLoggingOut: false,
   },
-  error: {
+  errors: {
     loginError: null,
   },
 };
@@ -44,7 +44,7 @@ const authSlice = createSlice({
     getIsLoadingUserData: (state) => state.loading.isGettingUserData,
     getIsLoggingIn: (state) => state.loading.isLoggingIn,
     getIsLoggingOut: (state) => state.loading.isLoggingOut,
-    getLoginError: (state) => state.error.loginError,
+    getLoginError: (state) => state.errors.loginError,
   },
   extraReducers: (builder) => {
     builder
@@ -73,7 +73,7 @@ const authSlice = createSlice({
       })
 
       .addCase(loginUserAsync.pending, (state) => {
-        state.error.loginError = null;
+        state.errors.loginError = null;
         state.loading.isLoggingIn = true;
       })
       .addCase(loginUserAsync.fulfilled, (state) => {
@@ -82,7 +82,7 @@ const authSlice = createSlice({
       })
       .addCase(loginUserAsync.rejected, (state, action) => {
         state.loading.isLoggingIn = false;
-        state.error.loginError =
+        state.errors.loginError =
           action.payload?.message || "Произошла неизвестная ошибка!";
       })
 

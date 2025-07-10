@@ -3,7 +3,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 
 import { FindFriends } from "@pages/find-friends";
 import { Login } from "@pages/login";
-import { Profile } from "@pages/profile";
+import { ProfilePage } from "@pages/profile-page";
 const DialogsPage = lazy(() => import("@pages/dialog-page"));
 const Settings = lazy(() => import("@pages/settings"));
 const NotFound = lazy(() => import("@pages/not-found"));
@@ -22,7 +22,7 @@ export const App = memo(() => {
     <Suspense fallback={<Loader />}>
       <Routes>
         <Route path="/" element={<Navigate to={initialRedirect} replace />} />
-        <Route path="/profile/:userId?" element={<Profile />} />
+        <Route path="/profile/:userId?" element={<ProfilePage />} />
         <Route
           path="/dialogs/:userId?"
           element={

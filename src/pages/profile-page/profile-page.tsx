@@ -1,6 +1,11 @@
 import { ProfileInfo } from "@components/profile";
 import { getCurrentUser } from "@slices/auth";
-import { getIsLoadingProfile, getProfile, setProfile } from "@slices/profile";
+import {
+  getFetchProfileError,
+  getIsLoadingProfile,
+  getProfile,
+  setProfile,
+} from "@slices/profile";
 import { useDispatch, useSelector } from "@store";
 import { getProfileAsync } from "@thunks/profile";
 import { BackButton } from "@ui/back-button";
@@ -10,10 +15,11 @@ import { PageWrapper } from "@ui/page-wrapper";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-export const Profile = () => {
+export const ProfilePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const profile = useSelector(getProfile);
+  const fetchError = useSelector(getFetchProfileError);
   const isLoading = useSelector(getIsLoadingProfile);
   const currentUser = useSelector(getCurrentUser);
 
@@ -45,11 +51,11 @@ export const Profile = () => {
     );
   }
 
-  if (!profile || !profileId) {
+  if (fetchError) {
     return (
       <PageWrapper
         title="Профиль не найден"
-        description="Профиль не найден. Возможно, профиль был удален или не существует."
+        description="Профиль не найден!"
         noIndex
       >
         <NoDataFound label="Профиль не найден!">
@@ -58,6 +64,8 @@ export const Profile = () => {
       </PageWrapper>
     );
   }
+
+  if (!profile || !profileId) return null;
 
   return (
     <PageWrapper title={profile?.fullName} description="Страница профиля">
