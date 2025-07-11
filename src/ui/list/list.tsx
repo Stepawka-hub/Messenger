@@ -27,7 +27,7 @@ export const List = <T,>({
 
   return (
     <section className={clsx(s.list, classes?.list)}>
-      {items.map((item) => renderItem(item))}
+      {items.map((item, index) => renderItem(item, index))}
     </section>
   );
 };

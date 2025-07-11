@@ -33,15 +33,12 @@ export const CommonChatPage: FC = () => {
     dispatch(sendMessageAsync(message));
   };
 
-  const renderMessage = ({
-    id,
-    userId,
-    userName,
-    message,
-    photo,
-  }: TChatMessage) => (
+  const renderMessage = (
+    { userId, userName, message, photo }: TChatMessage,
+    key?: number
+  ) => (
     <Message
-      key={id}
+      key={key}
       senderId={userId}
       username={userName}
       content={message}
@@ -56,7 +53,7 @@ export const CommonChatPage: FC = () => {
       title="Общий чат"
       description="Общий чат для общения"
     >
-      <ChatWrapper className={s.chatWrapper} handleSendMessage={onSubmit}>
+      <ChatWrapper className={s.chatWrapper} onSubmit={onSubmit}>
         <List
           items={messages}
           renderItem={renderMessage}

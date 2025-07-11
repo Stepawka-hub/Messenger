@@ -27,7 +27,6 @@ export type TMessage = {
 };
 
 export type TChatMessage = {
-  id: number;
   userId: TUserId;
   userName: string;
   message: string;

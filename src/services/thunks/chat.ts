@@ -1,6 +1,6 @@
 import { chatAPI } from "@api/chat.api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { setMessages, setStatus } from "@slices/chat";
+import { addMessages, setMessages, setStatus } from "@slices/chat";
 import {
   ThunkAppDispatch,
   TNewMessageHandler,
@@ -16,7 +16,7 @@ let _newMessageHandler: TNewMessageHandler = null;
 const newMessageHandlerCreator = (dispatch: ThunkAppDispatch) => {
   if (_newMessageHandler === null) {
     _newMessageHandler = (messages: TChatMessage[]) => {
-      dispatch(setMessages(messages));
+      dispatch(addMessages(messages));
     };
   }
 
@@ -51,6 +51,7 @@ export const stopMessagesListening = createAsyncThunk(
       "status-changed",
       statusChangedHandlerCreator(dispatch)
     );
+    dispatch(setMessages([]));
     chatAPI.stop();
   }
 );
