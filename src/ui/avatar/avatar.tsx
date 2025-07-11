@@ -6,12 +6,11 @@ import clsx from "clsx";
 
 export const Avatar: FC<AvatarProps> = ({
   image,
-  className,
   size = "medium",
   ...props
 }) => {
   return (
-    <div className={clsx(s.avatarWrapper, s[size], className)} {...props}>
+    <div className={clsx(s.avatarWrapper, s[size])} {...props}>
       <img className={s.avatar} src={image || defaultAvatar} alt="Avatar" />
     </div>
   );

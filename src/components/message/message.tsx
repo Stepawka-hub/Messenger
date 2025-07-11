@@ -20,7 +20,7 @@ export const Message: FC<MessageProps> = memo(
       >
         {!isMobile && (
           <NavLink to={`/profile/${senderId}`}>
-            <Avatar className={s.avatar} image={photo} size="small" />
+            <Avatar image={photo} size="small" />
           </NavLink>
         )}
         <div className={s.content}>

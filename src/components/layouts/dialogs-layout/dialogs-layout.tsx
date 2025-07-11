@@ -3,8 +3,7 @@ import { PropsWithChildren } from "react";
 
 export const DialogsLayout = ({ children }: PropsWithChildren) => (
   <PageWrapper
-    pageTitle="Диалоги"
-    title="Сообщения"
+    title="Диалоги"
     description="Общайтесь с друзьями и близкими в личном пространстве"
   >
     {children}

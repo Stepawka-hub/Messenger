@@ -17,6 +17,8 @@ import { SubmitHandler } from "react-hook-form";
 import { useMediaQuery } from "react-responsive";
 import s from "./private-chat.module.css";
 import { PrivateChatProps } from "./type";
+import { SendMessageForm } from "@components/send-message-form";
+import { ChatHeader } from "../chat-header";
 
 export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
   const dispatch = useDispatch();
@@ -58,14 +60,26 @@ export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
   };
 
   return (
-    <ChatWrapper disabled={isSendingMessage} onSubmit={onSubmit}>
-      <List
-        items={messages}
-        renderItem={renderMessage}
-        isLoading={isLoading}
-        classes={{ list: s.list }}
-        emptyMessage="Список сообщений пуст"
-      />
-    </ChatWrapper>
+    <ChatWrapper
+      header={
+        <ChatHeader
+          userId={userId}
+          username={selectedDialog?.userName}
+          avatar={selectedDialog?.photos.small || null}
+        />
+      }
+      body={
+        <List
+          items={messages}
+          renderItem={renderMessage}
+          isLoading={isLoading}
+          classes={{ list: s.list }}
+          emptyMessage="Список сообщений пуст"
+        />
+      }
+      footer={
+        <SendMessageForm disabled={isSendingMessage} onSubmit={onSubmit} />
+      }
+    />
   );
 };

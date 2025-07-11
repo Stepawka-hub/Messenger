@@ -1,0 +1,29 @@
+.header {
+  padding: 0.25rem 1rem 0.5rem;
+  border-bottom: 1px solid var(--header-border-color);
+}
+
+.content,
+.userInfoInner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.userInfo {
+  flex-grow: 1;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--primary-text-color);
+  text-decoration: none;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.backButton {
+  padding: 0.25rem;
+  background-color: var(--secondary-bg-color);
+}

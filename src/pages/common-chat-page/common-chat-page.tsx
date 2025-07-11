@@ -15,6 +15,7 @@ import { PageWrapper } from "@ui/page-wrapper";
 import { FC, useEffect } from "react";
 import { SubmitHandler } from "react-hook-form";
 import s from "./common-chat-page.module.css";
+import { SendMessageForm } from "@components/send-message-form";
 
 export const CommonChatPage: FC = () => {
   const dispatch = useDispatch();
@@ -53,14 +54,18 @@ export const CommonChatPage: FC = () => {
       title="Общий чат"
       description="Общий чат для общения"
     >
-      <ChatWrapper className={s.chatWrapper} onSubmit={onSubmit}>
-        <List
-          items={messages}
-          renderItem={renderMessage}
-          emptyMessage="Список сообщений пуст"
-          classes={{ list: s.list }}
-        />
-      </ChatWrapper>
+      <ChatWrapper
+        className={s.chatWrapper}
+        body={
+          <List
+            items={messages}
+            renderItem={renderMessage}
+            emptyMessage="Список сообщений пуст"
+            classes={{ list: s.list }}
+          />
+        }
+        footer={<SendMessageForm onSubmit={onSubmit} />}
+      />
     </PageWrapper>
   );
 };
