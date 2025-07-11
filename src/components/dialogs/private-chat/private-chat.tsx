@@ -1,6 +1,12 @@
 import { Message } from "@components/message";
 import { TSendMessageForm } from "@components/send-message-form/types";
-import { getIsLoadingMessages, getMessages } from "@slices/dialogs";
+import { getSelectedDialog } from "@selectors/dialogs";
+import { getCurrentUser } from "@slices/auth";
+import {
+  getIsLoadingMessages,
+  getIsSendingMessage,
+  getMessages,
+} from "@slices/dialogs";
 import { useDispatch, useSelector } from "@store";
 import { getMessagesAsync, sendMessageAsync } from "@thunks/dialogs";
 import { TMessage } from "@types";
@@ -8,13 +14,21 @@ import { ChatWrapper } from "@ui/chat-wrapper";
 import { List } from "@ui/list";
 import { FC, useEffect } from "react";
 import { SubmitHandler } from "react-hook-form";
-import { PrivateChatProps } from "./type";
+import { useMediaQuery } from "react-responsive";
 import s from "./private-chat.module.css";
+import { PrivateChatProps } from "./type";
 
 export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
   const dispatch = useDispatch();
+  const currentUser = useSelector(getCurrentUser);
+  const selectedDialog = useSelector((state) =>
+    getSelectedDialog(state, userId)
+  );
   const messages = useSelector(getMessages);
+
+  const isSendingMessage = useSelector(getIsSendingMessage);
   const isLoading = useSelector(getIsLoadingMessages);
+  const isMobile = useMediaQuery({ maxWidth: 600 });
 
   useEffect(() => {
     dispatch(getMessagesAsync(userId));
@@ -24,17 +38,27 @@ export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
     dispatch(sendMessageAsync({ userId, message }));
   };
 
-  const renderMessage = (message: TMessage) => (
-    <Message
-      key={message.id}
-      content={message.body}
-      username={message.senderName}
-      photo=""
-    />
-  );
+  const renderMessage = ({ id, body, senderName, senderId }: TMessage) => {
+    const isMessageOwner = senderId === currentUser?.id;
+    return (
+      <Message
+        key={id}
+        senderId={senderId}
+        content={body}
+        username={senderName}
+        photo={
+          isMessageOwner
+            ? currentUser.photos?.small
+            : selectedDialog?.photos.small
+        }
+        isOwnMessage={isMessageOwner}
+        isMobile={isMobile}
+      />
+    );
+  };
 
   return (
-    <ChatWrapper handleSendMessage={onSubmit}>
+    <ChatWrapper disabled={isSendingMessage} onSubmit={onSubmit}>
       <List
         items={messages}
         renderItem={renderMessage}

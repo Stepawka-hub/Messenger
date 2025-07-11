@@ -13,7 +13,6 @@ import { FieldConfig, ProfileEditFormProps, TProfileEditForm } from "./types";
 
 export const ProfileEditForm: FC<ProfileEditFormProps> = ({
   initialValue,
-  error,
   onSubmit,
   onCancel,
 }) => {
@@ -143,7 +142,6 @@ export const ProfileEditForm: FC<ProfileEditFormProps> = ({
           </Button>
         </div>
       </form>
-      {error && <span className={s.error}>{error}</span>}
     </div>
   );
 };

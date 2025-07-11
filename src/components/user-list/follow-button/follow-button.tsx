@@ -17,6 +17,7 @@ export const FollowButton: FC<FollowButtonProps> = ({
 }) => {
   const dispatch = useDispatch();
   const followingInProgressIds = useSelector(getFollowingInProgressIds);
+  const title = followed ? "Отписаться" : "Подписаться";
 
   const follow = () => {
     dispatch(followToUserAsync(userId));
@@ -28,6 +29,8 @@ export const FollowButton: FC<FollowButtonProps> = ({
 
   return (
     <Button
+      aria-label={title}
+      title={title}
       className={clsx(s.button, className, { [s.followed]: followed })}
       disabled={checkInProgress(followingInProgressIds, userId)}
       onClick={followed ? unfollow : follow}

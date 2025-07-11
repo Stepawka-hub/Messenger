@@ -6,9 +6,11 @@ import { createErrorPayload } from "@utils/helpers/error-helpers";
 import { TPhotos, TProfile, TUserId } from "src/types";
 import { TProfileWithStatus } from "../types";
 import { TBaseRejectValue } from "./types";
+import { setUserLogin, setUserPhoto } from "@slices/auth";
+import { setProfile } from "@slices/profile";
 
-const GET_PROFILE = "profile/get";
-const UPDATE_PROFILE = "profile/update";
+const GET_PROFILE = "profile/get-profile";
+const UPDATE_PROFILE = "profile/update-profile";
 const UPDATE_STATUS = "profile/update-status";
 const UPDATE_PHOTO = "profile/update-photo";
 
@@ -59,10 +61,11 @@ export const updateProfilePhotoAsync = createAsyncThunk<
   TPhotos,
   File,
   TBaseRejectValue
->(UPDATE_PHOTO, async (photo, { rejectWithValue }) => {
+>(UPDATE_PHOTO, async (photo, { dispatch, rejectWithValue }) => {
   try {
     const { data, messages, resultCode } = await profileAPI.updatePhoto(photo);
     if (resultCode === API_CODES.SUCCESS) {
+      dispatch(setUserPhoto(data.photos));
       return data.photos;
     }
 
@@ -93,7 +96,8 @@ export const updateProfileAsync = createAsyncThunk<
       );
 
       if (resultCode === API_CODES.SUCCESS && userId) {
-        dispatch(getProfileAsync(userId));
+        dispatch(setUserLogin(profileData.fullName));
+        dispatch(setProfile(profileData));
         return;
       }
 

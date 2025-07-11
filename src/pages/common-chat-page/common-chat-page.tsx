@@ -1,5 +1,6 @@
 import { Message } from "@components/message";
 import { TSendMessageForm } from "@components/send-message-form/types";
+import { getCurrentUser } from "@slices/auth";
 import { getMessages } from "@slices/chat";
 import { useDispatch, useSelector } from "@store";
 import {
@@ -7,17 +8,18 @@ import {
   startMessagesListening,
   stopMessagesListening,
 } from "@thunks/chat";
+import { TChatMessage } from "@types";
 import { ChatWrapper } from "@ui/chat-wrapper";
 import { List } from "@ui/list";
 import { PageWrapper } from "@ui/page-wrapper";
 import { FC, useEffect } from "react";
 import { SubmitHandler } from "react-hook-form";
 import s from "./common-chat-page.module.css";
-import { TChatMessage } from "@types";
 
 export const CommonChatPage: FC = () => {
   const dispatch = useDispatch();
   const messages = useSelector(getMessages);
+  const currentUser = useSelector(getCurrentUser);
 
   useEffect(() => {
     dispatch(startMessagesListening());
@@ -31,8 +33,21 @@ export const CommonChatPage: FC = () => {
     dispatch(sendMessageAsync(message));
   };
 
-  const renderMessage = ({ id, userName, message, photo }: TChatMessage) => (
-    <Message key={id} username={userName} content={message} photo={photo} />
+  const renderMessage = ({
+    id,
+    userId,
+    userName,
+    message,
+    photo,
+  }: TChatMessage) => (
+    <Message
+      key={id}
+      senderId={userId}
+      username={userName}
+      content={message}
+      photo={photo}
+      isOwnMessage={currentUser?.id === userId}
+    />
   );
 
   return (

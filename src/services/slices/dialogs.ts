@@ -3,6 +3,7 @@ import {
   getDialogsAsync,
   getMessagesAsync,
   sendMessageAsync,
+  startDialogAsync,
 } from "@thunks/dialogs";
 import { TDialog, TMessage } from "@types";
 import { TDialogsState } from "./types";
@@ -12,7 +13,7 @@ const initialState: TDialogsState = {
   messages: [],
   loading: {
     isGettingDialogs: false,
-    isStartingDialogIds: [],
+    isStartingDialog: false,
     isGettingMessages: false,
     isSendingMessage: false,
   },
@@ -21,13 +22,18 @@ const initialState: TDialogsState = {
 const dialogsSlice = createSlice({
   name: "dialogs",
   initialState,
-  reducers: {},
+  reducers: {
+    setMessages: (state, { payload }: PayloadAction<TMessage[]>) => {
+      state.messages = payload;
+    }
+  },
   selectors: {
     getDialogs: (state) => state.dialogs,
     getMessages: (state) => state.messages,
     getIsLoadingMessages: (state) => state.loading.isGettingMessages,
     getIsLoadingDialogs: (state) => state.loading.isGettingDialogs,
     getIsSendingMessage: (state) => state.loading.isSendingMessage,
+    getIsStartingDialog: (state) => state.loading.isStartingDialog,
   },
   extraReducers(builder) {
     builder
@@ -71,6 +77,16 @@ const dialogsSlice = createSlice({
       )
       .addCase(sendMessageAsync.rejected, (state) => {
         state.loading.isSendingMessage = false;
+      })
+
+      .addCase(startDialogAsync.pending, (state) => {
+        state.loading.isStartingDialog = true;
+      })
+      .addCase(startDialogAsync.fulfilled, (state) => {
+        state.loading.isStartingDialog = false;
+      })
+      .addCase(startDialogAsync.rejected, (state) => {
+        state.loading.isStartingDialog = false;
       });
   },
 });
@@ -81,4 +97,7 @@ export const {
   getDialogs,
   getIsLoadingDialogs,
   getIsLoadingMessages,
+  getIsStartingDialog,
+  getIsSendingMessage,
 } = dialogsSlice.selectors;
+export const { setMessages } = dialogsSlice.actions;

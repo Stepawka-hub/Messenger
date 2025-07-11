@@ -1,18 +1,23 @@
 import { ExitIcon } from "@icons";
-import { getCurrentUser, getIsAuth, getIsLoadingUserData } from "@slices/auth";
+import {
+  getCurrentUser,
+  getIsAuth,
+  getIsLoadingUserData,
+  getIsLoggingOut,
+} from "@slices/auth";
 import { useDispatch, useSelector } from "@store";
 import { logoutUserAsync } from "@thunks/auth";
 import { Button } from "@ui/button";
 import { Loader } from "@ui/loader";
 import { UserDetails } from "@ui/user-details";
 import { FC } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import s from "./auth-details.module.css";
 
 export const AuthDetails: FC = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const isLoading = useSelector(getIsLoadingUserData);
+  const isLoggingOut = useSelector(getIsLoggingOut);
   const isAuth = useSelector(getIsAuth);
   const currentUser = useSelector(getCurrentUser);
 
@@ -29,9 +34,9 @@ export const AuthDetails: FC = () => {
   }
 
   const { id, login, email, photos } = currentUser;
-
-  const logout = () => dispatch(logoutUserAsync());
-  const handleAvatarClick = () => navigate(`/profile/${id}`);
+  const logout = () => {
+    dispatch(logoutUserAsync());
+  };
 
   return (
     <div>
@@ -40,9 +45,15 @@ export const AuthDetails: FC = () => {
           username={login}
           email={email}
           photos={photos}
-          onAvatarClick={handleAvatarClick}
+          linkPath={`/profile/${id}`}
         />
-        <Button className={s.logoutBtn} onClick={logout}>
+        <Button
+          aria-label="Выход из аккаунта"
+          title="Выйти из аккаунта"
+          className={s.logoutBtn}
+          disabled={isLoggingOut}
+          onClick={logout}
+        >
           <ExitIcon size={32} />
         </Button>
       </div>

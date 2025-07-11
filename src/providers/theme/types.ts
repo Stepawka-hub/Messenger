@@ -8,6 +8,6 @@ export type ThemeProviderState = {
 };
 
 export type ThemeProviderProps = PropsWithChildren & {
-  defaultTheme: Theme;
+  defaultTheme?: Theme;
   storageKey?: string;
 };

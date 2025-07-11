@@ -6,11 +6,12 @@ import clsx from "clsx";
 
 export const ChatWrapper: FC<PropsWithChildren<ChatWrapperProps>> = ({
   children,
+  disabled,
   className,
-  handleSendMessage,
+  onSubmit,
 }) => (
   <div className={clsx(s.wrapper, className)}>
     <div className={s.body}>{children}</div>
-    <SendMessageForm onSubmit={handleSendMessage} />
+    <SendMessageForm disabled={disabled} onSubmit={onSubmit} />
   </div>
 );

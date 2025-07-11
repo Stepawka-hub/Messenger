@@ -5,6 +5,7 @@ import {
   TypedUseSelectorHook,
 } from "react-redux";
 import { reducer as appReducer } from "@slices/app";
+import { reducer as toastReducer } from "@slices/toast";
 import { reducer as usersReducer } from "@slices/users";
 import { reducer as profileReducer } from "@slices/profile";
 import { reducer as authReducer } from "@slices/auth";
@@ -14,6 +15,7 @@ import toastListenerMiddleware from "./middlewares/toastMiddleware";
 
 const rootReducer = combineReducers({
   app: appReducer,
+  toast: toastReducer,
   auth: authReducer,
   profile: profileReducer,
   dialogs: dialogsReducer,

@@ -38,3 +38,9 @@ export type TProfile = {
   };
   photos: TPhotos;
 };
+
+// User Card
+export type TSocialUser = TUser & {
+  photos: TPhotos;
+  followed: boolean;
+};

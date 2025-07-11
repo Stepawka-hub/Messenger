@@ -4,7 +4,7 @@
 
   padding: 0.75rem 1rem; 
   border-radius: 0.75rem;
-  background-color: var(--theme-primary-color);
+  background-color: var(--primary-bg-color);
   transition: opacity .2s;
 }
 
@@ -21,7 +21,7 @@
 .userName {
   font-size: 1.25rem;
   font-weight: 500;
-  color: var(--primary-color);
+  color: var(--primary-text-color);
 }
 
 .dialog.active {
@@ -30,5 +30,5 @@
 }
 
 .dialog.active .userName {
-  color: var(--orange-color);
+  color: var(--primary-color);
 }

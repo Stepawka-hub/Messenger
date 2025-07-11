@@ -6,11 +6,12 @@
 }
 
 .submit {
+  display: block;
   width: 3rem;
   height: 3rem;
   margin: 0.5rem;
   border-radius: 50%;
-  background-color: var(--create-btn-color);
+  background-color: var(--success-color);
 }
 
 .textareaContainer {
@@ -18,6 +19,6 @@
   gap: 1rem;
   align-items: center;
   width: 100%;
-  background-color: var(--theme-secondary-color);
+  background-color: var(--secondary-bg-color);
   border-radius: 1.25rem;
 }

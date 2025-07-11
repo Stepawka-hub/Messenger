@@ -1,10 +1,10 @@
-import api from './api';
+import api from "./api";
 import { BaseAPI } from "./base.api";
-import { TGetCaptchaData } from "./types";
+import { TGetCaptchaDataResponse } from "./types";
 
 class SecurityAPI extends BaseAPI {
-  getCaptchaURL = async (): Promise<TGetCaptchaData> => {
-    const { data } = await this.api.get<TGetCaptchaData>(
+  getCaptchaURL = async (): Promise<TGetCaptchaDataResponse> => {
+    const { data } = await this.api.get<TGetCaptchaDataResponse>(
       "security/get-captcha-url"
     );
     return data;

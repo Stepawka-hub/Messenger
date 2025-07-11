@@ -5,13 +5,18 @@
 .label {
   font-size: 1.2rem;
   font-weight: 500;
-  color: var(--lighten-orange-color);
+  color: var(--secondary-color);
 }
 
 .status {
+  pointer-events: none;
   line-height: 1.85rem;
   font-size: 1.15rem;
   transition: .2s ease-in;
+}
+
+.status.editable {
+  pointer-events: all;
 }
 
 .status.editable:hover {
@@ -19,11 +24,6 @@
   opacity: 0.8;
 }
 
-.input {
-  width: 100%;
-  padding: 0.15rem 0.25rem;
-  border-radius: 0.5rem;
-  font-size: 1.15rem;
-  color: var(--primary-color);
-  background-color: var(--theme-primary-color);
+.loaderContainer {
+  text-align: left;
 }

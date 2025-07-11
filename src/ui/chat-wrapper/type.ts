@@ -1,7 +1,5 @@
-import { SubmitHandler } from "react-hook-form";
-import { TSendMessageForm } from "@components/send-message-form/types";
+import { SendMessageFormProps } from "@components/send-message-form/types";
 
-export type ChatWrapperProps = {
+export type ChatWrapperProps = SendMessageFormProps & {
   className?: string;
-  handleSendMessage: SubmitHandler<TSendMessageForm>;
 };

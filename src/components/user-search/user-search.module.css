@@ -3,22 +3,21 @@
   align-items: center;
   padding: 0.25rem 1rem;
   border-radius: 1rem;
-  background-color: var(--theme-primary-color);
+  background-color: var(--primary-bg-color);
 }
 
 .filterIcon {
-  color: var(--primary-color);
+  color: var(--primary-text-color);
 }
 
 .filterBtn {
   background-color: transparent;
-  transition: .2s ease-in-out;
+}
+
+.filterBtn:hover {
+  transform: none;
 }
 
 .filterBtn:hover .filterIcon {
   color: var(--search-primary-color);
-}
-
-.filterBtn:active {
-  opacity: 0.8;
 }

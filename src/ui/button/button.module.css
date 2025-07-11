@@ -1,4 +1,7 @@
 .button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 1rem;
   transition:
     transform 0.2s ease-in,

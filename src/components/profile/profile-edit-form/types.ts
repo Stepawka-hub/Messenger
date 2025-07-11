@@ -2,7 +2,6 @@ import { RegisterOptions, SubmitHandler } from "react-hook-form";
 
 export type ProfileEditFormProps = {
   initialValue: TProfileEditForm;
-  error: string | null;
   onSubmit: SubmitHandler<TProfileEditForm>;
   onCancel: () => void;
 };
@@ -17,6 +16,9 @@ export type TProfileEditForm = {
   twitter: string;
   instagram: string;
   github: string;
+  website: string;
+  youtube: string;
+  mainLink: string;
 };
 
 export type FieldConfig = {

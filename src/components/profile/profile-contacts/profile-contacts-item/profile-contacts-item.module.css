@@ -14,18 +14,18 @@
 
   width: 0.5rem;
   height: 0.5rem;
-  background-color: var(--lighten-orange-color);
+  background-color: var(--secondary-color);
   border-radius: 50%;
 }
 
 .label {
   font-weight: 500;
-  color: var(--lighten-orange-color);
+  color: var(--secondary-color);
 }
 
 .link {
   font-size: 1.15rem;
-  color: var(--primary-color);
+  color: var(--primary-text-color);
   text-decoration: none;
   transition: .2s ease-in;
 }

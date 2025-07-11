@@ -1,0 +1,48 @@
+.form {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: 50%;
+}
+
+.input {
+  width: 100%;
+  padding: 0.25rem;
+  font-size: 1.15rem;
+  color: var(--primary-text-color);
+  background-color: var(--primary-bg-color);
+}
+
+.buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+}
+
+.submit {
+  background-color: var(--success-color);
+}
+
+.cancel {
+  background-color: var(--action-primary-color);
+}
+
+@media (max-width: 1280px) {
+  .form {
+    max-width: 75%;
+  }
+}
+
+@media (max-width: 960px) {
+  .form {
+    max-width: 100%;
+  }
+}

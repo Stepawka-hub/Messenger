@@ -4,12 +4,12 @@
 }
 
 .dialogs {
-  flex: 30%
+  flex: 35%
 }
 
 .chat {
   margin-top: 0.5rem;
-  flex: 70%;
+  flex: 65%;
 }
 
 .selectChat {
@@ -20,8 +20,8 @@
   width: 100%;
   height: 75vh;
   border-radius: 1rem;
-  background-color: var(--theme-primary-color);
+  background-color: var(--primary-bg-color);
   font-size: 1.25rem;
   font-weight: 500;
-  color: var(--select-chat-color);
+  color: var(--hint-color);
 }

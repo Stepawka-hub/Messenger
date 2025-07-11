@@ -3,19 +3,6 @@
 	position: relative;
 }
 
-.text {
-  display: block;
-
-  border-radius: 1rem;
-  padding: 0.5rem;
-
-  color: var(--primary-color);
-  background-color: var(--edit-btn-color);
-  text-align: center;
-
-	transition: .2s ease-in;
-}
-
 .input {
   display: block;
 	position: absolute;

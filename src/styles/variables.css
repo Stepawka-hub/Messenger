@@ -1,13 +1,57 @@
 :root {
-  --primary-color: #fff;
-  --secondary-color: #000;
-  --lighten-orange-color: #ffa454;
-  --orange-color: #ff5b42;
-  --theme-primary-color: #141414;
-  --theme-secondary-color: #222222;
+  --primary-btn-text-color: #fff;
+  --success-color: #2fac7c;
+  --action-primary-color: #ff7b57;
+  --action-secondary-color: #ff5b42;
+  --disabled-btn-color: #74706e;
+
+  --checkbox-pseudo-color: #fff;
+  --selected-option-text-color: #fff;
+  --default-icon-color: #fff;
+  --hint-color: #9b9b9b;
+  --error-color: #ff5757;
+}
+
+.light {
+  --primary-text-color: #000;
+  --secondary-text-color: #fff;
+  --primary-bg-color: #fff;
+  --secondary-bg-color: #f1f3f4;
+  --primary-color: #ff5b42;
+  --secondary-color: #ff8914;
+
+  --title-color: #000;
+  --subtitle-color: #ff8234;
+  --link-color-active: #ff653b;
+
+  --header-border-color: #e7e8ec;
+
+  --modal-bg-color: #f1f3f4;
+  --modal-close-cross-color: #2e2b35;
+  --modal-close-btn-color: #F7F7F8;
+  --modal-shadow-color: rgba(0, 0, 0, 0.25);
+  --overlay-color: rgba(5, 5, 5, 0.3);
+
+  --message-bg-color: #ecedf1;
+  --own-message-bg-color: #ffddbe;
+
+  --burger-line-color: #000;
+
+}
+
+.dark {
+  --primary-text-color: #fff;
+  --secondary-text-color: #000;
+  --primary-bg-color: #141414;
+  --secondary-bg-color: #222;
+  --primary-color: #ff5b42;
+  --secondary-color: #ffa454;
 
   --title-color: #ff7b57;
+  --subtitle-color: #ff7b57;
   --link-color-active: #ff7b57;
+
+  --header-border-color: #272727;
 
   --modal-bg-color: #24202c;
   --modal-close-cross-color: #2e2b35;
@@ -15,26 +59,8 @@
   --modal-shadow-color: rgba(0, 0, 0, 0.25);
   --overlay-color: rgba(5, 5, 5, 0.3);
 
-  --create-btn-color: #2fac7c;
-  --unfollow-btn-color: #ff6d4c;
-  --follow-btn-color: #2fac7c;
-  --start-dialog-btn-color: #2fac7c;
-  --edit-btn-color: #f65041;
-  --disabled-btn-color: #695c58;
-  --login-btn-color: #ff7b57;
-  --logout-btn-color: #ff7b57;
+  --message-bg-color: #202020;
+  --own-message-bg-color: #2e2e2e;
 
-  --input-bg-color: #222;
-  --checkbox-bg-color: #222;
-  --checkbox-checked-bg-color: #ff5b42;
-  --checkbox-pseudo-color: #fff;
-  --checkbox-border-color: #fff;
-  --checkbox-disabled-color: #ccc;
-
-  --search-primary-color: #ff5b42;
-  --search-placeholder-color: #9b9b9b;
-  --no-data-found-color: #9b9b9b;
-  --select-chat-color: #9b9b9b;
-
-  --error-color: #ff5757;
+  --burger-line-color: #fff;
 }

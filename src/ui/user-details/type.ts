@@ -4,5 +4,5 @@ export type UserDetailsProps = {
   username: string;
   email: string;
   photos: TPhotos | null;
-  onAvatarClick?: () => void;
+  linkPath: string;
 };

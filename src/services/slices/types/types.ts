@@ -1,10 +1,12 @@
 import {
   TChatMessage,
   TDialog,
+  TErrorMessage,
   TMessage,
   TProfile,
   TSocialUser,
   TSocketStatus,
+  TToastWithKey,
   TUserData,
   TUserFilter,
   TUserId,
@@ -12,6 +14,10 @@ import {
 
 export type TAppState = {
   initialized: boolean;
+};
+
+export type TToastState = {
+  toasts: TToastWithKey[];
 };
 
 export type TUsersState = {
@@ -36,6 +42,9 @@ export type TProfileState = {
     isUpdatingPhoto: boolean;
     isUpdatingStatus: boolean;
   };
+  errors: {
+    fetchProfileError: TErrorMessage;
+  }
 };
 
 export type TAuthState = {
@@ -47,8 +56,8 @@ export type TAuthState = {
     isLoggingIn: boolean;
     isLoggingOut: boolean;
   };
-  error: {
-    loginError: string | null;
+  errors: {
+    loginError: TErrorMessage;
   };
 };
 
@@ -57,7 +66,7 @@ export type TDialogsState = {
   messages: TMessage[];
   loading: {
     isGettingDialogs: boolean;
-    isStartingDialogIds: TUserId[];
+    isStartingDialog: boolean;
     isGettingMessages: boolean;
     isSendingMessage: boolean;
   };

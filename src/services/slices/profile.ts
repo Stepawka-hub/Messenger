@@ -18,6 +18,9 @@ const initialState: TProfileState = {
     isUpdatingPhoto: false,
     isUpdatingStatus: false,
   },
+  errors: {
+    fetchProfileError: null,
+  },
 };
 
 const profileSlice = createSlice({
@@ -43,12 +46,14 @@ const profileSlice = createSlice({
     getIsUpdatingProfile: (state) => state.loading.isUpdatingProfile,
     getIsUpdatingPhoto: (state) => state.loading.isUpdatingPhoto,
     getIsUpdatingStatus: (state) => state.loading.isUpdatingStatus,
+    getFetchProfileError: (state) => state.errors.fetchProfileError
   },
   extraReducers: (builder) => {
     builder
       .addCase(getProfileAsync.pending, (state) => {
         state.profile = null;
         state.loading.isGettingProfile = true;
+        state.errors.fetchProfileError = null;
       })
       .addCase(
         getProfileAsync.fulfilled,
@@ -58,8 +63,10 @@ const profileSlice = createSlice({
           state.loading.isGettingProfile = false;
         }
       )
-      .addCase(getProfileAsync.rejected, (state) => {
+      .addCase(getProfileAsync.rejected, (state, action) => {
         state.loading.isGettingProfile = false;
+        state.errors.fetchProfileError =
+          action.payload?.message || "Произошла неизвестная ошибка!";
       })
 
       .addCase(updateProfilePhotoAsync.pending, (state) => {
@@ -111,6 +118,8 @@ export const {
   getIsLoadingProfile,
   getIsUpdatingProfile,
   getIsUpdatingPhoto,
+  getIsUpdatingStatus,
+  getFetchProfileError
 } = profileSlice.selectors;
 export const { setProfile, setProfilePhoto, setProfileStatus } =
   profileSlice.actions;

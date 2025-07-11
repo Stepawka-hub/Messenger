@@ -1,5 +1,10 @@
+import { TUserId } from '@types';
+
 export type MessageProps = {
-  photo: string;
+  senderId: TUserId;
+  photo?: string | null;
   username: string;
   content: string;
+  isOwnMessage?: boolean;
+  isMobile?: boolean;
 };
