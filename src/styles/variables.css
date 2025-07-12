@@ -1,15 +1,12 @@
 :root {
-  --primary-btn-text-color: #fff;
+  --on-primary-color: #fff;
   --success-color: #2fac7c;
+  --hint-color: #9b9b9b;
+  --error-color: #ff5757;
+
   --action-primary-color: #ff7b57;
   --action-secondary-color: #ff5b42;
   --disabled-btn-color: #74706e;
-
-  --checkbox-pseudo-color: #fff;
-  --selected-option-text-color: #fff;
-  --default-icon-color: #fff;
-  --hint-color: #9b9b9b;
-  --error-color: #ff5757;
 }
 
 .light {

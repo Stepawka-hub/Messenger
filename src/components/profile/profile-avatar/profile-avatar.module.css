@@ -43,5 +43,5 @@
 }
 
 .loader {
-  color: var(--default-icon-color);
+  color: var(--on-primary-color);
 }

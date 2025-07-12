@@ -27,3 +27,7 @@
   padding: 0.25rem;
   background-color: var(--secondary-bg-color);
 }
+
+.closeIcon {
+  color: var(--primary-text-color);
+}

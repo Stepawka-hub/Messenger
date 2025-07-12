@@ -30,7 +30,7 @@
   font-size: 1.25rem;
   transition: .5s;
   overflow: hidden;
-  color: var(--checkbox-pseudo-color);
+  color: var(--on-primary-color);
 }
 
 .checkboxInput:checked::after {

@@ -8,7 +8,7 @@ import {
   getMessages,
 } from "@slices/dialogs";
 import { useDispatch, useSelector } from "@store";
-import { getMessagesAsync, sendMessageAsync } from "@thunks/dialogs";
+import { getDialogsAsync, getMessagesAsync, sendMessageAsync } from "@thunks/dialogs";
 import { TMessage } from "@types";
 import { ChatWrapper } from "@ui/chat-wrapper";
 import { List } from "@ui/list";
@@ -35,6 +35,16 @@ export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
   useEffect(() => {
     dispatch(getMessagesAsync(userId));
   }, [dispatch, userId]);
+
+  useEffect(() => {
+    if (!selectedDialog) {
+      dispatch(getDialogsAsync());
+    }
+  }, [dispatch, selectedDialog]);
+
+  if (!selectedDialog) {
+    return null;
+  }
 
   const onSubmit: SubmitHandler<TSendMessageForm> = ({ message }) => {
     dispatch(sendMessageAsync({ userId, message }));

@@ -14,14 +14,31 @@
 
 .content {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   gap: 1rem;
+  width: 100%;
+}
+
+.userInfoContainer {
+  display: flex;
+  gap: 1rem;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
 .userName {
   font-size: 1.25rem;
   font-weight: 500;
   color: var(--primary-text-color);
+}
+
+.lastActivity {
+  color: var(--hint-color);
 }
 
 .dialog.active {

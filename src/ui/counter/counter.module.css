@@ -1,0 +1,18 @@
+.counter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 0.25rem 0.35rem;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+}
+
+.count {
+  text-align: center;
+  width: fit-content;
+  min-width: 1rem;
+  min-height: 1rem;
+  font-weight: 500;
+  color: var(--on-primary-color);
+}

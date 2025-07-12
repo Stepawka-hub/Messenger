@@ -26,7 +26,7 @@ export const ChatHeader: FC<ChatHeaderProps> = ({
             className={s.backButton}
             onClick={onClickBackButton}
           >
-            <CrossIcon />
+            <CrossIcon className={s.closeIcon} />
           </Button>
         </div>
         <NavLink className={s.userInfo} to={`/profile/${userId}`}>
