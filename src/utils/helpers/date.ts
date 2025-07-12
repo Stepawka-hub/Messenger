@@ -1,11 +1,5 @@
-import { intlFormatDistance, isValid, Locale } from "date-fns";
+import { intlFormatDistance, isValid } from "date-fns";
 import { toZonedTime } from "date-fns-tz";
-import { enUS, ru } from "date-fns/locale";
-
-const LOCALE_MAP: Record<string, Locale> = {
-  en: enUS,
-  ru: ru,
-};
 
 const MS_PER_MINUTE = 1000 * 60;
 const MS_PER_DAY = MS_PER_MINUTE * 60 * 24;

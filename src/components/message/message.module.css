@@ -1,9 +1,10 @@
 .message {
   display: flex;
-  align-items: flex-start;
+  justify-content: space-between;
   gap: 1rem;
   padding: 1rem;
   border-radius: 1rem;
+  color: var(--primary-text-color);
   background-color: var(--message-bg-color);
 }
 
@@ -22,6 +23,18 @@
 .text {
   font-size: 1.15rem;
   white-space: pre-wrap;
+}
+
+.userInfo {
+  display: flex;
+  gap: 1rem;
+}
+
+.messageInfo {
+  display: flex;
+  align-items: center;
+  align-self: flex-end;
+  gap: 0.5rem;
 }
 
 @media (max-width: 600px) {
