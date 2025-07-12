@@ -54,7 +54,7 @@ export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
     dispatch(sendMessageAsync({ userId, message }));
   };
 
-  const renderMessage = ({ id, senderId, body, senderName, addedAt }: TMessage) => {
+  const renderMessage = ({ id, senderId, body, senderName, viewed, addedAt }: TMessage) => {
     const isMessageOwner = senderId === currentUser?.id;
     return (
       <Message
@@ -63,6 +63,7 @@ export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
         content={body}
         username={senderName}
         addedAt={addedAt}
+        isViewed={viewed}
         photo={
           isMessageOwner
             ? currentUser.photos?.small

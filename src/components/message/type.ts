@@ -9,4 +9,5 @@ export type MessageProps = {
   isViewed?: boolean;
   isOwnMessage?: boolean;
   isMobile?: boolean;
+  hideInfo?: boolean,
 };

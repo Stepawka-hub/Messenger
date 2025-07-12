@@ -60,7 +60,10 @@ export const getMessagesAsync = createAsyncThunk<
 >(GET_MESSAGES, async (userId, { rejectWithValue }) => {
   try {
     const messages = await dialogsAPI.getMessages(userId);
-    return messages;
+    return messages.map(({ addedAt, ...m }) => ({
+      ...m,
+      addedAt: formatDateToISOString(addedAt),
+    }));
   } catch (err) {
     console.error("Error fetching messages:", err);
     return rejectWithValue(createErrorPayload());

@@ -45,6 +45,7 @@ export const CommonChatPage: FC = () => {
       content={message}
       photo={photo}
       isOwnMessage={currentUser?.id === userId}
+      hideInfo
     />
   );
 

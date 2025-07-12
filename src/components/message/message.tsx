@@ -5,6 +5,8 @@ import s from "./message.module.css";
 import { MessageProps } from "./type";
 import clsx from "clsx";
 import { CheckIcon, DoubleCheckIcon } from "@icons";
+import { convertTZ } from "@utils/helpers/date";
+import { format } from "date-fns";
 
 export const Message: FC<MessageProps> = memo(
   ({
@@ -16,7 +18,9 @@ export const Message: FC<MessageProps> = memo(
     isViewed = false,
     isOwnMessage = false,
     isMobile = false,
+    hideInfo = false
   }) => {
+    const messageTime = addedAt ? format(convertTZ(addedAt), "HH:mm") : null;
     return (
       <article
         className={clsx(s.message, { [s.own]: isOwnMessage && isMobile })}
@@ -32,14 +36,16 @@ export const Message: FC<MessageProps> = memo(
             <span className={s.text}>{content}</span>
           </div>
         </div>
-        <div className={s.messageInfo}>
-          {addedAt && <span>{addedAt}</span>}
-          {isViewed ? (
-            <DoubleCheckIcon className={s.icon} size={16} />
-          ) : (
-            <CheckIcon className={s.icon} size={16} />
-          )}
-        </div>
+        {!hideInfo && (
+          <div className={s.messageInfo}>
+            {messageTime && <span>{messageTime}</span>}
+            {isViewed ? (
+              <DoubleCheckIcon className={s.icon} size={16} />
+            ) : (
+              <CheckIcon className={s.icon} size={16} />
+            )}
+          </div>
+        )}
       </article>
     );
   }
