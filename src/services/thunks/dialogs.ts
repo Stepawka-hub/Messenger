@@ -5,6 +5,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { TDialog, TMessage, TUserId } from "@types";
 import { createErrorPayload } from "@utils/helpers/error-helpers";
 import { TBaseRejectValue } from "./types";
+import { formatDateToISOString } from "@utils/helpers/date";
 
 const GET_DIALOGS = "dialogs/get-dialogs";
 const START_DIALOG = "dialogs/start";
@@ -18,7 +19,13 @@ export const getDialogsAsync = createAsyncThunk<
 >(GET_DIALOGS, async (_, { rejectWithValue }) => {
   try {
     const dialogs = await dialogsAPI.getDialogs();
-    return dialogs;
+    return dialogs.map(
+      ({ lastDialogActivityDate, lastUserActivityDate, ...d }) => ({
+        ...d,
+        lastDialogActivityDate: formatDateToISOString(lastDialogActivityDate),
+        lastUserActivityDate: formatDateToISOString(lastUserActivityDate),
+      })
+    );
   } catch (err) {
     console.error("Error fetching dialogs:", err);
     return rejectWithValue(createErrorPayload());

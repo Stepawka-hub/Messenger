@@ -1,10 +1,11 @@
-import { Avatar } from "@ui/avatar";
-import clsx from "clsx";
 import { FC } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import s from "./dialog.module.css";
-import { DialogProps } from "./type";
+import { Avatar } from "@ui/avatar";
 import { Counter } from "@ui/counter";
+import { convertTZ, getRelativeTimeString } from "@utils/helpers/date";
+import { useLocation, useNavigate } from "react-router-dom";
+import { DialogProps } from "./type";
+import s from "./dialog.module.css";
+import clsx from "clsx";
 
 export const Dialog: FC<DialogProps> = ({
   id,
@@ -17,6 +18,9 @@ export const Dialog: FC<DialogProps> = ({
   const location = useLocation();
   const path = `/dialogs/${id}`;
   const isActive = location.pathname === path;
+
+  const lastDialogActivityDateTZ = convertTZ(lastDialogActivityDate);
+  const relativeTime = getRelativeTimeString(lastDialogActivityDateTZ);
 
   const handleClick = () => {
     navigate(path);
@@ -36,10 +40,10 @@ export const Dialog: FC<DialogProps> = ({
           <Avatar image={photos.small} size="small" />
           <div className={s.userInfo}>
             <span className={s.userName}>{userName}</span>
-            <span className={s.lastActivity}>{lastDialogActivityDate}</span>
+            <span className={s.lastActivity}>{relativeTime}</span>
           </div>
         </div>
-        <Counter count={newMessagesCount + 0} />
+        {!!newMessagesCount && <Counter count={newMessagesCount} />}
       </div>
     </article>
   );
