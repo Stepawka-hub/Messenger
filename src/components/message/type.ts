@@ -1,12 +1,11 @@
 import { TUserId } from '@types';
+import { MessageInfoProps } from './message-info/type';
 
-export type MessageProps = {
+export type MessageProps = MessageInfoProps & {
   senderId: TUserId;
   photo?: string | null;
   username: string;
   content: string;
-  addedAt?: string;
-  isViewed?: boolean;
   isOwnMessage?: boolean;
   isMobile?: boolean;
   hideInfo?: boolean,

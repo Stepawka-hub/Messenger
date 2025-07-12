@@ -1,12 +1,10 @@
 import { Avatar } from "@ui/avatar";
 import { FC, memo } from "react";
 import { NavLink } from "react-router-dom";
-import s from "./message.module.css";
+import { MessageInfo } from "./message-info";
 import { MessageProps } from "./type";
+import s from "./message.module.css";
 import clsx from "clsx";
-import { CheckIcon, DoubleCheckIcon } from "@icons";
-import { convertTZ } from "@utils/helpers/date";
-import { format } from "date-fns";
 
 export const Message: FC<MessageProps> = memo(
   ({
@@ -18,9 +16,8 @@ export const Message: FC<MessageProps> = memo(
     isViewed = false,
     isOwnMessage = false,
     isMobile = false,
-    hideInfo = false
+    hideInfo = false,
   }) => {
-    const messageTime = addedAt ? format(convertTZ(addedAt), "HH:mm") : null;
     return (
       <article
         className={clsx(s.message, { [s.own]: isOwnMessage && isMobile })}
@@ -37,14 +34,11 @@ export const Message: FC<MessageProps> = memo(
           </div>
         </div>
         {!hideInfo && (
-          <div className={s.messageInfo}>
-            {messageTime && <span>{messageTime}</span>}
-            {isViewed ? (
-              <DoubleCheckIcon className={s.icon} size={16} />
-            ) : (
-              <CheckIcon className={s.icon} size={16} />
-            )}
-          </div>
+          <MessageInfo
+            addedAt={addedAt}
+            isViewed={isViewed}
+            isOwnMessage={isOwnMessage}
+          />
         )}
       </article>
     );

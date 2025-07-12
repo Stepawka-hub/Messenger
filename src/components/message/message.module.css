@@ -30,13 +30,6 @@
   gap: 1rem;
 }
 
-.messageInfo {
-  display: flex;
-  align-items: center;
-  align-self: flex-end;
-  gap: 0.5rem;
-}
-
 @media (max-width: 600px) {
   .message {
     padding: 0.5rem 0.75rem;
