@@ -61,5 +61,6 @@ export const getRelativeTimeString = (date: string | Date) => {
 
   return intlFormatDistance(safeDate, Date.now(), {
     locale: "ru",
+    style: "short",
   });
 };

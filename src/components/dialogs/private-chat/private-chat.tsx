@@ -8,7 +8,11 @@ import {
   getMessages,
 } from "@slices/dialogs";
 import { useDispatch, useSelector } from "@store";
-import { getDialogsAsync, getMessagesAsync, sendMessageAsync } from "@thunks/dialogs";
+import {
+  getDialogsAsync,
+  getMessagesAsync,
+  sendMessageAsync,
+} from "@thunks/dialogs";
 import { TMessage } from "@types";
 import { ChatWrapper } from "@ui/chat-wrapper";
 import { List } from "@ui/list";
@@ -75,6 +79,7 @@ export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
         <ChatHeader
           userId={userId}
           username={selectedDialog?.userName}
+          lastUserActivityDate={selectedDialog.lastUserActivityDate}
           avatar={selectedDialog?.photos.small || null}
         />
       }

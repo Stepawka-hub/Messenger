@@ -4,7 +4,7 @@
 }
 
 .content,
-.userInfoInner {
+.userInfo {
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -16,6 +16,16 @@
   font-weight: 500;
   color: var(--primary-text-color);
   text-decoration: none;
+}
+
+.userInfoContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.userLastSeen {
+  font-size: 1rem;
+  color: var(--hint-color);
 }
 
 .actions {
