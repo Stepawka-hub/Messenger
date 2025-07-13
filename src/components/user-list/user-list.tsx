@@ -6,9 +6,9 @@ import { SkeletonCard } from "@ui/skeleton-card";
 import { FC } from "react";
 import { useSelector } from "react-redux";
 import { UserListProps } from "./type";
-import s from "./user-list.module.css";
-import { StartDialogButton } from "@components/dialogs";
+import { StartDialogButton } from "@components/chatting";
 import { FollowButton } from "./follow-button";
+import s from "./user-list.module.css";
 
 export const UserList: FC<UserListProps> = ({
   users,

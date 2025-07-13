@@ -1,5 +1,9 @@
-import { Message } from "@components/message";
-import { TSendMessageForm } from "@components/send-message-form/types";
+import { FC, useEffect } from "react";
+import { SubmitHandler } from "react-hook-form";
+import { useMediaQuery } from "react-responsive";
+
+import { Message } from "@components/chatting";
+import { TSendMessageForm } from "@components/chatting/send-message-form/types";
 import { getSelectedDialog } from "@selectors/dialogs";
 import { getCurrentUser } from "@slices/auth";
 import {
@@ -16,13 +20,10 @@ import {
 import { TMessage } from "@types";
 import { ChatWrapper } from "@ui/chat-wrapper";
 import { List } from "@ui/list";
-import { FC, useEffect } from "react";
-import { SubmitHandler } from "react-hook-form";
-import { useMediaQuery } from "react-responsive";
 import s from "./private-chat.module.css";
 import { PrivateChatProps } from "./type";
-import { SendMessageForm } from "@components/send-message-form";
-import { ChatHeader } from "../chat-header";
+import { SendMessageForm } from "@components/chatting/send-message-form";
+import { ChatHeader } from "@ui/chat-header";
 
 export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
   const dispatch = useDispatch();
@@ -54,7 +55,14 @@ export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
     dispatch(sendMessageAsync({ userId, message }));
   };
 
-  const renderMessage = ({ id, senderId, body, senderName, viewed, addedAt }: TMessage) => {
+  const renderMessage = ({
+    id,
+    senderId,
+    body,
+    senderName,
+    viewed,
+    addedAt,
+  }: TMessage) => {
     const isMessageOwner = senderId === currentUser?.id;
     return (
       <Message

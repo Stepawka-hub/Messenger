@@ -1,4 +1,4 @@
-import { DialogList, PrivateChat } from "@components/dialogs";
+import { DialogList, PrivateChat } from "@components/chatting";
 import { DialogsLayout } from "@components/layouts";
 import { FC } from "react";
 import { useMediaQuery } from "react-responsive";
