@@ -1,3 +1,22 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 0.5rem;
+  height: 100%;
+}
+
 .list> :first-child {
   margin-top: auto;
+}
+
+.noData {
+  height: 100%;
+  align-items: center;
+}
+
+.mark {
+  min-height: 1rem;
+  width: 100%;
+  background-color: aqua;
 }
