@@ -1,87 +1,29 @@
-import { FC, useEffect } from "react";
-import { SubmitHandler } from "react-hook-form";
-import { useMediaQuery } from "react-responsive";
-
-import { Message } from "@components/chatting";
+import { MessageList, SendMessageForm } from "@components/chatting";
 import { TSendMessageForm } from "@components/chatting/send-message-form/types";
 import { getSelectedDialog } from "@selectors/dialogs";
-import { getCurrentUser } from "@slices/auth";
-import {
-  getIsLoadingMessages,
-  getIsSendingMessage,
-  getMessages,
-} from "@slices/dialogs";
+import { getIsSendingMessage } from "@slices/dialogs";
 import { useDispatch, useSelector } from "@store";
-import {
-  getDialogsAsync,
-  getMessagesAsync,
-  sendMessageAsync,
-} from "@thunks/dialogs";
-import { TMessage } from "@types";
-import { ChatWrapper } from "@ui/chat-wrapper";
-import { List } from "@ui/list";
-import s from "./private-chat.module.css";
-import { PrivateChatProps } from "./type";
-import { SendMessageForm } from "@components/chatting/send-message-form";
+import { sendMessageAsync } from "@thunks/dialogs";
 import { ChatHeader } from "@ui/chat-header";
+import { ChatWrapper } from "@ui/chat-wrapper";
+import { FC } from "react";
+import { SubmitHandler } from "react-hook-form";
+import { PrivateChatProps } from "./type";
 
 export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
   const dispatch = useDispatch();
-  const currentUser = useSelector(getCurrentUser);
+  const isSendingMessage = useSelector(getIsSendingMessage);
   const selectedDialog = useSelector((state) =>
     getSelectedDialog(state, userId)
   );
-  const messages = useSelector(getMessages);
-
-  const isSendingMessage = useSelector(getIsSendingMessage);
-  const isLoading = useSelector(getIsLoadingMessages);
-  const isMobile = useMediaQuery({ maxWidth: 600 });
-
-  useEffect(() => {
-    dispatch(getMessagesAsync(userId));
-  }, [dispatch, userId]);
-
-  useEffect(() => {
-    if (!selectedDialog) {
-      dispatch(getDialogsAsync());
-    }
-  }, [dispatch, selectedDialog]);
-
-  if (!selectedDialog) {
-    return null;
-  }
 
   const onSubmit: SubmitHandler<TSendMessageForm> = ({ message }) => {
     dispatch(sendMessageAsync({ userId, message }));
   };
 
-  const renderMessage = ({
-    id,
-    senderId,
-    body,
-    senderName,
-    viewed,
-    addedAt,
-  }: TMessage) => {
-    const isMessageOwner = senderId === currentUser?.id;
-    return (
-      <Message
-        key={id}
-        senderId={senderId}
-        content={body}
-        username={senderName}
-        addedAt={addedAt}
-        isViewed={viewed}
-        photo={
-          isMessageOwner
-            ? currentUser.photos?.small
-            : selectedDialog?.photos.small
-        }
-        isOwnMessage={isMessageOwner}
-        isMobile={isMobile}
-      />
-    );
-  };
+  if (!selectedDialog) {
+    return null;
+  }
 
   return (
     <ChatWrapper
@@ -94,12 +36,9 @@ export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
         />
       }
       body={
-        <List
-          items={messages}
-          renderItem={renderMessage}
-          isLoading={isLoading}
-          classes={{ list: s.list }}
-          emptyMessage="Список сообщений пуст"
+        <MessageList
+          userId={userId}
+          partnerAvatar={selectedDialog.photos.small}
         />
       }
       footer={

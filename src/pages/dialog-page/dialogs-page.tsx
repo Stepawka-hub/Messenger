@@ -1,13 +1,21 @@
 import { DialogList, PrivateChat } from "@components/chatting";
 import { DialogsLayout } from "@components/layouts";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
 import { useParams } from "react-router-dom";
+import { getDialogsAsync } from "@thunks/dialogs";
+import { useDispatch } from "@store";
 import s from "./dialogs-page.module.css";
 
 const DialogsPage: FC = () => {
+  const dispatch = useDispatch();
   const largeScreen = useMediaQuery({ minWidth: 1280 });
   const { userId } = useParams<{ userId?: string }>();
+
+  useEffect(() => {
+    dispatch(getDialogsAsync());
+  }, [dispatch]);
+
 
   if (!largeScreen) {
     return (
