@@ -1,6 +1,6 @@
 import { API_CODES } from "@api/constants";
 import { dialogsAPI } from "@api/dialogs.api";
-import { TSendMessagePayload } from "@api/types";
+import { TGetMessagesPayload, TSendMessagePayload } from "@api/types";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { TDialog, TMessage, TUserId } from "@types";
 import { formatDateToISOString } from "@utils/helpers/date";
@@ -55,20 +55,27 @@ export const startDialogAsync = createAsyncThunk<
 
 export const getMessagesAsync = createAsyncThunk<
   TMessage[],
-  TUserId,
+  TGetMessagesPayload,
   TBaseRejectValue
->(GET_MESSAGES, async (userId, { rejectWithValue }) => {
-  try {
-    const messages = await dialogsAPI.getMessages(userId);
-    return messages.map(({ addedAt, ...m }) => ({
-      ...m,
-      addedAt: formatDateToISOString(addedAt),
-    }));
-  } catch (err) {
-    console.error("Error fetching messages:", err);
-    return rejectWithValue(createErrorPayload());
+>(
+  GET_MESSAGES,
+  async ({ userId, currentPage, pageSize }, { rejectWithValue }) => {
+    try {
+      const messages = await dialogsAPI.getMessages({
+        userId,
+        currentPage,
+        pageSize,
+      });
+      return messages.map(({ addedAt, ...m }) => ({
+        ...m,
+        addedAt: formatDateToISOString(addedAt),
+      }));
+    } catch (err) {
+      console.error("Error fetching messages:", err);
+      return rejectWithValue(createErrorPayload());
+    }
   }
-});
+);
 
 export const sendMessageAsync = createAsyncThunk<
   TMessage,

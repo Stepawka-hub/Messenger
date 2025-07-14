@@ -53,7 +53,7 @@ const dialogsSlice = createSlice({
     getDialogs: (state) => state.dialogs,
     getMessages: (state) => state.messages,
     getSelectedDialogId: (state) => state.selectedDialogId,
-    getMessagePagiantion: (state) => state.messagePagination,
+    getMessagePagination: (state) => state.messagePagination,
     getIsLoadingMessages: (state) => state.loading.isGettingMessages,
     getIsLoadingDialogs: (state) => state.loading.isGettingDialogs,
     getIsSendingMessage: (state) => state.loading.isSendingMessage,
@@ -124,7 +124,7 @@ export const {
   getIsStartingDialog,
   getIsSendingMessage,
   getSelectedDialogId,
-  getMessagePagiantion,
+  getMessagePagination,
 } = dialogsSlice.selectors;
 export const { setMessages, setCurrentDialogId, moveSelectedDialogToTop } =
   dialogsSlice.actions;

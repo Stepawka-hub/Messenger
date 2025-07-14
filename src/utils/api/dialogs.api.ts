@@ -1,7 +1,13 @@
 import { TDialog, TMessage, TUserId } from "@types";
 import api from "./api";
 import { BaseAPI } from "./base.api";
-import { TGetMessageResponse, TResponse, TResponseWithData } from "./types";
+import {
+  TGetMessageResponse,
+  TGetMessagesParams,
+  TGetMessagesPayload,
+  TResponse,
+  TResponseWithData,
+} from "./types";
 
 class DialogsAPI extends BaseAPI {
   startDialog = async (userId: TUserId): Promise<TResponse> => {
@@ -14,9 +20,19 @@ class DialogsAPI extends BaseAPI {
     return data;
   };
 
-  getMessages = async (userId: TUserId): Promise<TMessage[]> => {
+  getMessages = async ({
+    userId,
+    currentPage = 1,
+    pageSize = 10,
+  }: TGetMessagesPayload): Promise<TMessage[]> => {
+    const params: TGetMessagesParams = {
+      page: currentPage,
+      count: pageSize,
+    };
+
     const { data } = await this.api.get<TGetMessageResponse>(
-      `dialogs/${userId}/messages?page=1&count=20`
+      `dialogs/${userId}/messages`,
+      { params }
     );
     return data.items;
   };

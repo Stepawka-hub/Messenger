@@ -1,7 +1,11 @@
 import { Message } from "@components/chatting";
 import { useScroll } from "@hooks/useScroll";
 import { getCurrentUser } from "@slices/auth";
-import { getIsLoadingMessages, getMessages } from "@slices/dialogs";
+import {
+  getIsLoadingMessages,
+  getMessagePagination,
+  getMessages,
+} from "@slices/dialogs";
 import { useDispatch, useSelector } from "@store";
 import { getMessagesAsync } from "@thunks/dialogs";
 import { Loader } from "@ui/loader";
@@ -18,6 +22,7 @@ export const MessageList: FC<MessageListProps> = memo(
     const dispatch = useDispatch();
     const currentUser = useSelector(getCurrentUser);
     const messages = useSelector(getMessages);
+    const { currentPage, pageSize } = useSelector(getMessagePagination);
     const isLoading = useSelector(getIsLoadingMessages);
     const isMobile = useMediaQuery({ maxWidth: 600 });
 
@@ -25,13 +30,9 @@ export const MessageList: FC<MessageListProps> = memo(
     const childRef = useRef<HTMLDivElement>(null);
     useScroll(parentRef, childRef, () => null);
 
-    const fetchMessages = () => {
-      dispatch(getMessagesAsync(userId));
-    };
-
     useEffect(() => {
-      dispatch(getMessagesAsync(userId));
-    }, [dispatch, userId]);
+      dispatch(getMessagesAsync({ userId, pageSize, currentPage }));
+    }, [dispatch, userId, pageSize, currentPage]);
 
     if (!messages || messages.length === 0) {
       return <NoDataFound label="Список сообщений пуст" className={s.noData} />;
