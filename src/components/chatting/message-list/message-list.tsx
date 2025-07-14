@@ -38,6 +38,7 @@ export const MessageList: FC<MessageListProps> = memo(
     const isLoading = useSelector(getIsLoadingMessages);
 
     const fetchMessages = useCallback(() => {
+      console.log(pageSize, currentPage);
       dispatch(getMessagesAsync({ userId, pageSize, currentPage }));
     }, [dispatch, userId, pageSize, currentPage]);
 
@@ -81,8 +82,6 @@ export const MessageList: FC<MessageListProps> = memo(
         </Fragment>
       );
     });
-
-    console.log(messages.length);
 
     return (
       <section className={s.list} ref={messageListRef}>

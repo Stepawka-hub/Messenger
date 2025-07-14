@@ -14,9 +14,3 @@
   height: 100%;
   align-items: center;
 }
-
-.loadMore {
-  font-size: 1.25rem;
-  color: var(--hint-color);
-  text-align: center;
-}

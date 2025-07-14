@@ -92,7 +92,9 @@ const dialogsSlice = createSlice({
           if (payload.length) {
             state.messages = [...payload, ...state.messages];
             state.messagePagination.currentPage += 1;
-          } else {
+          }
+
+          if (payload.length < state.messagePagination.pageSize) {
             state.hasMoreMessages = false;
           }
 
