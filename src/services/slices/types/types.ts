@@ -45,7 +45,7 @@ export type TProfileState = {
   };
   errors: {
     fetchProfileError: TErrorMessage;
-  }
+  };
 };
 
 export type TAuthState = {
@@ -64,8 +64,9 @@ export type TAuthState = {
 
 export type TDialogsState = {
   dialogs: TDialog[];
-  messages: TMessage[];
   selectedDialogId: number | null;
+  messages: TMessage[];
+  hasMoreMessages: boolean;
   messagePagination: TPagination;
   loading: {
     isGettingDialogs: boolean;

@@ -10,8 +10,9 @@ import { TDialogsState } from "./types";
 
 const initialState: TDialogsState = {
   dialogs: [],
-  messages: [],
   selectedDialogId: null,
+  messages: [],
+  hasMoreMessages: true,
   messagePagination: {
     currentPage: 1,
     pageSize: 10,
@@ -48,11 +49,18 @@ const dialogsSlice = createSlice({
     setCurrentDialogId: (state, { payload }: PayloadAction<number | null>) => {
       state.selectedDialogId = payload;
     },
+    setMessagePage: (state, { payload }: PayloadAction<number>) => {
+      state.messagePagination.currentPage = payload;
+    },
+    setHasMoreMessages: (state, { payload }: PayloadAction<boolean>) => {
+      state.hasMoreMessages = payload;
+    },
   },
   selectors: {
     getDialogs: (state) => state.dialogs,
     getMessages: (state) => state.messages,
     getSelectedDialogId: (state) => state.selectedDialogId,
+    getHasMoreMessages: (state) => state.hasMoreMessages,
     getMessagePagination: (state) => state.messagePagination,
     getIsLoadingMessages: (state) => state.loading.isGettingMessages,
     getIsLoadingDialogs: (state) => state.loading.isGettingDialogs,
@@ -81,7 +89,13 @@ const dialogsSlice = createSlice({
       .addCase(
         getMessagesAsync.fulfilled,
         (state, { payload }: PayloadAction<TMessage[]>) => {
-          state.messages = payload;
+          if (payload.length) {
+            state.messages = [...payload, ...state.messages];
+            state.messagePagination.currentPage += 1;
+          } else {
+            state.hasMoreMessages = false;
+          }
+
           state.loading.isGettingMessages = false;
         }
       )
@@ -125,6 +139,11 @@ export const {
   getIsSendingMessage,
   getSelectedDialogId,
   getMessagePagination,
+  getHasMoreMessages,
 } = dialogsSlice.selectors;
-export const { setMessages, setCurrentDialogId, moveSelectedDialogToTop } =
-  dialogsSlice.actions;
+export const {
+  setMessages,
+  setMessagePage,
+  setCurrentDialogId,
+  moveSelectedDialogToTop,
+} = dialogsSlice.actions;

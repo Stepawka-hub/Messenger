@@ -66,6 +66,7 @@ export const getMessagesAsync = createAsyncThunk<
         currentPage,
         pageSize,
       });
+
       return messages.map(({ addedAt, ...m }) => ({
         ...m,
         addedAt: formatDateToISOString(addedAt),

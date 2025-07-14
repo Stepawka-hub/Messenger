@@ -15,8 +15,8 @@
   align-items: center;
 }
 
-.mark {
-  min-height: 1rem;
-  width: 100%;
-  background-color: aqua;
+.loadMore {
+  font-size: 1.25rem;
+  color: var(--hint-color);
+  text-align: center;
 }

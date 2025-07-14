@@ -1,40 +1,59 @@
 import { Message } from "@components/chatting";
-import { useScroll } from "@hooks/useScroll";
+import { useInfiniteScroll } from "@hooks/useInfinityScroll";
 import { getCurrentUser } from "@slices/auth";
 import {
+  getHasMoreMessages,
   getIsLoadingMessages,
   getMessagePagination,
   getMessages,
 } from "@slices/dialogs";
 import { useDispatch, useSelector } from "@store";
-import { getMessagesAsync } from "@thunks/dialogs";
 import { Loader } from "@ui/loader";
 import { NoDataFound } from "@ui/no-data-found";
 import { getRelativeTimeString } from "@utils/helpers/date";
 import { isSameDay } from "date-fns";
-import { FC, Fragment, memo, useEffect, useRef } from "react";
+import {
+  FC,
+  Fragment,
+  memo,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useMediaQuery } from "react-responsive";
-import { MessageListProps } from "./type";
 import s from "./message-list.module.css";
+import { MessageListProps } from "./type";
+import { getMessagesAsync } from "@thunks/dialogs";
 
 export const MessageList: FC<MessageListProps> = memo(
   ({ userId, partnerAvatar }) => {
     const dispatch = useDispatch();
     const currentUser = useSelector(getCurrentUser);
-    const messages = useSelector(getMessages);
-    const { currentPage, pageSize } = useSelector(getMessagePagination);
-    const isLoading = useSelector(getIsLoadingMessages);
     const isMobile = useMediaQuery({ maxWidth: 600 });
 
-    const parentRef = useRef<HTMLElement>(null);
-    const childRef = useRef<HTMLDivElement>(null);
-    useScroll(parentRef, childRef, () => null);
+    const messages = useSelector(getMessages);
+    const hasMore = useSelector(getHasMoreMessages);
+    const { currentPage, pageSize } = useSelector(getMessagePagination);
+    const isLoading = useSelector(getIsLoadingMessages);
 
-    useEffect(() => {
+    const fetchMessages = useCallback(() => {
       dispatch(getMessagesAsync({ userId, pageSize, currentPage }));
     }, [dispatch, userId, pageSize, currentPage]);
 
-    if (!messages || messages.length === 0) {
+    const messageListRef = useRef<HTMLDivElement>(null);
+    const [isFirstLoad, setIsFirstLoad] = useState(true);
+    const loadMoreRef = useInfiniteScroll({ loadMore: fetchMessages, hasMore });
+
+    useEffect(() => {
+      const listRef = messageListRef.current;
+      if (listRef && messages.length > 0 && isFirstLoad) {
+        listRef.lastElementChild?.scrollIntoView();
+        setIsFirstLoad(false);
+      }
+    }, [messages, isFirstLoad]);
+
+    if (!messages.length && !hasMore) {
       return <NoDataFound label="Список сообщений пуст" className={s.noData} />;
     }
 
@@ -63,9 +82,12 @@ export const MessageList: FC<MessageListProps> = memo(
       );
     });
 
+    console.log(messages.length);
+
     return (
-      <section className={s.list} ref={parentRef}>
-        {isLoading ? <Loader /> : <div className={s.mark} ref={childRef} />}
+      <section className={s.list} ref={messageListRef}>
+        {isLoading && <Loader />}
+        {hasMore && <div className={s.loadMore} ref={loadMoreRef} />}
         {messageElements}
       </section>
     );
