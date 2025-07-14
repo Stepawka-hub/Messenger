@@ -3,6 +3,7 @@ import {
   TDialog,
   TErrorMessage,
   TMessage,
+  TPagination,
   TProfile,
   TSocialUser,
   TSocketStatus,
@@ -64,6 +65,8 @@ export type TAuthState = {
 export type TDialogsState = {
   dialogs: TDialog[];
   messages: TMessage[];
+  selectedDialogId: number | null;
+  messagePagination: TPagination;
   loading: {
     isGettingDialogs: boolean;
     isStartingDialog: boolean;

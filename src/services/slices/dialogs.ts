@@ -11,6 +11,11 @@ import { TDialogsState } from "./types";
 const initialState: TDialogsState = {
   dialogs: [],
   messages: [],
+  selectedDialogId: null,
+  messagePagination: {
+    currentPage: 1,
+    pageSize: 10,
+  },
   loading: {
     isGettingDialogs: false,
     isStartingDialog: false,
@@ -23,13 +28,32 @@ const dialogsSlice = createSlice({
   name: "dialogs",
   initialState,
   reducers: {
+    moveSelectedDialogToTop: (state) => {
+      if (!state.selectedDialogId) return;
+      const index = state.dialogs.findIndex(
+        (d) => d.id === state.selectedDialogId
+      );
+
+      if (index > 0) {
+        const selectedDialog = state.dialogs[index];
+        const newDialogs = state.dialogs.filter(
+          (d) => d.id !== state.selectedDialogId
+        );
+        state.dialogs = [selectedDialog, ...newDialogs];
+      }
+    },
     setMessages: (state, { payload }: PayloadAction<TMessage[]>) => {
       state.messages = payload;
-    }
+    },
+    setCurrentDialogId: (state, { payload }: PayloadAction<number | null>) => {
+      state.selectedDialogId = payload;
+    },
   },
   selectors: {
     getDialogs: (state) => state.dialogs,
     getMessages: (state) => state.messages,
+    getSelectedDialogId: (state) => state.selectedDialogId,
+    getMessagePagiantion: (state) => state.messagePagination,
     getIsLoadingMessages: (state) => state.loading.isGettingMessages,
     getIsLoadingDialogs: (state) => state.loading.isGettingDialogs,
     getIsSendingMessage: (state) => state.loading.isSendingMessage,
@@ -99,5 +123,8 @@ export const {
   getIsLoadingMessages,
   getIsStartingDialog,
   getIsSendingMessage,
+  getSelectedDialogId,
+  getMessagePagiantion,
 } = dialogsSlice.selectors;
-export const { setMessages } = dialogsSlice.actions;
+export const { setMessages, setCurrentDialogId, moveSelectedDialogToTop } =
+  dialogsSlice.actions;

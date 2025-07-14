@@ -5,22 +5,27 @@ import { useMediaQuery } from "react-responsive";
 import { useParams } from "react-router-dom";
 import { getDialogsAsync } from "@thunks/dialogs";
 import { useDispatch } from "@store";
+import { setCurrentDialogId } from "@slices/dialogs";
 import s from "./dialogs-page.module.css";
 
 const DialogsPage: FC = () => {
   const dispatch = useDispatch();
   const largeScreen = useMediaQuery({ minWidth: 1280 });
   const { userId } = useParams<{ userId?: string }>();
+  const userIdNumber = Number(userId);
 
   useEffect(() => {
     dispatch(getDialogsAsync());
   }, [dispatch]);
 
+  useEffect(() => {
+    dispatch(setCurrentDialogId(userIdNumber));
+  }, [dispatch, userIdNumber]);
 
   if (!largeScreen) {
     return (
       <DialogsLayout>
-        {!userId ? <DialogList /> : <PrivateChat userId={Number(userId)} />}
+        {!userId ? <DialogList /> : <PrivateChat userId={userIdNumber} />}
       </DialogsLayout>
     );
   }
@@ -35,7 +40,7 @@ const DialogsPage: FC = () => {
           {!userId ? (
             <div className={s.selectChat}>Выберите чат</div>
           ) : (
-            <PrivateChat userId={Number(userId)} />
+            <PrivateChat userId={userIdNumber} />
           )}
         </div>
       </div>

@@ -3,9 +3,9 @@ import { dialogsAPI } from "@api/dialogs.api";
 import { TSendMessagePayload } from "@api/types";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { TDialog, TMessage, TUserId } from "@types";
+import { formatDateToISOString } from "@utils/helpers/date";
 import { createErrorPayload } from "@utils/helpers/error-helpers";
 import { TBaseRejectValue } from "./types";
-import { formatDateToISOString } from "@utils/helpers/date";
 
 const GET_DIALOGS = "dialogs/get-dialogs";
 const START_DIALOG = "dialogs/start";

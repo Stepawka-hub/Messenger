@@ -1,7 +1,7 @@
 import { MessageList, SendMessageForm } from "@components/chatting";
 import { TSendMessageForm } from "@components/chatting/send-message-form/types";
 import { getSelectedDialog } from "@selectors/dialogs";
-import { getIsSendingMessage } from "@slices/dialogs";
+import { getIsSendingMessage, moveSelectedDialogToTop } from "@slices/dialogs";
 import { useDispatch, useSelector } from "@store";
 import { sendMessageAsync } from "@thunks/dialogs";
 import { ChatHeader } from "@ui/chat-header";
@@ -13,12 +13,11 @@ import { PrivateChatProps } from "./type";
 export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
   const dispatch = useDispatch();
   const isSendingMessage = useSelector(getIsSendingMessage);
-  const selectedDialog = useSelector((state) =>
-    getSelectedDialog(state, userId)
-  );
+  const selectedDialog = useSelector(getSelectedDialog);
 
   const onSubmit: SubmitHandler<TSendMessageForm> = ({ message }) => {
     dispatch(sendMessageAsync({ userId, message }));
+    dispatch(moveSelectedDialogToTop());
   };
 
   if (!selectedDialog) {

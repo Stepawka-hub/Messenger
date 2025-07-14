@@ -1,4 +1,5 @@
 import { Message } from "@components/chatting";
+import { useScroll } from "@hooks/useScroll";
 import { getCurrentUser } from "@slices/auth";
 import { getIsLoadingMessages, getMessages } from "@slices/dialogs";
 import { useDispatch, useSelector } from "@store";
@@ -7,11 +8,10 @@ import { Loader } from "@ui/loader";
 import { NoDataFound } from "@ui/no-data-found";
 import { getRelativeTimeString } from "@utils/helpers/date";
 import { isSameDay } from "date-fns";
-import { FC, Fragment, memo, useEffect, useRef, useState } from "react";
+import { FC, Fragment, memo, useEffect, useRef } from "react";
 import { useMediaQuery } from "react-responsive";
-import s from "./message-list.module.css";
 import { MessageListProps } from "./type";
-import { useScroll } from "@hooks/useScroll";
+import s from "./message-list.module.css";
 
 export const MessageList: FC<MessageListProps> = memo(
   ({ userId, partnerAvatar }) => {
@@ -21,8 +21,6 @@ export const MessageList: FC<MessageListProps> = memo(
     const isLoading = useSelector(getIsLoadingMessages);
     const isMobile = useMediaQuery({ maxWidth: 600 });
 
-    const [page, setPage] = useState(1);
-    const limit = 10;
     const parentRef = useRef<HTMLElement>(null);
     const childRef = useRef<HTMLDivElement>(null);
     useScroll(parentRef, childRef, () => null);
@@ -34,10 +32,6 @@ export const MessageList: FC<MessageListProps> = memo(
     useEffect(() => {
       dispatch(getMessagesAsync(userId));
     }, [dispatch, userId]);
-
-    if (isLoading) {
-      return <Loader />;
-    }
 
     if (!messages || messages.length === 0) {
       return <NoDataFound label="Список сообщений пуст" className={s.noData} />;
@@ -70,7 +64,7 @@ export const MessageList: FC<MessageListProps> = memo(
 
     return (
       <section className={s.list} ref={parentRef}>
-        <div className={s.mark} ref={childRef} />
+        {isLoading ? <Loader /> : <div className={s.mark} ref={childRef} />}
         {messageElements}
       </section>
     );
