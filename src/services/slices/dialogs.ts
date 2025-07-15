@@ -46,14 +46,14 @@ const dialogsSlice = createSlice({
     setMessages: (state, { payload }: PayloadAction<TMessage[]>) => {
       state.messages = payload;
     },
-    setCurrentDialogId: (state, { payload }: PayloadAction<number | null>) => {
+    setCurrentDialog: (state, { payload }: PayloadAction<number | null>) => {
       state.selectedDialogId = payload;
+      state.hasMoreMessages = true;
+      state.messagePagination.currentPage = 1;
+      state.messages = [];
     },
     setMessagePage: (state, { payload }: PayloadAction<number>) => {
       state.messagePagination.currentPage = payload;
-    },
-    setHasMoreMessages: (state, { payload }: PayloadAction<boolean>) => {
-      state.hasMoreMessages = payload;
     },
   },
   selectors: {
@@ -146,6 +146,6 @@ export const {
 export const {
   setMessages,
   setMessagePage,
-  setCurrentDialogId,
+  setCurrentDialog,
   moveSelectedDialogToTop,
 } = dialogsSlice.actions;

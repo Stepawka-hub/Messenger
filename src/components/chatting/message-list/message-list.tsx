@@ -1,46 +1,24 @@
 import { Message } from "@components/chatting";
+import { useFetchMessages } from "@hooks/useFetchMessages";
 import { useInfiniteScroll } from "@hooks/useInfinityScroll";
 import { getCurrentUser } from "@slices/auth";
-import {
-  getHasMoreMessages,
-  getIsLoadingMessages,
-  getMessagePagination,
-  getMessages,
-} from "@slices/dialogs";
-import { useDispatch, useSelector } from "@store";
+import { useSelector } from "@store";
 import { Loader } from "@ui/loader";
 import { NoDataFound } from "@ui/no-data-found";
 import { getRelativeTimeString } from "@utils/helpers/date";
 import { isSameDay } from "date-fns";
-import {
-  FC,
-  Fragment,
-  memo,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { FC, Fragment, memo, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import s from "./message-list.module.css";
 import { MessageListProps } from "./type";
-import { getMessagesAsync } from "@thunks/dialogs";
+import s from "./message-list.module.css";
 
 export const MessageList: FC<MessageListProps> = memo(
   ({ userId, partnerAvatar }) => {
-    const dispatch = useDispatch();
     const currentUser = useSelector(getCurrentUser);
     const isMobile = useMediaQuery({ maxWidth: 600 });
-
-    const messages = useSelector(getMessages);
-    const hasMore = useSelector(getHasMoreMessages);
-    const { currentPage, pageSize } = useSelector(getMessagePagination);
-    const isLoading = useSelector(getIsLoadingMessages);
-
-    const fetchMessages = useCallback(() => {
-      console.log(pageSize, currentPage);
-      dispatch(getMessagesAsync({ userId, pageSize, currentPage }));
-    }, [dispatch, userId, pageSize, currentPage]);
+    const { messages, hasMore, isLoading, fetchMessages } = useFetchMessages({
+      userId,
+    });
 
     const messageListRef = useRef<HTMLDivElement>(null);
     const [isFirstLoad, setIsFirstLoad] = useState(true);

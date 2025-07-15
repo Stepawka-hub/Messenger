@@ -1,11 +1,11 @@
 import { DialogList, PrivateChat } from "@components/chatting";
 import { DialogsLayout } from "@components/layouts";
+import { setCurrentDialog } from "@slices/dialogs";
+import { useDispatch } from "@store";
+import { getDialogsAsync } from "@thunks/dialogs";
 import { FC, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
 import { useParams } from "react-router-dom";
-import { getDialogsAsync } from "@thunks/dialogs";
-import { useDispatch } from "@store";
-import { setCurrentDialogId, setMessagePage } from "@slices/dialogs";
 import s from "./dialogs-page.module.css";
 
 const DialogsPage: FC = () => {
@@ -19,12 +19,11 @@ const DialogsPage: FC = () => {
 
   useEffect(() => {
     if (userId) {
-      dispatch(setMessagePage(1));
-      dispatch(setCurrentDialogId(Number(userId)));
+      dispatch(setCurrentDialog(Number(userId)));
     }
 
     return () => {
-      dispatch(setCurrentDialogId(null));
+      dispatch(setCurrentDialog(null));
     };
   }, [dispatch, userId]);
 
