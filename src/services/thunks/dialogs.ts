@@ -90,7 +90,10 @@ export const sendMessageAsync = createAsyncThunk<
     );
 
     if (resultCode === API_CODES.SUCCESS) {
-      return data.message;
+      return {
+        ...data.message,
+        addedAt: formatDateToISOString(data.message.addedAt),
+      };
     }
 
     return rejectWithValue(
