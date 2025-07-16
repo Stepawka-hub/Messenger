@@ -5,7 +5,7 @@ import { getCurrentUser } from "@slices/auth";
 import { useSelector } from "@store";
 import { Loader } from "@ui/loader";
 import { NoDataFound } from "@ui/no-data-found";
-import { getRelativeTimeString } from "@utils/helpers/date";
+import { formatRelativeDate } from "@utils/helpers/date";
 import { isSameDay } from "date-fns";
 import { FC, Fragment, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
@@ -60,7 +60,9 @@ export const MessageList: FC<MessageListProps> = ({
           isOwnMessage={isMessageOwner}
           isMobile={isMobile}
         />
-        {showSeparator && <div>{getRelativeTimeString(next.addedAt)}</div>}
+        {showSeparator && (
+          <div className={s.separator}>{formatRelativeDate(next.addedAt)}</div>
+        )}
       </Fragment>
     );
   });

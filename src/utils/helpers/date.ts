@@ -1,5 +1,13 @@
-import { intlFormatDistance, isValid } from "date-fns";
+import {
+  format,
+  intlFormatDistance,
+  isThisYear,
+  isToday,
+  isValid,
+  isYesterday
+} from "date-fns";
 import { toZonedTime } from "date-fns-tz";
+import { ru } from "date-fns/locale";
 
 const MS_PER_MINUTE = 1000 * 60;
 const MS_PER_DAY = MS_PER_MINUTE * 60 * 24;
@@ -54,7 +62,19 @@ export const getRelativeTimeString = (date: string | Date) => {
   const safeDate = ensureDate(date);
 
   return intlFormatDistance(safeDate, Date.now(), {
-    locale: 'ru',
+    locale: "ru",
     style: "short",
   });
+};
+
+export const formatRelativeDate = (date: string | Date) => {
+  if (isToday(date)) {
+    return "Сегодня";
+  } else if (isYesterday(date)) {
+    return "Вчера";
+  } else if (isThisYear(date)) {
+    return format(date, "d MMMM", { locale: ru });
+  } else {
+    return format(date, "d MMMM yyyy", { locale: ru });
+  }
 };
