@@ -81,7 +81,7 @@ export const getRelativeTimeString = (date: string | Date) => {
     (cutoff) => cutoff > Math.abs(deltaSeconds)
   );
   const divisor = unitIndex ? cutoffs[unitIndex - 1] : 1;
-  const rtf = new Intl.RelativeTimeFormat("ru");
+  const rtf = new Intl.RelativeTimeFormat("ru", { numeric: "auto" });
 
   const value = Math.floor(Math.abs(deltaSeconds / divisor));
   const signedValue = deltaSeconds >= 0 ? value : -value;
@@ -89,7 +89,7 @@ export const getRelativeTimeString = (date: string | Date) => {
   return rtf.format(signedValue, units[unitIndex]);
 };
 
-export const formatDate = (date: string | Date) => {
+export const formatDateShort = (date: string | Date) => {
   if (isToday(date)) {
     return "Сегодня";
   } else if (isYesterday(date)) {
@@ -98,5 +98,17 @@ export const formatDate = (date: string | Date) => {
     return format(date, "d MMMM", { locale: ru });
   } else {
     return format(date, "d MMMM yyyy", { locale: ru });
+  }
+};
+
+export const formatDateFull = (date: string | Date) => {
+  if (isToday(date)) {
+    return getRelativeTimeString(date);
+  } else if (isYesterday(date)) {
+    return `вчера в ${format(date, "HH:mm", { locale: ru })}`;
+  } else if (isThisYear(date)) {
+    return format(date, "d MMMM в HH:mm", { locale: ru });
+  } else {
+    return format(date, "d MMMM yyyy в HH:mm", { locale: ru });
   }
 };

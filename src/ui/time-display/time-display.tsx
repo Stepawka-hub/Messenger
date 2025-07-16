@@ -1,15 +1,17 @@
 import { FC, memo, useEffect, useState } from "react";
 import { TimeDisplayProps } from "./type";
+import { BASE_UPDATE_TIME } from "@utils/constants";
 import s from "./time-display.module.css";
-import { TIME_UPDATE_INTERVAL } from "@utils/constants";
+import clsx from "clsx";
 
 export const TimeDisplay: FC<TimeDisplayProps> = memo(
-  ({ interval = TIME_UPDATE_INTERVAL, timeFn }) => {
-    const [time, setTime] = useState(timeFn());
+  ({ className, interval = BASE_UPDATE_TIME, timeFn }) => {
+    const [time, setTime] = useState('');
 
     useEffect(() => {
+      setTime(timeFn());
+      
       const intervalId = setInterval(() => {
-        console.log('update');
         setTime(timeFn());
       }, interval);
 
@@ -18,6 +20,7 @@ export const TimeDisplay: FC<TimeDisplayProps> = memo(
       };
     }, [interval, timeFn]);
 
-    return <span className={s.time}>{time}</span>;
+
+    return <span className={clsx(s.time, className)}>{time}</span>;
   }
 );

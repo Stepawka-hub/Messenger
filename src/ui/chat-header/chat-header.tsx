@@ -1,11 +1,12 @@
+import { CrossIcon } from "@icons";
 import { Avatar } from "@ui/avatar";
 import { Button } from "@ui/button";
-import { FC } from "react";
+import { TimeDisplay } from "@ui/time-display";
+import { convertTZ, formatDateFull } from "@utils/helpers/date";
+import { FC, useCallback } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import s from "./chat-header.module.css";
 import { ChatHeaderProps } from "./types";
-import { NavLink, useNavigate } from "react-router-dom";
-import { CrossIcon } from "@icons";
-import { convertTZ, getRelativeTimeString } from "@utils/helpers/date";
 
 export const ChatHeader: FC<ChatHeaderProps> = ({
   userId,
@@ -18,8 +19,10 @@ export const ChatHeader: FC<ChatHeaderProps> = ({
     navigate("/dialogs");
   };
 
-  const lastUserActivityDateTZ = convertTZ(lastUserActivityDate);
-  const relativeTime = getRelativeTimeString(lastUserActivityDateTZ);
+  const formatLastActivityTime = useCallback(() => {
+    const lastUserActivityDateTZ = convertTZ(lastUserActivityDate);
+    return `Последняя активность: ${formatDateFull(lastUserActivityDateTZ)}`;
+  }, [lastUserActivityDate]);
 
   return (
     <header className={s.header}>
@@ -38,9 +41,10 @@ export const ChatHeader: FC<ChatHeaderProps> = ({
           <Avatar image={avatar} size="small" />
           <div className={s.userInfoContainer}>
             <span className={s.userName}>{username}</span>
-            <span
+            <TimeDisplay
               className={s.userLastSeen}
-            >{`Последняя активность: ${relativeTime}`}</span>
+              timeFn={formatLastActivityTime}
+            />
           </div>
         </NavLink>
       </div>
