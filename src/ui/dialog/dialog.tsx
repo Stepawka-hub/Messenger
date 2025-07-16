@@ -28,7 +28,9 @@ export const Dialog: FC<DialogProps> = ({
 
   return (
     <article
-      className={clsx(s.dialog, { [s.active]: isActive })}
+      className={clsx(s.dialog, {
+        [s.active]: isActive,
+      })}
       role="link"
       tabIndex={0}
       aria-label={`Перейти к диалогу с ${userName}`}

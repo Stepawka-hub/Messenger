@@ -16,7 +16,7 @@ export const List = <T,>({
     return customLoader;
   }
 
-  if (!items || items.length === 0) {
+  if (!items || !items.length) {
     return (
       <NoDataFound
         label={emptyMessage}
