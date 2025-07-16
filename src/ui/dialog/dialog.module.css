@@ -37,10 +37,6 @@
   color: var(--primary-text-color);
 }
 
-.lastActivity {
-  color: var(--hint-color);
-}
-
 .dialog.active {
   pointer-events: none;
   cursor: default;

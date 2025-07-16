@@ -1,11 +1,13 @@
-import { FC } from "react";
+import { FC, useCallback } from "react";
 import { Avatar } from "@ui/avatar";
 import { Counter } from "@ui/counter";
+import { TimeDisplay } from "@ui/time-display";
 import { convertTZ, getRelativeTimeString } from "@utils/helpers/date";
+import { differenceInMinutes } from "date-fns";
 import { useLocation, useNavigate } from "react-router-dom";
 import { DialogProps } from "./type";
-import s from "./dialog.module.css";
 import clsx from "clsx";
+import s from "./dialog.module.css";
 
 export const Dialog: FC<DialogProps> = ({
   id,
@@ -20,7 +22,13 @@ export const Dialog: FC<DialogProps> = ({
   const isActive = location.pathname === path;
 
   const lastDialogActivityDateTZ = convertTZ(lastDialogActivityDate);
-  const relativeTime = getRelativeTimeString(lastDialogActivityDateTZ);
+  const getRelativeTime = useCallback(
+    () =>
+      differenceInMinutes(Date.now(), lastDialogActivityDateTZ) < 1
+        ? "Только что"
+        : getRelativeTimeString(lastDialogActivityDateTZ),
+    [lastDialogActivityDateTZ]
+  );
 
   const handleClick = () => {
     navigate(path);
@@ -42,7 +50,7 @@ export const Dialog: FC<DialogProps> = ({
           <Avatar image={photos.small} size="small" />
           <div className={s.userInfo}>
             <span className={s.userName}>{userName}</span>
-            <span className={s.lastActivity}>{relativeTime}</span>
+            <TimeDisplay timeFn={getRelativeTime} />
           </div>
         </div>
         {!!newMessagesCount && <Counter count={newMessagesCount} />}

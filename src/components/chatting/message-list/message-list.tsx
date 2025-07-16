@@ -5,7 +5,7 @@ import { getCurrentUser } from "@slices/auth";
 import { useSelector } from "@store";
 import { Loader } from "@ui/loader";
 import { NoDataFound } from "@ui/no-data-found";
-import { formatRelativeDate } from "@utils/helpers/date";
+import { formatDate } from "@utils/helpers/date";
 import { isSameDay } from "date-fns";
 import { FC, Fragment, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
@@ -61,7 +61,7 @@ export const MessageList: FC<MessageListProps> = ({
           isMobile={isMobile}
         />
         {showSeparator && (
-          <div className={s.separator}>{formatRelativeDate(next.addedAt)}</div>
+          <div className={s.separator}>{formatDate(next.addedAt)}</div>
         )}
       </Fragment>
     );
