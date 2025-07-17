@@ -1,13 +1,36 @@
-import { DialogList, PrivateChat } from "@components/dialogs";
+import { DialogList, PrivateChat } from "@components/chatting";
+import { ChatStub } from "@components/chatting/chat-stub";
 import { DialogsLayout } from "@components/layouts";
-import { FC } from "react";
+import { setCurrentDialog, setDialogsPage } from "@slices/dialogs";
+import { useDispatch } from "@store";
+import { getDialogsAsync } from "@thunks/dialogs";
+import { FC, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
 import { useParams } from "react-router-dom";
 import s from "./dialogs-page.module.css";
 
 const DialogsPage: FC = () => {
+  const dispatch = useDispatch();
   const largeScreen = useMediaQuery({ minWidth: 1280 });
   const { userId } = useParams<{ userId?: string }>();
+
+  useEffect(() => {
+    dispatch(getDialogsAsync());
+
+    return () => {
+      dispatch(setDialogsPage(1));
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (userId) {
+      dispatch(setCurrentDialog(Number(userId)));
+    }
+
+    return () => {
+      dispatch(setCurrentDialog(null));
+    };
+  }, [dispatch, userId]);
 
   if (!largeScreen) {
     return (
@@ -24,11 +47,7 @@ const DialogsPage: FC = () => {
           <DialogList />
         </div>
         <div className={s.chat}>
-          {!userId ? (
-            <div className={s.selectChat}>Выберите чат</div>
-          ) : (
-            <PrivateChat userId={Number(userId)} />
-          )}
+          {!userId ? <ChatStub /> : <PrivateChat userId={Number(userId)} />}
         </div>
       </div>
     </DialogsLayout>

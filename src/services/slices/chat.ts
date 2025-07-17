@@ -11,8 +11,11 @@ const chatSlice = createSlice({
   name: "chat",
   initialState,
   reducers: {
-    setMessages: (state, { payload }: PayloadAction<TChatMessage[]>) => {
+    addMessages: (state, { payload }: PayloadAction<TChatMessage[]>) => {
       state.messages = [...state.messages, ...payload];
+    },
+    setMessages: (state, { payload }: PayloadAction<TChatMessage[]>) => {
+      state.messages = payload;
     },
     setStatus: (state, { payload }: PayloadAction<TSocketStatus>) => {
       state.status = payload;
@@ -26,4 +29,4 @@ const chatSlice = createSlice({
 
 export const reducer = chatSlice.reducer;
 export const { getMessages, getStatus } = chatSlice.selectors;
-export const { setMessages, setStatus } = chatSlice.actions;
+export const { addMessages, setMessages, setStatus } = chatSlice.actions;

@@ -31,7 +31,7 @@
 
 .item.active {
   cursor: default;
-  color: var(--primary-btn-text-color);
+  color: var(--on-primary-color);
   background-color: var(--primary-color);
 }
 

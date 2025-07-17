@@ -1,0 +1,1 @@
+export { DoubleCheckIcon } from './double-check-icon';

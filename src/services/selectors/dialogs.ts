@@ -1,8 +1,7 @@
 import { createSelector } from "@reduxjs/toolkit";
-import { getDialogs } from "@slices/dialogs";
-import { RootState } from "@store";
+import { getDialogs, getSelectedDialogId } from "@slices/dialogs";
 
 export const getSelectedDialog = createSelector(
-  [getDialogs, (_: RootState, id: number) => id],
+  [getDialogs, getSelectedDialogId],
   (dialogs, id) => dialogs.find((d) => d.id === id)
 );

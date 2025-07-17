@@ -1,8 +1,9 @@
 import { API_CODES } from "@api/constants";
 import { dialogsAPI } from "@api/dialogs.api";
-import { TSendMessagePayload } from "@api/types";
+import { TGetMessagesPayload, TSendMessagePayload } from "@api/types";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { TDialog, TMessage, TUserId } from "@types";
+import { formatDateToISOString } from "@utils/helpers/date";
 import { createErrorPayload } from "@utils/helpers/error-helpers";
 import { TBaseRejectValue } from "./types";
 
@@ -18,7 +19,13 @@ export const getDialogsAsync = createAsyncThunk<
 >(GET_DIALOGS, async (_, { rejectWithValue }) => {
   try {
     const dialogs = await dialogsAPI.getDialogs();
-    return dialogs;
+    return dialogs.map(
+      ({ lastDialogActivityDate, lastUserActivityDate, ...d }) => ({
+        ...d,
+        lastDialogActivityDate: formatDateToISOString(lastDialogActivityDate),
+        lastUserActivityDate: formatDateToISOString(lastUserActivityDate),
+      })
+    );
   } catch (err) {
     console.error("Error fetching dialogs:", err);
     return rejectWithValue(createErrorPayload());
@@ -48,17 +55,28 @@ export const startDialogAsync = createAsyncThunk<
 
 export const getMessagesAsync = createAsyncThunk<
   TMessage[],
-  TUserId,
+  TGetMessagesPayload,
   TBaseRejectValue
->(GET_MESSAGES, async (userId, { rejectWithValue }) => {
-  try {
-    const messages = await dialogsAPI.getMessages(userId);
-    return messages;
-  } catch (err) {
-    console.error("Error fetching messages:", err);
-    return rejectWithValue(createErrorPayload());
+>(
+  GET_MESSAGES,
+  async ({ userId, currentPage, pageSize }, { rejectWithValue }) => {
+    try {
+      const messages = await dialogsAPI.getMessages({
+        userId,
+        currentPage,
+        pageSize,
+      });
+
+      return messages.map(({ addedAt, ...m }) => ({
+        ...m,
+        addedAt: formatDateToISOString(addedAt),
+      }));
+    } catch (err) {
+      console.error("Error fetching messages:", err);
+      return rejectWithValue(createErrorPayload());
+    }
   }
-});
+);
 
 export const sendMessageAsync = createAsyncThunk<
   TMessage,
@@ -72,7 +90,10 @@ export const sendMessageAsync = createAsyncThunk<
     );
 
     if (resultCode === API_CODES.SUCCESS) {
-      return data.message;
+      return {
+        ...data.message,
+        addedAt: formatDateToISOString(data.message.addedAt),
+      };
     }
 
     return rejectWithValue(

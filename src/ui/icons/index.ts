@@ -10,3 +10,4 @@ export * from './camera-icon';
 export * from './loader-icon';
 export * from './cross-icon';
 export * from './check-icon';
+export * from './double-check-icon';

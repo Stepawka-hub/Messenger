@@ -19,5 +19,5 @@
 }
 
 .filterBtn:hover .filterIcon {
-  color: var(--search-primary-color);
+  color: var(--primary-color);
 }

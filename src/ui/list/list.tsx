@@ -10,24 +10,27 @@ export const List = <T,>({
   classes,
   isLoading = false,
   emptyMessage = "Список пуст",
+  emptyContent,
   customLoader = <Loader />
 }: ListProps<T>) => {
   if (isLoading) {
     return customLoader;
   }
 
-  if (!items || items.length === 0) {
+  if (!items || !items.length) {
     return (
       <NoDataFound
         label={emptyMessage}
         className={clsx(s.noData, classes?.noData)}
-      />
+      >
+        {emptyContent}
+      </NoDataFound>
     );
   }
 
   return (
     <section className={clsx(s.list, classes?.list)}>
-      {items.map((item) => renderItem(item))}
+      {items.map((item, index) => renderItem(item, index))}
     </section>
   );
 };

@@ -1,15 +1,11 @@
 :root {
-  --primary-btn-text-color: #fff;
+  --on-primary-color: #fff;
   --success-color: #2fac7c;
+  --error-color: #ff5757;
+
   --action-primary-color: #ff7b57;
   --action-secondary-color: #ff5b42;
   --disabled-btn-color: #74706e;
-
-  --checkbox-pseudo-color: #fff;
-  --selected-option-text-color: #fff;
-  --default-icon-color: #fff;
-  --hint-color: #9b9b9b;
-  --error-color: #ff5757;
 }
 
 .light {
@@ -19,6 +15,8 @@
   --secondary-bg-color: #f1f3f4;
   --primary-color: #ff5b42;
   --secondary-color: #ff8914;
+
+  --hint-color: #8a8a8a;
 
   --title-color: #000;
   --subtitle-color: #ff8234;
@@ -32,11 +30,15 @@
   --modal-shadow-color: rgba(0, 0, 0, 0.25);
   --overlay-color: rgba(5, 5, 5, 0.3);
 
-  --message-bg-color: #ecedf1;
+  --message-bg-color: #f5f5f5;
   --own-message-bg-color: #ffddbe;
+  --skeleton-base-color: #efefef;
+  --skeleton-highlight-color: #e1e1e1;
 
   --burger-line-color: #000;
 
+  --select-option-hover: #ffe9de;
+  --select-option-active: #ff745f;
 }
 
 .dark {
@@ -46,6 +48,8 @@
   --secondary-bg-color: #222;
   --primary-color: #ff5b42;
   --secondary-color: #ffa454;
+
+  --hint-color: #9b9b9b;
 
   --title-color: #ff7b57;
   --subtitle-color: #ff7b57;
@@ -61,6 +65,10 @@
 
   --message-bg-color: #202020;
   --own-message-bg-color: #2e2e2e;
+  --skeleton-base-color: #111;
+  --skeleton-highlight-color: #181818;
 
   --burger-line-color: #fff;
+  --select-option-hover: #202020;
+  --select-option-active: #282828;
 }

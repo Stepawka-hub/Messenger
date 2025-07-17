@@ -1,17 +1,17 @@
-import { FC, PropsWithChildren } from "react";
-import { ChatWrapperProps } from "./type";
-import s from "./chat-wrapper.module.css";
-import { SendMessageForm } from "@components/send-message-form";
 import clsx from "clsx";
+import { FC } from "react";
+import s from "./chat-wrapper.module.css";
+import { ChatWrapperProps } from "./type";
 
-export const ChatWrapper: FC<PropsWithChildren<ChatWrapperProps>> = ({
-  children,
-  disabled,
+export const ChatWrapper: FC<ChatWrapperProps> = ({
+  header,
+  body,
+  footer,
   className,
-  onSubmit,
 }) => (
   <div className={clsx(s.wrapper, className)}>
-    <div className={s.body}>{children}</div>
-    <SendMessageForm disabled={disabled} onSubmit={onSubmit} />
+    {header}
+    {body && <div className={s.body}>{body}</div>}
+    {footer && <footer>{footer}</footer>}
   </div>
 );

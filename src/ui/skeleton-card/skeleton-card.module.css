@@ -13,13 +13,25 @@
 .avatar {
   width: 6rem;
   height: 6rem;
-  background-color: var(--primary-bg-color);
   border-radius: 50%;
 }
 
 .content {
   width: 100%;
-  height: 5rem;
+  height: 5.5rem;
   border-radius: 1rem;
-  background-color: var(--primary-bg-color);
+}
+
+.skeleton {
+  animation: skeleton-loading 1s linear infinite alternate;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-color: var(--skeleton-base-color);
+  }
+
+  100% {
+    background-color: var(--skeleton-highlight-color);
+  }
 }

@@ -1,4 +1,4 @@
-import { StartDialogButton } from "@components/dialogs";
+import { StartDialogButton } from "@components/chatting";
 import {
   ProfileAvatar,
   ProfileContacts,

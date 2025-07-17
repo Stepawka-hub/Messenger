@@ -1,11 +1,12 @@
+import { FC, PropsWithChildren } from "react";
 import { PageWrapper } from "@ui/page-wrapper";
-import { PropsWithChildren } from "react";
+import s from './dialogs-layout.module.css';
 
-export const DialogsLayout = ({ children }: PropsWithChildren) => (
+export const DialogsLayout: FC<PropsWithChildren> = ({ children }) => (
   <PageWrapper
-    pageTitle="Диалоги"
-    title="Сообщения"
+    title="Диалоги"
     description="Общайтесь с друзьями и близкими в личном пространстве"
+    className={s.page}
   >
     {children}
   </PageWrapper>

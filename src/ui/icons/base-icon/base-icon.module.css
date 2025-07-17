@@ -1,4 +1,4 @@
 .baseIcon {
   transition: .2s ease-in-out;
-  color: var(--default-icon-color);
+  color: var(--on-primary-color);
 }

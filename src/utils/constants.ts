@@ -1,5 +1,7 @@
 import { TContacts, TUserData } from "@types";
 
+export const BASE_UPDATE_TIME = 60 * 1000;
+
 export const userDefault: TUserData = {
   id: -1,
   login: "None",

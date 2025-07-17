@@ -1,4 +1,10 @@
-import { TErrorMessage, TMessage, TPagination, TSocialUser, TUserId } from "@types";
+import {
+  TErrorMessage,
+  TMessage,
+  TPagination,
+  TSocialUser,
+  TUserId,
+} from "@types";
 
 // Base
 export type TResponse = TResponseWithData<object>;
@@ -49,4 +55,13 @@ export type TGetMessageResponse = {
   totalCount: number;
   items: TMessage[];
   error: TErrorMessage;
-}
+};
+
+export type TGetMessagesParams = {
+  page: number;
+  count: number;
+};
+
+export type TGetMessagesPayload = TPagination & {
+  userId: TUserId;
+};

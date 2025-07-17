@@ -1,7 +1,17 @@
+.page {
+  height: 75vh;
+}
+
 .chatWrapper {
-  width: 80%;
+  width: 85%;
 }
 
 .list> :first-child {
   margin-top: auto;
+}
+
+@media (max-width: 1280px) {
+  .chatWrapper {
+    width: 100%;
+  }
 }

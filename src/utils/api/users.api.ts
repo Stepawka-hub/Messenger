@@ -19,7 +19,6 @@ class UsersAPI extends BaseAPI {
 
     const { data } = await this.api.get<TGetUsersDataResponse>(`users`, {
       params,
-      withCredentials: true,
     });
 
     return data;
