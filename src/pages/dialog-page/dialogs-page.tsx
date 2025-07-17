@@ -1,4 +1,5 @@
 import { DialogList, PrivateChat } from "@components/chatting";
+import { ChatStub } from "@components/chatting/chat-stub";
 import { DialogsLayout } from "@components/layouts";
 import { setCurrentDialog } from "@slices/dialogs";
 import { useDispatch } from "@store";
@@ -42,11 +43,7 @@ const DialogsPage: FC = () => {
           <DialogList />
         </div>
         <div className={s.chat}>
-          {!userId ? (
-            <div className={s.selectChat}>Выберите чат</div>
-          ) : (
-            <PrivateChat userId={Number(userId)} />
-          )}
+          {!userId ? <ChatStub /> : <PrivateChat userId={Number(userId)} />}
         </div>
       </div>
     </DialogsLayout>

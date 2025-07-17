@@ -1,17 +1,18 @@
+import { MessageIcon } from "@icons";
+import { getIsStartingDialog } from "@slices/dialogs";
 import { useDispatch, useSelector } from "@store";
 import { startDialogAsync } from "@thunks/dialogs";
 import { Button } from "@ui/button";
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
-import { StartDialogButtonProps } from "./type";
-import { MessageIcon } from "@icons";
-import clsx from "clsx";
 import s from "./start-dialog-button.module.css";
-import { getIsStartingDialog } from '@slices/dialogs';
+import { StartDialogButtonProps } from "./type";
 
 export const StartDialogButton: FC<StartDialogButtonProps> = ({
   userId,
   className,
+  children = <MessageIcon />,
+  onSuccess,
   ...props
 }) => {
   const dispatch = useDispatch();
@@ -21,6 +22,7 @@ export const StartDialogButton: FC<StartDialogButtonProps> = ({
   const startDialog = async () => {
     try {
       await dispatch(startDialogAsync(userId)).unwrap();
+      onSuccess?.();
       navigate(`/dialogs/${userId}`);
     } catch (error) {
       console.error("Error starting dialog:", error);
@@ -29,14 +31,14 @@ export const StartDialogButton: FC<StartDialogButtonProps> = ({
 
   return (
     <Button
-      aria-label="Написать сообщение"
-      title="Написать сообщение"
-      className={clsx(s.button, className)}
+      aria-label="Начать диалог"
+      title="Начать диалог"
+      className={className || s.button}
       disabled={isStartingDialog}
       onClick={startDialog}
       {...props}
     >
-      <MessageIcon />
+      {children}
     </Button>
   );
 };
