@@ -37,6 +37,8 @@
 
   --burger-line-color: #000;
 
+  --select-option-hover: #ffe9de;
+  --select-option-active: #ff745f;
 }
 
 .dark {
@@ -67,4 +69,6 @@
   --skeleton-highlight-color: #181818;
 
   --burger-line-color: #fff;
+  --select-option-hover: #202020;
+  --select-option-active: #282828;
 }

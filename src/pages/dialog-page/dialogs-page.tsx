@@ -1,7 +1,7 @@
 import { DialogList, PrivateChat } from "@components/chatting";
 import { ChatStub } from "@components/chatting/chat-stub";
 import { DialogsLayout } from "@components/layouts";
-import { setCurrentDialog } from "@slices/dialogs";
+import { setCurrentDialog, setDialogsPage } from "@slices/dialogs";
 import { useDispatch } from "@store";
 import { getDialogsAsync } from "@thunks/dialogs";
 import { FC, useEffect } from "react";
@@ -16,6 +16,10 @@ const DialogsPage: FC = () => {
 
   useEffect(() => {
     dispatch(getDialogsAsync());
+
+    return () => {
+      dispatch(setDialogsPage(1));
+    }
   }, [dispatch]);
 
   useEffect(() => {
