@@ -7,14 +7,15 @@ import { Loader } from "@ui/loader";
 import { NoDataFound } from "@ui/no-data-found";
 import { formatDateShort } from "@utils/helpers/date";
 import { isSameDay } from "date-fns";
-import { FC, Fragment, useEffect, useRef, useState } from "react";
+import { FC, Fragment, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { MessageListProps } from "./type";
 import s from "./message-list.module.css";
+import { MessageListProps } from "./type";
 
 export const MessageList: FC<MessageListProps> = ({
   userId,
   partnerAvatar,
+  bottomListRef,
 }) => {
   const currentUser = useSelector(getCurrentUser);
   const isMobile = useMediaQuery({ maxWidth: 600 });
@@ -24,7 +25,6 @@ export const MessageList: FC<MessageListProps> = ({
 
   // Scroll logic
   const [isFirstLoad, setIsFirstLoad] = useState(true);
-  const bottomListRef = useRef<HTMLDivElement>(null);
   const loadMoreRef = useInfiniteScroll({ loadMore: fetchMessages, hasMore });
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export const MessageList: FC<MessageListProps> = ({
       });
       setIsFirstLoad(false);
     }
-  }, [messages, isFirstLoad]);
+  }, [messages, isFirstLoad, bottomListRef]);
 
   useEffect(() => {
     setIsFirstLoad(true);
