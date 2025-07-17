@@ -67,7 +67,10 @@ export type TDialogsState = {
   selectedDialogId: number | null;
   messages: TMessage[];
   hasMoreMessages: boolean;
-  messagePagination: TPagination;
+  pagination: {
+    dialogs: TPagination;
+    messages: TPagination;
+  };
   loading: {
     isGettingDialogs: boolean;
     isStartingDialog: boolean;

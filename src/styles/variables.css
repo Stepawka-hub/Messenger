@@ -1,7 +1,6 @@
 :root {
   --on-primary-color: #fff;
   --success-color: #2fac7c;
-  --hint-color: #9b9b9b;
   --error-color: #ff5757;
 
   --action-primary-color: #ff7b57;
@@ -16,6 +15,8 @@
   --secondary-bg-color: #f1f3f4;
   --primary-color: #ff5b42;
   --secondary-color: #ff8914;
+
+  --hint-color: #8a8a8a;
 
   --title-color: #000;
   --subtitle-color: #ff8234;
@@ -45,6 +46,8 @@
   --secondary-bg-color: #222;
   --primary-color: #ff5b42;
   --secondary-color: #ffa454;
+
+  --hint-color: #9b9b9b;
 
   --title-color: #ff7b57;
   --subtitle-color: #ff7b57;

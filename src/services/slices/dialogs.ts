@@ -13,9 +13,15 @@ const initialState: TDialogsState = {
   selectedDialogId: null,
   messages: [],
   hasMoreMessages: true,
-  messagePagination: {
-    currentPage: 1,
-    pageSize: 10,
+  pagination: {
+    dialogs: {
+      currentPage: 1,
+      pageSize: 7,
+    },
+    messages: {
+      currentPage: 1,
+      pageSize: 10,
+    }
   },
   loading: {
     isGettingDialogs: false,
@@ -49,19 +55,20 @@ const dialogsSlice = createSlice({
     setCurrentDialog: (state, { payload }: PayloadAction<number | null>) => {
       state.selectedDialogId = payload;
       state.hasMoreMessages = true;
-      state.messagePagination.currentPage = 1;
+      state.pagination.messages.currentPage = 1;
       state.messages = [];
     },
-    setMessagePage: (state, { payload }: PayloadAction<number>) => {
-      state.messagePagination.currentPage = payload;
-    },
+    setDialogsPage: (state, { payload }: PayloadAction<number>) => {
+      state.pagination.dialogs.currentPage = payload;
+    }
   },
   selectors: {
     getDialogs: (state) => state.dialogs,
     getMessages: (state) => state.messages,
     getSelectedDialogId: (state) => state.selectedDialogId,
     getHasMoreMessages: (state) => state.hasMoreMessages,
-    getMessagePagination: (state) => state.messagePagination,
+    getMessagesPagination: (state) => state.pagination.messages,
+    getDialogsPagination: (state) => state.pagination.dialogs,
     getIsLoadingMessages: (state) => state.loading.isGettingMessages,
     getIsLoadingDialogs: (state) => state.loading.isGettingDialogs,
     getIsSendingMessage: (state) => state.loading.isSendingMessage,
@@ -91,10 +98,10 @@ const dialogsSlice = createSlice({
         (state, { payload }: PayloadAction<TMessage[]>) => {
           if (payload.length) {
             state.messages = [...payload, ...state.messages];
-            state.messagePagination.currentPage += 1;
+            state.pagination.messages.currentPage += 1;
           }
 
-          if (payload.length < state.messagePagination.pageSize) {
+          if (payload.length < state.pagination.messages.pageSize) {
             state.hasMoreMessages = false;
           }
 
@@ -140,12 +147,13 @@ export const {
   getIsStartingDialog,
   getIsSendingMessage,
   getSelectedDialogId,
-  getMessagePagination,
+  getMessagesPagination,
+  getDialogsPagination,
   getHasMoreMessages,
 } = dialogsSlice.selectors;
 export const {
   setMessages,
-  setMessagePage,
+  setDialogsPage,
   setCurrentDialog,
   moveSelectedDialogToTop,
 } = dialogsSlice.actions;

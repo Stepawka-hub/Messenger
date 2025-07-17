@@ -10,6 +10,7 @@ export const List = <T,>({
   classes,
   isLoading = false,
   emptyMessage = "Список пуст",
+  emptyContent,
   customLoader = <Loader />
 }: ListProps<T>) => {
   if (isLoading) {
@@ -21,7 +22,9 @@ export const List = <T,>({
       <NoDataFound
         label={emptyMessage}
         className={clsx(s.noData, classes?.noData)}
-      />
+      >
+        {emptyContent}
+      </NoDataFound>
     );
   }
 

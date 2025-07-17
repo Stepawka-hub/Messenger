@@ -5,6 +5,7 @@ export type ListProps<T> = {
   renderItem: (item: T, key?: number) => ReactNode;
   isLoading?: boolean;
   emptyMessage?: string;
+  emptyContent?: ReactNode;
   classes?: {
     list?: string;
     noData?: string;

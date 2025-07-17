@@ -1,7 +1,7 @@
 import {
   getHasMoreMessages,
   getIsLoadingMessages,
-  getMessagePagination,
+  getMessagesPagination,
   getMessages,
 } from "@slices/dialogs";
 import { useDispatch, useSelector } from "@store";
@@ -26,7 +26,7 @@ export const useFetchMessages = ({
   const dispatch = useDispatch();
   const messages = useSelector(getMessages);
   const hasMore = useSelector(getHasMoreMessages);
-  const { currentPage, pageSize } = useSelector(getMessagePagination);
+  const { currentPage, pageSize } = useSelector(getMessagesPagination);
   const isLoading = useSelector(getIsLoadingMessages);
 
   const fetchMessages = useCallback(() => {

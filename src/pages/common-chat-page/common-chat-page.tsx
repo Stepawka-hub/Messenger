@@ -54,6 +54,7 @@ export const CommonChatPage: FC = () => {
       pageTitle="Общий чат"
       title="Общий чат"
       description="Общий чат для общения"
+      className={s.page}
     >
       <ChatWrapper
         className={s.chatWrapper}

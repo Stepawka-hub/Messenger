@@ -1,7 +1,7 @@
 .content {
   display: flex;
   gap: 1rem;
-  max-height: 85vh;
+  height: 100%;
 }
 
 .dialogs {
