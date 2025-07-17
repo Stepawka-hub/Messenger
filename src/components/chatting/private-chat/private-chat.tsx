@@ -8,16 +8,16 @@ import { getSelectedDialog } from "@selectors/dialogs";
 import { getIsSendingMessage, moveSelectedDialogToTop } from "@slices/dialogs";
 import { useDispatch, useSelector } from "@store";
 import { getDialogsAsync, sendMessageAsync } from "@thunks/dialogs";
+import { Button } from "@ui/button";
 import { ChatHeader } from "@ui/chat-header";
 import { ChatWrapper } from "@ui/chat-wrapper";
+import clsx from "clsx";
 import { FC } from "react";
 import { SubmitHandler } from "react-hook-form";
-import { PrivateChatProps } from "./type";
-import { ChatStub } from "../chat-stub";
-import { Button } from "@ui/button";
-import s from "./private-chat.module.css";
-import clsx from "clsx";
 import { useNavigate } from "react-router-dom";
+import { ChatStub } from "../chat-stub";
+import s from "./private-chat.module.css";
+import { PrivateChatProps } from "./type";
 
 export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
   const dispatch = useDispatch();
@@ -31,11 +31,6 @@ export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
 
   const refreshDialogs = () => {
     dispatch(getDialogsAsync());
-  };
-
-  const onSubmit: SubmitHandler<TSendMessageForm> = ({ message }) => {
-    dispatch(sendMessageAsync({ userId, message }));
-    dispatch(moveSelectedDialogToTop());
   };
 
   if (!selectedDialog) {
@@ -60,6 +55,11 @@ export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
       </ChatStub>
     );
   }
+
+  const onSubmit: SubmitHandler<TSendMessageForm> = ({ message }) => {
+    dispatch(sendMessageAsync({ userId, message }));
+    dispatch(moveSelectedDialogToTop());
+  };
 
   return (
     <ChatWrapper

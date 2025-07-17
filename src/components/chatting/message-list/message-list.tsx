@@ -24,13 +24,15 @@ export const MessageList: FC<MessageListProps> = ({
 
   // Scroll logic
   const [isFirstLoad, setIsFirstLoad] = useState(true);
-  const messageListRef = useRef<HTMLDivElement>(null);
+  const bottomListRef = useRef<HTMLDivElement>(null);
   const loadMoreRef = useInfiniteScroll({ loadMore: fetchMessages, hasMore });
 
   useEffect(() => {
-    const listRef = messageListRef.current;
-    if (listRef && messages.length > 0 && isFirstLoad) {
-      listRef.lastElementChild?.scrollIntoView();
+    const bottomRef = bottomListRef.current;
+    if (bottomRef && messages.length > 0 && isFirstLoad) {
+      bottomRef.scrollIntoView({
+        block: "nearest",
+      });
       setIsFirstLoad(false);
     }
   }, [messages, isFirstLoad]);
@@ -68,10 +70,11 @@ export const MessageList: FC<MessageListProps> = ({
   });
 
   return (
-    <section className={s.list} ref={messageListRef}>
+    <section className={s.list}>
       {isLoading && <Loader />}
       {hasMore && <div className={s.loadMore} ref={loadMoreRef} />}
       {messageElements}
+      <div ref={bottomListRef}></div>
     </section>
   );
 };
