@@ -47,11 +47,16 @@ export const MessageList: FC<MessageListProps> = ({
 
   const messageElements = messages.map((m, index) => {
     const isMessageOwner = m.senderId === currentUser?.id;
-    const next = index < messages.length - 1 ? messages[index + 1] : null;
-    const showSeparator = next && !isSameDay(next.addedAt, m.addedAt);
+    const prevMessage = index > 0 ? messages[index - 1] : null;
+    const showSeparator =
+      index === 0 ||
+      (prevMessage && !isSameDay(prevMessage.addedAt, m.addedAt));
 
     return (
       <Fragment key={m.id}>
+        {showSeparator && (
+          <div className={s.separator}>{formatDateShort(m.addedAt)}</div>
+        )}
         <Message
           senderId={m.senderId}
           content={m.body}
@@ -62,9 +67,6 @@ export const MessageList: FC<MessageListProps> = ({
           isOwnMessage={isMessageOwner}
           isMobile={isMobile}
         />
-        {showSeparator && (
-          <div className={s.separator}>{formatDateShort(next.addedAt)}</div>
-        )}
       </Fragment>
     );
   });
