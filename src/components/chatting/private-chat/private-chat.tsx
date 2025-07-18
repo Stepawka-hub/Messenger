@@ -58,11 +58,15 @@ export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
   }
 
   const onSubmit: SubmitHandler<TSendMessageForm> = async ({ message }) => {
-    await dispatch(sendMessageAsync({ userId, message })).unwrap();
-    dispatch(moveSelectedDialogToTop());
-    bottomListRef.current?.scrollIntoView({
-      block: "nearest",
-    });
+    try {
+      await dispatch(sendMessageAsync({ userId, message })).unwrap();
+      dispatch(moveSelectedDialogToTop());
+      bottomListRef.current?.scrollIntoView({
+        block: "nearest",
+      });
+    } catch (error) {
+      console.error("Error sending message:", error);
+    }
   };
 
   return (
