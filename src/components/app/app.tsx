@@ -4,7 +4,6 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { FindFriends } from "@pages/find-friends";
 import { Login } from "@pages/login";
 import { ProfilePage } from "@pages/profile-page";
-const DialogsPage = lazy(() => import("@pages/dialog-page"));
 const Settings = lazy(() => import("@pages/settings"));
 const NotFound = lazy(() => import("@pages/not-found"));
 
@@ -13,6 +12,7 @@ import { getIsAuth } from "@slices/auth";
 import { useSelector } from "@store";
 import { Loader } from "@ui/loader";
 import { CommonChatPage } from "@pages/common-chat-page";
+import { DialogsPage } from '@pages/dialog-page';
 
 export const App = memo(() => {
   const isAuth = useSelector(getIsAuth);

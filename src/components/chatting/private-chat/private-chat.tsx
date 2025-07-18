@@ -16,8 +16,8 @@ import { SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { ChatStub } from "../chat-stub";
 import { PrivateChatProps } from "./type";
-import s from "./private-chat.module.css";
 import clsx from "clsx";
+import s from "./private-chat.module.css";
 
 export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
   const dispatch = useDispatch();
