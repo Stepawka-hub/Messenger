@@ -1,11 +1,11 @@
+import { FC } from "react";
 import { useClickOutside } from "@hooks/useClickOutside";
 import { getCurrentUser, getIsAuth } from "@slices/auth";
 import { useSelector } from "@store";
+import { Link } from "@ui/link";
+import { SidebarProps } from "./type";
 import clsx from "clsx";
-import { FC, useMemo } from "react";
-import { NavLink } from "react-router-dom";
 import s from "./sidebar.module.css";
-import { SidebarProps, TNavItems } from "./type";
 
 export const Sidebar: FC<SidebarProps> = ({ isOpen, onClose }) => {
   const isAuth = useSelector(getIsAuth);
@@ -13,35 +13,18 @@ export const Sidebar: FC<SidebarProps> = ({ isOpen, onClose }) => {
   const userId = currentUser?.id || "";
   const ref = useClickOutside({ isActive: isOpen, callback: onClose });
 
-  const navItems: TNavItems[] = useMemo(
-    () => [
-      { to: `/profile/${userId}`, label: "Profile", hide: !isAuth },
-      { to: "/dialogs", label: "Dialogs", hide: !isAuth },
-      { to: "/chat", label: "Common chat", hide: !isAuth },
-      { to: "/users", label: "Find friends", hide: !isAuth },
-      { to: "/settings", label: "Settings" },
-    ],
-    [isAuth, userId]
-  );
-
   return (
     <aside className={clsx(s.sidebar, { [s.active]: isOpen })} ref={ref}>
       <nav className={s.nav}>
-        {navItems
-          .filter((n) => !n.hide)
-          .map(({ to, label }) => (
-            <NavLink
-              key={to}
-              to={to}
-              className={({ isActive }) =>
-                clsx(s.link, {
-                  [s.active]: isActive,
-                })
-              }
-            >
-              {label}
-            </NavLink>
-          ))}
+        {isAuth && (
+          <>
+            <Link to={`/profile/${userId}`} label="Profile" />
+            <Link to={`/dialogs`} label="Dialogs" />
+            <Link to={`/chat`} label="Common chat" />
+            <Link to={`/users`} label="Find friends" />
+          </>
+        )}
+        <Link to={`/settings`} label="Settings" />
       </nav>
     </aside>
   );
