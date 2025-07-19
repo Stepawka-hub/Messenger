@@ -1,11 +1,18 @@
 .link {
-  color: var(--primary-text-color);
-  font-size: 1.75rem;
-  transition: all 0.1s linear;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: .15s linear;
   text-decoration: none;
 }
 
-.link:hover:not(.active) {
+.linkText {
+  font-size: 1.75rem;
+  color: var(--primary-text-color);
+  transition: .15s linear;
+}
+
+.link:hover:not(.active) .linkText {
   color: var(--link-color-active);
   transform: translateX(0.5rem);
 }
@@ -14,6 +21,6 @@
   opacity: 0.8;
 }
 
-.active {
+.active .linkText {
   color: var(--link-color-active);
 }

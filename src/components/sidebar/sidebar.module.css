@@ -2,10 +2,11 @@
   position: absolute;
   display: flex;
   flex-direction: column;
-  padding: 2rem 3rem 2rem 2rem;
-  background-color: var(--primary-bg-color);
-  height: 100%;
   gap: 5rem;
+  width: 18rem;
+  height: 100%;
+  padding: 2rem;
+  background-color: var(--primary-bg-color);
   z-index: 2;
   transform: translateX(-100%);
   transition: .25s ease-in-out;

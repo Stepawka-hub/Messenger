@@ -4,6 +4,7 @@ import { getCurrentUser, getIsAuth } from "@slices/auth";
 import { useSelector } from "@store";
 import { Link } from "@ui/link";
 import { SidebarProps } from "./type";
+import { Counter } from "@ui/counter";
 import clsx from "clsx";
 import s from "./sidebar.module.css";
 
@@ -19,7 +20,9 @@ export const Sidebar: FC<SidebarProps> = ({ isOpen, onClose }) => {
         {isAuth && (
           <>
             <Link to={`/profile/${userId}`} label="Profile" />
-            <Link to={`/dialogs`} label="Dialogs" />
+            <Link to={`/dialogs`} label="Dialogs">
+              <Counter count={2} />
+            </Link>
             <Link to={`/chat`} label="Common chat" />
             <Link to={`/users`} label="Find friends" />
           </>
