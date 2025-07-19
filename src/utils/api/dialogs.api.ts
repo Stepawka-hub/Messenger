@@ -5,6 +5,8 @@ import {
   TGetMessageResponse,
   TGetMessagesParams,
   TGetMessagesPayload,
+  TGetNewMessagesParams,
+  TGetNewMessagesPayload,
   TResponse,
   TResponseWithData,
 } from "./types";
@@ -47,6 +49,49 @@ class DialogsAPI extends BaseAPI {
       body: message,
     });
     return data;
+  };
+
+  getMessageViewStatus = async (messageId: number) => {
+    const { data } = await this.api.get(`dialogs/messages/${messageId}/viewed`);
+    console.log(data);
+    return data;
+  };
+
+  addMessageToSpam = async (messageId: number) => {
+    const { data } = await this.api.post(`dialogs/messages/${messageId}/spam`);
+    console.log(data);
+    return data;
+  };
+
+  deleteMessage = async (messageId: number) => {
+    const { data } = await this.api.delete(`dialogs/messages/${messageId}`);
+    console.log(data);
+    return data;
+  };
+
+  restoreMessage = async (messageId: number) => {
+    const { data } = await this.api.put(
+      `dialogs/messages/${messageId}/restore`
+    );
+    console.log(data);
+    return data;
+  };
+
+  getCountNewMessages = async () => {
+    const { data } = await this.api.get(`dialogs/messages/new/count`);
+    console.log(data);
+    return data;
+  };
+
+  getNewMessages = async ({ userId, date }: TGetNewMessagesPayload) => {
+    const params: TGetNewMessagesParams = {
+      newerThen: date,
+    };
+
+    const { data } = await this.api.get(`dialogs/${userId}/messages/new`, {
+      params,
+    });
+    return data.items;
   };
 }
 

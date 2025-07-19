@@ -65,3 +65,12 @@ export type TGetMessagesParams = {
 export type TGetMessagesPayload = TPagination & {
   userId: TUserId;
 };
+
+export type TGetNewMessagesParams = {
+  newerThen: string;
+};
+
+export type TGetNewMessagesPayload = {
+  userId: TUserId;
+  date: string;
+};
