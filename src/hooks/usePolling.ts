@@ -2,10 +2,17 @@ import { TTimeout } from "@types";
 import { POLLING_INTERVAL } from "@utils/constants";
 import { useCallback, useEffect, useRef } from "react";
 
-export const usePolling = (
-  callback: () => Promise<unknown>,
-  interval: number = POLLING_INTERVAL
-) => {
+export type TUsePollingArgs = {
+  callback: () => Promise<void>;
+  isEnabled?: boolean;
+  interval?: number;
+};
+
+export const usePolling = ({
+  callback,
+  isEnabled = true,
+  interval = POLLING_INTERVAL,
+}: TUsePollingArgs) => {
   const timeout = useRef<TTimeout>(null);
   const mountedRef = useRef(false);
 
@@ -18,13 +25,20 @@ export const usePolling = (
 
   useEffect(() => {
     mountedRef.current = true;
-    polling();
-    
+
+    if (isEnabled) {
+      polling();
+    } else {
+      if (timeout.current) {
+        clearTimeout(timeout.current);
+      }
+    }
+
     return () => {
       mountedRef.current = false;
       if (timeout.current) {
         clearTimeout(timeout.current);
       }
     };
-  }, [polling]);
+  }, [polling, isEnabled]);
 };
