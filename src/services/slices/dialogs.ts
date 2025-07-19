@@ -7,6 +7,7 @@ import {
 } from "@thunks/dialogs";
 import { TDialog, TMessage } from "@types";
 import { TDialogsState } from "./types";
+import { TGetItemsDataResponse } from '@api/types';
 
 const initialState: TDialogsState = {
   dialogs: [],
@@ -21,6 +22,7 @@ const initialState: TDialogsState = {
     messages: {
       currentPage: 1,
       pageSize: 10,
+      totalCount: 0
     }
   },
   loading: {
@@ -95,13 +97,15 @@ const dialogsSlice = createSlice({
       })
       .addCase(
         getMessagesAsync.fulfilled,
-        (state, { payload }: PayloadAction<TMessage[]>) => {
-          if (payload.length) {
-            state.messages = [...payload, ...state.messages];
+        (state, { payload }: PayloadAction<TGetItemsDataResponse<TMessage>>) => {
+          const { items, totalCount } = payload;
+
+          if (items.length) {
+            state.messages = [...items, ...state.messages];
             state.pagination.messages.currentPage += 1;
           }
 
-          if (payload.length < state.pagination.messages.pageSize) {
+          if (state.messages.length === totalCount) {
             state.hasMoreMessages = false;
           }
 

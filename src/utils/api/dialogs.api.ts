@@ -26,7 +26,7 @@ class DialogsAPI extends BaseAPI {
     userId,
     currentPage = 1,
     pageSize = 10,
-  }: TGetMessagesPayload): Promise<TMessage[]> => {
+  }: TGetMessagesPayload): Promise<TGetMessageResponse> => {
     const params: TGetMessagesParams = {
       page: currentPage,
       count: pageSize,
@@ -36,7 +36,7 @@ class DialogsAPI extends BaseAPI {
       `dialogs/${userId}/messages`,
       { params }
     );
-    return data.items;
+    return data;
   };
 
   sendMessage = async (
@@ -91,6 +91,7 @@ class DialogsAPI extends BaseAPI {
     const { data } = await this.api.get(`dialogs/${userId}/messages/new`, {
       params,
     });
+    console.log(data);
     return data.items;
   };
 }

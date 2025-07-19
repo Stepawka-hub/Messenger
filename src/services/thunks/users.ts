@@ -2,8 +2,8 @@ import { API_CODES } from "@api/constants";
 import { usersAPI } from "@api/users.api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { setFollowed, setFollowingProgressIds } from "@slices/users";
-import { TUserId } from "@types";
-import { TGetUsersDataResponse, TGetUsersPayload } from "@utils/api/types";
+import { TSocialUser, TUserId } from "@types";
+import { TGetItemsDataResponse, TGetUsersPayload } from "@utils/api/types";
 import { createErrorPayload } from "@utils/helpers/error-helpers";
 import { TBaseRejectValue } from "./types";
 import { TFollowUnfollowPayload } from "../types";
@@ -14,7 +14,7 @@ const UNFOLLOW_USER = "users/unfollow";
 const FOLLOW_UNFOLLOW_FLOW = "users/followUnfollowFlow";
 
 export const getUsersAsync = createAsyncThunk<
-  TGetUsersDataResponse,
+  TGetItemsDataResponse<TSocialUser>,
   TGetUsersPayload,
   TBaseRejectValue
 >(

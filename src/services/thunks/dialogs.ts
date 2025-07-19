@@ -1,6 +1,10 @@
 import { API_CODES } from "@api/constants";
 import { dialogsAPI } from "@api/dialogs.api";
-import { TGetMessagesPayload, TSendMessagePayload } from "@api/types";
+import {
+  TGetItemsDataResponse,
+  TGetMessagesPayload,
+  TSendMessagePayload,
+} from "@api/types";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { TDialog, TMessage, TUserId } from "@types";
 import { formatDateToISOString } from "@utils/helpers/date";
@@ -54,23 +58,26 @@ export const startDialogAsync = createAsyncThunk<
 });
 
 export const getMessagesAsync = createAsyncThunk<
-  TMessage[],
+  TGetItemsDataResponse<TMessage>,
   TGetMessagesPayload,
   TBaseRejectValue
 >(
   GET_MESSAGES,
   async ({ userId, currentPage, pageSize }, { rejectWithValue }) => {
     try {
-      const messages = await dialogsAPI.getMessages({
+      const { items, totalCount } = await dialogsAPI.getMessages({
         userId,
         currentPage,
         pageSize,
       });
 
-      return messages.map(({ addedAt, ...m }) => ({
-        ...m,
-        addedAt: formatDateToISOString(addedAt),
-      }));
+      return {
+        items: items.map(({ addedAt, ...m }) => ({
+          ...m,
+          addedAt: formatDateToISOString(addedAt),
+        })),
+        totalCount,
+      };
     } catch (err) {
       console.error("Error fetching messages:", err);
       return rejectWithValue(createErrorPayload());

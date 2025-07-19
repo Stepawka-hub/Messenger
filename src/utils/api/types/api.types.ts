@@ -1,10 +1,4 @@
-import {
-  TErrorMessage,
-  TMessage,
-  TPagination,
-  TSocialUser,
-  TUserId,
-} from "@types";
+import { TErrorMessage, TMessage, TPagination, TUserId } from "@types";
 
 // Base
 export type TResponse = TResponseWithData<object>;
@@ -15,12 +9,12 @@ export type TResponseWithData<T extends object> = {
   data: T;
 };
 
-// Users
-export type TGetUsersDataResponse = {
-  items: TSocialUser[];
+export type TGetItemsDataResponse<T> = {
+  items: T[];
   totalCount: number;
 };
 
+// Users
 export type TGetUsersParams = {
   page: number;
   count: number;
@@ -51,6 +45,7 @@ export type TSendMessagePayload = {
   message: string;
 };
 
+// Fetch messages
 export type TGetMessageResponse = {
   totalCount: number;
   items: TMessage[];
@@ -66,6 +61,7 @@ export type TGetMessagesPayload = TPagination & {
   userId: TUserId;
 };
 
+// New messages
 export type TGetNewMessagesParams = {
   newerThen: string;
 };
