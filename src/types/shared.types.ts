@@ -1,5 +1,7 @@
 import { Id, ToastContent, ToastOptions } from "react-toastify";
 
+export type TTimeout = ReturnType<typeof setTimeout> | undefined;
+
 export type TPagination = {
   currentPage: number;
   pageSize: number;

@@ -1,7 +1,7 @@
+import { TTimeout } from '@types';
 import { useCallback, useRef } from "react";
 
 type DebouncedFunction<Args extends unknown[]> = (...args: Args) => void;
-type TTimeout = ReturnType<typeof setTimeout> | undefined;
 
 export const useDebounce = <Args extends unknown[]>(
   callback: DebouncedFunction<Args>,
