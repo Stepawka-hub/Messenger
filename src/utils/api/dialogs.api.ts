@@ -77,9 +77,8 @@ class DialogsAPI extends BaseAPI {
     return data;
   };
 
-  getCountNewMessages = async () => {
+  getNewMessageCount = async () => {
     const { data } = await this.api.get(`dialogs/messages/new/count`);
-    console.log(data);
     return data;
   };
 
@@ -92,7 +91,7 @@ class DialogsAPI extends BaseAPI {
       params,
     });
     console.log(data);
-    return data.items;
+    return data;
   };
 }
 

@@ -15,6 +15,7 @@ const GET_DIALOGS = "dialogs/get-dialogs";
 const START_DIALOG = "dialogs/start";
 const SEND_MESSAGE = "dialogs/send-message";
 const GET_MESSAGES = "dialogs/get-messages";
+const GET_NEW_MESSAGE_COUNT = "dialogs/get-new-message-count";
 
 export const getDialogsAsync = createAsyncThunk<
   TDialog[],
@@ -110,6 +111,20 @@ export const sendMessageAsync = createAsyncThunk<
     );
   } catch (err) {
     console.error("Error sending message:", err);
+    return rejectWithValue(createErrorPayload());
+  }
+});
+
+export const getNewMessageCountAsync = createAsyncThunk<
+  number,
+  void,
+  TBaseRejectValue
+>(GET_NEW_MESSAGE_COUNT, async (_, { rejectWithValue }) => {
+  try {
+    const count = await dialogsAPI.getNewMessageCount();
+    return count;
+  } catch (err) {
+    console.error("Error fetching new message count:", err);
     return rejectWithValue(createErrorPayload());
   }
 });

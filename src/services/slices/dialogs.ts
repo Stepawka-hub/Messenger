@@ -2,17 +2,19 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   getDialogsAsync,
   getMessagesAsync,
+  getNewMessageCountAsync,
   sendMessageAsync,
   startDialogAsync,
 } from "@thunks/dialogs";
 import { TDialog, TMessage } from "@types";
 import { TDialogsState } from "./types";
-import { TGetItemsDataResponse } from '@api/types';
+import { TGetItemsDataResponse } from "@api/types";
 
 const initialState: TDialogsState = {
   dialogs: [],
   selectedDialogId: null,
   messages: [],
+  newMessageCount: 0,
   hasMoreMessages: true,
   pagination: {
     dialogs: {
@@ -22,8 +24,8 @@ const initialState: TDialogsState = {
     messages: {
       currentPage: 1,
       pageSize: 10,
-      totalCount: 0
-    }
+      totalCount: 0,
+    },
   },
   loading: {
     isGettingDialogs: false,
@@ -62,13 +64,14 @@ const dialogsSlice = createSlice({
     },
     setDialogsPage: (state, { payload }: PayloadAction<number>) => {
       state.pagination.dialogs.currentPage = payload;
-    }
+    },
   },
   selectors: {
     getDialogs: (state) => state.dialogs,
     getMessages: (state) => state.messages,
     getSelectedDialogId: (state) => state.selectedDialogId,
     getHasMoreMessages: (state) => state.hasMoreMessages,
+    getNewMessageCount: (state) => state.newMessageCount,
     getMessagesPagination: (state) => state.pagination.messages,
     getDialogsPagination: (state) => state.pagination.dialogs,
     getIsLoadingMessages: (state) => state.loading.isGettingMessages,
@@ -97,7 +100,10 @@ const dialogsSlice = createSlice({
       })
       .addCase(
         getMessagesAsync.fulfilled,
-        (state, { payload }: PayloadAction<TGetItemsDataResponse<TMessage>>) => {
+        (
+          state,
+          { payload }: PayloadAction<TGetItemsDataResponse<TMessage>>
+        ) => {
           const { items, totalCount } = payload;
 
           if (items.length) {
@@ -138,7 +144,14 @@ const dialogsSlice = createSlice({
       })
       .addCase(startDialogAsync.rejected, (state) => {
         state.loading.isStartingDialog = false;
-      });
+      })
+
+      .addCase(
+        getNewMessageCountAsync.fulfilled,
+        (state, { payload }: PayloadAction<number>) => {
+          state.newMessageCount = payload;
+        }
+      );
   },
 });
 
@@ -154,6 +167,7 @@ export const {
   getMessagesPagination,
   getDialogsPagination,
   getHasMoreMessages,
+  getNewMessageCount,
 } = dialogsSlice.selectors;
 export const {
   setMessages,
