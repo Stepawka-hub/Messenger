@@ -11,3 +11,5 @@ export * from './loader-icon';
 export * from './cross-icon';
 export * from './check-icon';
 export * from './double-check-icon';
+export * from './report-icon';
+export * from './trash-icon';

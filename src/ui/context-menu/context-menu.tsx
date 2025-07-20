@@ -43,14 +43,14 @@ export const ContextMenu: FC<ContextMenuProps> = ({
         style={{ left: position[0], top: position[1] }}
         onContextMenu={onContextMenu}
       >
-        {items.map(({ name, onClick }, idx) => (
+        {items.map(({ content, onClick }, idx) => (
           <li
             key={idx}
             className={s.menuItem}
             onClick={onClick}
             onContextMenu={onClick}
           >
-            {name}
+            {content}
           </li>
         ))}
       </ul>

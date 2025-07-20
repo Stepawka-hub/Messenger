@@ -29,11 +29,14 @@
 }
 
 .menuItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   user-select: none;
   cursor: pointer;
   padding: 0.5rem 1rem;
-  color: var(--primary-text-color);
   background-color: var(--primary-bg-color);
+  color: var(--primary-text-color);
   list-style-type: none;
   transition: .1s linear;
 }

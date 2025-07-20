@@ -1,5 +1,7 @@
+import { ReactNode } from "react";
+
 export type TContextMenuItem = {
-  name: string;
+  content: ReactNode;
   onClick: () => void;
 };
 

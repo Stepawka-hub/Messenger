@@ -7,6 +7,7 @@ import { MessageInfo } from "./message-info";
 import { MessageProps } from "./type";
 import clsx from "clsx";
 import s from "./message.module.css";
+import { ReportIcon, TrashIcon } from "@icons";
 
 export const Message: FC<MessageProps> = memo(
   ({
@@ -25,13 +26,23 @@ export const Message: FC<MessageProps> = memo(
     const menuItems: TContextMenuItem[] = useMemo(
       () => [
         {
-          name: "Удалить сообщение (у себя)",
+          content: (
+            <>
+              <TrashIcon className={s.icon} />
+              <span className={s.menuIconText}>Удалить сообщение у себя</span>
+            </>
+          ),
           onClick: () => {
             setIsOpenMenu(false);
           },
         },
         {
-          name: "Добавить в спам",
+          content: (
+            <>
+              <ReportIcon className={s.icon} />
+              <span className={s.menuIconText}>Пожаловаться</span>
+            </>
+          ),
           onClick: () => {
             setIsOpenMenu(false);
           },
