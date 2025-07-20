@@ -1,6 +1,7 @@
 import { useClickOutside } from "@hooks/useClickOutside";
 import { FC, MouseEvent } from "react";
 import { ContextMenuProps } from "./type";
+import { CSSTransition } from "react-transition-group";
 import s from "./context-menu.module.css";
 
 export const ContextMenu: FC<ContextMenuProps> = ({
@@ -24,17 +25,35 @@ export const ContextMenu: FC<ContextMenuProps> = ({
   };
 
   return (
-    <ul
-      ref={ref}
-      className={s.contextMenu}
-      style={{ left: position[0], top: position[1] }}
-      onContextMenu={onContextMenu}
+    <CSSTransition
+      in={isOpen}
+      nodeRef={ref}
+      timeout={300}
+      classNames={{
+        enter: s.menuEnter,
+        enterActive: s.menuEnterActive,
+        exit: s.menuExit,
+        exitActive: s.menuExitActive,
+      }}
+      unmountOnExit
     >
-      {items.map(({ name, onClick }) => (
-        <li className={s.menuItem} onClick={onClick} onContextMenu={onClick}>
-          {name}
-        </li>
-      ))}
-    </ul>
+      <ul
+        ref={ref}
+        className={s.contextMenu}
+        style={{ left: position[0], top: position[1] }}
+        onContextMenu={onContextMenu}
+      >
+        {items.map(({ name, onClick }, idx) => (
+          <li
+            key={idx}
+            className={s.menuItem}
+            onClick={onClick}
+            onContextMenu={onClick}
+          >
+            {name}
+          </li>
+        ))}
+      </ul>
+    </CSSTransition>
   );
 };

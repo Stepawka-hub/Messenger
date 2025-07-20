@@ -31,14 +31,12 @@ export const ContextMenuProvider: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <ContextMenu.Provider value={value}>
-      {isOpen && (
-        <ContextMenuUI
-          isOpen={isOpen}
-          items={menuItems}
-          position={position}
-          setIsOpen={setIsOpen}
-        />
-      )}
+      <ContextMenuUI
+        isOpen={isOpen}
+        items={menuItems}
+        position={position}
+        setIsOpen={setIsOpen}
+      />
       {children}
     </ContextMenu.Provider>
   );

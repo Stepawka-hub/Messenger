@@ -24,7 +24,7 @@ export const Sidebar: FC<SidebarProps> = ({ isOpen, onClose }) => {
           <>
             <Link to={`/profile/${userId}`} label="Profile" />
             <Link to={`/dialogs`} label="Dialogs">
-              <Counter count={newMessageCount} />
+              {!!newMessageCount && <Counter count={newMessageCount} />}
             </Link>
             <Link to={`/chat`} label="Common chat" />
             <Link to={`/users`} label="Find friends" />

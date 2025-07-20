@@ -25,7 +25,7 @@ export const Message: FC<MessageProps> = memo(
     const menuItems: TContextMenuItem[] = useMemo(
       () => [
         {
-          name: "Удалить сообщение",
+          name: "Удалить сообщение (у себя)",
           onClick: () => {
             setIsOpenMenu(false);
           },
@@ -48,6 +48,8 @@ export const Message: FC<MessageProps> = memo(
       },
       [setContextMenu, menuItems]
     );
+
+    console.log('RENDER');
 
     return (
       <article
