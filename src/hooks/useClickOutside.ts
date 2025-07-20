@@ -5,11 +5,11 @@ type TUseClickOutsideArgs = {
   callback: () => void;
 };
 
-export const useClickOutside = ({
+export const useClickOutside = <T extends HTMLElement>({
   isActive,
   callback,
 }: TUseClickOutsideArgs) => {
-  const elementRef = useRef<HTMLElement>(null);
+  const elementRef = useRef<T>(null);
 
   useEffect(() => {
     const handleClickOutside = (evt: MouseEvent) => {

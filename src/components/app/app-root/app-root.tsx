@@ -28,7 +28,6 @@ export const AppRoot: FC<PropsWithChildren> = ({ children }) => {
             <>
               <AppLayout>{children}</AppLayout>
               <BackgroundDataSync />
-              <ToastContainer />
             </>
           )}
           <ToastContainer />
