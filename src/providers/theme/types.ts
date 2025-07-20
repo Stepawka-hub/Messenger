@@ -2,7 +2,7 @@ import { PropsWithChildren } from "react";
 
 export type Theme = "light" | "dark" | "system";
 
-export type ThemeProviderState = {
+export type TThemeState = {
   theme: Theme;
   setTheme: (theme: Theme) => void;
 };

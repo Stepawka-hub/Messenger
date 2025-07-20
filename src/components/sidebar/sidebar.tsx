@@ -1,7 +1,7 @@
 import { useClickOutside } from "@hooks/useClickOutside";
 import { getCurrentUser, getIsAuth } from "@slices/auth";
 import { getNewMessageCount } from "@slices/dialogs";
-import { useDispatch, useSelector } from "@store";
+import { useSelector } from "@store";
 import { Counter } from "@ui/counter";
 import { Link } from "@ui/link";
 import clsx from "clsx";

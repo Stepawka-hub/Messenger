@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-export type TModalContext = {
+export type TModalState = {
   showModal: (content: ReactNode) => void;
   hideModal: () => void;
 };

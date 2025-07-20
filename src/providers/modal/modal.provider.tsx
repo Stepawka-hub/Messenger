@@ -9,7 +9,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { ModalContext } from "./modal-context";
+import { ModalContext } from "./modal.context";
 
 export const ModalProvider: FC<PropsWithChildren> = memo(({ children }) => {
   const [isOpen, setIsOpen] = useState(false);

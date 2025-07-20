@@ -14,7 +14,7 @@ import { Loader } from "@ui/loader";
 import { CommonChatPage } from "@pages/common-chat-page";
 import { DialogsPage } from '@pages/dialog-page';
 
-export const App = memo(() => {
+export const AppRouter = memo(() => {
   const isAuth = useSelector(getIsAuth);
   const initialRedirect = isAuth ? "/profile" : "/login";
 
