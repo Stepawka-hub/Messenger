@@ -1,12 +1,12 @@
+import { useContextMenu } from "@hooks/useContextMenu";
+import { TContextMenuItem } from "@providers/context-menu";
 import { Avatar } from "@ui/avatar";
 import { FC, memo, MouseEvent, useCallback, useMemo } from "react";
 import { NavLink } from "react-router-dom";
 import { MessageInfo } from "./message-info";
 import { MessageProps } from "./type";
-import { useContextMenu } from "@hooks/useContextMenu";
-import { TContextMenuItem } from "@providers/context-menu";
-import s from "./message.module.css";
 import clsx from "clsx";
+import s from "./message.module.css";
 
 export const Message: FC<MessageProps> = memo(
   ({
@@ -40,21 +40,21 @@ export const Message: FC<MessageProps> = memo(
       [setIsOpenMenu]
     );
 
-    const handleMenuContext = useCallback(
-      (e: MouseEvent<HTMLDivElement>) => {
+    const openContextMenu = useCallback(
+      (e: MouseEvent<HTMLElement>) => {
         e.preventDefault();
+        e.stopPropagation();
         const { clientX, clientY } = e;
         setContextMenu(menuItems, [clientX, clientY]);
       },
       [setContextMenu, menuItems]
     );
 
-    console.log('RENDER');
-
     return (
       <article
         className={clsx(s.message, { [s.own]: isOwnMessage && isMobile })}
-        onContextMenu={handleMenuContext}
+        onClick={isMobile ? openContextMenu : undefined}
+        onContextMenu={openContextMenu}
       >
         <div className={s.userInfo}>
           {!isMobile && (

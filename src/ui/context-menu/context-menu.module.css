@@ -22,8 +22,8 @@
   flex-direction: column;
   gap: 0.5rem;
   padding: 0.25rem 0;
-  border-radius: 0.5rem;
-  box-shadow: 0 0 4px var(--secondary-text-color);
+  border-radius: 0.25rem;
+  box-shadow: 0 0 4px var(--menu-shadow-color);
   background-color: var(--primary-bg-color);
   z-index: 3;
 }

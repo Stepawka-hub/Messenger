@@ -23,7 +23,7 @@ export const MessageInfo: FC<MessageInfoProps> = ({
 
   return (
     <div className={s.container}>
-      {messageTime && <span>{messageTime}</span>}
+      {messageTime && <span className={s.messageTime}>{messageTime}</span>}
       {statusIcon}
     </div>
   );

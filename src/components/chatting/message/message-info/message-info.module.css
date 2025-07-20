@@ -8,3 +8,9 @@
 .icon {
   color: var(--secondary-color);
 }
+
+@media (max-width: 760px) {
+  .messageTime {
+    font-size: 0.875rem;
+  }
+}

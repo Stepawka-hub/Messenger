@@ -18,7 +18,7 @@ export const MessageList: FC<MessageListProps> = ({
   bottomListRef,
 }) => {
   const currentUser = useSelector(getCurrentUser);
-  const isMobile = useMediaQuery({ maxWidth: 600 });
+  const isMobile = useMediaQuery({ maxWidth: 760 });
   const { messages, hasMore, isLoading, fetchMessages } = useFetchMessages({
     userId,
   });
