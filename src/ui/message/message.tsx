@@ -17,31 +17,34 @@ export const Message: FC<MessageProps> = memo(
     isOwnMessage = false,
     isMobile = false,
     hideInfo = false,
-    openContextMenu
-  }) => (
-    <article
-      className={clsx(s.message, { [s.own]: isOwnMessage && isMobile })}
-      onClick={isMobile ? openContextMenu : undefined}
-      onContextMenu={openContextMenu}
-    >
-      <div className={s.userInfo}>
-        {!isMobile && (
-          <NavLink to={`/profile/${senderId}`}>
-            <Avatar image={photo} size="small" />
-          </NavLink>
-        )}
-        <div className={s.content}>
-          {!isMobile && <h4 className={s.sender}>{username}</h4>}
-          <span className={s.text}>{content}</span>
+    openContextMenu,
+  }) => {
+    console.log("RENDER");
+    return (
+      <article
+        className={clsx(s.message, { [s.own]: isOwnMessage && isMobile })}
+        onClick={isMobile ? openContextMenu : undefined}
+        onContextMenu={openContextMenu}
+      >
+        <div className={s.userInfo}>
+          {!isMobile && (
+            <NavLink to={`/profile/${senderId}`}>
+              <Avatar image={photo} size="small" />
+            </NavLink>
+          )}
+          <div className={s.content}>
+            {!isMobile && <h4 className={s.sender}>{username}</h4>}
+            <span className={s.text}>{content}</span>
+          </div>
         </div>
-      </div>
-      {!hideInfo && (
-        <MessageInfo
-          addedAt={addedAt}
-          isViewed={isViewed}
-          isOwnMessage={isOwnMessage}
-        />
-      )}
-    </article>
-  )
+        {!hideInfo && (
+          <MessageInfo
+            addedAt={addedAt}
+            isViewed={isViewed}
+            isOwnMessage={isOwnMessage}
+          />
+        )}
+      </article>
+    );
+  }
 );

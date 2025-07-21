@@ -1,17 +1,16 @@
-import { FC, Fragment, useCallback, useEffect, useState } from "react";
-import { isSameDay } from "date-fns";
-import { formatDateShort } from "@utils/helpers/date";
-import { useMediaQuery } from "react-responsive";
-import { useDispatch, useSelector } from "@store";
-import { getCurrentUser } from "@slices/auth";
+import { ChatMessage } from "@components/chatting";
 import { useFetchMessages } from "@hooks/useFetchMessages";
 import { useInfiniteScroll } from "@hooks/useInfinityScroll";
-import { useContextMenu } from "@hooks/useContextMenu";
-import { ChatMessage } from "@components/chatting";
+import { getCurrentUser } from "@slices/auth";
+import { useDispatch, useSelector } from "@store";
 import { Loader } from "@ui/loader";
 import { NoDataFound } from "@ui/no-data-found";
-import { MessageListProps } from "./type";
+import { formatDateShort } from "@utils/helpers/date";
+import { isSameDay } from "date-fns";
+import { FC, Fragment, useCallback, useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import s from "./message-list.module.css";
+import { MessageListProps } from "./type";
 
 export const MessageList: FC<MessageListProps> = ({
   userId,
@@ -42,9 +41,6 @@ export const MessageList: FC<MessageListProps> = ({
   useEffect(() => {
     setIsFirstLoad(true);
   }, [userId]);
-
-  // Context menu logic
-  const { setContextMenu, setIsOpenMenu } = useContextMenu();
 
   const handleDelete = useCallback(
     (messageId: string) => {
@@ -90,8 +86,6 @@ export const MessageList: FC<MessageListProps> = ({
           isMobile={isMobile}
           onDelete={handleDelete}
           onReport={handleReport}
-          setContextMenu={setContextMenu}
-          setIsOpenMenu={setIsOpenMenu}
         />
       </Fragment>
     );
