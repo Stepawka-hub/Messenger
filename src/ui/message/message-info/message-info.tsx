@@ -1,7 +1,7 @@
+import { FC } from "react";
+import { format } from "date-fns";
 import { CheckIcon, DoubleCheckIcon } from "@icons";
 import { convertTZ } from "@utils/helpers/date";
-import { format } from "date-fns";
-import { FC } from "react";
 import { MessageInfoProps } from "./type";
 import s from "./message-info.module.css";
 

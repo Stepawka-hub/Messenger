@@ -1,5 +1,5 @@
-import { Message } from "@components/chatting/message";
-import { TSendMessageForm } from "@components/chatting/send-message-form/types";
+import { FC, useEffect } from "react";
+import { SubmitHandler } from "react-hook-form";
 import { getCurrentUser } from "@slices/auth";
 import { getMessages } from "@slices/chat";
 import { useDispatch, useSelector } from "@store";
@@ -9,13 +9,13 @@ import {
   stopMessagesListening,
 } from "@thunks/chat";
 import { TChatMessage } from "@types";
+import { SendMessageForm } from "@components/chatting/send-message-form";
+import { TSendMessageForm } from "@components/chatting/send-message-form/types";
 import { ChatWrapper } from "@ui/chat-wrapper";
 import { List } from "@ui/list";
+import { Message } from "@ui/message";
 import { PageWrapper } from "@ui/page-wrapper";
-import { FC, useEffect } from "react";
-import { SubmitHandler } from "react-hook-form";
 import s from "./common-chat-page.module.css";
-import { SendMessageForm } from "@components/chatting/send-message-form";
 
 export const CommonChatPage: FC = () => {
   const dispatch = useDispatch();

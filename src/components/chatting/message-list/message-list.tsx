@@ -1,22 +1,24 @@
-import { Message } from "@components/chatting";
+import { FC, Fragment, useCallback, useEffect, useState } from "react";
+import { isSameDay } from "date-fns";
+import { formatDateShort } from "@utils/helpers/date";
+import { useMediaQuery } from "react-responsive";
+import { useDispatch, useSelector } from "@store";
+import { getCurrentUser } from "@slices/auth";
 import { useFetchMessages } from "@hooks/useFetchMessages";
 import { useInfiniteScroll } from "@hooks/useInfinityScroll";
-import { getCurrentUser } from "@slices/auth";
-import { useSelector } from "@store";
+import { useContextMenu } from "@hooks/useContextMenu";
+import { ChatMessage } from "@components/chatting";
 import { Loader } from "@ui/loader";
 import { NoDataFound } from "@ui/no-data-found";
-import { formatDateShort } from "@utils/helpers/date";
-import { isSameDay } from "date-fns";
-import { FC, Fragment, useEffect, useState } from "react";
-import { useMediaQuery } from "react-responsive";
-import s from "./message-list.module.css";
 import { MessageListProps } from "./type";
+import s from "./message-list.module.css";
 
 export const MessageList: FC<MessageListProps> = ({
   userId,
   partnerAvatar,
   bottomListRef,
 }) => {
+  const dispatch = useDispatch();
   const currentUser = useSelector(getCurrentUser);
   const isMobile = useMediaQuery({ maxWidth: 760 });
   const { messages, hasMore, isLoading, fetchMessages } = useFetchMessages({
@@ -41,6 +43,25 @@ export const MessageList: FC<MessageListProps> = ({
     setIsFirstLoad(true);
   }, [userId]);
 
+  // Context menu logic
+  const { setContextMenu, setIsOpenMenu } = useContextMenu();
+
+  const handleDelete = useCallback(
+    (messageId: string) => {
+      alert(`Delete: ${messageId}`);
+      //dispatch(deleteMessageAction(messageId));
+    },
+    [dispatch]
+  );
+
+  const handleReport = useCallback(
+    (messageId: string) => {
+      alert(`Report: ${messageId}`);
+      //dispatch(reportMessageAction(messageId));
+    },
+    [dispatch]
+  );
+
   if (!messages.length && !hasMore) {
     return <NoDataFound label="Список сообщений пуст" className={s.noData} />;
   }
@@ -57,7 +78,8 @@ export const MessageList: FC<MessageListProps> = ({
         {showSeparator && (
           <div className={s.separator}>{formatDateShort(m.addedAt)}</div>
         )}
-        <Message
+        <ChatMessage
+          messageId={m.id}
           senderId={m.senderId}
           content={m.body}
           username={m.senderName}
@@ -66,6 +88,10 @@ export const MessageList: FC<MessageListProps> = ({
           photo={isMessageOwner ? currentUser.photos?.small : partnerAvatar}
           isOwnMessage={isMessageOwner}
           isMobile={isMobile}
+          onDelete={handleDelete}
+          onReport={handleReport}
+          setContextMenu={setContextMenu}
+          setIsOpenMenu={setIsOpenMenu}
         />
       </Fragment>
     );
