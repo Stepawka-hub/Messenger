@@ -51,25 +51,25 @@ class DialogsAPI extends BaseAPI {
     return data;
   };
 
-  getMessageViewStatus = async (messageId: number) => {
+  getMessageViewStatus = async (messageId: string) => {
     const { data } = await this.api.get(`dialogs/messages/${messageId}/viewed`);
     console.log(data);
     return data;
   };
 
-  addMessageToSpam = async (messageId: number) => {
+  addMessageToSpam = async (messageId: string) => {
     const { data } = await this.api.post(`dialogs/messages/${messageId}/spam`);
     console.log(data);
     return data;
   };
 
-  deleteMessage = async (messageId: number) => {
+  deleteMessage = async (messageId: string) => {
     const { data } = await this.api.delete(`dialogs/messages/${messageId}`);
     console.log(data);
     return data;
   };
 
-  restoreMessage = async (messageId: number) => {
+  restoreMessage = async (messageId: string) => {
     const { data } = await this.api.put(
       `dialogs/messages/${messageId}/restore`
     );

@@ -1,16 +1,16 @@
-import { ChatMessage } from "@components/chatting";
+import { FC, Fragment, useCallback, useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
+import { isSameDay } from "date-fns";
+import { useDispatch, useSelector } from "@store";
+import { getCurrentUser } from "@slices/auth";
 import { useFetchMessages } from "@hooks/useFetchMessages";
 import { useInfiniteScroll } from "@hooks/useInfinityScroll";
-import { getCurrentUser } from "@slices/auth";
-import { useDispatch, useSelector } from "@store";
+import { ChatMessage } from "@components/chatting";
 import { Loader } from "@ui/loader";
 import { NoDataFound } from "@ui/no-data-found";
 import { formatDateShort } from "@utils/helpers/date";
-import { isSameDay } from "date-fns";
-import { FC, Fragment, useCallback, useEffect, useState } from "react";
-import { useMediaQuery } from "react-responsive";
-import s from "./message-list.module.css";
 import { MessageListProps } from "./type";
+import s from "./message-list.module.css";
 
 export const MessageList: FC<MessageListProps> = ({
   userId,

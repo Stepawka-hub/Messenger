@@ -16,6 +16,9 @@ const START_DIALOG = "dialogs/start";
 const SEND_MESSAGE = "dialogs/send-message";
 const GET_MESSAGES = "dialogs/get-messages";
 const GET_NEW_MESSAGE_COUNT = "dialogs/get-new-message-count";
+const ADD_MESSAGE_TO_SPAM = "dialogs/add-message-to-spam";
+const DELETE_MESSAGE = "dialogs/delete-message";
+const RESTORE_MESSAGE = "dialogs/restore-message";
 
 export const getDialogsAsync = createAsyncThunk<
   TDialog[],
@@ -125,6 +128,45 @@ export const getNewMessageCountAsync = createAsyncThunk<
     return count;
   } catch (err) {
     console.error("Error fetching new message count:", err);
+    return rejectWithValue(createErrorPayload());
+  }
+});
+
+export const addMessageToSpamAsync = createAsyncThunk<
+  void,
+  string,
+  TBaseRejectValue
+>(ADD_MESSAGE_TO_SPAM, async (messageId, { rejectWithValue }) => {
+  try {
+    const res = await dialogsAPI.addMessageToSpam(messageId);
+  } catch (err) {
+    console.error("Error adding to spam:", err);
+    return rejectWithValue(createErrorPayload());
+  }
+});
+
+export const deleteMessageAsync = createAsyncThunk<
+  void,
+  string,
+  TBaseRejectValue
+>(DELETE_MESSAGE, async (messageId, { rejectWithValue }) => {
+  try {
+    const res = await dialogsAPI.deleteMessage(messageId);
+  } catch (err) {
+    console.error("Error deleting message:", err);
+    return rejectWithValue(createErrorPayload());
+  }
+});
+
+export const restoreMessageAsync = createAsyncThunk<
+  void,
+  string,
+  TBaseRejectValue
+>(RESTORE_MESSAGE, async (messageId, { rejectWithValue }) => {
+  try {
+    const res = await dialogsAPI.restoreMessage(messageId);
+  } catch (err) {
+    console.error("Message recovery error:", err);
     return rejectWithValue(createErrorPayload());
   }
 });
