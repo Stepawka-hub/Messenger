@@ -46,12 +46,6 @@ export type TSendMessagePayload = {
 };
 
 // Fetch messages
-export type TGetMessageResponse = {
-  totalCount: number;
-  items: TMessage[];
-  error: TErrorMessage;
-};
-
 export type TGetMessagesParams = {
   page: number;
   count: number;

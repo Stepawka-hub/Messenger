@@ -10,6 +10,7 @@ import { Loader } from "@ui/loader";
 import { NoDataFound } from "@ui/no-data-found";
 import { formatDateShort } from "@utils/helpers/date";
 import { MessageListProps } from "./type";
+import { deleteMessageAsync, restoreMessageAsync } from "@thunks/dialogs";
 import s from "./message-list.module.css";
 
 export const MessageList: FC<MessageListProps> = ({
@@ -42,18 +43,16 @@ export const MessageList: FC<MessageListProps> = ({
     setIsFirstLoad(true);
   }, [userId]);
 
-  const handleDelete = useCallback(
+  const deleteMessage = useCallback(
     (messageId: string) => {
-      alert(`Delete: ${messageId}`);
-      //dispatch(deleteMessageAction(messageId));
+      dispatch(deleteMessageAsync(messageId));
     },
     [dispatch]
   );
 
-  const handleReport = useCallback(
+  const restoreMessage = useCallback(
     (messageId: string) => {
-      alert(`Report: ${messageId}`);
-      //dispatch(reportMessageAction(messageId));
+      dispatch(restoreMessageAsync(messageId));
     },
     [dispatch]
   );
@@ -81,11 +80,12 @@ export const MessageList: FC<MessageListProps> = ({
           username={m.senderName}
           addedAt={m.addedAt}
           isViewed={m.viewed}
+          isRemoved={m.isRemoved}
           photo={isMessageOwner ? currentUser.photos?.small : partnerAvatar}
           isOwnMessage={isMessageOwner}
           isMobile={isMobile}
-          onDelete={handleDelete}
-          onReport={handleReport}
+          onRestore={restoreMessage}
+          onDelete={deleteMessage}
         />
       </Fragment>
     );

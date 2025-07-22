@@ -6,7 +6,7 @@ import {
   sendMessageAsync,
   startDialogAsync,
 } from "@thunks/dialogs";
-import { TDialog, TMessage } from "@types";
+import { TBaseMessage, TDialog, TMessage } from "@types";
 import { TDialogsState } from "./types";
 import { TGetItemsDataResponse } from "@api/types";
 
@@ -102,7 +102,7 @@ const dialogsSlice = createSlice({
         getMessagesAsync.fulfilled,
         (
           state,
-          { payload }: PayloadAction<TGetItemsDataResponse<TMessage>>
+          { payload }: PayloadAction<TGetItemsDataResponse<TBaseMessage>>
         ) => {
           const { items, totalCount } = payload;
 

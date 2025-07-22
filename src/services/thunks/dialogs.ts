@@ -6,7 +6,7 @@ import {
   TSendMessagePayload,
 } from "@api/types";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { TDialog, TMessage, TUserId } from "@types";
+import { TBaseMessage, TDialog, TMessage, TUserId } from "@types";
 import { formatDateToISOString } from "@utils/helpers/date";
 import { createErrorPayload } from "@utils/helpers/error-helpers";
 import { TBaseRejectValue } from "./types";
@@ -16,7 +16,6 @@ const START_DIALOG = "dialogs/start";
 const SEND_MESSAGE = "dialogs/send-message";
 const GET_MESSAGES = "dialogs/get-messages";
 const GET_NEW_MESSAGE_COUNT = "dialogs/get-new-message-count";
-const ADD_MESSAGE_TO_SPAM = "dialogs/add-message-to-spam";
 const DELETE_MESSAGE = "dialogs/delete-message";
 const RESTORE_MESSAGE = "dialogs/restore-message";
 
@@ -62,7 +61,7 @@ export const startDialogAsync = createAsyncThunk<
 });
 
 export const getMessagesAsync = createAsyncThunk<
-  TGetItemsDataResponse<TMessage>,
+  TGetItemsDataResponse<TBaseMessage>,
   TGetMessagesPayload,
   TBaseRejectValue
 >(
@@ -132,26 +131,21 @@ export const getNewMessageCountAsync = createAsyncThunk<
   }
 });
 
-export const addMessageToSpamAsync = createAsyncThunk<
-  void,
-  string,
-  TBaseRejectValue
->(ADD_MESSAGE_TO_SPAM, async (messageId, { rejectWithValue }) => {
-  try {
-    const res = await dialogsAPI.addMessageToSpam(messageId);
-  } catch (err) {
-    console.error("Error adding to spam:", err);
-    return rejectWithValue(createErrorPayload());
-  }
-});
-
 export const deleteMessageAsync = createAsyncThunk<
   void,
   string,
   TBaseRejectValue
 >(DELETE_MESSAGE, async (messageId, { rejectWithValue }) => {
   try {
-    const res = await dialogsAPI.deleteMessage(messageId);
+    const { resultCode, messages } = await dialogsAPI.deleteMessage(messageId);
+
+    if (resultCode !== API_CODES.SUCCESS) {
+      return rejectWithValue(
+        createErrorPayload({
+          message: messages[0] || "Не удалось удалить сообщение",
+        })
+      );
+    }
   } catch (err) {
     console.error("Error deleting message:", err);
     return rejectWithValue(createErrorPayload());
@@ -164,7 +158,15 @@ export const restoreMessageAsync = createAsyncThunk<
   TBaseRejectValue
 >(RESTORE_MESSAGE, async (messageId, { rejectWithValue }) => {
   try {
-    const res = await dialogsAPI.restoreMessage(messageId);
+    const { resultCode, messages } = await dialogsAPI.restoreMessage(messageId);
+
+    if (resultCode !== API_CODES.SUCCESS) {
+      return rejectWithValue(
+        createErrorPayload({
+          message: messages[0] || "Не удалось восстановить сообщение",
+        })
+      );
+    }
   } catch (err) {
     console.error("Message recovery error:", err);
     return rejectWithValue(createErrorPayload());

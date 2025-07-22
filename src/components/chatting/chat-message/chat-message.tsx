@@ -1,5 +1,5 @@
 import { useContextMenu } from "@hooks/useContextMenu";
-import { ReportIcon, TrashIcon } from "@icons";
+import { TrashIcon } from "@icons";
 import { TContextMenuItem } from "@providers/context-menu";
 import { Message } from "@ui/message";
 import { FC, memo, MouseEvent } from "react";
@@ -7,8 +7,16 @@ import { ChatMessageProps } from "./type";
 import s from "./chat-message.module.css";
 
 export const ChatMessage: FC<ChatMessageProps> = memo(
-  ({ messageId, onReport, onDelete, ...baseProps }) => {
+  ({ messageId, isRemoved = false, onDelete, onRestore, ...baseProps }) => {
     const { setContextMenu, setIsOpenMenu } = useContextMenu();
+
+    if (isRemoved) {
+      return (
+        <div onClick={() => onRestore(messageId)}>
+          Удалённое сообщение. Восстановить?
+        </div>
+      );
+    }
 
     const menuItems: TContextMenuItem[] = [
       {
@@ -20,18 +28,6 @@ export const ChatMessage: FC<ChatMessageProps> = memo(
         ),
         onClick: () => {
           onDelete(messageId);
-          setIsOpenMenu(false);
-        },
-      },
-      {
-        content: (
-          <>
-            <ReportIcon className={s.icon} />
-            <span>Пожаловаться</span>
-          </>
-        ),
-        onClick: () => {
-          onReport(messageId);
           setIsOpenMenu(false);
         },
       },

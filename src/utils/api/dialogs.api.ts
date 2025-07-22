@@ -1,14 +1,14 @@
-import { TDialog, TMessage, TUserId } from "@types";
+import { TBaseMessage, TDialog, TMessage, TUserId } from "@types";
 import api from "./api";
 import { BaseAPI } from "./base.api";
 import {
-  TGetMessageResponse,
+  TGetItemsDataResponse,
   TGetMessagesParams,
   TGetMessagesPayload,
   TGetNewMessagesParams,
   TGetNewMessagesPayload,
   TResponse,
-  TResponseWithData,
+  TResponseWithData
 } from "./types";
 
 class DialogsAPI extends BaseAPI {
@@ -26,13 +26,13 @@ class DialogsAPI extends BaseAPI {
     userId,
     currentPage = 1,
     pageSize = 10,
-  }: TGetMessagesPayload): Promise<TGetMessageResponse> => {
+  }: TGetMessagesPayload): Promise<TGetItemsDataResponse<TBaseMessage>> => {
     const params: TGetMessagesParams = {
       page: currentPage,
       count: pageSize,
     };
 
-    const { data } = await this.api.get<TGetMessageResponse>(
+    const { data } = await this.api.get<TGetItemsDataResponse<TBaseMessage>>(
       `dialogs/${userId}/messages`,
       { params }
     );
@@ -57,20 +57,15 @@ class DialogsAPI extends BaseAPI {
     return data;
   };
 
-  addMessageToSpam = async (messageId: string) => {
-    const { data } = await this.api.post(`dialogs/messages/${messageId}/spam`);
-    console.log(data);
+  deleteMessage = async (messageId: string): Promise<TResponse> => {
+    const { data } = await this.api.delete<TResponse>(
+      `dialogs/messages/${messageId}`
+    );
     return data;
   };
 
-  deleteMessage = async (messageId: string) => {
-    const { data } = await this.api.delete(`dialogs/messages/${messageId}`);
-    console.log(data);
-    return data;
-  };
-
-  restoreMessage = async (messageId: string) => {
-    const { data } = await this.api.put(
+  restoreMessage = async (messageId: string): Promise<TResponse> => {
+    const { data } = await this.api.put<TResponse>(
       `dialogs/messages/${messageId}/restore`
     );
     console.log(data);
