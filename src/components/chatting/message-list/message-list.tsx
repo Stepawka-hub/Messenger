@@ -103,7 +103,7 @@ export const MessageList: FC<MessageListProps> = ({
       {isLoading && <Loader />}
       {hasMore && <div className={s.loadMore} ref={loadMoreRef} />}
       {messageElements}
-      <div ref={bottomListRef}></div>
+      <div className={s.bottomList} ref={bottomListRef}></div>
     </section>
   );
 };

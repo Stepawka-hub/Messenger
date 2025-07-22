@@ -5,6 +5,7 @@ import { Message } from "@ui/message";
 import { FC, memo, MouseEvent } from "react";
 import { ChatMessageProps } from "./type";
 import { Loader } from "@ui/loader";
+import { DeletedMessageBanner } from "@ui/deleted-message-banner";
 import s from "./chat-message.module.css";
 
 export const ChatMessage: FC<ChatMessageProps> = memo(
@@ -18,7 +19,6 @@ export const ChatMessage: FC<ChatMessageProps> = memo(
     ...baseProps
   }) => {
     const { setContextMenu, setIsOpenMenu } = useContextMenu();
-    console.log('CHAT MESSAGE');
 
     if (isDeleting || isRestoring) {
       return <Loader />;
@@ -26,9 +26,7 @@ export const ChatMessage: FC<ChatMessageProps> = memo(
 
     if (isDeleted) {
       return (
-        <div onClick={() => onRestore(messageId)}>
-          Удалённое сообщение. Восстановить?
-        </div>
+        <DeletedMessageBanner messageId={messageId} onRestore={onRestore} />
       );
     }
 

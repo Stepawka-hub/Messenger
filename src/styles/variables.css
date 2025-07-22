@@ -23,7 +23,7 @@
   --subtitle-color: #ff8234;
   --link-color-active: #ff653b;
 
-  --header-border-color: #e7e8ec;
+  --border-divider-line: #e7e8ec;
 
   --modal-bg-color: #f1f3f4;
   --modal-close-cross-color: #2e2b35;
@@ -58,7 +58,7 @@
   --subtitle-color: #ff7b57;
   --link-color-active: #ff7b57;
 
-  --header-border-color: #272727;
+  --border-divider-line: #272727;
 
   --modal-bg-color: #24202c;
   --modal-close-cross-color: #2e2b35;
