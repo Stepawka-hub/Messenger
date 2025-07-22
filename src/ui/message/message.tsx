@@ -19,7 +19,7 @@ export const Message: FC<MessageProps> = memo(
     hideInfo = false,
     openContextMenu,
   }) => {
-    console.log("RENDER");
+    console.log("MESSAGE");
     return (
       <article
         className={clsx(s.message, { [s.own]: isOwnMessage && isMobile })}

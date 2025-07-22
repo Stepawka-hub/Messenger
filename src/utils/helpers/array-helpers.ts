@@ -14,6 +14,9 @@ export const updateObjectInArray = <T, K extends object>(
 
 export const checkInProgress = <T>(array: T[], id: T) => array.includes(id);
 
+export const removeFromArray = <T>(array: T[], item: T) =>
+  array.filter((i) => i !== item);
+
 export const getPaginatedItems = <T>(
   array: T[],
   page: number,

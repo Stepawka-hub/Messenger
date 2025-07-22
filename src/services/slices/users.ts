@@ -1,13 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getUsersAsync } from "@thunks/users";
-import { TGetItemsDataResponse } from "@utils/api/types";
-import { updateObjectInArray } from "@utils/helpers/array-helpers";
+import { followUnfollowFlow, getUsersAsync } from "@thunks/users";
 import { TSocialUser, TUserFilter } from "@types";
+import { TGetItemsDataResponse } from "@utils/api/types";
 import {
-  TSetFollowedPayload,
-  TSetIsFollowingPayload,
-  TUsersState,
-} from "./types";
+  removeFromArray,
+  updateObjectInArray,
+} from "@utils/helpers/array-helpers";
+import { TUsersState } from "./types";
 
 const initialState: TUsersState = {
   users: [],
@@ -26,25 +25,6 @@ const usersSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
-    setFollowed: (state, { payload }: PayloadAction<TSetFollowedPayload>) => {
-      const { userid, status } = payload;
-      state.users = updateObjectInArray<TSocialUser, { followed: boolean }>(
-        state.users,
-        userid,
-        "id",
-        { followed: status }
-      );
-    },
-    setFollowingProgressIds: (
-      state,
-      { payload }: PayloadAction<TSetIsFollowingPayload>
-    ) => {
-      const { userid, followingInProgress } = payload;
-
-      state.followingInProgressIds = followingInProgress
-        ? [...state.followingInProgressIds, userid]
-        : state.followingInProgressIds.filter((id) => id !== userid);
-    },
     setCurrentPage: (state, { payload }: PayloadAction<number>) => {
       state.pagination.currentPage = payload;
     },
@@ -82,6 +62,28 @@ const usersSlice = createSlice({
       )
       .addCase(getUsersAsync.rejected, (state) => {
         state.isLoading = false;
+      })
+
+      .addCase(followUnfollowFlow.pending, (state, { meta }) => {
+        state.followingInProgressIds.push(meta.arg.userId);
+      })
+      .addCase(followUnfollowFlow.fulfilled, (state, { payload, meta }) => {
+        const userId = meta.arg.userId;
+
+        state.followingInProgressIds = removeFromArray(
+          state.followingInProgressIds,
+          userId
+        );
+
+        state.users = updateObjectInArray(state.users, userId, "id", {
+          followed: payload,
+        });
+      })
+      .addCase(followUnfollowFlow.rejected, (state, { meta }) => {
+        state.followingInProgressIds = removeFromArray(
+          state.followingInProgressIds,
+          meta.arg.userId
+        );
       });
   },
 });
@@ -95,10 +97,4 @@ export const {
   getSearchQuery,
   getFilter,
 } = usersSlice.selectors;
-export const {
-  setFollowed,
-  setFollowingProgressIds,
-  setCurrentPage,
-  setSearchQuery,
-  setFilter,
-} = usersSlice.actions;
+export const { setCurrentPage, setSearchQuery, setFilter } = usersSlice.actions;

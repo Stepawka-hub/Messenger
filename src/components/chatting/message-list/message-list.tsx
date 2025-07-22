@@ -11,15 +11,16 @@ import { NoDataFound } from "@ui/no-data-found";
 import { formatDateShort } from "@utils/helpers/date";
 import { MessageListProps } from "./type";
 import { deleteMessageAsync, restoreMessageAsync } from "@thunks/dialogs";
-import s from "./message-list.module.css";
 import { checkInProgress } from "@utils/helpers/array-helpers";
 import { getDeletingMessageIds, getRestoringMessageIds } from "@slices/dialogs";
+import s from "./message-list.module.css";
 
 export const MessageList: FC<MessageListProps> = ({
   userId,
   partnerAvatar,
   bottomListRef,
 }) => {
+  console.log("MESSAGE LIST");
   const dispatch = useDispatch();
   const currentUser = useSelector(getCurrentUser);
   const isMobile = useMediaQuery({ maxWidth: 760 });

@@ -1,14 +1,19 @@
 import { TGetItemsDataResponse } from "@api/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
+  deleteMessageAsync,
   getDialogsAsync,
   getMessagesAsync,
   getNewMessageCountAsync,
+  restoreMessageAsync,
   sendMessageAsync,
   startDialogAsync,
 } from "@thunks/dialogs";
 import { TBaseMessage, TDialog, TMessage } from "@types";
-import { updateObjectInArray } from "@utils/helpers/array-helpers";
+import {
+  removeFromArray,
+  updateObjectInArray,
+} from "@utils/helpers/array-helpers";
 import { TDialogsState, TSetDeletedPayload } from "./types";
 
 const initialState: TDialogsState = {
@@ -148,6 +153,38 @@ const dialogsSlice = createSlice({
       )
       .addCase(sendMessageAsync.rejected, (state) => {
         state.loading.isSendingMessage = false;
+      })
+
+      .addCase(deleteMessageAsync.pending, (state, { meta }) => {
+        state.loading.deletingMessageIds.push(meta.arg);
+      })
+      .addCase(deleteMessageAsync.fulfilled, (state, { meta }) => {
+        state.loading.deletingMessageIds = removeFromArray(
+          state.loading.deletingMessageIds,
+          meta.arg
+        );
+      })
+      .addCase(deleteMessageAsync.rejected, (state, { meta }) => {
+        state.loading.deletingMessageIds = removeFromArray(
+          state.loading.deletingMessageIds,
+          meta.arg
+        );
+      })
+
+      .addCase(restoreMessageAsync.pending, (state, { meta }) => {
+        state.loading.restoringMessageIds.push(meta.arg);
+      })
+      .addCase(restoreMessageAsync.fulfilled, (state, { meta }) => {
+        state.loading.restoringMessageIds = removeFromArray(
+          state.loading.restoringMessageIds,
+          meta.arg
+        );
+      })
+      .addCase(restoreMessageAsync.rejected, (state, { meta }) => {
+        state.loading.restoringMessageIds = removeFromArray(
+          state.loading.restoringMessageIds,
+          meta.arg
+        );
       })
 
       .addCase(startDialogAsync.pending, (state) => {

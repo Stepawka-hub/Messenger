@@ -18,6 +18,7 @@ export const ChatMessage: FC<ChatMessageProps> = memo(
     ...baseProps
   }) => {
     const { setContextMenu, setIsOpenMenu } = useContextMenu();
+    console.log('CHAT MESSAGE');
 
     if (isDeleting || isRestoring) {
       return <Loader />;

@@ -1,12 +1,11 @@
 import { API_CODES } from "@api/constants";
 import { usersAPI } from "@api/users.api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { setFollowed, setFollowingProgressIds } from "@slices/users";
 import { TSocialUser, TUserId } from "@types";
 import { TGetItemsDataResponse, TGetUsersPayload } from "@utils/api/types";
 import { createErrorPayload } from "@utils/helpers/error-helpers";
-import { TBaseRejectValue } from "./types";
 import { TFollowUnfollowPayload } from "../types";
+import { TBaseRejectValue } from "./types";
 
 const GET_USERS = "users/getAll";
 const FOLLOW_USER = "users/follow";
@@ -54,42 +53,32 @@ export const unfollowFromUserAsync = createAsyncThunk<void, TUserId>(
 );
 
 export const followUnfollowFlow = createAsyncThunk<
-  void,
+  boolean,
   TFollowUnfollowPayload,
   TBaseRejectValue
->(
-  FOLLOW_UNFOLLOW_FLOW,
-  async ({ userId, status }, { dispatch, rejectWithValue }) => {
-    const apiMethod = status
-      ? usersAPI.followUser.bind(usersAPI)
-      : usersAPI.unfollowUser.bind(usersAPI);
+>(FOLLOW_UNFOLLOW_FLOW, async ({ userId, status }, { rejectWithValue }) => {
+  const apiMethod = status
+    ? usersAPI.followUser.bind(usersAPI)
+    : usersAPI.unfollowUser.bind(usersAPI);
 
-    try {
-      dispatch(
-        setFollowingProgressIds({ followingInProgress: true, userid: userId })
-      );
+  try {
+    const { resultCode, messages } = await apiMethod(userId);
 
-      const data = await apiMethod(userId);
-      if (data.resultCode !== API_CODES.SUCCESS) {
-        const actionText = status ? "подписки на" : "отписки от";
-        return rejectWithValue(
-          createErrorPayload({
-            message: data.messages[0] || `Ошибка ${actionText} пользователя`,
-          })
-        );
-      }
-
-      dispatch(setFollowed({ userid: userId, status }));
-    } catch (err) {
-      console.error(
-        status ? "Error follow to user" : "Error unfollow from user",
-        err
-      );
-      return rejectWithValue(createErrorPayload());
-    } finally {
-      dispatch(
-        setFollowingProgressIds({ followingInProgress: false, userid: userId })
-      );
+    if (resultCode === API_CODES.SUCCESS) {
+      return status;
     }
+
+    const actionText = status ? "подписки на" : "отписки от";
+    return rejectWithValue(
+      createErrorPayload({
+        message: messages[0] || `Ошибка ${actionText} пользователя`,
+      })
+    );
+  } catch (err) {
+    console.error(
+      status ? "Error follow to user" : "Error unfollow from user",
+      err
+    );
+    return rejectWithValue(createErrorPayload());
   }
-);
+});

@@ -53,7 +53,6 @@ class DialogsAPI extends BaseAPI {
 
   getMessageViewStatus = async (messageId: string) => {
     const { data } = await this.api.get(`dialogs/messages/${messageId}/viewed`);
-    console.log(data);
     return data;
   };
 
@@ -68,7 +67,6 @@ class DialogsAPI extends BaseAPI {
     const { data } = await this.api.put<TResponse>(
       `dialogs/messages/${messageId}/restore`
     );
-    console.log(data);
     return data;
   };
 
