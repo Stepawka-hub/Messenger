@@ -1,6 +1,6 @@
 .header {
   padding: 0.25rem 1rem 0.5rem;
-  border-bottom: 1px solid var(--border-divider-line);
+  border-bottom: 1px solid var(--border-divider-line-color);
 }
 
 .content,

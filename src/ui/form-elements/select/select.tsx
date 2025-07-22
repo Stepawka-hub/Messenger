@@ -38,13 +38,13 @@ export const Select = <
         "&:hover": {
           backgroundColor: isSelected
             ? "var(--primary-color)"
-            : "var(--select-option-hover)",
+            : "var(--select-option-color-hover)",
         },
         "&:active": {
           color: "var(--on-primary-color)",
           backgroundColor: isSelected
             ? "var(--primary-color)"
-            : "var(--select-option-active)",
+            : "var(--select-option-color-active)",
         },
       }),
     }),

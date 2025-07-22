@@ -14,5 +14,5 @@
   overflow-y: auto;
   height: 100%;
   max-height: 65vh;
-  border-bottom: 1px solid var(--border-divider-line);
+  border-bottom: 1px solid var(--border-divider-line-color);
 }

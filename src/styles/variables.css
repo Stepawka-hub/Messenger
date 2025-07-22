@@ -23,7 +23,7 @@
   --subtitle-color: #ff8234;
   --link-color-active: #ff653b;
 
-  --border-divider-line: #e7e8ec;
+  --border-divider-line-color: #e7e8ec;
 
   --modal-bg-color: #f1f3f4;
   --modal-close-cross-color: #2e2b35;
@@ -38,8 +38,8 @@
 
   --burger-line-color: #000;
 
-  --select-option-hover: #ffe9de;
-  --select-option-active: #ff745f;
+  --select-option-color-hover: #ffe9de;
+  --select-option-color-active: #ff745f;
 
   --menu-shadow-color: #bdbdbd;
 }
@@ -58,7 +58,7 @@
   --subtitle-color: #ff7b57;
   --link-color-active: #ff7b57;
 
-  --border-divider-line: #272727;
+  --border-divider-line-color: #272727;
 
   --modal-bg-color: #24202c;
   --modal-close-cross-color: #2e2b35;
@@ -72,8 +72,8 @@
   --skeleton-highlight-color: #181818;
 
   --burger-line-color: #fff;
-  --select-option-hover: #202020;
-  --select-option-active: #282828;
+  --select-option-color-hover: #202020;
+  --select-option-color-active: #282828;
 
   --menu-shadow-color: #272727;
 }
