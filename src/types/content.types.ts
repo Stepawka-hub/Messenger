@@ -26,7 +26,7 @@ export type TMessage = TBaseMessage & {
   deletedBySender?: boolean;
   deletedByRecipient?: boolean;
   isSpam?: boolean;
-  isRemoved?: boolean;
+  isDeleted?: boolean;
 };
 
 export type TChatMessage = {

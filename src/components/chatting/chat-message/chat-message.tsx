@@ -4,13 +4,26 @@ import { TContextMenuItem } from "@providers/context-menu";
 import { Message } from "@ui/message";
 import { FC, memo, MouseEvent } from "react";
 import { ChatMessageProps } from "./type";
+import { Loader } from "@ui/loader";
 import s from "./chat-message.module.css";
 
 export const ChatMessage: FC<ChatMessageProps> = memo(
-  ({ messageId, isRemoved = false, onDelete, onRestore, ...baseProps }) => {
+  ({
+    messageId,
+    isDeleted = false,
+    isDeleting,
+    isRestoring,
+    onDelete,
+    onRestore,
+    ...baseProps
+  }) => {
     const { setContextMenu, setIsOpenMenu } = useContextMenu();
 
-    if (isRemoved) {
+    if (isDeleting || isRestoring) {
+      return <Loader />;
+    }
+
+    if (isDeleted) {
       return (
         <div onClick={() => onRestore(messageId)}>
           Удалённое сообщение. Восстановить?

@@ -79,7 +79,7 @@ export const followUnfollowFlow = createAsyncThunk<
         );
       }
 
-      dispatch(setFollowed({ userid: userId, status: status }));
+      dispatch(setFollowed({ userid: userId, status }));
     } catch (err) {
       console.error(
         status ? "Error follow to user" : "Error unfollow from user",

@@ -10,6 +10,7 @@ import { TBaseMessage, TDialog, TMessage, TUserId } from "@types";
 import { formatDateToISOString } from "@utils/helpers/date";
 import { createErrorPayload } from "@utils/helpers/error-helpers";
 import { TBaseRejectValue } from "./types";
+import { setMessageDeletedStatus } from "@slices/dialogs";
 
 const GET_DIALOGS = "dialogs/get-dialogs";
 const START_DIALOG = "dialogs/start";
@@ -135,7 +136,7 @@ export const deleteMessageAsync = createAsyncThunk<
   void,
   string,
   TBaseRejectValue
->(DELETE_MESSAGE, async (messageId, { rejectWithValue }) => {
+>(DELETE_MESSAGE, async (messageId, { dispatch, rejectWithValue }) => {
   try {
     const { resultCode, messages } = await dialogsAPI.deleteMessage(messageId);
 
@@ -146,6 +147,8 @@ export const deleteMessageAsync = createAsyncThunk<
         })
       );
     }
+
+    dispatch(setMessageDeletedStatus({ messageId, value: true }));
   } catch (err) {
     console.error("Error deleting message:", err);
     return rejectWithValue(createErrorPayload());
@@ -156,7 +159,7 @@ export const restoreMessageAsync = createAsyncThunk<
   void,
   string,
   TBaseRejectValue
->(RESTORE_MESSAGE, async (messageId, { rejectWithValue }) => {
+>(RESTORE_MESSAGE, async (messageId, { dispatch, rejectWithValue }) => {
   try {
     const { resultCode, messages } = await dialogsAPI.restoreMessage(messageId);
 
@@ -167,6 +170,8 @@ export const restoreMessageAsync = createAsyncThunk<
         })
       );
     }
+
+    dispatch(setMessageDeletedStatus({ messageId, value: false }));
   } catch (err) {
     console.error("Message recovery error:", err);
     return rejectWithValue(createErrorPayload());

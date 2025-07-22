@@ -79,20 +79,12 @@ export type TDialogsState = {
     isStartingDialog: boolean;
     isGettingMessages: boolean;
     isSendingMessage: boolean;
+    deletingMessageIds: string[];
+    restoringMessageIds: string[];
   };
 };
 
 export type TChatState = {
   status: TSocketStatus;
   messages: TChatMessage[];
-};
-
-export type TSetIsFollowingPayload = {
-  userid: TUserId;
-  followingInProgress: boolean;
-};
-
-export type TSetFollowedPayload = {
-  userid: TUserId;
-  status: boolean;
 };

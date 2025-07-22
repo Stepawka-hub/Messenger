@@ -12,10 +12,7 @@ export const updateObjectInArray = <T, K extends object>(
     return item;
   });
 
-export const checkInProgress = (
-  array: (number | string)[],
-  id: number | string
-) => array.includes(id);
+export const checkInProgress = <T>(array: T[], id: T) => array.includes(id);
 
 export const getPaginatedItems = <T>(
   array: T[],

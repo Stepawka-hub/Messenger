@@ -1,3 +1,4 @@
+import { TGetItemsDataResponse } from "@api/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   getDialogsAsync,
@@ -7,8 +8,8 @@ import {
   startDialogAsync,
 } from "@thunks/dialogs";
 import { TBaseMessage, TDialog, TMessage } from "@types";
-import { TDialogsState } from "./types";
-import { TGetItemsDataResponse } from "@api/types";
+import { updateObjectInArray } from "@utils/helpers/array-helpers";
+import { TDialogsState, TSetDeletedPayload } from "./types";
 
 const initialState: TDialogsState = {
   dialogs: [],
@@ -32,6 +33,8 @@ const initialState: TDialogsState = {
     isStartingDialog: false,
     isGettingMessages: false,
     isSendingMessage: false,
+    deletingMessageIds: [],
+    restoringMessageIds: [],
   },
 };
 
@@ -56,6 +59,15 @@ const dialogsSlice = createSlice({
     setMessages: (state, { payload }: PayloadAction<TMessage[]>) => {
       state.messages = payload;
     },
+    setMessageDeletedStatus: (
+      state,
+      { payload }: PayloadAction<TSetDeletedPayload>
+    ) => {
+      const { messageId, value } = payload;
+      state.messages = updateObjectInArray(state.messages, messageId, "id", {
+        isDeleted: value,
+      });
+    },
     setCurrentDialog: (state, { payload }: PayloadAction<number | null>) => {
       state.selectedDialogId = payload;
       state.hasMoreMessages = true;
@@ -78,6 +90,8 @@ const dialogsSlice = createSlice({
     getIsLoadingDialogs: (state) => state.loading.isGettingDialogs,
     getIsSendingMessage: (state) => state.loading.isSendingMessage,
     getIsStartingDialog: (state) => state.loading.isStartingDialog,
+    getDeletingMessageIds: (state) => state.loading.deletingMessageIds,
+    getRestoringMessageIds: (state) => state.loading.restoringMessageIds,
   },
   extraReducers(builder) {
     builder
@@ -168,9 +182,12 @@ export const {
   getDialogsPagination,
   getHasMoreMessages,
   getNewMessageCount,
+  getDeletingMessageIds,
+  getRestoringMessageIds,
 } = dialogsSlice.selectors;
 export const {
   setMessages,
+  setMessageDeletedStatus,
   setDialogsPage,
   setCurrentDialog,
   moveSelectedDialogToTop,

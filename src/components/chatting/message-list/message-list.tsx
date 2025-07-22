@@ -12,6 +12,8 @@ import { formatDateShort } from "@utils/helpers/date";
 import { MessageListProps } from "./type";
 import { deleteMessageAsync, restoreMessageAsync } from "@thunks/dialogs";
 import s from "./message-list.module.css";
+import { checkInProgress } from "@utils/helpers/array-helpers";
+import { getDeletingMessageIds, getRestoringMessageIds } from "@slices/dialogs";
 
 export const MessageList: FC<MessageListProps> = ({
   userId,
@@ -24,6 +26,8 @@ export const MessageList: FC<MessageListProps> = ({
   const { messages, hasMore, isLoading, fetchMessages } = useFetchMessages({
     userId,
   });
+  const deletingMessageIds = useSelector(getDeletingMessageIds);
+  const restoringMessageIds = useSelector(getRestoringMessageIds);
 
   // Scroll logic
   const [isFirstLoad, setIsFirstLoad] = useState(true);
@@ -79,9 +83,11 @@ export const MessageList: FC<MessageListProps> = ({
           content={m.body}
           username={m.senderName}
           addedAt={m.addedAt}
-          isViewed={m.viewed}
-          isRemoved={m.isRemoved}
           photo={isMessageOwner ? currentUser.photos?.small : partnerAvatar}
+          isViewed={m.viewed}
+          isDeleted={m.isDeleted}
+          isDeleting={checkInProgress(deletingMessageIds, m.id)}
+          isRestoring={checkInProgress(restoringMessageIds, m.id)}
           isOwnMessage={isMessageOwner}
           isMobile={isMobile}
           onRestore={restoreMessage}
