@@ -5,7 +5,7 @@ import {
 } from "@components/chatting";
 import { TSendMessageForm } from "@components/chatting/send-message-form/types";
 import { getSelectedDialog } from "@selectors/dialogs";
-import { getIsSendingMessage, moveSelectedDialogToTop } from "@slices/dialogs";
+import { getIsSendingMessage, moveDialogToTop } from "@slices/dialogs";
 import { useDispatch, useSelector } from "@store";
 import { getDialogsAsync, sendMessageAsync } from "@thunks/dialogs";
 import { Button } from "@ui/button";
@@ -23,8 +23,12 @@ export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isSendingMessage = useSelector(getIsSendingMessage);
-  const selectedDialog = useSelector(getSelectedDialog);
+  const selectedDialog = useSelector((state) =>
+    getSelectedDialog(state, userId)
+  );
   const bottomListRef = useRef<HTMLDivElement>(null);
+
+  console.log(userId);
 
   const openProfile = () => {
     navigate(`/profile/${userId}`);
@@ -60,7 +64,7 @@ export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
   const onSubmit: SubmitHandler<TSendMessageForm> = async ({ message }) => {
     try {
       await dispatch(sendMessageAsync({ userId, message })).unwrap();
-      dispatch(moveSelectedDialogToTop());
+      dispatch(moveDialogToTop(userId));
       bottomListRef.current?.scrollIntoView({
         block: "nearest",
       });

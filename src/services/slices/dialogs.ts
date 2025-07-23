@@ -18,7 +18,6 @@ import { TDialogsState, TSetDeletedPayload } from "./types";
 
 const initialState: TDialogsState = {
   dialogs: [],
-  selectedDialogId: null,
   messages: [],
   newMessageCount: 0,
   hasMoreMessages: true,
@@ -47,18 +46,13 @@ const dialogsSlice = createSlice({
   name: "dialogs",
   initialState,
   reducers: {
-    moveSelectedDialogToTop: (state) => {
-      if (!state.selectedDialogId) return;
-      const index = state.dialogs.findIndex(
-        (d) => d.id === state.selectedDialogId
-      );
+    moveDialogToTop: (state, { payload }: PayloadAction<number>) => {
+      const index = state.dialogs.findIndex((d) => d.id === payload);
 
       if (index > 0) {
-        const selectedDialog = state.dialogs[index];
-        const newDialogs = state.dialogs.filter(
-          (d) => d.id !== state.selectedDialogId
-        );
-        state.dialogs = [selectedDialog, ...newDialogs];
+        const foundDialog = state.dialogs[index];
+        const newDialogs = state.dialogs.filter((d) => d.id !== payload);
+        state.dialogs = [foundDialog, ...newDialogs];
       }
     },
     setMessages: (state, { payload }: PayloadAction<TMessage[]>) => {
@@ -73,8 +67,7 @@ const dialogsSlice = createSlice({
         isDeleted: value,
       });
     },
-    setCurrentDialog: (state, { payload }: PayloadAction<number | null>) => {
-      state.selectedDialogId = payload;
+    setCurrentDialog: (state) => {
       state.hasMoreMessages = true;
       state.pagination.messages.currentPage = 1;
       state.messages = [];
@@ -86,7 +79,6 @@ const dialogsSlice = createSlice({
   selectors: {
     getDialogs: (state) => state.dialogs,
     getMessages: (state) => state.messages,
-    getSelectedDialogId: (state) => state.selectedDialogId,
     getHasMoreMessages: (state) => state.hasMoreMessages,
     getNewMessageCount: (state) => state.newMessageCount,
     getMessagesPagination: (state) => state.pagination.messages,
@@ -214,7 +206,6 @@ export const {
   getIsLoadingMessages,
   getIsStartingDialog,
   getIsSendingMessage,
-  getSelectedDialogId,
   getMessagesPagination,
   getDialogsPagination,
   getHasMoreMessages,
@@ -227,5 +218,5 @@ export const {
   setMessageDeletedStatus,
   setDialogsPage,
   setCurrentDialog,
-  moveSelectedDialogToTop,
+  moveDialogToTop,
 } = dialogsSlice.actions;

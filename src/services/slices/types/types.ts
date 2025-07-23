@@ -64,7 +64,6 @@ export type TAuthState = {
 
 export type TDialogsState = {
   dialogs: TDialog[];
-  selectedDialogId: number | null;
   messages: TMessage[];
   newMessageCount: number;
   hasMoreMessages: boolean;
