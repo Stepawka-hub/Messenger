@@ -1,34 +1,28 @@
+import { FC, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "@store";
+import { getSelectedDialog } from "@selectors/dialogs";
+import { getDialogsAsync } from "@thunks/dialogs";
+import { PrivateChatProps } from "./type";
 import {
+  SendMessageFormWrapper,
   MessageList,
-  SendMessageForm,
   StartDialogButton,
 } from "@components/chatting";
-import { TSendMessageForm } from "@components/chatting/send-message-form/types";
-import { getSelectedDialog } from "@selectors/dialogs";
-import { getIsSendingMessage, moveDialogToTop } from "@slices/dialogs";
-import { useDispatch, useSelector } from "@store";
-import { getDialogsAsync, sendMessageAsync } from "@thunks/dialogs";
 import { Button } from "@ui/button";
 import { ChatHeader } from "@ui/chat-header";
 import { ChatWrapper } from "@ui/chat-wrapper";
-import { FC, useRef } from "react";
-import { SubmitHandler } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { ChatStub } from "../chat-stub";
-import { PrivateChatProps } from "./type";
+import { ChatStub } from "@ui/chat-stub";
 import clsx from "clsx";
 import s from "./private-chat.module.css";
 
 export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isSendingMessage = useSelector(getIsSendingMessage);
   const selectedDialog = useSelector((state) =>
     getSelectedDialog(state, userId)
   );
   const bottomListRef = useRef<HTMLDivElement>(null);
-
-  console.log(userId);
 
   const openProfile = () => {
     navigate(`/profile/${userId}`);
@@ -61,16 +55,10 @@ export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
     );
   }
 
-  const onSubmit: SubmitHandler<TSendMessageForm> = async ({ message }) => {
-    try {
-      await dispatch(sendMessageAsync({ userId, message })).unwrap();
-      dispatch(moveDialogToTop(userId));
-      bottomListRef.current?.scrollIntoView({
-        block: "nearest",
-      });
-    } catch (error) {
-      console.error("Error sending message:", error);
-    }
+  const onSendMessage = () => {
+    bottomListRef.current?.scrollIntoView({
+      block: "nearest",
+    });
   };
 
   return (
@@ -91,7 +79,7 @@ export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
         />
       }
       footer={
-        <SendMessageForm disabled={isSendingMessage} onSubmit={onSubmit} />
+        <SendMessageFormWrapper userId={userId} onSuccess={onSendMessage} />
       }
     />
   );

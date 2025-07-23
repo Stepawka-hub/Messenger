@@ -1,5 +1,5 @@
 import { DialogList, PrivateChat } from "@components/chatting";
-import { ChatStub } from "@components/chatting/chat-stub";
+import { ChatStub } from "@ui/chat-stub";
 import { DialogsLayout } from "@components/layouts";
 import {
   getIsLoadingDialogs,
