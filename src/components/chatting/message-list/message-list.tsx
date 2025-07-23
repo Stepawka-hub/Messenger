@@ -1,17 +1,21 @@
-import { FC, Fragment, useCallback, useEffect, useState } from "react";
+import { FC, Fragment } from "react";
 import { useMediaQuery } from "react-responsive";
 import { isSameDay } from "date-fns";
-import { useDispatch, useSelector } from "@store";
-import { getDeletingMessageIds, getRestoringMessageIds } from "@slices/dialogs";
-import { getCurrentUser } from "@slices/auth";
-import { deleteMessageAsync, restoreMessageAsync } from "@thunks/dialogs";
-import { useFetchMessages, useInfiniteScroll } from "@hooks";
-import { formatDateShort } from "@utils/helpers/date";
-import { checkInProgress } from "@utils/helpers/array-helpers";
-import { MessageListProps } from "./type";
 import { ChatMessage } from "@components/chatting";
+import {
+  useFetchMessages,
+  useInfiniteScroll,
+  useMessageActions,
+  useScrollToBottom,
+} from "@hooks";
+import { getCurrentUser } from "@slices/auth";
+import { getDeletingMessageIds, getRestoringMessageIds } from "@slices/dialogs";
+import { useSelector } from "@store";
 import { Loader } from "@ui/loader";
 import { NoDataFound } from "@ui/no-data-found";
+import { checkInProgress } from "@utils/helpers/array-helpers";
+import { formatDateShort } from "@utils/helpers/date";
+import { MessageListProps } from "./type";
 import s from "./message-list.module.css";
 
 export const MessageList: FC<MessageListProps> = ({
@@ -20,46 +24,19 @@ export const MessageList: FC<MessageListProps> = ({
   bottomListRef,
 }) => {
   console.log("MESSAGE LIST");
-  const dispatch = useDispatch();
   const currentUser = useSelector(getCurrentUser);
+  const deletingMessageIds = useSelector(getDeletingMessageIds);
+  const restoringMessageIds = useSelector(getRestoringMessageIds);
+
   const isMobile = useMediaQuery({ maxWidth: 760 });
   const { messages, hasMore, isLoading, fetchMessages } = useFetchMessages({
     userId,
   });
-  const deletingMessageIds = useSelector(getDeletingMessageIds);
-  const restoringMessageIds = useSelector(getRestoringMessageIds);
+  const { deleteMessage, restoreMessage } = useMessageActions();
 
   // Scroll logic
-  const [isFirstLoad, setIsFirstLoad] = useState(true);
   const loadMoreRef = useInfiniteScroll({ loadMore: fetchMessages, hasMore });
-
-  useEffect(() => {
-    const bottomRef = bottomListRef.current;
-    if (bottomRef && messages.length > 0 && isFirstLoad) {
-      bottomRef.scrollIntoView({
-        block: "nearest",
-      });
-      setIsFirstLoad(false);
-    }
-  }, [messages, isFirstLoad, bottomListRef]);
-
-  useEffect(() => {
-    setIsFirstLoad(true);
-  }, [userId]);
-
-  const deleteMessage = useCallback(
-    (messageId: string) => {
-      dispatch(deleteMessageAsync(messageId));
-    },
-    [dispatch]
-  );
-
-  const restoreMessage = useCallback(
-    (messageId: string) => {
-      dispatch(restoreMessageAsync(messageId));
-    },
-    [dispatch]
-  );
+  useScrollToBottom({ userId, messages, bottomListRef });
 
   if (!messages.length && !hasMore) {
     return <NoDataFound label="Список сообщений пуст" className={s.noData} />;
