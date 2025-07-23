@@ -1,0 +1,18 @@
+.separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.25rem;
+  text-align: center;
+}
+
+.text {
+  padding: 0 1rem;
+  color: var(--hint-color);
+}
+
+.line {
+  height: 1px;
+  flex-grow: 1;
+  background-color: var(--hint-color);
+}

@@ -15,12 +15,6 @@
   align-items: center;
 }
 
-.separator {
-  margin: 0.25rem;
-  color: var(--hint-color);
-  text-align: center;
-}
-
 .bottomList {
   padding-top: 0.75rem;
 }

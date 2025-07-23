@@ -17,13 +17,13 @@ import { checkInProgress } from "@utils/helpers/array-helpers";
 import { formatDateShort } from "@utils/helpers/date";
 import { MessageListProps } from "./type";
 import s from "./message-list.module.css";
+import { Separator } from "@ui/separator";
 
 export const MessageList: FC<MessageListProps> = ({
   userId,
   partnerAvatar,
   bottomListRef,
 }) => {
-  console.log("MESSAGE LIST");
   const currentUser = useSelector(getCurrentUser);
   const deletingMessageIds = useSelector(getDeletingMessageIds);
   const restoringMessageIds = useSelector(getRestoringMessageIds);
@@ -51,9 +51,7 @@ export const MessageList: FC<MessageListProps> = ({
 
     return (
       <Fragment key={m.id}>
-        {showSeparator && (
-          <div className={s.separator}>{formatDateShort(m.addedAt)}</div>
-        )}
+        {showSeparator && <Separator text={formatDateShort(m.addedAt)} />}
         <ChatMessage
           messageId={m.id}
           senderId={m.senderId}
