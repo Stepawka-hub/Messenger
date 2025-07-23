@@ -14,7 +14,11 @@ import {
   removeFromArray,
   updateObjectInArray,
 } from "@utils/helpers/array-helpers";
-import { TDialogsState, TSetDeletedPayload } from "./types";
+import {
+  TDialogsState,
+  TSetDeletedPayload,
+  TSetDialogActivityDatePayload,
+} from "./types";
 
 const initialState: TDialogsState = {
   dialogs: [],
@@ -46,15 +50,6 @@ const dialogsSlice = createSlice({
   name: "dialogs",
   initialState,
   reducers: {
-    moveDialogToTop: (state, { payload }: PayloadAction<number>) => {
-      const index = state.dialogs.findIndex((d) => d.id === payload);
-
-      if (index > 0) {
-        const foundDialog = state.dialogs[index];
-        const newDialogs = state.dialogs.filter((d) => d.id !== payload);
-        state.dialogs = [foundDialog, ...newDialogs];
-      }
-    },
     setMessages: (state, { payload }: PayloadAction<TMessage[]>) => {
       state.messages = payload;
     },
@@ -65,6 +60,23 @@ const dialogsSlice = createSlice({
       const { messageId, value } = payload;
       state.messages = updateObjectInArray(state.messages, messageId, "id", {
         isDeleted: value,
+      });
+    },
+    moveDialogToTop: (state, { payload }: PayloadAction<number>) => {
+      const index = state.dialogs.findIndex((d) => d.id === payload);
+
+      if (index > 0) {
+        const foundDialog = state.dialogs[index];
+        const newDialogs = state.dialogs.filter((d) => d.id !== payload);
+        state.dialogs = [foundDialog, ...newDialogs];
+      }
+    },
+    setDialogActivityDate: (
+      state,
+      { payload }: PayloadAction<TSetDialogActivityDatePayload>
+    ) => {
+      state.dialogs = updateObjectInArray(state.dialogs, payload.dialogId, "id", {
+        lastDialogActivityDate: payload.date,
       });
     },
     setCurrentDialog: (state) => {
@@ -219,4 +231,5 @@ export const {
   setDialogsPage,
   setCurrentDialog,
   moveDialogToTop,
+  setDialogActivityDate
 } = dialogsSlice.actions;

@@ -4,7 +4,11 @@ import { useDispatch, useSelector } from "@store";
 import { SendMessageFormWrapperProps } from "./type";
 import { SendMessageForm } from "../send-message-form";
 import { TSendMessageForm } from "../send-message-form/types";
-import { getIsSendingMessage, moveDialogToTop } from "@slices/dialogs";
+import {
+  getIsSendingMessage,
+  moveDialogToTop,
+  setDialogActivityDate,
+} from "@slices/dialogs";
 import { sendMessageAsync } from "@thunks/dialogs";
 
 export const SendMessageFormWrapper: FC<SendMessageFormWrapperProps> = ({
@@ -18,6 +22,12 @@ export const SendMessageFormWrapper: FC<SendMessageFormWrapperProps> = ({
     try {
       await dispatch(sendMessageAsync({ userId, message })).unwrap();
       dispatch(moveDialogToTop(userId));
+      dispatch(
+        setDialogActivityDate({
+          dialogId: userId,
+          date: new Date().toISOString(),
+        })
+      );
       onSuccess();
     } catch (error) {
       console.error("Error sending message:", error);
