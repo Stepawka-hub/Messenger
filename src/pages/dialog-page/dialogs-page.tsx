@@ -24,14 +24,14 @@ export const DialogsPage: FC = () => {
     dispatch(getDialogsAsync());
 
     return () => {
-      dispatch(setCurrentDialog(null));
+      dispatch(setCurrentDialog());
       dispatch(setDialogsPage(1));
     };
   }, [dispatch]);
 
   useEffect(() => {
     if (userId) {
-      dispatch(setCurrentDialog(Number(userId)));
+      dispatch(setCurrentDialog());
     }
   }, [dispatch, userId]);
 

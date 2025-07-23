@@ -2,17 +2,16 @@ import { FC, Fragment, useCallback, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { isSameDay } from "date-fns";
 import { useDispatch, useSelector } from "@store";
+import { getDeletingMessageIds, getRestoringMessageIds } from "@slices/dialogs";
 import { getCurrentUser } from "@slices/auth";
-import { useFetchMessages } from "@hooks/useFetchMessages";
-import { useInfiniteScroll } from "@hooks/useInfinityScroll";
+import { deleteMessageAsync, restoreMessageAsync } from "@thunks/dialogs";
+import { useFetchMessages, useInfiniteScroll } from "@hooks";
+import { formatDateShort } from "@utils/helpers/date";
+import { checkInProgress } from "@utils/helpers/array-helpers";
+import { MessageListProps } from "./type";
 import { ChatMessage } from "@components/chatting";
 import { Loader } from "@ui/loader";
 import { NoDataFound } from "@ui/no-data-found";
-import { formatDateShort } from "@utils/helpers/date";
-import { MessageListProps } from "./type";
-import { deleteMessageAsync, restoreMessageAsync } from "@thunks/dialogs";
-import { checkInProgress } from "@utils/helpers/array-helpers";
-import { getDeletingMessageIds, getRestoringMessageIds } from "@slices/dialogs";
 import s from "./message-list.module.css";
 
 export const MessageList: FC<MessageListProps> = ({

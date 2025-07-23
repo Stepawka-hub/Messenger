@@ -1,8 +1,8 @@
-import { usePolling } from "@hooks/usePolling";
-import { getIsAuth } from "@slices/auth";
-import { useDispatch, useSelector } from "@store";
-import { getNewMessageCountAsync } from "@thunks/dialogs";
 import { FC, useCallback } from "react";
+import { useDispatch, useSelector } from "@store";
+import { getIsAuth } from "@slices/auth";
+import { getNewMessageCountAsync } from "@thunks/dialogs";
+import { usePolling } from "@hooks";
 
 export const BackgroundDataSync: FC = () => {
   const dispatch = useDispatch();

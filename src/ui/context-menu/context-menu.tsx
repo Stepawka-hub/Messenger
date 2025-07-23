@@ -1,7 +1,7 @@
-import { useClickOutside } from "@hooks/useClickOutside";
 import { FC, MouseEvent } from "react";
-import { ContextMenuProps } from "./type";
 import { CSSTransition } from "react-transition-group";
+import { useClickOutside } from "@hooks";
+import { ContextMenuProps } from "./type";
 import s from "./context-menu.module.css";
 
 export const ContextMenu: FC<ContextMenuProps> = ({

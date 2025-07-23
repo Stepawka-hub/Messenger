@@ -1,8 +1,8 @@
-import { useTheme } from "@hooks/useTheme";
-import { Select } from "@ui/form-elements";
 import { FC, useRef } from "react";
-import { TOption } from "./types";
 import { SelectInstance } from "react-select";
+import { useTheme } from "@hooks";
+import { Select } from "@ui/form-elements";
+import { TOption } from "./types";
 
 const themeOptions: TOption[] = [
   { value: "light", label: "Светлая" },

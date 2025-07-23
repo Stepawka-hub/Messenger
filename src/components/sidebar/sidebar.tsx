@@ -1,13 +1,13 @@
-import { useClickOutside } from "@hooks/useClickOutside";
+import { FC } from "react";
+import { useSelector } from "@store";
 import { getCurrentUser, getIsAuth } from "@slices/auth";
 import { getNewMessageCount } from "@slices/dialogs";
-import { useSelector } from "@store";
+import { useClickOutside } from "@hooks";
+import { SidebarProps } from "./type";
 import { Counter } from "@ui/counter";
 import { Link } from "@ui/link";
 import clsx from "clsx";
-import { FC } from "react";
 import s from "./sidebar.module.css";
-import { SidebarProps } from "./type";
 
 export const Sidebar: FC<SidebarProps> = ({ isOpen, onClose }) => {
   const isAuth = useSelector(getIsAuth);

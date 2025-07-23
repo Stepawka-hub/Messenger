@@ -1,9 +1,9 @@
-import { useContextMenu } from "@hooks/useContextMenu";
-import { TrashIcon } from "@icons";
-import { TContextMenuItem } from "@providers/context-menu";
-import { Message } from "@ui/message";
 import { FC, memo, MouseEvent } from "react";
+import { TContextMenuItem } from "@providers/context-menu";
 import { ChatMessageProps } from "./type";
+import { useContextMenu } from "@hooks";
+import { TrashIcon } from "@icons";
+import { Message } from "@ui/message";
 import { Loader } from "@ui/loader";
 import { DeletedMessageBanner } from "@ui/deleted-message-banner";
 import s from "./chat-message.module.css";
