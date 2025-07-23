@@ -1,4 +1,3 @@
-import { TGetItemsDataResponse } from "@api/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   deleteMessageAsync,
@@ -9,7 +8,7 @@ import {
   sendMessageAsync,
   startDialogAsync,
 } from "@thunks/dialogs";
-import { TBaseMessage, TDialog, TMessage } from "@types";
+import { TDialog, TMessage } from "@types";
 import {
   removeFromArray,
   updateObjectInArray,
@@ -75,9 +74,14 @@ const dialogsSlice = createSlice({
       state,
       { payload }: PayloadAction<TSetDialogActivityDatePayload>
     ) => {
-      state.dialogs = updateObjectInArray(state.dialogs, payload.dialogId, "id", {
-        lastDialogActivityDate: payload.date,
-      });
+      state.dialogs = updateObjectInArray(
+        state.dialogs,
+        payload.dialogId,
+        "id",
+        {
+          lastDialogActivityDate: payload.date,
+        }
+      );
     },
     setCurrentDialog: (state) => {
       state.hasMoreMessages = true;
@@ -121,26 +125,35 @@ const dialogsSlice = createSlice({
       .addCase(getMessagesAsync.pending, (state) => {
         state.loading.isGettingMessages = true;
       })
-      .addCase(
-        getMessagesAsync.fulfilled,
-        (
-          state,
-          { payload }: PayloadAction<TGetItemsDataResponse<TBaseMessage>>
-        ) => {
-          const { items, totalCount } = payload;
+      .addCase(getMessagesAsync.fulfilled, (state, { payload, meta }) => {
+        const { items, totalCount, numberOfRead } = payload;
+        const { userId } = meta.arg;
 
-          if (items.length) {
-            state.messages = [...items, ...state.messages];
-            state.pagination.messages.currentPage += 1;
-          }
+        if (numberOfRead > 0) {
+          state.dialogs = state.dialogs.map((d) => {
+            if (d.id === userId) {
+              const newMessageCount = d.newMessagesCount - numberOfRead;
+              return {
+                ...d,
+                newMessagesCount: newMessageCount < 0 ? 0 : newMessageCount,
+              };
+            }
 
-          if (state.messages.length === totalCount) {
-            state.hasMoreMessages = false;
-          }
-
-          state.loading.isGettingMessages = false;
+            return d;
+          });
         }
-      )
+
+        if (items.length) {
+          state.messages = [...items, ...state.messages];
+          state.pagination.messages.currentPage += 1;
+        }
+
+        if (state.messages.length === totalCount) {
+          state.hasMoreMessages = false;
+        }
+
+        state.loading.isGettingMessages = false;
+      })
       .addCase(getMessagesAsync.rejected, (state) => {
         state.loading.isGettingMessages = false;
       })
@@ -231,5 +244,5 @@ export const {
   setDialogsPage,
   setCurrentDialog,
   moveDialogToTop,
-  setDialogActivityDate
+  setDialogActivityDate,
 } = dialogsSlice.actions;

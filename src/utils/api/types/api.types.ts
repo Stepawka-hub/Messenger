@@ -1,4 +1,4 @@
-import { TErrorMessage, TMessage, TPagination, TUserId } from "@types";
+import { TPagination, TUserId } from "@types";
 
 // Base
 export type TResponse = TResponseWithData<object>;

@@ -1,16 +1,16 @@
 import { API_CODES } from "@api/constants";
 import { dialogsAPI } from "@api/dialogs.api";
 import {
-  TGetItemsDataResponse,
   TGetMessagesPayload,
-  TSendMessagePayload,
+  TSendMessagePayload
 } from "@api/types";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { TBaseMessage, TDialog, TMessage, TUserId } from "@types";
+import { setMessageDeletedStatus } from "@slices/dialogs";
+import { TGetMessagesReturnValue } from "@slices/types";
+import { TDialog, TMessage, TUserId } from "@types";
 import { formatDateToISOString } from "@utils/helpers/date";
 import { createErrorPayload } from "@utils/helpers/error-helpers";
 import { TBaseRejectValue } from "./types";
-import { setMessageDeletedStatus } from "@slices/dialogs";
 
 const GET_DIALOGS = "dialogs/get-dialogs";
 const START_DIALOG = "dialogs/start";
@@ -62,7 +62,7 @@ export const startDialogAsync = createAsyncThunk<
 });
 
 export const getMessagesAsync = createAsyncThunk<
-  TGetItemsDataResponse<TBaseMessage>,
+  TGetMessagesReturnValue,
   TGetMessagesPayload,
   TBaseRejectValue
 >(
@@ -75,12 +75,23 @@ export const getMessagesAsync = createAsyncThunk<
         pageSize,
       });
 
-      return {
-        items: items.map(({ addedAt, ...m }) => ({
+      let numberOfRead = 0;
+      const updatedMessages = items.map(({ addedAt, viewed, ...m }) => {
+        if (!viewed && userId === m.senderId) {
+          numberOfRead++;
+        }
+
+        return {
           ...m,
+          viewed: userId === m.senderId ? true : viewed,
           addedAt: formatDateToISOString(addedAt),
-        })),
+        };
+      });
+
+      return {
+        items: updatedMessages,
         totalCount,
+        numberOfRead,
       };
     } catch (err) {
       console.error("Error fetching messages:", err);
