@@ -64,32 +64,26 @@ export type TAuthState = {
 
 export type TDialogsState = {
   dialogs: TDialog[];
-  selectedDialogId: number | null;
   messages: TMessage[];
+  newMessageCount: number;
   hasMoreMessages: boolean;
   pagination: {
     dialogs: TPagination;
-    messages: TPagination;
+    messages: TPagination & {
+      totalCount: number;
+    };
   };
   loading: {
     isGettingDialogs: boolean;
     isStartingDialog: boolean;
     isGettingMessages: boolean;
     isSendingMessage: boolean;
+    deletingMessageIds: string[];
+    restoringMessageIds: string[];
   };
 };
 
 export type TChatState = {
   status: TSocketStatus;
   messages: TChatMessage[];
-};
-
-export type TSetIsFollowingPayload = {
-  userid: TUserId;
-  followingInProgress: boolean;
-};
-
-export type TSetFollowedPayload = {
-  userid: TUserId;
-  status: boolean;
 };

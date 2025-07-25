@@ -1,0 +1,1 @@
+export { SendMessageFormWrapper } from './send-message-form-wrapper';

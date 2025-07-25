@@ -30,7 +30,7 @@
       "@icons": ["src/ui/icons"],
       "@ui/*": ["src/ui/*"],
       "@components/*": ["src/components/*"],
-      "@hooks/*": ["src/hooks/*"],
+      "@hooks": ["src/hooks"],
       "@pages/*": ["src/pages/*"],
       "@providers/*": ["src/providers/*"],
       "@slices/*": ["src/services/slices/*"],

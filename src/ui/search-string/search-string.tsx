@@ -1,11 +1,15 @@
-import { SearchIcon } from "@icons"
-import { useDebounce } from "@hooks/useDebounce";
 import { ChangeEvent, FC, useState } from "react";
+import { useDebounce } from "@hooks";
+import { SearchStringProps } from "./types";
+import { SearchIcon } from "@icons";
+import { Input } from "@ui/form-elements";
 import s from "./search-string.module.css";
-import { SearchStringProps } from './types';
-import { Input } from '@ui/form-elements';
 
-export const SearchString: FC<SearchStringProps> = ({ initialValue, placeholder, onSearch }) => {
+export const SearchString: FC<SearchStringProps> = ({
+  initialValue,
+  placeholder,
+  onSearch,
+}) => {
   const debouncedSearch = useDebounce(onSearch, 1000);
   const [value, setValue] = useState(initialValue);
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

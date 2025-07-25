@@ -1,0 +1,1 @@
+export { DeletedMessageBanner } from './deleted-message-banner';

@@ -1,0 +1,1 @@
+export { usePaginatedUsers } from './usePaginatedUsers';

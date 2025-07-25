@@ -1,6 +1,6 @@
 import { UserList } from "@components/user-list";
 import { UserSearch } from "@components/user-search";
-import { usePaginatedUsers } from "@hooks/usePaginatedUsers";
+import { usePaginatedUsers } from "@hooks";
 import { getCurrentUser } from "@slices/auth";
 import { useSelector } from "@store";
 import { PageWrapper } from "@ui/page-wrapper";

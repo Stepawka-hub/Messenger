@@ -1,36 +1,43 @@
 import { DialogList, PrivateChat } from "@components/chatting";
-import { ChatStub } from "@components/chatting/chat-stub";
+import { ChatStub } from "@ui/chat-stub";
 import { DialogsLayout } from "@components/layouts";
-import { setCurrentDialog, setDialogsPage } from "@slices/dialogs";
-import { useDispatch } from "@store";
+import {
+  getIsLoadingDialogs,
+  setCurrentDialog,
+  setDialogsPage,
+} from "@slices/dialogs";
+import { useDispatch, useSelector } from "@store";
 import { getDialogsAsync } from "@thunks/dialogs";
 import { FC, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
 import { useParams } from "react-router-dom";
+import { Loader } from "@ui/loader";
 import s from "./dialogs-page.module.css";
 
-const DialogsPage: FC = () => {
+export const DialogsPage: FC = () => {
   const dispatch = useDispatch();
   const largeScreen = useMediaQuery({ minWidth: 1280 });
+  const isLoading = useSelector(getIsLoadingDialogs);
   const { userId } = useParams<{ userId?: string }>();
 
   useEffect(() => {
     dispatch(getDialogsAsync());
 
     return () => {
+      dispatch(setCurrentDialog());
       dispatch(setDialogsPage(1));
-    }
+    };
   }, [dispatch]);
 
   useEffect(() => {
     if (userId) {
-      dispatch(setCurrentDialog(Number(userId)));
+      dispatch(setCurrentDialog());
     }
-
-    return () => {
-      dispatch(setCurrentDialog(null));
-    };
   }, [dispatch, userId]);
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   if (!largeScreen) {
     return (
@@ -53,5 +60,3 @@ const DialogsPage: FC = () => {
     </DialogsLayout>
   );
 };
-
-export default DialogsPage;

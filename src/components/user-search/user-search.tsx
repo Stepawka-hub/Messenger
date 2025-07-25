@@ -1,12 +1,12 @@
-import { FilterIcon } from "@icons";
-import { getSearchQuery, setCurrentPage, setSearchQuery } from "@slices/users";
-import { useDispatch, useSelector } from "@store";
-import { SearchString } from "@ui/search-string";
 import { FC, memo, useCallback } from "react";
-import s from "./user-search.module.css";
-import { useModal } from "@hooks/useModal";
+import { useDispatch, useSelector } from "@store";
+import { getSearchQuery, setCurrentPage, setSearchQuery } from "@slices/users";
+import { useModal } from "@hooks";
 import { UserFilter } from "@components/user-filter";
-import { Button } from '@ui/button';
+import { FilterIcon } from "@icons";
+import { Button } from "@ui/button";
+import { SearchString } from "@ui/search-string";
+import s from "./user-search.module.css";
 
 export const UserSearch: FC = memo(() => {
   const dispatch = useDispatch();

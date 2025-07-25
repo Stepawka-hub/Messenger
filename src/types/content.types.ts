@@ -11,7 +11,7 @@ export type TDialog = {
   photos: TPhotos;
 };
 
-export type TMessage = {
+export type TBaseMessage = {
   id: string;
   body: string;
   addedAt: string;
@@ -19,11 +19,14 @@ export type TMessage = {
   senderName: string;
   recipientId: TUserId;
   viewed: boolean;
+};
 
+export type TMessage = TBaseMessage & {
   recipientName?: string;
   deletedBySender?: boolean;
   deletedByRecipient?: boolean;
   isSpam?: boolean;
+  isDeleted?: boolean;
 };
 
 export type TChatMessage = {

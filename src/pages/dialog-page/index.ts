@@ -1,1 +1,1 @@
-export { default } from './dialogs-page';
+export { DialogsPage } from './dialogs-page';

@@ -1,6 +1,6 @@
-import { TUserId } from "@types";
+import { TSocialUser, TUserId } from "@types";
 import { BaseAPI } from "./base.api";
-import { TGetUsersDataResponse, TGetUsersParams, TResponse } from "./types";
+import { TGetItemsDataResponse, TGetUsersParams, TResponse } from "./types";
 import api from "./api";
 
 class UsersAPI extends BaseAPI {
@@ -9,7 +9,7 @@ class UsersAPI extends BaseAPI {
     pageSize = 10,
     term: string,
     friend: boolean | null
-  ): Promise<TGetUsersDataResponse> => {
+  ): Promise<TGetItemsDataResponse<TSocialUser>> => {
     const params: TGetUsersParams = {
       page: currentPage,
       count: pageSize,
@@ -17,7 +17,7 @@ class UsersAPI extends BaseAPI {
       ...(friend !== null ? { friend } : {}),
     };
 
-    const { data } = await this.api.get<TGetUsersDataResponse>(`users`, {
+    const { data } = await this.api.get<TGetItemsDataResponse<TSocialUser>>(`users`, {
       params,
     });
 

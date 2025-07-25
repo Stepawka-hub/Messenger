@@ -1,3 +1,8 @@
+import { FC } from "react";
+import { useSelector } from "@store";
+import { getIsAuth } from "@slices/auth";
+import { useProfileEdit } from "@hooks";
+import { ProfileInfoProps } from "./type";
 import { StartDialogButton } from "@components/chatting";
 import {
   ProfileAvatar,
@@ -5,13 +10,8 @@ import {
   ProfileData,
   ProfileEditForm,
 } from "@components/profile";
-import { useProfileEdit } from "@hooks/useProfileEdit";
 import { Button } from "@ui/button";
-import { FC } from "react";
 import s from "./profile-info.module.css";
-import { ProfileInfoProps } from "./type";
-import { useSelector } from "@store";
-import { getIsAuth } from "@slices/auth";
 
 export const ProfileInfo: FC<ProfileInfoProps> = ({ id, isOwner, profile }) => {
   const isAuth = useSelector(getIsAuth);

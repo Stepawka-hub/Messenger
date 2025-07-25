@@ -20,10 +20,10 @@ const ensureDate = (value: string | Date): Date => {
   return new Date();
 };
 
-export const formatDateToISOString = (dateString: string): string => {
-  const date = new Date(dateString);
+export const formatDateToISOString = (date: string | Date): string => {
+  const safeDate = ensureDate(date);
   const utcDate = new Date(
-    date.getTime() - date.getTimezoneOffset() * MS_PER_MINUTE
+    safeDate.getTime() - safeDate.getTimezoneOffset() * MS_PER_MINUTE
   );
   return utcDate.toISOString();
 };

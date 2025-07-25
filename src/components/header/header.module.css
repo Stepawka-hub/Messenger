@@ -4,5 +4,5 @@
   align-items: center;
   padding: 1rem 2rem;
   background-color: var(--primary-bg-color);
-  border-bottom: 1px solid var(--header-border-color);
+  border-bottom: 1px solid var(--border-divider-line-color);
 }

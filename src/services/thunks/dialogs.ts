@@ -1,7 +1,13 @@
 import { API_CODES } from "@api/constants";
 import { dialogsAPI } from "@api/dialogs.api";
-import { TGetMessagesPayload, TSendMessagePayload } from "@api/types";
+import {
+  TGetMessagesPayload,
+  TGetNewMessagesPayload,
+  TSendMessagePayload,
+} from "@api/types";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { setMessageDeletedStatus } from "@slices/dialogs";
+import { TGetMessagesReturnValue } from "@slices/types";
 import { TDialog, TMessage, TUserId } from "@types";
 import { formatDateToISOString } from "@utils/helpers/date";
 import { createErrorPayload } from "@utils/helpers/error-helpers";
@@ -11,6 +17,10 @@ const GET_DIALOGS = "dialogs/get-dialogs";
 const START_DIALOG = "dialogs/start";
 const SEND_MESSAGE = "dialogs/send-message";
 const GET_MESSAGES = "dialogs/get-messages";
+const GET_NEW_MESSAGES = "dialogs/get-new-messages";
+const GET_NEW_MESSAGE_COUNT = "dialogs/get-new-message-count";
+const DELETE_MESSAGE = "dialogs/delete-message";
+const RESTORE_MESSAGE = "dialogs/restore-message";
 
 export const getDialogsAsync = createAsyncThunk<
   TDialog[],
@@ -54,29 +64,78 @@ export const startDialogAsync = createAsyncThunk<
 });
 
 export const getMessagesAsync = createAsyncThunk<
-  TMessage[],
+  TGetMessagesReturnValue,
   TGetMessagesPayload,
   TBaseRejectValue
 >(
   GET_MESSAGES,
   async ({ userId, currentPage, pageSize }, { rejectWithValue }) => {
     try {
-      const messages = await dialogsAPI.getMessages({
+      const { items, totalCount } = await dialogsAPI.getMessages({
         userId,
         currentPage,
         pageSize,
       });
 
-      return messages.map(({ addedAt, ...m }) => ({
-        ...m,
-        addedAt: formatDateToISOString(addedAt),
-      }));
+      let numberOfRead = 0;
+      const updatedMessages = items.map(({ addedAt, viewed, ...m }) => {
+        if (!viewed && userId === m.senderId) {
+          numberOfRead++;
+        }
+
+        return {
+          ...m,
+          viewed: userId === m.senderId ? true : viewed,
+          addedAt: formatDateToISOString(addedAt),
+        };
+      });
+
+      return {
+        items: updatedMessages,
+        totalCount,
+        numberOfRead,
+      };
     } catch (err) {
       console.error("Error fetching messages:", err);
       return rejectWithValue(createErrorPayload());
     }
   }
 );
+
+export const getNewMessagesAsync = createAsyncThunk<
+  void,
+  TGetNewMessagesPayload,
+  TBaseRejectValue
+>(GET_NEW_MESSAGES, async ({ userId, date }, { rejectWithValue }) => {
+  try {
+    // const { items, totalCount } = await dialogsAPI.getNewMessages({
+    //   userId,
+    //   date,
+    // });
+
+    // let numberOfRead = 0;
+    // const updatedMessages = items.map(({ addedAt, viewed, ...m }) => {
+    //   if (!viewed && userId === m.senderId) {
+    //     numberOfRead++;
+    //   }
+
+    //   return {
+    //     ...m,
+    //     viewed: userId === m.senderId ? true : viewed,
+    //     addedAt: formatDateToISOString(addedAt),
+    //   };
+    // });
+
+    // return {
+    //   items: updatedMessages,
+    //   totalCount,
+    //   numberOfRead,
+    // };
+  } catch (err) {
+    console.error("Error fetching messages:", err);
+    return rejectWithValue(createErrorPayload());
+  }
+});
 
 export const sendMessageAsync = createAsyncThunk<
   TMessage,
@@ -103,6 +162,66 @@ export const sendMessageAsync = createAsyncThunk<
     );
   } catch (err) {
     console.error("Error sending message:", err);
+    return rejectWithValue(createErrorPayload());
+  }
+});
+
+export const getNewMessageCountAsync = createAsyncThunk<
+  number,
+  void,
+  TBaseRejectValue
+>(GET_NEW_MESSAGE_COUNT, async (_, { rejectWithValue }) => {
+  try {
+    const count = await dialogsAPI.getNewMessageCount();
+    return count;
+  } catch (err) {
+    console.error("Error fetching new message count:", err);
+    return rejectWithValue(createErrorPayload());
+  }
+});
+
+export const deleteMessageAsync = createAsyncThunk<
+  void,
+  string,
+  TBaseRejectValue
+>(DELETE_MESSAGE, async (messageId, { dispatch, rejectWithValue }) => {
+  try {
+    const { resultCode, messages } = await dialogsAPI.deleteMessage(messageId);
+
+    if (resultCode !== API_CODES.SUCCESS) {
+      return rejectWithValue(
+        createErrorPayload({
+          message: messages[0] || "Не удалось удалить сообщение",
+        })
+      );
+    }
+
+    dispatch(setMessageDeletedStatus({ messageId, value: true }));
+  } catch (err) {
+    console.error("Error deleting message:", err);
+    return rejectWithValue(createErrorPayload());
+  }
+});
+
+export const restoreMessageAsync = createAsyncThunk<
+  void,
+  string,
+  TBaseRejectValue
+>(RESTORE_MESSAGE, async (messageId, { dispatch, rejectWithValue }) => {
+  try {
+    const { resultCode, messages } = await dialogsAPI.restoreMessage(messageId);
+
+    if (resultCode !== API_CODES.SUCCESS) {
+      return rejectWithValue(
+        createErrorPayload({
+          message: messages[0] || "Не удалось восстановить сообщение",
+        })
+      );
+    }
+
+    dispatch(setMessageDeletedStatus({ messageId, value: false }));
+  } catch (err) {
+    console.error("Message recovery error:", err);
     return rejectWithValue(createErrorPayload());
   }
 });

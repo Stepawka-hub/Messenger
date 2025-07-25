@@ -1,31 +1,26 @@
 import {
   getDialogs,
   getDialogsPagination,
-  getIsLoadingDialogs,
-  setDialogsPage,
+  setDialogsPage
 } from "@slices/dialogs";
 import { useDispatch, useSelector } from "@store";
 import { TDialog } from "@types";
+import { Button } from "@ui/button";
 import { Dialog } from "@ui/dialog";
 import { List } from "@ui/list";
-import { Loader } from "@ui/loader";
-import { FC } from "react";
-import s from "./dialog-list.module.css";
 import { Pagination } from "@ui/pagination";
 import { getPaginatedItems } from "@utils/helpers/array-helpers";
-import { Button } from "@ui/button";
+import { FC } from "react";
 import { useNavigate } from "react-router-dom";
+import s from "./dialog-list.module.css";
 
 export const DialogList: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const dialogs = useSelector(getDialogs);
   const { currentPage, pageSize } = useSelector(getDialogsPagination);
-  const isLoading = useSelector(getIsLoadingDialogs);
 
-  if (isLoading) {
-    return <Loader />;
-  }
+  console.log('RENDER');
 
   const navigateToUsers = () => {
     navigate("/users");
@@ -46,7 +41,6 @@ export const DialogList: FC = () => {
       <List
         items={paginatedDialogs}
         renderItem={renderDialogs}
-        isLoading={isLoading}
         classes={{ list: s.list, noData: s.noData }}
         emptyMessage="Список диалогов пуст"
         emptyContent={

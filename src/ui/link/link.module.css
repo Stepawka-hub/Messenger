@@ -1,0 +1,26 @@
+.link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: .15s linear;
+  text-decoration: none;
+}
+
+.linkText {
+  font-size: 1.75rem;
+  color: var(--primary-text-color);
+  transition: .15s linear;
+}
+
+.link:hover:not(.active) .linkText {
+  color: var(--link-color-active);
+  transform: translateX(0.5rem);
+}
+
+.link:active:not(.active) {
+  opacity: 0.8;
+}
+
+.active .linkText {
+  color: var(--link-color-active);
+}
