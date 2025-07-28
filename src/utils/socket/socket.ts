@@ -1,5 +1,3 @@
-import { TChatMessage } from "@types";
-
 export class Socket {
   private socket: WebSocket | null;
 
@@ -20,7 +18,7 @@ export class Socket {
     }
   }
 
-  send(message: TChatMessage) {
+  send<T>(message: T) {
     if (this.socket) {
       this.socket.send(JSON.stringify(message));
     }
