@@ -12,45 +12,49 @@ import {
 export const socketMiddleware =
   (socket: Socket): AppMiddleware =>
   (params) =>
-  (next) =>
-  (action) => {
+  (next) => {
     const { dispatch } = params;
 
-    if (isWhitelistedAction(action)) {
-      switch (action.type) {
-        case socketConnect.type:
-          socket.connect(WS_URL);
+    const handleOpen = () => {
+      dispatch(setMessages([]));
+    };
 
-          socket.on("open", () => {
-            console.log("OPEN");
-            dispatch(setMessages([]));
-          });
+    const handleClose = () => {};
 
-          socket.on("message", (e: MessageEvent<string>) => {
-            console.log("MESSAGE RECIEVED");
-            const messages: TChatMessage[] = JSON.parse(e.data);
-            dispatch(addMessages(messages));
-          });
+    const handleRecievedMessage = (e: MessageEvent<string>) => {
+      const messages: TChatMessage[] = JSON.parse(e.data);
+      dispatch(addMessages(messages));
+    };
 
-          socket.on("close", () => {
-            console.log("CLOSE");
-          });
-          break;
+    return (action) => {
+      if (isWhitelistedAction(action)) {
+        switch (action.type) {
+          case socketConnect.type:
+            socket.connect(WS_URL);
 
-        case sendMessage.type:
-          console.log("SEND");
-          socket.send(action.payload);
-          break;
+            socket.on("open", handleOpen);
 
-        case socketDisconnect.type:
-          console.log("DISCONNECT");
-          socket.disconnect();
-          break;
+            socket.on("message", handleRecievedMessage);
 
-        default:
-          break;
+            socket.on("close", handleClose);
+            break;
+
+          case sendMessage.type:
+            socket.send(action.payload);
+            break;
+
+          case socketDisconnect.type:
+            socket.off("open", handleOpen);
+            socket.off("message", handleRecievedMessage);
+            socket.off("close", handleClose);
+            socket.disconnect();
+            break;
+
+          default:
+            break;
+        }
       }
-    }
 
-    return next(action);
+      return next(action);
+    };
   };

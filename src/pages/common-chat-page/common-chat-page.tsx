@@ -27,7 +27,6 @@ export const CommonChatPage: FC = () => {
   }, [dispatch]);
 
   const onSubmit: SubmitHandler<TSendMessageForm> = ({ message }) => {
-    console.log(message);
     dispatch(sendMessage(message));
   };
 
