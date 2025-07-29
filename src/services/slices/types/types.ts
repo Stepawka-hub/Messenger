@@ -1,5 +1,5 @@
 import {
-  TChatMessage,
+  TCommonChatMessage,
   TDialog,
   TErrorMessage,
   TMessage,
@@ -85,5 +85,5 @@ export type TDialogsState = {
 
 export type TChatState = {
   status: TSocketStatus;
-  messages: TChatMessage[];
+  messages: TCommonChatMessage[];
 };

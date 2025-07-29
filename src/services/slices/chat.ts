@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TChatMessage, TSocketStatus } from "@types";
+import { TCommonChatMessage, TSocketStatus } from "@types";
 import { TChatState } from "./types";
 
 const initialState: TChatState = {
@@ -11,10 +11,10 @@ const chatSlice = createSlice({
   name: "chat",
   initialState,
   reducers: {
-    addMessages: (state, { payload }: PayloadAction<TChatMessage[]>) => {
+    addMessages: (state, { payload }: PayloadAction<TCommonChatMessage[]>) => {
       state.messages = [...state.messages, ...payload];
     },
-    setMessages: (state, { payload }: PayloadAction<TChatMessage[]>) => {
+    setMessages: (state, { payload }: PayloadAction<TCommonChatMessage[]>) => {
       state.messages = payload;
     },
     setStatus: (state, { payload }: PayloadAction<TSocketStatus>) => {

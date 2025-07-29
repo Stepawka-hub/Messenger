@@ -22,15 +22,15 @@ export const Sidebar: FC<SidebarProps> = ({ isOpen, onClose }) => {
       <nav className={s.nav}>
         {isAuth && (
           <>
-            <Link to={`/profile/${userId}`} label="Profile" />
-            <Link to={`/dialogs`} label="Dialogs">
+            <Link to={`/profile/${userId}`} label="Профиль" />
+            <Link to={`/dialogs`} label="Диалоги">
               {!!newMessageCount && <Counter count={newMessageCount} />}
             </Link>
-            <Link to={`/chat`} label="Common chat" />
-            <Link to={`/users`} label="Find friends" />
+            <Link to={`/chat`} label="Общий чат" />
+            <Link to={`/users`} label="Найти друзей" />
           </>
         )}
-        <Link to={`/settings`} label="Settings" />
+        <Link to={`/settings`} label="Настройки" />
       </nav>
     </aside>
   );
