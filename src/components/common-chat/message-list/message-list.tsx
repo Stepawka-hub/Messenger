@@ -1,12 +1,11 @@
 import { getCurrentUser } from "@slices/auth";
 import { getMessages } from "@slices/common-chat";
 import { useSelector } from "@store";
-import { TCommonChatMessage } from "@types";
 import { Message } from "@ui/message";
-import { NoDataFound } from "@ui/no-data-found";
 import { FC, useEffect } from "react";
 import { MessageListProps } from "./types";
-import s from "./message-list.module.css";
+import { MessagesContainer } from "@components/chat";
+import { useScrollToBottom } from '@hooks';
 
 export const MessageList: FC<MessageListProps> = ({ bottomListRef }) => {
   const messages = useSelector(getMessages);
@@ -21,24 +20,7 @@ export const MessageList: FC<MessageListProps> = ({ bottomListRef }) => {
     }
   }, [messages, bottomListRef]);
 
-  const renderMessage = (
-    { userId, userName, message, photo }: TCommonChatMessage,
-    key?: number
-  ) => (
-    <Message
-      key={key}
-      senderId={userId}
-      username={userName}
-      content={message}
-      photo={photo}
-      isOwnMessage={currentUser?.id === userId}
-      hideInfo
-    />
-  );
-
-  if (!messages.length) {
-    return <NoDataFound label="Список сообщений пуст" className={s.noData} />;
-  }
+  useScrollToBottom({ bottomListRef, deps: [messages] });
 
   const messageElements = messages.map(
     ({ userId, userName, message, photo }, key) => (
@@ -55,9 +37,9 @@ export const MessageList: FC<MessageListProps> = ({ bottomListRef }) => {
   );
 
   return (
-    <section className={s.list}>
-      {messageElements}
-      <div className={s.bottomList} ref={bottomListRef}></div>
-    </section>
+    <MessagesContainer
+      messages={messageElements}
+      bottomListRef={bottomListRef}
+    />
   );
 };

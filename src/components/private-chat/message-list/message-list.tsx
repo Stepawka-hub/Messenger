@@ -11,13 +11,11 @@ import {
 import { getCurrentUser } from "@slices/auth";
 import { getDeletingMessageIds, getRestoringMessageIds } from "@slices/dialogs";
 import { useSelector } from "@store";
-import { Loader } from "@ui/loader";
-import { NoDataFound } from "@ui/no-data-found";
 import { checkInProgress } from "@utils/helpers/array-helpers";
 import { formatDateShort } from "@utils/helpers/date";
 import { MessageListProps } from "./type";
-import s from "./message-list.module.css";
 import { Separator } from "@ui/separator";
+import { MessagesContainer } from "@components/chat";
 
 export const MessageList: FC<MessageListProps> = ({
   userId,
@@ -36,11 +34,7 @@ export const MessageList: FC<MessageListProps> = ({
 
   // Scroll logic
   const loadMoreRef = useInfiniteScroll({ loadMore: fetchMessages, hasMore });
-  useScrollToBottom({ userId, messages, bottomListRef });
-
-  if (!messages.length && !hasMore) {
-    return <NoDataFound label="Список сообщений пуст" className={s.noData} />;
-  }
+  useScrollToBottom({ bottomListRef });
 
   const messageElements = messages.map((m, index) => {
     const isMessageOwner = m.senderId === currentUser?.id;
@@ -73,11 +67,12 @@ export const MessageList: FC<MessageListProps> = ({
   });
 
   return (
-    <section className={s.list}>
-      {isLoading && <Loader />}
-      {hasMore && <div className={s.loadMore} ref={loadMoreRef} />}
-      {messageElements}
-      <div className={s.bottomList} ref={bottomListRef}></div>
-    </section>
+    <MessagesContainer
+      messages={messageElements}
+      isLoading={isLoading}
+      hasMore={hasMore}
+      loadMoreRef={loadMoreRef}
+      bottomListRef={bottomListRef}
+    />
   );
 };
