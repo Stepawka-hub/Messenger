@@ -3,18 +3,14 @@ import { SubmitHandler } from "react-hook-form";
 import { getCurrentUser } from "@slices/auth";
 import { getMessages } from "@slices/chat";
 import { useDispatch, useSelector } from "@store";
-import {
-  sendMessageAsync,
-  startMessagesListening,
-  stopMessagesListening,
-} from "@thunks/chat";
 import { TChatMessage } from "@types";
-import { SendMessageForm } from "@components/chatting/send-message-form";
+import { SendMessageForm } from "@components/chatting";
 import { TSendMessageForm } from "@components/chatting/send-message-form/types";
 import { ChatWrapper } from "@ui/chat-wrapper";
 import { List } from "@ui/list";
 import { Message } from "@ui/message";
 import { PageWrapper } from "@ui/page-wrapper";
+import { sendMessage, socketConnect, socketDisconnect } from "@services/socket";
 import s from "./common-chat-page.module.css";
 
 export const CommonChatPage: FC = () => {
@@ -23,15 +19,16 @@ export const CommonChatPage: FC = () => {
   const currentUser = useSelector(getCurrentUser);
 
   useEffect(() => {
-    dispatch(startMessagesListening());
+    dispatch(socketConnect());
 
     return () => {
-      dispatch(stopMessagesListening());
+      dispatch(socketDisconnect());
     };
   }, [dispatch]);
 
   const onSubmit: SubmitHandler<TSendMessageForm> = ({ message }) => {
-    dispatch(sendMessageAsync(message));
+    console.log(message);
+    dispatch(sendMessage(message));
   };
 
   const renderMessage = (

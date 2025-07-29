@@ -1,3 +1,6 @@
+import { isReadySocketData } from "@utils/helpers/values-helpers";
+import { WebSocketEvent, WebSocketEventListener } from "./types";
+
 export class Socket {
   private socket: WebSocket | null;
 
@@ -19,12 +22,16 @@ export class Socket {
   }
 
   send<T>(message: T) {
-    if (this.socket) {
-      this.socket.send(JSON.stringify(message));
-    }
+    if (!this.socket) return;
+
+    const data = isReadySocketData(message) ? message : JSON.stringify(message);
+    this.socket.send(data);
   }
 
-  on(eventName: string, callback: EventListenerOrEventListenerObject) {
+  on<T extends WebSocketEvent>(
+    eventName: T,
+    callback: WebSocketEventListener<T>
+  ) {
     if (this.socket) {
       this.socket.addEventListener(eventName, callback);
     }
