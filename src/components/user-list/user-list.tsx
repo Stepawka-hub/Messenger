@@ -1,12 +1,12 @@
-import { UserCard } from "@components/user-list/user-card";
-import { getIsLoading } from "@slices/users";
-import { TSocialUser } from "@types";
-import { List } from "@ui/list";
-import { SkeletonCard } from "@ui/skeleton-card";
 import { FC } from "react";
 import { useSelector } from "react-redux";
+import { UserCard } from "@components/user-list/user-card";
+import { StartDialogButton } from "@components/chat";
+import { TSocialUser } from "@types";
+import { getIsLoading } from "@slices/users";
+import { List } from "@ui/list";
+import { SkeletonCard } from "@ui/skeleton-card";
 import { UserListProps } from "./type";
-import { StartDialogButton } from "@components/chatting";
 import { FollowButton } from "./follow-button";
 import s from "./user-list.module.css";
 

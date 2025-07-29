@@ -1,4 +1,4 @@
-import { addMessages, setMessages } from "@slices/chat";
+import { addMessages, setMessages } from "@slices/common-chat";
 import { AppMiddleware } from "@store";
 import { TChatMessage } from "@types";
 import { Socket, WS_URL } from "@utils/socket";

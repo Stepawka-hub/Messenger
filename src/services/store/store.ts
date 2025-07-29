@@ -1,7 +1,7 @@
 import { combineReducers, configureStore, Middleware } from "@reduxjs/toolkit";
 import { reducer as appReducer } from "@slices/app";
 import { reducer as authReducer } from "@slices/auth";
-import { reducer as chatReducer } from "@slices/chat";
+import { reducer as commonChatReducer } from "@slices/common-chat";
 import { reducer as dialogsReducer } from "@slices/dialogs";
 import { reducer as profileReducer } from "@slices/profile";
 import { reducer as toastReducer } from "@slices/toast";
@@ -21,7 +21,7 @@ export const rootReducer = combineReducers({
   auth: authReducer,
   profile: profileReducer,
   dialogs: dialogsReducer,
-  chat: chatReducer,
+  commonChat: commonChatReducer,
   users: usersReducer,
 });
 

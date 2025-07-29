@@ -1,21 +1,14 @@
-import { FC } from "react";
-import { SubmitHandler } from "react-hook-form";
-import { sendMessage } from "@services/socket";
-import { useDispatch } from "@store";
+import { FC, useRef } from "react";
+import { MessageList, SendMessageFormWrapper } from "@components/common-chat";
 import { ChatWrapper } from "@ui/chat-wrapper";
-import { MessageList } from "@components/common-chat";
-import { SendMessageForm, TSendMessageForm } from "@components/chat";
 
 export const CommonChat: FC = () => {
-  const dispatch = useDispatch();
-  const onSubmit: SubmitHandler<TSendMessageForm> = ({ message }) => {
-    dispatch(sendMessage(message));
-  };
+  const bottomListRef = useRef<HTMLDivElement>(null);
 
   return (
     <ChatWrapper
-      body={<MessageList />}
-      footer={<SendMessageForm onSubmit={onSubmit} />}
+      body={<MessageList bottomListRef={bottomListRef} />}
+      footer={<SendMessageFormWrapper />}
     />
   );
 };

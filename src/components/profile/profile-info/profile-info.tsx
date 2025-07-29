@@ -3,7 +3,7 @@ import { useSelector } from "@store";
 import { getIsAuth } from "@slices/auth";
 import { useProfileEdit } from "@hooks";
 import { ProfileInfoProps } from "./type";
-import { StartDialogButton } from "@components/chatting";
+import { StartDialogButton } from "@components/chat";
 import {
   ProfileAvatar,
   ProfileContacts,

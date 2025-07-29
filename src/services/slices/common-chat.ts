@@ -7,8 +7,8 @@ const initialState: TChatState = {
   messages: [],
 };
 
-const chatSlice = createSlice({
-  name: "chat",
+const commonChatSlice = createSlice({
+  name: "commonChat",
   initialState,
   reducers: {
     addMessages: (state, { payload }: PayloadAction<TCommonChatMessage[]>) => {
@@ -27,6 +27,6 @@ const chatSlice = createSlice({
   },
 });
 
-export const reducer = chatSlice.reducer;
-export const { getMessages, getStatus } = chatSlice.selectors;
-export const { addMessages, setMessages, setStatus } = chatSlice.actions;
+export const reducer = commonChatSlice.reducer;
+export const { getMessages, getStatus } = commonChatSlice.selectors;
+export const { addMessages, setMessages, setStatus } = commonChatSlice.actions;
