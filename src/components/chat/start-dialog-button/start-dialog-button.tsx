@@ -1,10 +1,10 @@
+import { FC } from "react";
+import { useNavigate } from "react-router-dom";
 import { MessageIcon } from "@icons";
 import { getIsStartingDialog } from "@slices/dialogs";
 import { useDispatch, useSelector } from "@store";
 import { startDialogAsync } from "@thunks/dialogs";
 import { Button } from "@ui/button";
-import { FC } from "react";
-import { useNavigate } from "react-router-dom";
 import s from "./start-dialog-button.module.css";
 import { StartDialogButtonProps } from "./type";
 

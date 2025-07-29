@@ -1,8 +1,8 @@
-import { CommonChat } from "@components/chatting";
+import { FC, useEffect } from "react";
+import { CommonChat } from "@components/common-chat";
 import { socketConnect, socketDisconnect } from "@services/socket";
 import { useDispatch } from "@store";
 import { PageWrapper } from "@ui/page-wrapper";
-import { FC, useEffect } from "react";
 import s from "./common-chat-page.module.css";
 
 export const CommonChatPage: FC = () => {

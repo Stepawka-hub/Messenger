@@ -7,7 +7,7 @@ import { List } from "@ui/list";
 import { Message } from "@ui/message";
 import s from "./chat-message-list.module.css";
 
-export const ChatMessageList: FC = () => {
+export const MessageList: FC = () => {
   const messages = useSelector(getMessages);
   const currentUser = useSelector(getCurrentUser);
 

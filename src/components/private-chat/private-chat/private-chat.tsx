@@ -4,11 +4,8 @@ import { useDispatch, useSelector } from "@store";
 import { getSelectedDialog } from "@selectors/dialogs";
 import { getDialogsAsync } from "@thunks/dialogs";
 import { PrivateChatProps } from "./type";
-import {
-  SendMessageFormWrapper,
-  MessageList,
-  StartDialogButton,
-} from "@components/chatting";
+import { StartDialogButton } from "@components/chat";
+import { SendMessageFormWrapper, MessageList } from "@components/private-chat";
 import { Button } from "@ui/button";
 import { ChatHeader } from "@ui/chat-header";
 import { ChatWrapper } from "@ui/chat-wrapper";

@@ -1,7 +1,7 @@
 import { FC, Fragment } from "react";
 import { useMediaQuery } from "react-responsive";
 import { isSameDay } from "date-fns";
-import { ChatMessage } from "@components/chatting";
+import { ChatMessage } from "@components/private-chat";
 import {
   useFetchMessages,
   useInfiniteScroll,

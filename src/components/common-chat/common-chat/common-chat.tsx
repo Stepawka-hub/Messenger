@@ -1,10 +1,10 @@
 import { FC } from "react";
 import { SubmitHandler } from "react-hook-form";
-import { SendMessageForm, TSendMessageForm } from "@components/chatting";
 import { sendMessage } from "@services/socket";
 import { useDispatch } from "@store";
 import { ChatWrapper } from "@ui/chat-wrapper";
-import { ChatMessageList } from "@components/chatting";
+import { MessageList } from "@components/common-chat";
+import { SendMessageForm, TSendMessageForm } from "@components/chat";
 
 export const CommonChat: FC = () => {
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ export const CommonChat: FC = () => {
 
   return (
     <ChatWrapper
-      body={<ChatMessageList />}
+      body={<MessageList />}
       footer={<SendMessageForm onSubmit={onSubmit} />}
     />
   );

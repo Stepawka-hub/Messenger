@@ -1,16 +1,16 @@
-import { DialogList, PrivateChat } from "@components/chatting";
-import { ChatStub } from "@ui/chat-stub";
-import { DialogsLayout } from "@components/layouts";
+import { FC, useEffect } from "react";
+import { useMediaQuery } from "react-responsive";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "@store";
 import {
   getIsLoadingDialogs,
   setCurrentDialog,
   setDialogsPage,
 } from "@slices/dialogs";
-import { useDispatch, useSelector } from "@store";
 import { getDialogsAsync } from "@thunks/dialogs";
-import { FC, useEffect } from "react";
-import { useMediaQuery } from "react-responsive";
-import { useParams } from "react-router-dom";
+import { DialogList, PrivateChat } from "@components/private-chat";
+import { DialogsLayout } from "@components/layouts";
+import { ChatStub } from "@ui/chat-stub";
 import { Loader } from "@ui/loader";
 import s from "./dialogs-page.module.css";
 

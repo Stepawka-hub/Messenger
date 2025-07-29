@@ -2,8 +2,7 @@ import { FC } from "react";
 import { SubmitHandler } from "react-hook-form";
 import { useDispatch, useSelector } from "@store";
 import { SendMessageFormWrapperProps } from "./type";
-import { SendMessageForm } from "../send-message-form";
-import { TSendMessageForm } from "../send-message-form/types";
+import { SendMessageForm, TSendMessageForm } from "@components/chat";
 import {
   getIsSendingMessage,
   moveDialogToTop,
