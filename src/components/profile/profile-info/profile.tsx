@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useSelector } from "@store";
 import { getIsAuth } from "@slices/auth";
 import { useProfileEdit } from "@hooks";
-import { ProfileInfoProps } from "./type";
+import { ProfileProps } from "./type";
 import { StartDialogButton } from "@components/chat";
 import {
   ProfileAvatar,
@@ -11,9 +11,9 @@ import {
   ProfileEditForm,
 } from "@components/profile";
 import { Button } from "@ui/button";
-import s from "./profile-info.module.css";
+import s from "./profile.module.css";
 
-export const ProfileInfo: FC<ProfileInfoProps> = ({ id, isOwner, profile }) => {
+export const Profile: FC<ProfileProps> = ({ id, isOwner, profile }) => {
   const isAuth = useSelector(getIsAuth);
   const {
     initialValues,
@@ -40,6 +40,7 @@ export const ProfileInfo: FC<ProfileInfoProps> = ({ id, isOwner, profile }) => {
             <ProfileData isOwner={isOwner} profile={profile} />
           )}
         </div>
+        
         {isAuth && (
           <div className={s.actions}>
             {isOwner && !editMode && (

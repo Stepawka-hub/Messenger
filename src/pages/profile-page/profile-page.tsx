@@ -1,4 +1,4 @@
-import { ProfileInfo } from "@components/profile";
+import { Profile } from "@components/profile";
 import { getCurrentUser } from "@slices/auth";
 import {
   getFetchProfileError,
@@ -69,7 +69,7 @@ export const ProfilePage = () => {
 
   return (
     <PageWrapper title={profile?.fullName} description="Страница профиля">
-      <ProfileInfo
+      <Profile
         id={profileId}
         isOwner={profileId === currentUser?.id}
         profile={profile}
