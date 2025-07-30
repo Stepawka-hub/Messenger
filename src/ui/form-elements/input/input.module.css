@@ -23,7 +23,7 @@
 }
 
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
+input:-webkit-autofill:hover,
 input:-webkit-autofill:focus {
   font-family: 'Gilroy';
   border: none;
@@ -31,4 +31,20 @@ input:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0px 1000px var(--secondary-bg-color) inset;
   caret-color: var(--primary-text-color);
   transition: background-color 5000s ease-in-out 0s;
+}
+
+@media (max-width: 960px) {
+  .inputWrapper {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .inputWrapper {
+    font-size: 1rem;
+  }
+
+  .input {
+    padding: 0.35rem 0.5rem;
+  }
 }
