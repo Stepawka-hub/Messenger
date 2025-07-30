@@ -26,3 +26,14 @@
 .link:active {
   opacity: 0.8;
 }
+
+@media (max-width: 768px) {
+  .link {
+    font-size: 1.25rem;
+  }
+
+  .logoutBtn {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}

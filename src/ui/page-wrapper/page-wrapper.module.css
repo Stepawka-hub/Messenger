@@ -6,7 +6,7 @@
   text-align: center;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .title {
     margin-bottom: 1rem;
     font-size: 1.75rem;

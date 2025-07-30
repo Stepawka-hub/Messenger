@@ -39,24 +39,22 @@ export const AuthDetails: FC = () => {
   };
 
   return (
-    <div>
-      <div className={s.userDetails}>
-        <UserDetails
-          username={login}
-          email={email}
-          photos={photos}
-          linkPath={`/profile/${id}`}
-        />
-        <Button
-          aria-label="Выход из аккаунта"
-          title="Выйти из аккаунта"
-          className={s.logoutBtn}
-          disabled={isLoggingOut}
-          onClick={logout}
-        >
-          <ExitIcon size={32} />
-        </Button>
-      </div>
+    <div className={s.userDetails}>
+      <UserDetails
+        username={login}
+        email={email}
+        photos={photos}
+        linkPath={`/profile/${id}`}
+      />
+      <Button
+        aria-label="Выход из аккаунта"
+        title="Выйти из аккаунта"
+        className={s.logoutBtn}
+        disabled={isLoggingOut}
+        onClick={logout}
+      >
+        <ExitIcon size={32} />
+      </Button>
     </div>
   );
 };
