@@ -1,6 +1,6 @@
 import { addMessages, setMessages } from "@slices/common-chat";
 import { AppMiddleware } from "@store";
-import { TChatMessage } from "@types";
+import { TCommonChatMessage } from "@types";
 import { Socket, WS_URL } from "@utils/socket";
 import {
   isWhitelistedAction,
@@ -22,7 +22,7 @@ export const socketMiddleware =
     const handleClose = () => {};
 
     const handleRecievedMessage = (e: MessageEvent<string>) => {
-      const messages: TChatMessage[] = JSON.parse(e.data);
+      const messages: TCommonChatMessage[] = JSON.parse(e.data);
       dispatch(addMessages(messages));
     };
 

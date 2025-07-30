@@ -59,6 +59,7 @@ export const MessageList: FC<MessageListProps> = ({
           isRestoring={checkInProgress(restoringMessageIds, m.id)}
           isOwnMessage={isMessageOwner}
           isMobile={isMobile}
+          hideUserInfo={isMobile}
           onRestore={restoreMessage}
           onDelete={deleteMessage}
         />

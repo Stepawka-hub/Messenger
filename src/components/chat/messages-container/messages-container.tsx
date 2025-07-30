@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { MessagesContainerProps } from "./types";
 import { NoDataFound } from "@ui/no-data-found";
-import s from "./messages-container.module.css";
 import { Loader } from "@ui/loader";
+import s from "./messages-container.module.css";
 
 export const MessagesContainer: FC<MessagesContainerProps> = ({
   messages,

@@ -13,11 +13,21 @@
   background-color: var(--own-message-bg-color);
 }
 
-.sender {
+.content {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.senderName {
+  width: 90%;
   margin-bottom: 0.5rem;
   font-size: 1.2rem;
   font-weight: 500;
   color: var(--subtitle-color);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .text {
@@ -34,7 +44,7 @@
   .message {
     padding: 0.5rem 0.75rem;
     max-width: 75%;
-    min-width: 20%;
+    min-width: 25%;
     width: fit-content;
   }
 }
