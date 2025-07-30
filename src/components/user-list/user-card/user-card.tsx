@@ -15,10 +15,10 @@ export const UserCard: FC<UserCardProps> = ({ user, actions }) => {
         </NavLink>
       </header>
 
-      <div className={s.info}>
+      <div className={s.content}>
         <div className={s.description}>
           <h3 className={s.name}>{name}</h3>
-          <p className={s.status}>{status || "There is no description..."}</p>
+          <p className={s.status}>{status || "Нет описания..."}</p>
         </div>
         <div className={s.actions}>{actions}</div>
       </div>
