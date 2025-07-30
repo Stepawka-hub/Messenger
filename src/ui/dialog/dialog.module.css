@@ -66,10 +66,14 @@
   }
 
   .userInfo {
-    gap: 0.15rem;
+    gap: 0;
   }
 
   .userName {
-    font-size: 1.15rem;
+    font-size: 1.1rem;
+  }
+
+  .lastDialogActivity {
+    font-size: 0.875rem;
   }
 }

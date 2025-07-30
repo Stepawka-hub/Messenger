@@ -50,7 +50,10 @@ export const Dialog: FC<DialogProps> = ({
           <Avatar image={photos.small} size="small" />
           <div className={s.userInfo}>
             <span className={s.userName}>{userName}</span>
-            <TimeDisplay timeFn={getRelativeTime} />
+            <TimeDisplay
+              className={s.lastDialogActivity}
+              timeFn={getRelativeTime}
+            />
           </div>
         </div>
         {!!newMessagesCount && <Counter count={newMessagesCount} />}

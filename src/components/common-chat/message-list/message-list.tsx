@@ -11,7 +11,7 @@ import { useMediaQuery } from "react-responsive";
 export const MessageList: FC<MessageListProps> = ({ bottomListRef }) => {
   const messages = useSelector(getMessages);
   const currentUser = useSelector(getCurrentUser);
-  const isMobile = useMediaQuery({ maxWidth: 760 });
+  const isMobile = useMediaQuery({ maxWidth: 768 });
 
   useEffect(() => {
     const bottomRef = bottomListRef.current;

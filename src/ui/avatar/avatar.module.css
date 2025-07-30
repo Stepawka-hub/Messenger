@@ -4,6 +4,7 @@
   align-items: center;
   justify-content: center;
   aspect-ratio: 1;
+  flex-shrink: 0;
 }
 
 .avatar {
@@ -41,7 +42,7 @@
 
 @media (max-width: 768px) {
   .avatarWrapper.small {
-    width: 3rem;
+    width: 2.75rem;
   }
 
   .avatarWrapper.medium {

@@ -26,7 +26,7 @@ export const MessageList: FC<MessageListProps> = ({
   const deletingMessageIds = useSelector(getDeletingMessageIds);
   const restoringMessageIds = useSelector(getRestoringMessageIds);
 
-  const isMobile = useMediaQuery({ maxWidth: 760 });
+  const isMobile = useMediaQuery({ maxWidth: 768 });
   const { messages, hasMore, isLoading, fetchMessages } = useFetchMessages({
     userId,
   });

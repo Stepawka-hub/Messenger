@@ -3,14 +3,16 @@
   align-items: center;
   align-self: flex-end;
   gap: 0.5rem;
+  margin-top: 0.5rem;
+  flex-shrink: 0;
 }
 
 .icon {
   color: var(--secondary-color);
 }
 
-@media (max-width: 760px) {
+@media (max-width: 768px) {
   .messageTime {
-    font-size: 0.875rem;
+    font-size: 0.85rem;
   }
 }

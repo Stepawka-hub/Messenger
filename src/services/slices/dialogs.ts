@@ -27,7 +27,7 @@ const initialState: TDialogsState = {
   pagination: {
     dialogs: {
       currentPage: 1,
-      pageSize: 8,
+      pageSize: 7,
     },
     messages: {
       currentPage: 1,
