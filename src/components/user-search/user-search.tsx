@@ -29,7 +29,7 @@ export const UserSearch: FC = memo(() => {
     <div className={s.search}>
       <SearchString
         initialValue={searchQuery}
-        placeholder="Enter username..."
+        placeholder="Введите имя пользователя..."
         onSearch={handleSearch}
       />
       <Button

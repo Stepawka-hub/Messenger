@@ -8,7 +8,6 @@ import { List } from "@ui/list";
 import { SkeletonCard } from "@ui/skeleton-card";
 import { UserListProps } from "./type";
 import { FollowButton } from "./follow-button";
-import s from "./user-list.module.css";
 
 export const UserList: FC<UserListProps> = ({
   users,
@@ -17,12 +16,11 @@ export const UserList: FC<UserListProps> = ({
 }) => {
   const isLoading = useSelector(getIsLoading);
 
+  const renderSkeleton = (_: number, key?: number) => (
+    <SkeletonCard key={key} />
+  );
   const customLoader = (
-    <div className={s.skeletonList}>
-      {[...Array(pageSize)].map((_, i) => (
-        <SkeletonCard key={i} />
-      ))}
-    </div>
+    <List items={[...Array(pageSize)]} renderItem={renderSkeleton} />
   );
 
   const renderUsers = (u: TSocialUser) => (
