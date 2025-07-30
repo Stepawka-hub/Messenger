@@ -13,10 +13,14 @@
   background-color: var(--own-message-bg-color);
 }
 
+.userInfo {
+  display: flex;
+  flex-grow: 1;
+  gap: 1rem;
+}
+
 .content {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  width: 100%;
 }
 
 .senderName {
@@ -33,11 +37,6 @@
 .text {
   font-size: 1.15rem;
   white-space: pre-wrap;
-}
-
-.userInfo {
-  display: flex;
-  gap: 1rem;
 }
 
 @media (max-width: 760px) {
