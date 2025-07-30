@@ -14,7 +14,7 @@ export const UserDetails: FC<UserDetailsProps> = ({
     <NavLink className={s.avatarLink} to={linkPath}>
       <Avatar image={photos?.small || null} size="small" />
     </NavLink>
-    <div>
+    <div className={s.userInfo}>
       <h3 className={s.username}>{username}</h3>
       <p className={s.email}>{email}</p>
     </div>
