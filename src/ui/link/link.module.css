@@ -24,3 +24,9 @@
 .active .linkText {
   color: var(--link-color-active);
 }
+
+@media (max-width: 960px) {
+  .linkText {
+    font-size: 1.5rem;
+  }
+}
