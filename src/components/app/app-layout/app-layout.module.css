@@ -17,3 +17,15 @@
   padding: 2rem;
   background-color: var(--secondary-bg-color);
 }
+
+@media (max-width: 960px) {
+  .content {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .content {
+    padding: 0.75rem;
+  }
+}
