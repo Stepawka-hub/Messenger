@@ -18,3 +18,10 @@
 .bottomList {
   padding-top: 0.75rem;
 }
+
+@media (max-width: 768px) {
+  .list {
+    padding: 0.5rem 0.5rem 0;
+  }
+
+}

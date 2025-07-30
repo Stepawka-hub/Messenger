@@ -35,7 +35,7 @@ export const SendMessageForm: FC<SendMessageFormProps> = ({
       <div className={s.textareaContainer}>
         <Textarea
           id="new-message"
-          placeholder="Send message..."
+          placeholder="Сообщение..."
           {...register("message", {
             ...requiredValidation(),
             ...maxLengthValidation(1024),
