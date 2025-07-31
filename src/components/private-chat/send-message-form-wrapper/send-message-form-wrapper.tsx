@@ -9,6 +9,7 @@ import {
   setDialogActivityDate,
 } from "@slices/dialogs";
 import { sendMessageAsync } from "@thunks/dialogs";
+import { MAX_MESSAGE_LENGTH } from "@utils/constants";
 
 export const SendMessageFormWrapper: FC<SendMessageFormWrapperProps> = ({
   userId,
@@ -33,5 +34,11 @@ export const SendMessageFormWrapper: FC<SendMessageFormWrapperProps> = ({
     }
   };
 
-  return <SendMessageForm disabled={isSendingMessage} onSubmit={onSubmit} />;
+  return (
+    <SendMessageForm
+      maxLength={MAX_MESSAGE_LENGTH}
+      disabled={isSendingMessage}
+      onSubmit={onSubmit}
+    />
+  );
 };

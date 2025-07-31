@@ -5,6 +5,7 @@ import { sendMessage } from "@services/socket";
 import { getIsSendingMessage } from "@slices/dialogs";
 import { useDispatch, useSelector } from "@store";
 import { SendMessageFormWrapperProps } from "./type";
+import { MAX_CHAT_MESSAGE_LENGTH } from "@utils/constants";
 
 export const SendMessageFormWrapper: FC<SendMessageFormWrapperProps> = ({
   onSuccess,
@@ -21,5 +22,11 @@ export const SendMessageFormWrapper: FC<SendMessageFormWrapperProps> = ({
     }
   };
 
-  return <SendMessageForm disabled={isSendingMessage} onSubmit={onSubmit} />;
+  return (
+    <SendMessageForm
+      maxLength={MAX_CHAT_MESSAGE_LENGTH}
+      disabled={isSendingMessage}
+      onSubmit={onSubmit}
+    />
+  );
 };

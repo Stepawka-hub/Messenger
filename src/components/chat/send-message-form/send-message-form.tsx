@@ -13,6 +13,7 @@ import s from "./send-message-form.module.css";
 
 export const SendMessageForm: FC<SendMessageFormProps> = ({
   disabled = false,
+  maxLength = 128,
   onSubmit,
 }) => {
   const { register, handleSubmit, formState, reset } =
@@ -38,7 +39,7 @@ export const SendMessageForm: FC<SendMessageFormProps> = ({
           placeholder="Сообщение..."
           {...register("message", {
             ...requiredValidation(),
-            ...maxLengthValidation(1024),
+            ...maxLengthValidation(maxLength),
           })}
           onKeyDown={handleKeyDown}
         />
