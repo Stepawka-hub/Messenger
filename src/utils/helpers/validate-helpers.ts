@@ -6,31 +6,31 @@ export const isValidUrl = (value: string) => value && URL_REGEX.test(value);
 export const minLengthValidation = (minLength: number, message?: string) => ({
   minLength: {
     value: minLength,
-    message: message || `The minimum length of this field is ${minLength}`,
+    message: message || `Минимальная длина поля: ${minLength}`,
   },
 });
 
 export const maxLengthValidation = (maxLength: number, message?: string) => ({
   maxLength: {
     value: maxLength,
-    message: message || `The maximum length of this field is ${maxLength}`,
+    message: message || `Максимальная длина поля: ${maxLength}`,
   },
 });
 
 export const requiredValidation = (
-  message: string = "This field is required!"
+  message: string = "Обязательное поле"
 ) => ({
   required: message,
 });
 
-export const urlValidation = (message: string = "Invalid link") => ({
+export const urlValidation = (message: string = "Некорректная ссылка") => ({
   pattern: {
     value: URL_REGEX,
     message,
   },
 });
 
-export const emailValidation = (message: string = "Invalid email address") => ({
+export const emailValidation = (message: string = "Некорректный адрес почты") => ({
   pattern: {
     value: EMAIL_REGEX,
     message,

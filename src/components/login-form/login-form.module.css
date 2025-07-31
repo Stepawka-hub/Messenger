@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
 
-  padding: 2rem;
+  padding: 1.5rem;
   margin: 0 auto;
   max-width: 35rem;
 
@@ -29,10 +29,11 @@
 
 .submit {
   width: 100%;
-  margin-top: 1.5rem;
-  padding: 0.5rem 2rem;
-  font-size: 1.2rem;
+  margin-top: 1rem;
+  padding: 0.35rem 1.5rem;
+  font-size: 1.25rem;
   font-weight: 500;
+  color: var(--on-primary-color);
   background-color: var(--action-primary-color);
 }
 
@@ -50,6 +51,32 @@
 
 .formError {
   margin-top: 1rem;
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   color: var(--error-color);
+}
+
+@media (max-width: 768px) {
+  .form {
+    padding: 1rem;
+  }
+
+  .title {
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+  }
+
+  .submit {
+    margin-top: 0.75rem;
+    padding: 0.25rem 1rem;
+    font-size: 1.1rem;
+  }
+
+  .captcha {
+    margin-top: 0.75rem;
+  }
+
+  .formError {
+    margin-top: 0.75rem;
+    font-size: 1rem;
+  }
 }

@@ -28,7 +28,7 @@ export const AuthDetails: FC = () => {
   if (!currentUser || !isAuth) {
     return (
       <NavLink to="/login" className={s.link}>
-        Login
+        Вход
       </NavLink>
     );
   }

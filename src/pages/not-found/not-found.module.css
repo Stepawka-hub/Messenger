@@ -4,7 +4,7 @@
   align-items: center;
   gap: 1rem;
 
-  margin: 4rem;
+  margin: 4rem 0;
   height: 100%;
 }
 
@@ -17,7 +17,7 @@
 @media (max-width: 768px) {
   .notFound {
     gap: 0.75rem;
-    margin: 2.5rem;
+    margin: 2.5rem 0;
   }
 
   .text {

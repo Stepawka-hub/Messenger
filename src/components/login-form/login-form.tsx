@@ -27,14 +27,14 @@ export const LoginForm: FC<LoginFormProps> = ({
 
   return (
     <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
-      <h2 className={s.title}>Login</h2>
+      <h2 className={s.title}>Вход</h2>
 
       <fieldset className={s.fieldset}>
         <Input
           id="email"
           type="text"
-          label="Email"
-          placeholder="Enter email..."
+          label="Почта"
+          placeholder="Почта..."
           autoComplete="email"
           error={emailError}
           {...register("email", {
@@ -46,8 +46,8 @@ export const LoginForm: FC<LoginFormProps> = ({
         <Input
           id="password"
           type="password"
-          label="Password"
-          placeholder="Enter password..."
+          label="Пароль"
+          placeholder="Пароль..."
           autoComplete="current-password"
           error={passwordError}
           {...register("password", {
@@ -61,7 +61,7 @@ export const LoginForm: FC<LoginFormProps> = ({
               id="captcha"
               label="Captcha"
               type="text"
-              placeholder="Enter captcha..."
+              placeholder="Код..."
               {...register("captcha")}
             />
             <img className={s.captcha} src={captchaUrl} alt="Captcha" />
@@ -72,7 +72,7 @@ export const LoginForm: FC<LoginFormProps> = ({
       {error && <span className={s.formError}>{error}</span>}
 
       <Button className={s.submit} disabled={isLogginIn}>
-        {isLogginIn ? "Logging in..." : "Login"}
+        {isLogginIn ? "Выполняется вход..." : "Войти"}
       </Button>
     </form>
   );
