@@ -8,12 +8,11 @@ const NotFound: FC = () => {
     <PageWrapper
       title="Страница не найдена"
       description="К сожалению, запрошенная страница не найдена. Вернитесь на главную страницу"
+      className={s.notFound}
       noIndex
     >
-      <section className={s.notFound}>
-        <span className={s.text}>404 - Not Found</span>
-        <BackButton />
-      </section>
+      <span className={s.text}>404 - Not Found</span>
+      <BackButton />
     </PageWrapper>
   );
 };

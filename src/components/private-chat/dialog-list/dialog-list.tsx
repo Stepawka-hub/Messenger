@@ -20,8 +20,6 @@ export const DialogList: FC = () => {
   const dialogs = useSelector(getDialogs);
   const { currentPage, pageSize } = useSelector(getDialogsPagination);
 
-  console.log('RENDER');
-
   const navigateToUsers = () => {
     navigate("/users");
   };

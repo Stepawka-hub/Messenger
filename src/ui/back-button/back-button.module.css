@@ -10,3 +10,10 @@
 .icon {
   color: var(--secondary-text-color);
 }
+
+@media (max-width: 768px) {
+  .button {
+    font-size: 1.05rem;
+    padding: 0.25rem 0.5rem;
+  }
+}

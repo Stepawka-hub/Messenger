@@ -14,11 +14,13 @@
   text-transform: uppercase;
 }
 
-.btn {
-  display: inline-block;
-  padding: 0.5rem 2rem;
-  font-size: 1.25rem;
-  font-weight: 500;
-  color: var(--primary-text-color);
-  background-color: var(--primary-color);
+@media (max-width: 768px) {
+  .notFound {
+    gap: 0.75rem;
+    margin: 2.5rem;
+  }
+
+  .text {
+    font-size: 1.75rem;
+  }
 }
