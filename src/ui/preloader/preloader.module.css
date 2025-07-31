@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
+  gap: 0.25rem;
   height: 100vh;
   background-color: var(--primary-bg-color);
 }
@@ -13,4 +13,10 @@
   font-size: 2rem;
   font-weight: 600;
   color: var(--title-color);
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 1.5rem;
+  }
 }
