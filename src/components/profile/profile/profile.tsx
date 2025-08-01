@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useSelector } from "@store";
 import { getIsAuth } from "@slices/auth";
-import { useProfileEdit } from "@hooks";
+import { useModal, useProfileEdit } from "@hooks";
 import { ProfileProps } from "./type";
 import { StartDialogButton } from "@components/chat";
 import {
@@ -15,41 +15,38 @@ import s from "./profile.module.css";
 
 export const Profile: FC<ProfileProps> = ({ id, isOwner, profile }) => {
   const isAuth = useSelector(getIsAuth);
-  const {
-    initialValues,
-    isUpdatingProfile,
-    editMode,
-    activateEditMode,
-    deactivateEditMode,
-    onSubmit,
-  } = useProfileEdit(profile, isOwner);
+  const { initialValues, isUpdatingProfile, onSubmit } =
+    useProfileEdit(profile);
+
+  const { showModal, hideModal } = useModal();
+
+  const handleClick = () => {
+    showModal(
+      <ProfileEditForm
+        initialValue={initialValues}
+        onSubmit={onSubmit}
+        onCancel={hideModal}
+      />
+    );
+  };
 
   return (
     <div className={s.container}>
-      <div className={s.info}>
+      <div className={s.userInfo}>
         <div className={s.details}>
           <ProfileAvatar isOwner={isOwner} photos={profile.photos} />
-
-          {editMode ? (
-            <ProfileEditForm
-              initialValue={initialValues}
-              onSubmit={onSubmit}
-              onCancel={deactivateEditMode}
-            />
-          ) : (
-            <ProfileData isOwner={isOwner} profile={profile} />
-          )}
+          <ProfileData isOwner={isOwner} profile={profile} />
         </div>
-        
+
         {isAuth && (
           <div className={s.actions}>
-            {isOwner && !editMode && (
+            {isOwner && (
               <Button
                 className={s.button}
                 disabled={isUpdatingProfile}
-                onClick={activateEditMode}
+                onClick={handleClick}
               >
-                {isUpdatingProfile ? "Сохранение..." : "Редактировать профиль"}
+                {isUpdatingProfile ? "Сохранение..." : "Р"}
               </Button>
             )}
             {!isOwner && <StartDialogButton userId={id} />}
@@ -57,7 +54,7 @@ export const Profile: FC<ProfileProps> = ({ id, isOwner, profile }) => {
         )}
       </div>
 
-      {!editMode && <ProfileContacts contacts={profile.contacts} />}
+      <ProfileContacts contacts={profile.contacts} />
     </div>
   );
 };

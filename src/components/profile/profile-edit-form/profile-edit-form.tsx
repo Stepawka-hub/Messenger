@@ -104,6 +104,7 @@ export const ProfileEditForm: FC<ProfileEditFormProps> = ({
 
   return (
     <div className={s.container}>
+      <h2 className={s.title}>Редактирование профиля</h2>
       <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
         <fieldset className={s.fields}>
           {fields.map(({ label, name, type, validation }) => (

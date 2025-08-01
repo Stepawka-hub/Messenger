@@ -2,24 +2,18 @@ import { getIsUpdatingProfile } from "@slices/profile";
 import { useDispatch, useSelector } from "@store";
 import { updateProfileAsync } from "@thunks/profile";
 import { TProfile } from "@types";
-import { useState } from "react";
 import { SubmitHandler } from "react-hook-form";
 import { TProfileEditForm } from "@components/profile/profile-edit-form/types";
 
-export const useProfileEdit = (profile: TProfile, isOwner: boolean) => {
+export const useProfileEdit = (profile: TProfile) => {
   const dispatch = useDispatch();
   const isUpdatingProfile = useSelector(getIsUpdatingProfile);
-  const [editMode, setEditMode] = useState(false);
 
   const { contacts, ...rest } = profile;
   const initialValues: TProfileEditForm = {
     ...rest,
     ...contacts,
   };
-
-  const activateEditMode = () => isOwner && setEditMode(true);
-
-  const deactivateEditMode = () => setEditMode(false);
 
   const onSubmit: SubmitHandler<TProfileEditForm> = (formData) => {
     const {
@@ -50,15 +44,11 @@ export const useProfileEdit = (profile: TProfile, isOwner: boolean) => {
     };
 
     dispatch(updateProfileAsync(updatedProfile));
-    deactivateEditMode();
   };
 
   return {
     initialValues,
     isUpdatingProfile,
-    editMode,
-    activateEditMode,
-    deactivateEditMode,
     onSubmit,
   };
 };
