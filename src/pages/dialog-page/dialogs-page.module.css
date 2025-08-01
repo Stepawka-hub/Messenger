@@ -5,10 +5,12 @@
 }
 
 .dialogs {
-  flex: 35%;
+  width: 45%;
 }
 
 .chat {
   margin-top: 0.5rem;
-  flex: 65%;
+  width: 100%;
+  overflow: hidden;
+  flex-grow: 1;
 }

@@ -14,7 +14,7 @@
 }
 
 .button {
-  padding: 0.25rem 0.75rem;
+  padding: 0.25rem 1rem;
   font-size: 1.15rem;
   font-weight: 500;
   color: var(--on-primary-color);
@@ -28,5 +28,9 @@
 
   .list {
     padding: 0.5rem;
+  }
+
+  .button {
+    font-size: 1rem;
   }
 }
