@@ -11,7 +11,7 @@ export const List = <T,>({
   isLoading = false,
   emptyMessage = "Список пуст",
   emptyContent,
-  customLoader = <Loader />
+  customLoader = <Loader />,
 }: ListProps<T>) => {
   if (isLoading) {
     return customLoader;
@@ -21,7 +21,7 @@ export const List = <T,>({
     return (
       <NoDataFound
         label={emptyMessage}
-        className={clsx(s.noData, classes?.noData)}
+        classes={{ container: clsx(s.noData, classes?.noData) }}
       >
         {emptyContent}
       </NoDataFound>

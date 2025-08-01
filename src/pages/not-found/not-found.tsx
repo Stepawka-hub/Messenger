@@ -1,5 +1,6 @@
 import { BackButton } from "@ui/back-button";
 import { PageWrapper } from "@ui/page-wrapper";
+import { NoDataFound } from "@ui/no-data-found";
 import { FC } from "react";
 import s from "./not-found.module.css";
 
@@ -11,8 +12,9 @@ const NotFound: FC = () => {
       className={s.notFound}
       noIndex
     >
-      <span className={s.text}>404 - Not Found</span>
-      <BackButton />
+      <NoDataFound label="404 - Not Found" classes={{ label: s.label }}>
+        <BackButton />
+      </NoDataFound>
     </PageWrapper>
   );
 };

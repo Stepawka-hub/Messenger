@@ -1,0 +1,15 @@
+.noDataText {
+  font-size: 1.65rem;
+}
+
+@media (max-width: 1280px) {
+  .noDataText {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .noDataText {
+    font-size: 1.25rem;
+  }
+}

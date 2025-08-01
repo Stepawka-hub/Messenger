@@ -14,6 +14,7 @@ import { NoDataFound } from "@ui/no-data-found";
 import { PageWrapper } from "@ui/page-wrapper";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import s from './profile-page.module.css';
 
 export const ProfilePage = () => {
   const dispatch = useDispatch();
@@ -58,8 +59,8 @@ export const ProfilePage = () => {
         description="Профиль не найден!"
         noIndex
       >
-        <NoDataFound label="Профиль не найден!">
-          <BackButton label="Вернуться к списку пользователей" path="/users" />
+        <NoDataFound label="Профиль не найден!" classes={{ label: s.noDataText }}>
+          <BackButton label="К списку пользователей" path="/users" />
         </NoDataFound>
       </PageWrapper>
     );

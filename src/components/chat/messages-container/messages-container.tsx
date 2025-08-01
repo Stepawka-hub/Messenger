@@ -12,7 +12,12 @@ export const MessagesContainer: FC<MessagesContainerProps> = ({
   bottomListRef,
 }) => {
   if (!messages.length && !isLoading && !hasMore) {
-    return <NoDataFound label="Список сообщений пуст" className={s.noData} />;
+    return (
+      <NoDataFound
+        label="Список сообщений пуст"
+        classes={{ container: s.noData }}
+      />
+    );
   }
 
   return (
