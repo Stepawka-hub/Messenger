@@ -10,16 +10,22 @@ import {
   useState,
 } from "react";
 import { ModalContext } from "./modal.context";
+import { useBodyScrollLock } from "@hooks";
 
 export const ModalProvider: FC<PropsWithChildren> = memo(({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState<ReactNode | null>(null);
   const nodeRef = useRef<HTMLDivElement>(null);
+  const { enableScroll, disableScroll } = useBodyScrollLock();
 
-  const showModal = useCallback((content: ReactNode) => {
-    setModalContent(content);
-    setIsOpen(true);
-  }, []);
+  const showModal = useCallback(
+    (content: ReactNode) => {
+      setModalContent(content);
+      setIsOpen(true);
+      disableScroll();
+    },
+    [disableScroll]
+  );
 
   const hideModal = useCallback(() => {
     setIsOpen(false);
@@ -33,7 +39,12 @@ export const ModalProvider: FC<PropsWithChildren> = memo(({ children }) => {
   return (
     <ModalContext.Provider value={contextValue}>
       {children}
-      <Modal isOpen={isOpen} nodeRef={nodeRef} onClose={hideModal}>
+      <Modal
+        isOpen={isOpen}
+        nodeRef={nodeRef}
+        enableScroll={enableScroll}
+        onClose={hideModal}
+      >
         {modalContent}
       </Modal>
     </ModalContext.Provider>

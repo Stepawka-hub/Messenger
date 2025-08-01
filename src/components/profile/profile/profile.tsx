@@ -17,13 +17,13 @@ export const Profile: FC<ProfileProps> = ({ id, isOwner, profile }) => {
   const isAuth = useSelector(getIsAuth);
   const { initialValues, isUpdatingProfile, onSubmit } =
     useProfileEdit(profile);
-
   const { showModal, hideModal } = useModal();
 
   const handleClick = () => {
     showModal(
       <ProfileEditForm
         initialValue={initialValues}
+        disabled={isUpdatingProfile}
         onSubmit={onSubmit}
         onCancel={hideModal}
       />
@@ -46,7 +46,7 @@ export const Profile: FC<ProfileProps> = ({ id, isOwner, profile }) => {
                 disabled={isUpdatingProfile}
                 onClick={handleClick}
               >
-                {isUpdatingProfile ? "Сохранение..." : "Р"}
+                {isUpdatingProfile ? "Сохранение..." : "Редактировать"}
               </Button>
             )}
             {!isOwner && <StartDialogButton userId={id} />}

@@ -1,13 +1,15 @@
 import { FC, memo, MouseEventHandler, useCallback, useEffect } from "react";
 import { TModalProps } from "./types";
 import { createPortal } from "react-dom";
-import s from "./modal.module.css";
 import { CSSTransition } from "react-transition-group";
+import { FIXED_BLOCK_CLASS } from "@hooks";
+import s from "./modal.module.css";
+import clsx from "clsx";
 
 const modalRoot = document.getElementById("modals");
 
 export const Modal: FC<TModalProps> = memo(
-  ({ isOpen, nodeRef, children, onClose }) => {
+  ({ isOpen, nodeRef, children, enableScroll, onClose }) => {
     const closeByEsc = useCallback(
       (evt: KeyboardEvent) => {
         if (evt.key === "Escape") {
@@ -45,9 +47,13 @@ export const Modal: FC<TModalProps> = memo(
           exitActive: s.modalExitActive,
         }}
         unmountOnExit
+        onExited={enableScroll}
       >
         <div ref={nodeRef} className={s.modal}>
-          <div className={s.overlay} onClick={handleOverlayClick}>
+          <div
+            className={clsx(FIXED_BLOCK_CLASS, s.overlay)}
+            onClick={handleOverlayClick}
+          >
             <div className={s.content}>
               {children}
               <button className={s.btnClose} onClick={onClose} />

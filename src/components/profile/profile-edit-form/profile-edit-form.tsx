@@ -8,11 +8,12 @@ import {
 } from "@utils/helpers/validate-helpers";
 import { FC, useMemo } from "react";
 import { useForm } from "react-hook-form";
-import s from "./profile-edit-form.module.css";
 import { FieldConfig, ProfileEditFormProps, TProfileEditForm } from "./types";
+import s from "./profile-edit-form.module.css";
 
 export const ProfileEditForm: FC<ProfileEditFormProps> = ({
   initialValue,
+  disabled = false,
   onSubmit,
   onCancel,
 }) => {
@@ -135,7 +136,7 @@ export const ProfileEditForm: FC<ProfileEditFormProps> = ({
           ))}
         </fieldset>
         <div className={s.buttons}>
-          <Button type="submit" className={s.saveBtn}>
+          <Button type="submit" className={s.saveBtn} disabled={disabled}>
             Сохранить
           </Button>
           <Button type="button" className={s.cancelBtn} onClick={onCancel}>

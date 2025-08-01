@@ -2,6 +2,7 @@ import { RegisterOptions, SubmitHandler } from "react-hook-form";
 
 export type ProfileEditFormProps = {
   initialValue: TProfileEditForm;
+  disabled?: boolean;
   onSubmit: SubmitHandler<TProfileEditForm>;
   onCancel: () => void;
 };
