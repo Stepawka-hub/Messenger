@@ -5,6 +5,7 @@ import { CSSTransition } from "react-transition-group";
 import { FIXED_BLOCK_CLASS } from "@hooks";
 import s from "./modal.module.css";
 import clsx from "clsx";
+import { Button } from "@ui/button";
 
 const modalRoot = document.getElementById("modals");
 
@@ -56,7 +57,7 @@ export const Modal: FC<TModalProps> = memo(
           >
             <div className={s.content}>
               {children}
-              <button className={s.btnClose} onClick={onClose} />
+              <Button className={s.btnClose} onClick={onClose} />
             </div>
           </div>
         </div>

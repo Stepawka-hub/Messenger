@@ -4,9 +4,8 @@ import { MessageIcon } from "@icons";
 import { getIsStartingDialog } from "@slices/dialogs";
 import { useDispatch, useSelector } from "@store";
 import { startDialogAsync } from "@thunks/dialogs";
-import { Button } from "@ui/button";
-import s from "./start-dialog-button.module.css";
 import { StartDialogButtonProps } from "./type";
+import { IconButton } from "@ui/icon-button";
 
 export const StartDialogButton: FC<StartDialogButtonProps> = ({
   userId,
@@ -30,15 +29,15 @@ export const StartDialogButton: FC<StartDialogButtonProps> = ({
   };
 
   return (
-    <Button
+    <IconButton
       aria-label="Начать диалог"
       title="Начать диалог"
-      className={className || s.button}
+      className={className}
       disabled={isStartingDialog}
       onClick={startDialog}
       {...props}
     >
       {children}
-    </Button>
+    </IconButton>
   );
 };

@@ -10,9 +10,13 @@ export const Button: FC<ButtonProps> = ({
   ...props
 }) => (
   <button
-    className={clsx(s.button, className, {
-      [s.disabled]: disabled,
-    })}
+    className={clsx(
+      s.button,
+      {
+        [s.disabled]: disabled,
+      },
+      className
+    )}
     disabled={disabled}
     {...props}
   >

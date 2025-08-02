@@ -1,7 +1,7 @@
 .message {
+  position: relative;
   display: flex;
-  justify-content: space-between;
-  gap: 1rem;
+  flex-direction: column;
   padding: 1rem;
   border-radius: 1rem;
   color: var(--primary-text-color);
@@ -43,6 +43,10 @@
   font-size: 1.15rem;
   word-wrap: break-word;
   white-space: pre-wrap;
+}
+
+.messageInfo {
+  align-self: flex-end;
 }
 
 @media (max-width: 768px) {

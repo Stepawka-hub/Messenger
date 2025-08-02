@@ -51,27 +51,19 @@
   align-self: flex-end;
 }
 
-.saveBtn,
-.cancelBtn {
-  padding: 0.5rem 1rem;
-  font-size: 1.1rem;
+.saveBtn {
   font-weight: 500;
-  color: var(--on-primary-color);
   background-color: var(--success-color);
 }
 
 .cancelBtn {
+  font-weight: 500;
   background-color: var(--disabled-btn-color);
 }
 
 @media (max-width: 1280px) {
   .title {
     font-size: 1.25rem;
-  }
-
-  .saveBtn,
-  .cancelBtn {
-    padding: 0.5rem 0.75rem;
   }
 }
 
@@ -92,12 +84,6 @@
   }
 
   .label {
-    font-size: 1rem;
-  }
-
-  .saveBtn,
-  .cancelBtn {
-    padding: 0.5rem;
     font-size: 1rem;
   }
 }

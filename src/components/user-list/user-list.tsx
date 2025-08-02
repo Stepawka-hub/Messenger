@@ -1,13 +1,13 @@
 import { FC } from "react";
 import { useSelector } from "react-redux";
-import { UserCard } from "@components/user-list/user-card";
-import { StartDialogButton } from "@components/chat";
 import { TSocialUser } from "@types";
 import { getIsLoading } from "@slices/users";
+import { UserListProps } from "./type";
+import { FollowButton } from "@components/follow-button";
+import { UserCard } from "@components/user-list/user-card";
+import { StartDialogButton } from "@components/chat";
 import { List } from "@ui/list";
 import { SkeletonCard } from "@ui/skeleton-card";
-import { UserListProps } from "./type";
-import { FollowButton } from "./follow-button";
 
 export const UserList: FC<UserListProps> = ({
   users,

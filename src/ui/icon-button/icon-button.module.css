@@ -1,0 +1,23 @@
+.iconButton {
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border-radius: 0.75rem;
+  flex-shrink: 0;
+}
+
+@media (max-width: 1280px) {
+  .iconButton {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 0.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .iconButton {
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+  }
+}

@@ -1,12 +1,12 @@
 import { CrossIcon } from "@icons";
 import { Avatar } from "@ui/avatar";
-import { Button } from "@ui/button";
 import { TimeDisplay } from "@ui/time-display";
 import { convertTZ, formatDateFull } from "@utils/helpers/date";
 import { FC, useCallback } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import s from "./chat-header.module.css";
 import { ChatHeaderProps } from "./types";
+import { IconButton } from '@ui/icon-button';
 
 export const ChatHeader: FC<ChatHeaderProps> = ({
   userId,
@@ -28,14 +28,14 @@ export const ChatHeader: FC<ChatHeaderProps> = ({
     <header className={s.header}>
       <div className={s.content}>
         <div className={s.actions}>
-          <Button
+          <IconButton
             aria-label="Закрыть"
             title="Закрыть"
-            className={s.backButton}
+            extraClass={s.backButton}
             onClick={onClickBackButton}
           >
             <CrossIcon className={s.closeIcon} />
-          </Button>
+          </IconButton>
         </div>
         <NavLink className={s.userInfo} to={`/profile/${userId}`}>
           <Avatar image={avatar} size="small" />

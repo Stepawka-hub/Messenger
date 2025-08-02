@@ -39,11 +39,13 @@ export const Message: FC<MessageProps> = memo(
         </div>
 
         {!hideMessageInfo && (
-          <MessageInfo
-            addedAt={addedAt}
-            isViewed={isViewed}
-            isOwnMessage={isOwnMessage}
-          />
+          <div className={s.messageInfo}>
+            <MessageInfo
+              addedAt={addedAt}
+              isViewed={isViewed}
+              isOwnMessage={isOwnMessage}
+            />
+          </div>
         )}
       </article>
     );

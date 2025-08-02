@@ -7,9 +7,9 @@ import {
 } from "@utils/helpers/validate-helpers";
 import { SendMessageFormProps, TSendMessageForm } from "./types";
 import { SendIcon } from "@icons";
-import { Button } from "@ui/button";
 import { Textarea } from "@ui/form-elements";
 import s from "./send-message-form.module.css";
+import { IconButton } from "@ui/icon-button";
 
 export const SendMessageForm: FC<SendMessageFormProps> = ({
   disabled = false,
@@ -43,14 +43,14 @@ export const SendMessageForm: FC<SendMessageFormProps> = ({
           })}
           onKeyDown={handleKeyDown}
         />
-        <Button
+        <IconButton
           aria-label="Отправить"
           title="Отправить"
           className={s.submit}
           disabled={!isValid || disabled}
         >
           <SendIcon />
-        </Button>
+        </IconButton>
       </div>
     </form>
   );

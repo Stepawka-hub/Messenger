@@ -1,5 +1,6 @@
 .noDataText {
   font-size: 1.65rem;
+  color: var(--primary-text-color);
 }
 
 @media (max-width: 1280px) {

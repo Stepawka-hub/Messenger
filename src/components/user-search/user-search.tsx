@@ -4,8 +4,8 @@ import { getSearchQuery, setCurrentPage, setSearchQuery } from "@slices/users";
 import { useModal } from "@hooks";
 import { UserFilter } from "@components/user-filter";
 import { FilterIcon } from "@icons";
-import { Button } from "@ui/button";
 import { SearchString } from "@ui/search-string";
+import { IconButton } from '@ui/icon-button';
 import s from "./user-search.module.css";
 
 export const UserSearch: FC = memo(() => {
@@ -32,14 +32,14 @@ export const UserSearch: FC = memo(() => {
         placeholder="Введите имя пользователя..."
         onSearch={handleSearch}
       />
-      <Button
+      <IconButton
         aria-label="Фильтр"
         title="Фильтр"
         className={s.filterBtn}
         onClick={handleFilterClick}
       >
         <FilterIcon className={s.filterIcon} />
-      </Button>
+      </IconButton>
     </div>
   );
 });

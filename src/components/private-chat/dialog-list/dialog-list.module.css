@@ -14,12 +14,9 @@
 }
 
 .button {
-  padding: 0.25rem 1rem;
-  font-size: 1.15rem;
-  font-weight: 500;
-  color: var(--on-primary-color);
   background-color: var(--success-color);
 }
+
 
 @media (max-width: 768px) {
   .container {
@@ -28,9 +25,5 @@
 
   .list {
     padding: 0.5rem;
-  }
-
-  .button {
-    font-size: 1rem;
   }
 }
