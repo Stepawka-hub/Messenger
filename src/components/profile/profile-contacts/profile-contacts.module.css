@@ -1,5 +1,6 @@
 .contacts {
   margin-top: 1rem;
+  word-break: break-all;
 }
 
 .title {
