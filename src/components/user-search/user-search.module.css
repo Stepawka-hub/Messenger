@@ -21,3 +21,9 @@
 .filterBtn:hover .filterIcon {
   color: var(--primary-color);
 }
+
+@media (max-width: 768px) {
+  .search {
+    padding: 0.25rem 0.75rem;
+  }
+}

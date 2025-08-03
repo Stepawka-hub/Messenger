@@ -1,14 +1,13 @@
-import { UserCard } from "@components/user-list/user-card";
-import { getIsLoading } from "@slices/users";
-import { TSocialUser } from "@types";
-import { List } from "@ui/list";
-import { SkeletonCard } from "@ui/skeleton-card";
 import { FC } from "react";
 import { useSelector } from "react-redux";
+import { TSocialUser } from "@types";
+import { getIsLoading } from "@slices/users";
 import { UserListProps } from "./type";
-import { StartDialogButton } from "@components/chatting";
-import { FollowButton } from "./follow-button";
-import s from "./user-list.module.css";
+import { FollowButton } from "@components/follow-button";
+import { UserCard } from "@components/user-list/user-card";
+import { StartDialogButton } from "@components/chat";
+import { List } from "@ui/list";
+import { SkeletonCard } from "@ui/skeleton-card";
 
 export const UserList: FC<UserListProps> = ({
   users,
@@ -17,12 +16,11 @@ export const UserList: FC<UserListProps> = ({
 }) => {
   const isLoading = useSelector(getIsLoading);
 
+  const renderSkeleton = (_: number, key?: number) => (
+    <SkeletonCard key={key} />
+  );
   const customLoader = (
-    <div className={s.skeletonList}>
-      {[...Array(pageSize)].map((_, i) => (
-        <SkeletonCard key={i} />
-      ))}
-    </div>
+    <List items={[...Array(pageSize)]} renderItem={renderSkeleton} />
   );
 
   const renderUsers = (u: TSocialUser) => (

@@ -11,3 +11,14 @@
   gap: 2.5rem;
   margin-top: 1.5rem;
 }
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 1.1rem;
+  }
+
+  .fieldset {
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+}

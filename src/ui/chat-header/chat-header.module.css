@@ -33,10 +33,46 @@
 }
 
 .backButton {
-  padding: 0.25rem;
+  width: 2.5rem;
+  height: 2.5rem;
   background-color: var(--secondary-bg-color);
 }
 
 .closeIcon {
   color: var(--primary-text-color);
+}
+
+@media (max-width: 1280px) {
+  .backButton {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .backButton {
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+
+  .header {
+    padding: 0.25rem 0.5rem 0.5rem;
+  }
+
+  .content,
+  .userInfo {
+    gap: 0.75rem;
+  }
+
+  .userInfo {
+    font-size: 1rem;
+  }
+
+  .userLastSeen {
+    font-size: 0.875rem;
+  }
+
+  .actions {
+    gap: 0.25rem;
+  }
 }

@@ -1,5 +1,6 @@
 .container {
   width: 100%;
+  word-break: break-all;
 }
 
 .username {
@@ -10,4 +11,16 @@
 
 .data {
   margin-top: 0.25rem;
+}
+
+@media (max-width: 1280px) {
+  .username {
+    font-size: 1.35rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .username {
+    font-size: 1.15rem;
+  }
 }

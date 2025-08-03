@@ -1,30 +1,20 @@
-import { TMessage, TUserId } from '@types';
-import { RefObject, useEffect, useState } from "react";
+import { RefObject, useEffect } from "react";
 
 type TUseScrollToBottomParams = {
-  userId: TUserId;
-  messages: TMessage[];
+  deps?: unknown[];
   bottomListRef: RefObject<HTMLDivElement | null>;
 };
 
 export const useScrollToBottom = ({
-  userId,
-  messages,
+  deps = [],
   bottomListRef,
 }: TUseScrollToBottomParams) => {
-  const [isFirstLoad, setIsFirstLoad] = useState(true);
-
   useEffect(() => {
     const bottomRef = bottomListRef.current;
-    if (bottomRef && messages.length > 0 && isFirstLoad) {
+    if (bottomRef) {
       bottomRef.scrollIntoView({
         block: "nearest",
       });
-      setIsFirstLoad(false);
     }
-  }, [messages, isFirstLoad, bottomListRef]);
-
-  useEffect(() => {
-    setIsFirstLoad(true);
-  }, [userId]);
+  }, [bottomListRef]);
 };

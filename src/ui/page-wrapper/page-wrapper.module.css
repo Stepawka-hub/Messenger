@@ -5,3 +5,10 @@
   color: var(--title-color);
   text-align: center;
 }
+
+@media (max-width: 768px) {
+  .title {
+    margin-bottom: 1rem;
+    font-size: 1.75rem;
+  }
+}

@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { getAuthUserDataAsync } from "./auth";
 import { TBaseRejectValue } from "./types";
-import { createErrorPayload } from "@utils/helpers/error-helpers";
+import { createErrorPayload } from "@utils/helpers";
 
 const INITIALIZE_APP = "app/initialize";
 

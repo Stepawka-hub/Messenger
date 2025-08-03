@@ -2,8 +2,8 @@ import { API_CODES } from "@api/constants";
 import { usersAPI } from "@api/users.api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { TSocialUser, TUserId } from "@types";
-import { TGetItemsDataResponse, TGetUsersPayload } from "@utils/api/types";
-import { createErrorPayload } from "@utils/helpers/error-helpers";
+import { TGetItemsDataResponse, TGetUsersPayload } from "@api/types";
+import { createErrorPayload } from "@utils/helpers";
 import { TFollowUnfollowPayload } from "../types";
 import { TBaseRejectValue } from "./types";
 

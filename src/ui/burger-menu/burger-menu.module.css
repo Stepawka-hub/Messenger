@@ -50,3 +50,25 @@
   top: 0;
   transform: rotate(-45deg);
 }
+
+@media (max-width: 768px) {
+  .burger {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  .lines::before,
+  .lines::after,
+  .lines {
+    width: 1.5rem;
+    height: 2px;
+  }
+
+  .lines::before {
+    top: -8px;
+  }
+
+  .lines::after {
+    top: 8px;
+  }
+}

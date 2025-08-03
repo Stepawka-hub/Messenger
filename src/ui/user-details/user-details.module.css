@@ -1,5 +1,6 @@
 .userDetails {
   display: flex;
+  align-items: center;
   gap: 1rem;
   text-align: right;
 }
@@ -8,13 +9,40 @@
   order: 2;
 }
 
+.userInfo {
+  max-width: 30vw;
+}
+
+.username,
+.email {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .username {
-  font-size: 1.5rem;
+  font-size: 1.35rem;
   font-weight: 600;
   color: var(--subtitle-color);
 }
 
 .email {
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-weight: 500;
+}
+
+@media (max-width: 960px) {
+  .username {
+    font-size: 1.25rem;
+  }
+
+  .email {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .userInfo {
+    display: none;
+  }
 }

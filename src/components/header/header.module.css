@@ -6,3 +6,15 @@
   background-color: var(--primary-bg-color);
   border-bottom: 1px solid var(--border-divider-line-color);
 }
+
+@media (max-width: 960px) {
+  .header {
+    padding: 0.75rem 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 0.75rem 1rem;
+  }
+}

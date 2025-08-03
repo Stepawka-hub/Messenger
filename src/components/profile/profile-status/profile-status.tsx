@@ -2,18 +2,20 @@ import { FC, useState } from "react";
 import { useSelector } from "react-redux";
 import { getIsUpdatingStatus, getProfileStatus } from "@slices/profile";
 import { ProfileStatusForm } from "../profile-status-form";
-import { ProfileStatusProps } from "./type";
+import { Loader } from "@ui/loader";
+import { WithOwnerProps } from '@components/profile';
 import s from "./profile-status.module.css";
 import clsx from "clsx";
-import { Loader } from "@ui/loader";
 
-export const ProfileStatus: FC<ProfileStatusProps> = ({ isOwner }) => {
+export const ProfileStatus: FC<WithOwnerProps> = ({ isOwner }) => {
   const status = useSelector(getProfileStatus);
   const isUpdatingStatus = useSelector(getIsUpdatingStatus);
   const [editMode, setEditMode] = useState(false);
 
   if (isUpdatingStatus) {
-    return <Loader size={32} classes={{ container: s.loaderContainer }} />;
+    return (
+      <Loader classes={{ container: s.loaderContainer, loader: s.loader }} />
+    );
   }
 
   const activateEditMode = () => {

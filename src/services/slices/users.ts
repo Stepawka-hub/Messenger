@@ -5,7 +5,7 @@ import { TGetItemsDataResponse } from "@utils/api/types";
 import {
   removeFromArray,
   updateObjectInArray,
-} from "@utils/helpers/array-helpers";
+} from "@utils/helpers";
 import { TUsersState } from "./types";
 
 const initialState: TUsersState = {

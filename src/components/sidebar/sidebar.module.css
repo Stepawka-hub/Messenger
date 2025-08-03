@@ -2,11 +2,11 @@
   position: absolute;
   display: flex;
   flex-direction: column;
-  gap: 5rem;
-  width: 18rem;
   height: 100%;
-  padding: 2rem;
+  padding: 2rem 4rem 2rem 2rem;
   background-color: var(--primary-bg-color);
+  border-right: 1px solid var(--border-divider-line-color);
+
   z-index: 2;
   transform: translateX(-100%);
   transition: .25s ease-in-out;
@@ -23,4 +23,24 @@
 
 .links {
   margin-bottom: 3rem;
+}
+
+@media (max-width: 960px) {
+  .sidebar {
+    padding: 1.25rem 2.25rem 1.25rem 1.25rem;
+  }
+
+  .links {
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    padding: 1rem 1.5rem 1rem 1rem;
+  }
+
+  .nav {
+    gap: 0.25rem;
+  }
 }

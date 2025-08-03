@@ -1,2 +1,1 @@
-export * from './api.constants';
-export * from './chat-api.constants';
+export * from './api';

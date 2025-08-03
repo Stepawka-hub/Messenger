@@ -9,8 +9,12 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: var(--primary-bg-color);
 }
 
-.locked {
-  overflow: hidden;
+.disable-scroll {
+  overflow-y: hidden;
+  height: 100vh;
 }

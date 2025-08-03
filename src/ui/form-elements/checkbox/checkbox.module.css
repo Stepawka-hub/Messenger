@@ -45,11 +45,36 @@
 }
 
 .label {
-  margin-bottom: 0.25rem;
   font-weight: 500;
 }
 
 .error {
-  margin-top: 0.25rem;
   color: var(--error-color);
+}
+
+@media (max-width: 768px) {
+  .checkbox {
+    gap: 0.25rem;
+  }
+
+  .checkboxInput {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 0.35rem;
+  }
+
+  .checkboxInput::after {
+    top: 0;
+    left: 5px;
+    font-size: 1rem;
+  }
+
+  .checkboxInput:checked::after {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .error {
+    font-size: 0.875rem;
+  }
 }

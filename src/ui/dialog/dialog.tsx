@@ -1,10 +1,10 @@
 import { FC, useCallback } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Avatar } from "@ui/avatar";
 import { Counter } from "@ui/counter";
 import { TimeDisplay } from "@ui/time-display";
-import { convertTZ, getRelativeTimeString } from "@utils/helpers/date";
+import { convertTZ, getRelativeTimeString } from "@utils/helpers";
 import { differenceInMinutes } from "date-fns";
-import { useLocation, useNavigate } from "react-router-dom";
 import { DialogProps } from "./type";
 import clsx from "clsx";
 import s from "./dialog.module.css";
@@ -50,7 +50,10 @@ export const Dialog: FC<DialogProps> = ({
           <Avatar image={photos.small} size="small" />
           <div className={s.userInfo}>
             <span className={s.userName}>{userName}</span>
-            <TimeDisplay timeFn={getRelativeTime} />
+            <TimeDisplay
+              className={s.lastDialogActivity}
+              timeFn={getRelativeTime}
+            />
           </div>
         </div>
         {!!newMessagesCount && <Counter count={newMessagesCount} />}

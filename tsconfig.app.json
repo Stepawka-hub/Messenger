@@ -34,12 +34,12 @@
       "@pages/*": ["src/pages/*"],
       "@providers/*": ["src/providers/*"],
       "@slices/*": ["src/services/slices/*"],
-      "@actions/*": ["src/services/actions/*"],
       "@selectors/*": ["src/services/selectors/*"],
       "@thunks/*": ["src/services/thunks/*"],
       "@api/*": ["src/utils/api/*"],
       "@utils/*": ["src/utils/*"],
       "@store": ["src/services/store/store.ts"],
+      "@services/*": ["src/services/*"],
       "@types": ["src/types"]
     }
   },

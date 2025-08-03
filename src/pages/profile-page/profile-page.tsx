@@ -1,4 +1,4 @@
-import { ProfileInfo } from "@components/profile";
+import { Profile } from "@components/profile";
 import { getCurrentUser } from "@slices/auth";
 import {
   getFetchProfileError,
@@ -14,6 +14,7 @@ import { NoDataFound } from "@ui/no-data-found";
 import { PageWrapper } from "@ui/page-wrapper";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import s from './profile-page.module.css';
 
 export const ProfilePage = () => {
   const dispatch = useDispatch();
@@ -58,8 +59,8 @@ export const ProfilePage = () => {
         description="Профиль не найден!"
         noIndex
       >
-        <NoDataFound label="Профиль не найден!">
-          <BackButton label="Вернуться к списку пользователей" path="/users" />
+        <NoDataFound label="Профиль не найден!" classes={{ label: s.noDataText }}>
+          <BackButton label="К списку пользователей" path="/users" />
         </NoDataFound>
       </PageWrapper>
     );
@@ -69,7 +70,7 @@ export const ProfilePage = () => {
 
   return (
     <PageWrapper title={profile?.fullName} description="Страница профиля">
-      <ProfileInfo
+      <Profile
         id={profileId}
         isOwner={profileId === currentUser?.id}
         profile={profile}

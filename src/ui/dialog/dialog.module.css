@@ -1,7 +1,6 @@
 .dialog {
   display: flex;
   cursor: pointer;
-
   padding: 0.75rem 1rem;
   border-radius: 0.75rem;
   background-color: var(--primary-bg-color);
@@ -22,19 +21,26 @@
 
 .userInfoContainer {
   display: flex;
+  align-items: center;
   gap: 1rem;
+  min-width: 0;
 }
 
 .userInfo {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  min-width: 0;
 }
 
 .userName {
   font-size: 1.25rem;
   font-weight: 500;
   color: var(--primary-text-color);
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .dialog.active {
@@ -44,4 +50,30 @@
 
 .dialog.active .userName {
   color: var(--primary-color);
+}
+
+@media (max-width: 768px) {
+  .dialog {
+    padding: 0.35rem 0.75rem;
+  }
+
+  .content {
+    gap: 0.5rem;
+  }
+
+  .userInfoContainer {
+    gap: 0.75rem;
+  }
+
+  .userInfo {
+    gap: 0;
+  }
+
+  .userName {
+    font-size: 1.1rem;
+  }
+
+  .lastDialogActivity {
+    font-size: 0.875rem;
+  }
 }

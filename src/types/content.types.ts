@@ -29,7 +29,7 @@ export type TMessage = TBaseMessage & {
   isDeleted?: boolean;
 };
 
-export type TChatMessage = {
+export type TCommonChatMessage = {
   userId: TUserId;
   userName: string;
   message: string;

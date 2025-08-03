@@ -9,6 +9,7 @@ export type MessageProps = MessageInfoProps & {
   content: string;
   isOwnMessage?: boolean;
   isMobile?: boolean;
-  hideInfo?: boolean;
+  hideUserInfo?: boolean;
+  hideMessageInfo?: boolean;
   openContextMenu?: (e: MouseEvent<HTMLElement>) => void;
 };

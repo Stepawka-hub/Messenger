@@ -16,7 +16,8 @@ export const Message: FC<MessageProps> = memo(
     isViewed = false,
     isOwnMessage = false,
     isMobile = false,
-    hideInfo = false,
+    hideUserInfo = false,
+    hideMessageInfo = false,
     openContextMenu,
   }) => {
     return (
@@ -26,22 +27,25 @@ export const Message: FC<MessageProps> = memo(
         onContextMenu={openContextMenu}
       >
         <div className={s.userInfo}>
-          {!isMobile && (
+          {!hideUserInfo && (
             <NavLink to={`/profile/${senderId}`}>
               <Avatar image={photo} size="small" />
             </NavLink>
           )}
           <div className={s.content}>
-            {!isMobile && <h4 className={s.sender}>{username}</h4>}
+            {!hideUserInfo && <h4 className={s.senderName}>{username}</h4>}
             <span className={s.text}>{content}</span>
           </div>
         </div>
-        {!hideInfo && (
-          <MessageInfo
-            addedAt={addedAt}
-            isViewed={isViewed}
-            isOwnMessage={isOwnMessage}
-          />
+
+        {!hideMessageInfo && (
+          <div className={s.messageInfo}>
+            <MessageInfo
+              addedAt={addedAt}
+              isViewed={isViewed}
+              isOwnMessage={isOwnMessage}
+            />
+          </div>
         )}
       </article>
     );

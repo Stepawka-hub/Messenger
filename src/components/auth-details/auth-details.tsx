@@ -1,3 +1,5 @@
+import { FC } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import { ExitIcon } from "@icons";
 import {
   getCurrentUser,
@@ -7,15 +9,14 @@ import {
 } from "@slices/auth";
 import { useDispatch, useSelector } from "@store";
 import { logoutUserAsync } from "@thunks/auth";
-import { Button } from "@ui/button";
 import { Loader } from "@ui/loader";
 import { UserDetails } from "@ui/user-details";
-import { FC } from "react";
-import { NavLink } from "react-router-dom";
+import { IconButton } from "@ui/icon-button";
 import s from "./auth-details.module.css";
 
 export const AuthDetails: FC = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const isLoading = useSelector(getIsLoadingUserData);
   const isLoggingOut = useSelector(getIsLoggingOut);
   const isAuth = useSelector(getIsAuth);
@@ -28,35 +29,38 @@ export const AuthDetails: FC = () => {
   if (!currentUser || !isAuth) {
     return (
       <NavLink to="/login" className={s.link}>
-        Login
+        Вход
       </NavLink>
     );
   }
 
   const { id, login, email, photos } = currentUser;
-  const logout = () => {
-    dispatch(logoutUserAsync());
+  const logout = async () => {
+    try {
+      await dispatch(logoutUserAsync()).unwrap();
+      navigate('/login');
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
   };
 
   return (
-    <div>
-      <div className={s.userDetails}>
-        <UserDetails
-          username={login}
-          email={email}
-          photos={photos}
-          linkPath={`/profile/${id}`}
-        />
-        <Button
-          aria-label="Выход из аккаунта"
-          title="Выйти из аккаунта"
-          className={s.logoutBtn}
-          disabled={isLoggingOut}
-          onClick={logout}
-        >
-          <ExitIcon size={32} />
-        </Button>
-      </div>
+    <div className={s.userDetails}>
+      <UserDetails
+        username={login}
+        email={email}
+        photos={photos}
+        linkPath={`/profile/${id}`}
+      />
+      <IconButton
+        aria-label="Выход из аккаунта"
+        title="Выйти из аккаунта"
+        className={s.logoutBtn}
+        disabled={isLoggingOut}
+        onClick={logout}
+      >
+        <ExitIcon />
+      </IconButton>
     </div>
   );
 };

@@ -83,7 +83,6 @@ class DialogsAPI extends BaseAPI {
     const { data } = await this.api.get(`dialogs/${userId}/messages/new`, {
       params,
     });
-    console.log(data);
     return data;
   };
 }

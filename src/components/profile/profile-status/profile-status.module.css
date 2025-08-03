@@ -2,12 +2,6 @@
   min-height: 2rem;
 }
 
-.label {
-  font-size: 1.2rem;
-  font-weight: 500;
-  color: var(--secondary-color);
-}
-
 .status {
   pointer-events: none;
   line-height: 1.85rem;
@@ -25,5 +19,36 @@
 }
 
 .loaderContainer {
+  max-width: 2rem;
   text-align: left;
+}
+
+.loader {
+  height: 1.5rem;
+}
+
+@media (max-width: 1280px) {
+  .container {
+    min-height: 1.5rem;
+  }
+
+  .status {
+    font-size: 1rem;
+    line-height: 1.35rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .loader {
+    height: 1rem;
+  }
+
+  .container {
+    min-height: 1.35rem;
+  }
+
+  .status {
+    font-size: 0.95rem;
+    line-height: 1.2rem;
+  }
 }

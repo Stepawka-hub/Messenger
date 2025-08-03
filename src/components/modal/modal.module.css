@@ -40,10 +40,10 @@
   box-shadow: 0 2px 8px var(--modal-shadow-color);
 
   width: 100%;
-  max-width: 30rem;
-  min-height: 10rem;
+  max-width: 40rem;
+  min-height: 10vh;
 
-  padding: 1.5rem 1rem 2rem;
+  padding: 1.5rem 1rem 1.75rem;
   border-radius: 1.5rem;
   pointer-events: auto;
   z-index: 15;
@@ -99,19 +99,19 @@
   }
 }
 
-@media (max-width: 600px) {
-  .overlay {
-    padding: 1rem;
+@media (max-width: 768px) {
+  .content {
+    padding: 1rem 1rem 1.25rem;
   }
 
-  .content {
-    min-height: 7.5rem;
+  .overlay {
+    padding: 1rem;
   }
 
   .btnClose {
     width: 1.5rem;
     height: 1.5rem;
-    top: 1.7rem;
+    top: 1rem;
   }
 
   .btnClose::after,

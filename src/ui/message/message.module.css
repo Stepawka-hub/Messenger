@@ -1,7 +1,7 @@
 .message {
+  position: relative;
   display: flex;
-  justify-content: space-between;
-  gap: 1rem;
+  flex-direction: column;
   padding: 1rem;
   border-radius: 1rem;
   color: var(--primary-text-color);
@@ -13,28 +13,59 @@
   background-color: var(--own-message-bg-color);
 }
 
-.sender {
-  margin-bottom: 0.5rem;
+.userInfo {
+  display: flex;
+  flex-grow: 1;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.senderName {
   font-size: 1.2rem;
   font-weight: 500;
   color: var(--subtitle-color);
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .text {
   font-size: 1.15rem;
+  word-wrap: break-word;
   white-space: pre-wrap;
 }
 
-.userInfo {
-  display: flex;
-  gap: 1rem;
+.messageInfo {
+  align-self: flex-end;
 }
 
-@media (max-width: 760px) {
+@media (max-width: 768px) {
   .message {
     padding: 0.5rem 0.75rem;
     max-width: 75%;
-    min-width: 20%;
+    min-width: 25%;
     width: fit-content;
+  }
+
+  .content {
+    gap: 0.25rem;
+  }
+
+  .senderName {
+    font-size: 1.1rem;
+  }
+
+  .text {
+    font-size: 1rem;
   }
 }

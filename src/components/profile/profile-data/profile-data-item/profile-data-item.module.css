@@ -9,3 +9,23 @@
   font-size: 1.15rem;
   line-height: 1.35;
 }
+
+@media (max-width: 1280px) {
+  .label {
+    font-size: 1.1rem;
+  }
+
+  .text {
+    font-size: 1.05rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .label {
+    font-size: 1rem;
+  }
+
+  .text {
+    font-size: 0.95rem;
+  }
+}

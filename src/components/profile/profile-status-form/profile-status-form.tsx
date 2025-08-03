@@ -1,14 +1,14 @@
+import { SubmitHandler, useForm } from "react-hook-form";
+import { CheckIcon, CrossIcon } from "@icons";
 import { useDispatch } from "@store";
 import { updateProfileStatusAsync } from "@thunks/profile";
-import { Button } from "@ui/button";
 import { Input } from "@ui/form-elements";
-import { maxLengthValidation } from "@utils/helpers/validate-helpers";
-import clsx from "clsx";
+import { IconButton } from "@ui/icon-button";
+import { maxLengthValidation } from "@utils/helpers";
 import { FC } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import s from "./profile-status-form.module.css";
 import { ProfileStatusFormProps, TProfileStatusForm } from "./type";
-import { CheckIcon, CrossIcon } from "@icons";
+import clsx from "clsx";
+import s from "./profile-status-form.module.css";
 
 export const ProfileStatusForm: FC<ProfileStatusFormProps> = ({
   initialValue,
@@ -31,20 +31,17 @@ export const ProfileStatusForm: FC<ProfileStatusFormProps> = ({
   return (
     <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
       <Input
-        classes={{
-          wrapper: s.inputWrapper,
-        }}
         className={s.input}
         error={statusError}
         {...register("status", { ...maxLengthValidation(300) })}
       />
       <div className={s.buttons}>
-        <Button className={clsx(s.button, s.submit)} type="submit">
+        <IconButton extraClass={clsx(s.button, s.submit)} type="submit">
           <CheckIcon />
-        </Button>
-        <Button className={clsx(s.button, s.cancel)} onClick={callback}>
+        </IconButton>
+        <IconButton extraClass={clsx(s.button, s.cancel)} onClick={callback}>
           <CrossIcon />
-        </Button>
+        </IconButton>
       </div>
     </form>
   );
