@@ -23,3 +23,11 @@ export const contactNames: TContacts = {
   instagram: "Instagram",
   github: "GitHub",
 } as const;
+
+export const CONTACT_ORDER: (keyof TContacts)[] = [
+  "github",
+  "vk",
+  "facebook",
+  "instagram",
+  "twitter",
+] as const;
