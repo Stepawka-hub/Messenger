@@ -28,7 +28,7 @@ export const FindFriends: FC = () => {
       <div className={s.search}>
         <UserSearch />
       </div>
-      <div className={s.users}>
+      <div className={s.content}>
         <UserList
           users={users}
           currentUserId={currentUser?.id || null}

@@ -12,7 +12,7 @@ import { getIsAuth } from "@slices/auth";
 import { useSelector } from "@store";
 import { Loader } from "@ui/loader";
 import { CommonChatPage } from "@pages/common-chat-page";
-import { DialogsPage } from '@pages/dialog-page';
+import { DialogsPage } from '@pages/dialogs-page';
 
 export const AppRouter = memo(() => {
   const isAuth = useSelector(getIsAuth);
