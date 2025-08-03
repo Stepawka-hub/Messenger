@@ -6,7 +6,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { addToast } from "@slices/toast";
 import { TPhotos, TUserData } from "@types";
 import { TLoginPayload } from "@utils/api/types";
-import { createErrorPayload } from "@utils/helpers/error-helpers";
+import { createErrorPayload } from "@utils/helpers";
 import { TBaseRejectValue } from "./types";
 
 const GET_USER_DATA = "auth/get-user-data";

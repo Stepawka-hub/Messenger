@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { ExitIcon } from "@icons";
 import {
   getCurrentUser,
@@ -16,6 +16,7 @@ import s from "./auth-details.module.css";
 
 export const AuthDetails: FC = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const isLoading = useSelector(getIsLoadingUserData);
   const isLoggingOut = useSelector(getIsLoggingOut);
   const isAuth = useSelector(getIsAuth);
@@ -34,8 +35,13 @@ export const AuthDetails: FC = () => {
   }
 
   const { id, login, email, photos } = currentUser;
-  const logout = () => {
-    dispatch(logoutUserAsync());
+  const logout = async () => {
+    try {
+      await dispatch(logoutUserAsync()).unwrap();
+      navigate('/login');
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
   };
 
   return (
@@ -49,11 +55,11 @@ export const AuthDetails: FC = () => {
       <IconButton
         aria-label="Выход из аккаунта"
         title="Выйти из аккаунта"
-        extraClass={s.logoutBtn}
+        className={s.logoutBtn}
         disabled={isLoggingOut}
         onClick={logout}
       >
-        <ExitIcon size={32} />
+        <ExitIcon />
       </IconButton>
     </div>
   );

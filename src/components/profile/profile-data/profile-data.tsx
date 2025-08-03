@@ -1,6 +1,6 @@
 import { FC, useMemo } from "react";
 import { ProfileDataProps } from "./type";
-import { getSafeValue } from "@utils/helpers/values-helpers";
+import { getSafeValue } from "@utils/helpers";
 import { ProfileStatus } from "@components/profile";
 import { ProfileDataItem } from "./profile-data-item";
 import s from "./profile-data.module.css";

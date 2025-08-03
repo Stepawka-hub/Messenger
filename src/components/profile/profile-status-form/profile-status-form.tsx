@@ -1,14 +1,14 @@
+import { SubmitHandler, useForm } from "react-hook-form";
 import { CheckIcon, CrossIcon } from "@icons";
 import { useDispatch } from "@store";
 import { updateProfileStatusAsync } from "@thunks/profile";
 import { Input } from "@ui/form-elements";
 import { IconButton } from "@ui/icon-button";
-import { maxLengthValidation } from "@utils/helpers/validate-helpers";
+import { maxLengthValidation } from "@utils/helpers";
 import { FC } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import s from "./profile-status-form.module.css";
 import { ProfileStatusFormProps, TProfileStatusForm } from "./type";
 import clsx from "clsx";
+import s from "./profile-status-form.module.css";
 
 export const ProfileStatusForm: FC<ProfileStatusFormProps> = ({
   initialValue,

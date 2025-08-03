@@ -12,7 +12,7 @@ import { TDialog, TMessage } from "@types";
 import {
   removeFromArray,
   updateObjectInArray,
-} from "@utils/helpers/array-helpers";
+} from "@utils/helpers";
 import {
   TDialogsState,
   TSetDeletedPayload,

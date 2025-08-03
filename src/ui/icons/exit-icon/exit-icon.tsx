@@ -2,7 +2,7 @@ import { FC } from "react";
 import { IconProps } from "../types";
 import { BaseIcon } from "../base-icon";
 
-export const ExitIcon: FC<IconProps> = ({ size = 24, ...props }) => (
+export const ExitIcon: FC<IconProps> = ({ size = 28, ...props }) => (
   <BaseIcon
     size={size}
     viewBox="0 0 24 24"

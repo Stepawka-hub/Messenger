@@ -4,7 +4,7 @@ import { useSubmitOnEnter } from "@hooks";
 import {
   maxLengthValidation,
   requiredValidation,
-} from "@utils/helpers/validate-helpers";
+} from "@utils/helpers";
 import { SendMessageFormProps, TSendMessageForm } from "./types";
 import { SendIcon } from "@icons";
 import { Textarea } from "@ui/form-elements";

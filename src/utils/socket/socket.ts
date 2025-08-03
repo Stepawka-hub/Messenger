@@ -1,4 +1,4 @@
-import { isReadySocketData } from "@utils/helpers/values-helpers";
+import { isReadySocketData } from "@utils/helpers";
 import { WebSocketEvent, WebSocketEventListener } from "./types";
 
 export class Socket {

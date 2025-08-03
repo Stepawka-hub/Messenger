@@ -1,13 +1,13 @@
+import { FC } from "react";
+import { useForm } from "react-hook-form";
 import { Button } from "@ui/button";
 import { Input } from "@ui/form-elements";
 import {
   emailValidation,
   requiredValidation,
-} from "@utils/helpers/validate-helpers";
-import { FC } from "react";
-import { useForm } from "react-hook-form";
-import s from "./login-form.module.css";
+} from "@utils/helpers";
 import { LoginFormProps, TLoginForm } from "./types";
+import s from "./login-form.module.css";
 
 export const LoginForm: FC<LoginFormProps> = ({
   isLogginIn,

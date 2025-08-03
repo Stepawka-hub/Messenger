@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { ProfileContactsProps } from "./type";
 import { CONTACT_ORDER, contactNames } from "@utils/constants";
-import { getSafeValue } from "@utils/helpers/values-helpers";
+import { getSafeValue } from "@utils/helpers";
 import { ProfileContactsItem } from "./profile-contacts-item";
 import s from "./profile-contacts.module.css";
 

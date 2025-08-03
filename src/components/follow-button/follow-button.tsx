@@ -4,7 +4,7 @@ import { getFollowingInProgressIds } from "@slices/users";
 import { useDispatch, useSelector } from "@store";
 import { followToUserAsync, unfollowFromUserAsync } from "@thunks/users";
 import { IconButton } from "@ui/icon-button";
-import { checkInProgress } from "@utils/helpers/array-helpers";
+import { checkInProgress } from "@utils/helpers";
 import { FollowButtonProps } from "./type";
 import clsx from "clsx";
 import s from "./follow-button.module.css";

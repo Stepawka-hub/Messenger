@@ -1,12 +1,12 @@
-import { CrossIcon } from "@icons";
-import { Avatar } from "@ui/avatar";
-import { TimeDisplay } from "@ui/time-display";
-import { convertTZ, formatDateFull } from "@utils/helpers/date";
 import { FC, useCallback } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import s from "./chat-header.module.css";
+import { CrossIcon } from "@icons";
+import { convertTZ, formatDateFull } from "@utils/helpers";
 import { ChatHeaderProps } from "./types";
+import { Avatar } from "@ui/avatar";
+import { TimeDisplay } from "@ui/time-display";
 import { IconButton } from '@ui/icon-button';
+import s from "./chat-header.module.css";
 
 export const ChatHeader: FC<ChatHeaderProps> = ({
   userId,

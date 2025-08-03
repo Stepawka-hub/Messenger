@@ -1,10 +1,10 @@
 import { FC, useCallback } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Avatar } from "@ui/avatar";
 import { Counter } from "@ui/counter";
 import { TimeDisplay } from "@ui/time-display";
-import { convertTZ, getRelativeTimeString } from "@utils/helpers/date";
+import { convertTZ, getRelativeTimeString } from "@utils/helpers";
 import { differenceInMinutes } from "date-fns";
-import { useLocation, useNavigate } from "react-router-dom";
 import { DialogProps } from "./type";
 import clsx from "clsx";
 import s from "./dialog.module.css";

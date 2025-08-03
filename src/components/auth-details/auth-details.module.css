@@ -5,6 +5,10 @@
 }
 
 .logoutBtn {
+  width: 2.5rem;
+  height: 3rem;
+  padding: 0;
+  border-radius: 0.75rem;
   background-color: var(--action-primary-color);
 }
 
@@ -24,7 +28,37 @@
   opacity: 0.8;
 }
 
+@media (max-width: 1280px) {
+  .userDetails {
+    gap: 0.75rem;
+  }
+
+  .logoutBtn {
+    width: 2rem;
+    height: 2.5rem;
+    padding: 0.25rem;
+    box-sizing: content-box;
+  }
+}
+
+@media (max-width: 960px) {
+  .logoutBtn {
+    height: 2.25rem;
+  }
+}
+
 @media (max-width: 768px) {
+  .userDetails {
+    gap: 0.65rem;
+  }
+
+  .logoutBtn {
+    width: 1.5rem;
+    height: 1.75rem;
+    padding: 0.35rem;
+    border-radius: 0.5rem;
+  }
+
   .link {
     font-size: 1.25rem;
   }

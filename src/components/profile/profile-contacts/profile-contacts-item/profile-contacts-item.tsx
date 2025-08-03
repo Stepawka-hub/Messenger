@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { ProfileContactsItemProps } from "./type";
+import { isValidUrl } from "@utils/helpers";
 import s from "./profile-contacts-item.module.css";
-import { isValidUrl } from "@utils/helpers/validate-helpers";
 
 export const ProfileContactsItem: FC<ProfileContactsItemProps> = ({
   value,

@@ -9,7 +9,7 @@ import { Button } from "@ui/button";
 import { Dialog } from "@ui/dialog";
 import { List } from "@ui/list";
 import { Pagination } from "@ui/pagination";
-import { getPaginatedItems } from "@utils/helpers/array-helpers";
+import { getPaginatedItems } from "@utils/helpers";
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import s from "./dialog-list.module.css";

@@ -1,6 +1,7 @@
 import { FC, Fragment } from "react";
 import { useMediaQuery } from "react-responsive";
 import { isSameDay } from "date-fns";
+import { MessagesContainer } from "@components/chat";
 import { ChatMessage } from "@components/private-chat";
 import {
   useFetchMessages,
@@ -11,11 +12,9 @@ import {
 import { getCurrentUser } from "@slices/auth";
 import { getDeletingMessageIds, getRestoringMessageIds } from "@slices/dialogs";
 import { useSelector } from "@store";
-import { checkInProgress } from "@utils/helpers/array-helpers";
-import { formatDateShort } from "@utils/helpers/date";
+import { checkInProgress, formatDateShort } from "@utils/helpers";
 import { MessageListProps } from "./type";
 import { Separator } from "@ui/separator";
-import { MessagesContainer } from "@components/chat";
 
 export const MessageList: FC<MessageListProps> = ({
   userId,

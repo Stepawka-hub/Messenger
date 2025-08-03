@@ -9,8 +9,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { setMessageDeletedStatus } from "@slices/dialogs";
 import { TGetMessagesReturnValue } from "@slices/types";
 import { TDialog, TMessage, TUserId } from "@types";
-import { formatDateToISOString } from "@utils/helpers/date";
-import { createErrorPayload } from "@utils/helpers/error-helpers";
+import { createErrorPayload, formatDateToISOString } from "@utils/helpers";
 import { TBaseRejectValue } from "./types";
 
 const GET_DIALOGS = "dialogs/get-dialogs";

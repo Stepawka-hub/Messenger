@@ -1,3 +1,5 @@
+import { FC, useMemo } from "react";
+import { useForm } from "react-hook-form";
 import { Button } from "@ui/button";
 import { Input } from "@ui/form-elements";
 import { Checkbox } from "@ui/form-elements/checkbox";
@@ -5,9 +7,7 @@ import {
   maxLengthValidation,
   requiredValidation,
   urlValidation,
-} from "@utils/helpers/validate-helpers";
-import { FC, useMemo } from "react";
-import { useForm } from "react-hook-form";
+} from "@utils/helpers";
 import { FieldConfig, ProfileEditFormProps, TProfileEditForm } from "./types";
 import s from "./profile-edit-form.module.css";
 
