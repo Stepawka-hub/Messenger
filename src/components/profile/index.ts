@@ -5,3 +5,5 @@ export * from "./profile";
 export * from "./profile-status";
 export * from "./profile-edit-form";
 export * from "./profile-status-form";
+export * from './profile-actions';
+export * from './types';

@@ -1,34 +1,17 @@
 import { FC } from "react";
 import { useSelector } from "@store";
 import { getIsAuth } from "@slices/auth";
-import { useModal, useProfileEdit } from "@hooks";
 import { ProfileProps } from "./type";
-import { StartDialogButton } from "@components/chat";
 import {
   ProfileAvatar,
   ProfileContacts,
   ProfileData,
-  ProfileEditForm,
+  ProfileActions,
 } from "@components/profile";
-import { Button } from "@ui/button";
 import s from "./profile.module.css";
 
 export const Profile: FC<ProfileProps> = ({ id, isOwner, profile }) => {
   const isAuth = useSelector(getIsAuth);
-  const { initialValues, isUpdatingProfile, onSubmit } =
-    useProfileEdit(profile);
-  const { showModal, hideModal } = useModal();
-
-  const handleClick = () => {
-    showModal(
-      <ProfileEditForm
-        initialValue={initialValues}
-        disabled={isUpdatingProfile}
-        onSubmit={onSubmit}
-        onCancel={hideModal}
-      />
-    );
-  };
 
   return (
     <div className={s.container}>
@@ -40,16 +23,7 @@ export const Profile: FC<ProfileProps> = ({ id, isOwner, profile }) => {
 
         {isAuth && (
           <div className={s.actions}>
-            {isOwner && (
-              <Button
-                className={s.button}
-                disabled={isUpdatingProfile}
-                onClick={handleClick}
-              >
-                {isUpdatingProfile ? "Сохранение..." : "Редактировать"}
-              </Button>
-            )}
-            {!isOwner && <StartDialogButton userId={id} />}
+            <ProfileActions userId={id} isOwner={isOwner} profile={profile} />
           </div>
         )}
       </div>

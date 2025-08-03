@@ -9,6 +9,7 @@ import s from "./profile-contacts.module.css";
 const getValue = getSafeValue("-");
 
 export const ProfileContacts: FC<ProfileContactsProps> = ({ contacts }) => {
+  console.log(contacts);
   const contactsEntries = Object.entries(contacts);
   const contactElements = contactsEntries.map(([key, value]) => {
     if (key in contactNames) {

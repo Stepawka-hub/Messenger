@@ -1,6 +1,6 @@
-import { TPhotos } from '@types';
+import { TPhotos } from "@types";
+import { WithOwnerProps } from "@components/profile";
 
-export type ProfileAvatarProps = {
-  isOwner: boolean;
+export type ProfileAvatarProps = WithOwnerProps & {
   photos: TPhotos;
-}
+};

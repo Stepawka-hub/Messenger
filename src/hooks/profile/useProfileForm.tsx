@@ -1,13 +1,16 @@
+import { SubmitHandler } from "react-hook-form";
 import { getIsUpdatingProfile } from "@slices/profile";
 import { useDispatch, useSelector } from "@store";
 import { updateProfileAsync } from "@thunks/profile";
+import { ProfileEditForm, TProfileEditForm } from "@components/profile";
 import { TProfile } from "@types";
-import { SubmitHandler } from "react-hook-form";
-import { TProfileEditForm } from "@components/profile/profile-edit-form/types";
+import { useModal } from "@hooks";
 
-export const useProfileEdit = (profile: TProfile) => {
+export const useProfileForm = (profile: TProfile) => {
   const dispatch = useDispatch();
   const isUpdatingProfile = useSelector(getIsUpdatingProfile);
+
+  const { showModal, hideModal } = useModal();
 
   const { contacts, ...rest } = profile;
   const initialValues: TProfileEditForm = {
@@ -44,11 +47,22 @@ export const useProfileEdit = (profile: TProfile) => {
     };
 
     dispatch(updateProfileAsync(updatedProfile));
+    hideModal();
+  };
+
+  const openEditForm = () => {
+    showModal(
+      <ProfileEditForm
+        initialValue={initialValues}
+        disabled={isUpdatingProfile}
+        onSubmit={onSubmit}
+        onCancel={hideModal}
+      />
+    );
   };
 
   return {
-    initialValues,
-    isUpdatingProfile,
-    onSubmit,
-  };
+    openEditForm,
+    isUpdatingProfile
+  }
 };

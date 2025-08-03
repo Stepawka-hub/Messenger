@@ -1,6 +1,3 @@
-import { TProfile } from "@types";
+import { WithOwnerProps, WithProfileProps } from "@components/profile";
 
-export type ProfileDataProps = {
-  isOwner: boolean;
-  profile: TProfile;
-};
+export type ProfileDataProps = WithOwnerProps & WithProfileProps;
