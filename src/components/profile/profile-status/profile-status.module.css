@@ -19,7 +19,12 @@
 }
 
 .loaderContainer {
+  max-width: 2rem;
   text-align: left;
+}
+
+.loader {
+  height: 1.5rem;
 }
 
 @media (max-width: 1280px) {
@@ -34,6 +39,10 @@
 }
 
 @media (max-width: 768px) {
+  .loader {
+    height: 1rem;
+  }
+
   .container {
     min-height: 1.35rem;
   }

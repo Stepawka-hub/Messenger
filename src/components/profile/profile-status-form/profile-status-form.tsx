@@ -31,9 +31,6 @@ export const ProfileStatusForm: FC<ProfileStatusFormProps> = ({
   return (
     <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
       <Input
-        classes={{
-          wrapper: s.inputWrapper,
-        }}
         className={s.input}
         error={statusError}
         {...register("status", { ...maxLengthValidation(300) })}

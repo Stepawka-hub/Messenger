@@ -3,9 +3,9 @@ import { useSelector } from "react-redux";
 import { getIsUpdatingStatus, getProfileStatus } from "@slices/profile";
 import { ProfileStatusForm } from "../profile-status-form";
 import { ProfileStatusProps } from "./type";
+import { Loader } from "@ui/loader";
 import s from "./profile-status.module.css";
 import clsx from "clsx";
-import { Loader } from "@ui/loader";
 
 export const ProfileStatus: FC<ProfileStatusProps> = ({ isOwner }) => {
   const status = useSelector(getProfileStatus);
@@ -13,7 +13,9 @@ export const ProfileStatus: FC<ProfileStatusProps> = ({ isOwner }) => {
   const [editMode, setEditMode] = useState(false);
 
   if (isUpdatingStatus) {
-    return <Loader size={32} classes={{ container: s.loaderContainer }} />;
+    return (
+      <Loader classes={{ container: s.loaderContainer, loader: s.loader }} />
+    );
   }
 
   const activateEditMode = () => {
