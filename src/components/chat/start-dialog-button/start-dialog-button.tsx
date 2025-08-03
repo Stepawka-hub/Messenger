@@ -6,10 +6,10 @@ import { useDispatch, useSelector } from "@store";
 import { startDialogAsync } from "@thunks/dialogs";
 import { StartDialogButtonProps } from "./type";
 import { IconButton } from "@ui/icon-button";
+import s from './start-dialog-button.module.css';
 
 export const StartDialogButton: FC<StartDialogButtonProps> = ({
   userId,
-  className,
   children = <MessageIcon />,
   onSuccess,
   ...props
@@ -32,7 +32,7 @@ export const StartDialogButton: FC<StartDialogButtonProps> = ({
     <IconButton
       aria-label="Начать диалог"
       title="Начать диалог"
-      className={className}
+      extraClass={s.button}
       disabled={isStartingDialog}
       onClick={startDialog}
       {...props}

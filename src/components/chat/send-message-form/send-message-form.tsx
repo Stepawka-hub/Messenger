@@ -8,8 +8,8 @@ import {
 import { SendMessageFormProps, TSendMessageForm } from "./types";
 import { SendIcon } from "@icons";
 import { Textarea } from "@ui/form-elements";
-import s from "./send-message-form.module.css";
 import { IconButton } from "@ui/icon-button";
+import s from "./send-message-form.module.css";
 
 export const SendMessageForm: FC<SendMessageFormProps> = ({
   disabled = false,
@@ -46,7 +46,7 @@ export const SendMessageForm: FC<SendMessageFormProps> = ({
         <IconButton
           aria-label="Отправить"
           title="Отправить"
-          className={s.submit}
+          extraClass={s.submit}
           disabled={!isValid || disabled}
         >
           <SendIcon />

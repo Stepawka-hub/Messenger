@@ -33,6 +33,8 @@
 }
 
 .backButton {
+  width: 2.5rem;
+  height: 2.5rem;
   background-color: var(--secondary-bg-color);
 }
 
@@ -40,7 +42,19 @@
   color: var(--primary-text-color);
 }
 
+@media (max-width: 1280px) {
+  .backButton {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
 @media (max-width: 768px) {
+  .backButton {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
   .header {
     padding: 0.25rem 0.5rem 0.5rem;
   }

@@ -2,7 +2,6 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  max-width: 50%;
 }
 
 .input {
@@ -19,12 +18,10 @@
 }
 
 .button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0.2rem;
+  box-sizing: content-box;
 }
 
 .submit {
@@ -39,10 +36,20 @@
   .form {
     max-width: 75%;
   }
+
+  .button {
+    padding: 0.15rem;
+  }
 }
 
 @media (max-width: 960px) {
   .form {
     max-width: 100%;
+  }
+
+  .button {
+    width: 1.45rem;
+    height: 1.45rem;
+    padding: 0.2rem;
   }
 }

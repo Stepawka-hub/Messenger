@@ -7,7 +7,7 @@
 }
 
 .linkText {
-  font-size: 1.75rem;
+  font-size: 1.7rem;
   color: var(--primary-text-color);
   transition: .15s linear;
 }
@@ -25,8 +25,14 @@
   color: var(--link-color-active);
 }
 
-@media (max-width: 960px) {
+@media (max-width: 1280px) {
   .linkText {
-    font-size: 1.5rem;
+    font-size: 1.45rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .linkText {
+    font-size: 1.15rem;
   }
 }

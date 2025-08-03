@@ -12,7 +12,6 @@ import s from "./follow-button.module.css";
 export const FollowButton: FC<FollowButtonProps> = ({
   userId,
   followed,
-  className,
   ...props
 }) => {
   const dispatch = useDispatch();
@@ -31,7 +30,7 @@ export const FollowButton: FC<FollowButtonProps> = ({
     <IconButton
       aria-label={title}
       title={title}
-      className={className || clsx(s.button, { [s.followed]: followed })}
+      extraClass={clsx(s.button, { [s.followed]: followed })}
       disabled={checkInProgress(followingInProgressIds, userId)}
       onClick={followed ? unfollow : follow}
       {...props}

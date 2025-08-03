@@ -28,7 +28,7 @@
 
 @media (max-width: 960px) {
   .avatarWrapper.small {
-    width: 3.5rem;
+    width: 3rem;
   }
 
   .avatarWrapper.medium {
