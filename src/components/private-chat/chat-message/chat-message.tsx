@@ -7,6 +7,7 @@ import { Message } from "@ui/message";
 import { Loader } from "@ui/loader";
 import { DeletedMessageBanner } from "@ui/deleted-message-banner";
 import s from "./chat-message.module.css";
+import { MenuItem } from "@ui/menu-item";
 
 export const ChatMessage: FC<ChatMessageProps> = memo(
   ({
@@ -30,15 +31,13 @@ export const ChatMessage: FC<ChatMessageProps> = memo(
       );
     }
 
-    console.log('RENDER');
-
     const menuItems: TContextMenuItem[] = [
       {
         content: (
-          <>
-            <TrashIcon className={s.icon} />
-            <span>Удалить сообщение у себя</span>
-          </>
+          <MenuItem
+            icon={<TrashIcon className={s.icon} />}
+            text="Удалить сообщение у себя"
+          />
         ),
         onClick: () => {
           onDelete(messageId);

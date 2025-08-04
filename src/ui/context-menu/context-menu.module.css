@@ -38,9 +38,16 @@
   background-color: var(--primary-bg-color);
   color: var(--primary-text-color);
   list-style-type: none;
-  transition: .1s linear;
+  transition: .15s linear;
 }
 
 .menuItem:hover {
   background-color: var(--secondary-bg-color);
+}
+
+@media (max-width: 768px) {
+  .menuItem {
+    gap: 0.35rem;
+    padding: 0.35rem 0.75rem;
+  }
 }

@@ -10,6 +10,7 @@ import { CSSTransition } from "react-transition-group";
 import { useClickOutside } from "@hooks";
 import { ContextMenuProps } from "./type";
 import s from "./context-menu.module.css";
+import clsx from "clsx";
 
 export const ContextMenu: FC<ContextMenuProps> = ({
   isOpen,
@@ -78,7 +79,7 @@ export const ContextMenu: FC<ContextMenuProps> = ({
     >
       <ul
         ref={menuRef}
-        className={s.contextMenu}
+        className={clsx("fix-block", s.contextMenu)}
         style={{ left: menuPosition[0], top: menuPosition[1] }}
         onContextMenu={onContextMenu}
       >
