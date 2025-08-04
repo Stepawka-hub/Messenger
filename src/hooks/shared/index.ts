@@ -7,4 +7,5 @@ export { useModal } from './useModal';
 export { usePolling } from './usePolling';
 export { useSubmitOnEnter } from './useSubmitOnEnter';
 export { useTheme } from './useTheme';
+export { useThrottle } from './useThrottle';
 export * from './useBodyScrollLock';

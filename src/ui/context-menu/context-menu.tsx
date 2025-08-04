@@ -54,7 +54,7 @@ export const ContextMenu: FC<ContextMenuProps> = ({
     onClose: closeMenu,
   });
 
-  useCursorDistance({ ref: menuRef, callback: closeMenu });
+  useCursorDistance({ ref: menuRef, callback: closeMenu, condition: isOpen });
 
   useEffect(() => {
     const newPosition = correctPosition(position);
