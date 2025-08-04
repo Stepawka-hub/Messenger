@@ -30,6 +30,8 @@ export const ChatMessage: FC<ChatMessageProps> = memo(
       );
     }
 
+    console.log('RENDER');
+
     const menuItems: TContextMenuItem[] = [
       {
         content: (
