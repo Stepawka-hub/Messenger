@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 import { CSSTransition } from "react-transition-group";
-import { useClickOutside } from "@hooks";
+import { useClickOutside, useCursorDistance } from "@hooks";
 import { ContextMenuProps } from "./type";
 import s from "./context-menu.module.css";
 import clsx from "clsx";
@@ -53,6 +53,8 @@ export const ContextMenu: FC<ContextMenuProps> = ({
     isOpen,
     onClose: closeMenu,
   });
+
+  useCursorDistance({ ref: menuRef, callback: closeMenu });
 
   useEffect(() => {
     const newPosition = correctPosition(position);
