@@ -5,6 +5,7 @@ import { ContextMenuProps } from "./type";
 import s from "./context-menu.module.css";
 
 export const ContextMenu: FC<ContextMenuProps> = ({
+  ref,
   isOpen,
   items,
   position,
@@ -14,9 +15,10 @@ export const ContextMenu: FC<ContextMenuProps> = ({
     setIsOpen(false);
   };
 
-  const ref = useClickOutside<HTMLUListElement>({
-    isActive: isOpen,
-    callback: closeMenu,
+  useClickOutside({
+    elementRef: ref,
+    isOpen,
+    onClose: closeMenu,
   });
 
   const onContextMenu = (e: MouseEvent<HTMLUListElement>) => {

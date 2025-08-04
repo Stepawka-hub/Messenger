@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useRef } from "react";
 import { useSelector } from "@store";
 import { getCurrentUser, getIsAuth } from "@slices/auth";
 import { getNewMessageCount } from "@slices/dialogs";
@@ -14,15 +14,15 @@ export const Sidebar: FC<SidebarProps> = ({ isOpen, onClose }) => {
   const currentUser = useSelector(getCurrentUser);
   const newMessageCount = useSelector(getNewMessageCount);
 
-  const userId = currentUser?.id || "";
-  const ref = useClickOutside({ isActive: isOpen, callback: onClose });
+  const sidebarRef = useRef<HTMLElement>(null);
+  useClickOutside({ elementRef: sidebarRef, isOpen, onClose });
 
   return (
-    <aside className={clsx(s.sidebar, { [s.active]: isOpen })} ref={ref}>
+    <aside className={clsx(s.sidebar, { [s.active]: isOpen })} ref={sidebarRef}>
       <nav className={s.nav}>
         {isAuth && (
           <>
-            <Link to={`/profile/${userId}`} label="Профиль" />
+            <Link to={`/profile/${currentUser?.id || ""}`} label="Профиль" />
             <Link to={`/dialogs`} label="Диалоги">
               {!!newMessageCount && <Counter count={newMessageCount} />}
             </Link>
