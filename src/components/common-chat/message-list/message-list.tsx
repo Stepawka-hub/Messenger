@@ -7,8 +7,13 @@ import { MessageListProps } from "./types";
 import { MessagesContainer } from "@components/chat";
 import { useScrollToBottom } from "@hooks";
 import { useMediaQuery } from "react-responsive";
+import { Loader } from "@ui/loader";
+import s from './message-list.module.css';
 
-export const MessageList: FC<MessageListProps> = ({ bottomListRef }) => {
+export const MessageList: FC<MessageListProps> = ({
+  status,
+  bottomListRef,
+}) => {
   const messages = useSelector(getMessages);
   const currentUser = useSelector(getCurrentUser);
   const isMobile = useMediaQuery({ maxWidth: 768 });
@@ -23,6 +28,10 @@ export const MessageList: FC<MessageListProps> = ({ bottomListRef }) => {
   }, [messages, bottomListRef]);
 
   useScrollToBottom({ bottomListRef, deps: [messages] });
+
+  if (status !== "ready") {
+    return <Loader classes={{ container: s.loaderContainer }} />;
+  }
 
   const messageElements = messages.map(
     ({ userId, userName, message, photo }, key) => {

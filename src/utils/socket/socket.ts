@@ -43,5 +43,5 @@ export class Socket {
       console.log('OFF', eventName);
       this.socket.removeEventListener(eventName, callback);
     }
-  } 
+  }
 }
