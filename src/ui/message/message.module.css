@@ -36,13 +36,6 @@
   overflow: hidden;
 }
 
-.text {
-  font-size: 1.15rem;
-  line-height: 1.35;
-  word-wrap: break-word;
-  white-space: pre-wrap;
-}
-
 .messageInfo {
   margin: 0.5rem 0.25rem 0 3rem;
   display: inline;
@@ -69,7 +62,6 @@
   .text {
     font-size: 1rem;
   }
-
 
   .messageInfo {
     margin: 0.5rem 0.25rem 0 1rem;

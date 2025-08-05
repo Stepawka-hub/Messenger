@@ -1,0 +1,21 @@
+.text {
+  font-size: 1.15rem;
+  line-height: 1.35;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.link {
+  color: var(--subtitle-color);
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .text {
+    font-size: 1rem;
+  }
+}

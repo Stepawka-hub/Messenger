@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { MessageProps } from "./type";
 import { MessageInfo } from "./message-info";
 import { Avatar } from "@ui/avatar";
+import { FormattedText } from "@ui/formatted-text";
 import clsx from "clsx";
 import s from "./message.module.css";
 
@@ -37,7 +38,7 @@ export const Message: FC<MessageProps> = memo(
             {!hideUserInfo && <h4 className={s.senderName}>{username}</h4>}
 
             <div className={s.content}>
-              <span className={s.text}>{content}</span>
+              <FormattedText content={content} />
               {!hideMessageInfo && (
                 <div className={s.messageInfo}>
                   <MessageInfo
