@@ -1,13 +1,12 @@
 import { FC } from "react";
 import { FormattedTextProps } from "./types";
-import Linkify from "linkify-react";
+import { FIND_PHONES_REGEX, unescapeHtml } from "@utils/helpers";
+import { LinkIt, LinkItEmail, LinkItUrl } from "react-linkify-it";
 import s from "./formatted-text.module.css";
-import { unescapeHtml } from "@utils/helpers";
 
 export const FormattedText: FC<FormattedTextProps> = ({
   content,
   classes,
-  openLinksInNewTab = true,
   replaceLineBreaks = true,
 }) => {
   const textClass = classes?.text || s.text;
@@ -17,36 +16,21 @@ export const FormattedText: FC<FormattedTextProps> = ({
     ? content.replace(/<br \/>/g, "\n")
     : content;
   const htmlSafeText = unescapeHtml(formattedContent);
-  console.log(htmlSafeText);
 
   return (
-    <Linkify
-      as="span"
-      options={{
-        attributes: {
-          className: linkClass,
-          target: openLinksInNewTab ? "_blank" : undefined,
-          rel: openLinksInNewTab ? "noopener noreferrer" : undefined,
-        },
-        render: {
-          render: ({ content }) => {
-            const phoneRegex = /(\+?\d[\d\s\-()]{7,}\d)/g;
-            const phoneMatch = content.match(phoneRegex);
-
-            if (phoneMatch && phoneMatch[0] === content) {
-              const cleanPhone = phoneMatch[0].replace(/[\s\-()]/g, "");
-              return (
-                <a href={`tel:${cleanPhone}`} className={s.link}>
-                  {content}
-                </a>
-              );
-            }
-            return <span>{content}</span>;
-          },
-        },
-      }}
-    >
-      <span className={textClass}>{htmlSafeText}</span>
-    </Linkify>
+    <LinkItUrl className={linkClass}>
+      <LinkItEmail className={linkClass}>
+        <LinkIt
+          component={(match, key) => (
+            <a key={key} className={linkClass} href={`tel:${match}`}>
+              {match}
+            </a>
+          )}
+          regex={FIND_PHONES_REGEX}
+        >
+          <span className={textClass}>{htmlSafeText}</span>
+        </LinkIt>
+      </LinkItEmail>
+    </LinkItUrl>
   );
 };

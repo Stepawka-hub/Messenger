@@ -4,6 +4,5 @@ export type FormattedTextProps = {
     link?: string;
     text?: string;
   },
-  openLinksInNewTab?: boolean;
   replaceLineBreaks?: boolean;
 }
