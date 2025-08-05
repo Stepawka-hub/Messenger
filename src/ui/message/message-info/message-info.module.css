@@ -2,7 +2,8 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  flex-shrink: 0;
+  margin-top: 0.15rem;
+  font-size: 0.875rem;
 }
 
 .icon {
@@ -10,7 +11,11 @@
 }
 
 @media (max-width: 768px) {
+  .container {
+    gap: 0.25rem;
+  }
+
   .messageTime {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
   }
 }

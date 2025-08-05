@@ -32,21 +32,24 @@ export const Message: FC<MessageProps> = memo(
               <Avatar image={photo} size="small" />
             </NavLink>
           )}
-          <div className={s.content}>
+
+          <div className={s.container}>
             {!hideUserInfo && <h4 className={s.senderName}>{username}</h4>}
-            <span className={s.text}>{content}</span>
+
+            <div className={s.content}>
+              <span className={s.text}>{content}</span>
+              {!hideMessageInfo && (
+                <div className={s.messageInfo}>
+                  <MessageInfo
+                    addedAt={addedAt}
+                    isViewed={isViewed}
+                    isOwnMessage={isOwnMessage}
+                  />
+                </div>
+              )}
+            </div>
           </div>
         </div>
-
-        {!hideMessageInfo && (
-          <div className={s.messageInfo}>
-            <MessageInfo
-              addedAt={addedAt}
-              isViewed={isViewed}
-              isOwnMessage={isOwnMessage}
-            />
-          </div>
-        )}
       </article>
     );
   }
