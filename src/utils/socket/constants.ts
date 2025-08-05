@@ -5,4 +5,4 @@ export const WS_CODES = {
   CLOSING: 2,
   CLOSED: 3,
 } as const;
-export const RECONNECT_DELAY = 3000;
+export const RECONNECT_DELAY = 5000;

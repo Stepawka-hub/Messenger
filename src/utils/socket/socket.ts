@@ -8,6 +8,10 @@ export class Socket {
     this.socket = null;
   }
 
+  getReadyState() {
+    return this.socket?.readyState;
+  }
+
   connect(url: string) {
     if (!this.socket) {
       this.socket = new WebSocket(url);

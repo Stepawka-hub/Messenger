@@ -1,7 +1,7 @@
 import { addMessages, setMessages, setStatus } from "@slices/common-chat";
 import { AppMiddleware } from "@store";
 import { TCommonChatMessage } from "@types";
-import { Socket, WS_URL } from "@utils/socket";
+import { RECONNECT_DELAY, Socket, WS_CODES, WS_URL } from "@utils/socket";
 import {
   isWhitelistedAction,
   sendMessage,
@@ -16,22 +16,42 @@ export const socketMiddleware =
   (next) => {
     const { dispatch } = params;
 
+    const cleanUp = () => {
+      socket.off("open", handleOpen);
+      socket.off("message", handleRecievedMessage);
+      socket.off("close", handleClose);
+      socket.off("error", handleError);
+      socket.disconnect();
+    };
+
     const handleOpen = () => {
       dispatch(setMessages([]));
       dispatch(setStatus("ready"));
     };
 
     const handleClose = () => {
-      dispatch(setStatus("pending"));
-      dispatch(
-        addToast({
-          type: "error",
-          content: "Соединение прервано! Переподключение...",
-        })
-      );
+      if (socket.getReadyState() === WS_CODES.CLOSED) {
+        cleanUp();
+
+        dispatch(setStatus("pending"));
+        dispatch(
+          addToast({
+            type: "error",
+            content: "Соединение прервано! Переподключение...",
+            options: {
+              autoClose: RECONNECT_DELAY - 500,
+            },
+          })
+        );
+
+        setTimeout(() => {
+          dispatch(socketConnect());
+        }, RECONNECT_DELAY);
+      }
     };
 
     const handleError = () => {
+      console.log("ERROR");
       dispatch(setStatus("error"));
     };
 
@@ -59,11 +79,7 @@ export const socketMiddleware =
             break;
 
           case socketDisconnect.type:
-            socket.off("open", handleOpen);
-            socket.off("message", handleRecievedMessage);
-            socket.off("close", handleClose);
-            socket.off("error", handleError);
-            socket.disconnect();
+            cleanUp();
             break;
 
           default:
