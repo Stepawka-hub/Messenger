@@ -1,6 +1,6 @@
 import { addMessages, setMessages, setStatus } from "@slices/common-chat";
 import { AppMiddleware } from "@store";
-import { TCommonChatMessage } from "@types";
+import { TCommonChatMessage, TTimeout } from "@types";
 import { RECONNECT_DELAY, Socket, WS_CODES, WS_URL } from "@utils/socket";
 import {
   isWhitelistedAction,
@@ -15,8 +15,14 @@ export const socketMiddleware =
   (params) =>
   (next) => {
     const { dispatch } = params;
+    let reconnectTimer: TTimeout | null = null;
 
     const cleanUp = () => {
+      if (reconnectTimer) {
+        clearTimeout(reconnectTimer);
+        reconnectTimer = null;
+      }
+
       socket.off("open", handleOpen);
       socket.off("message", handleRecievedMessage);
       socket.off("close", handleClose);
@@ -37,22 +43,22 @@ export const socketMiddleware =
         dispatch(
           addToast({
             type: "error",
-            content: "Соединение прервано! Переподключение...",
+            content: "Не удалось установить соединение! Переподключение...",
             options: {
               autoClose: RECONNECT_DELAY - 500,
             },
           })
         );
 
-        setTimeout(() => {
+        reconnectTimer = setTimeout(() => {
           dispatch(socketConnect());
         }, RECONNECT_DELAY);
       }
     };
 
-    const handleError = () => {
-      console.log("ERROR");
+    const handleError = (err: Event) => {
       dispatch(setStatus("error"));
+      console.error("Socket encountered error: ", err, "Closing socket");
     };
 
     const handleRecievedMessage = (e: MessageEvent<string>) => {
