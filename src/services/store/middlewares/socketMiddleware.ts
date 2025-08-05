@@ -1,7 +1,15 @@
 import { addMessages, setMessages, setStatus } from "@slices/common-chat";
 import { AppMiddleware } from "@store";
 import { TCommonChatMessage, TTimeout } from "@types";
-import { RECONNECT_DELAY, Socket, WS_CODES, WS_URL } from "@utils/socket";
+import {
+  BASE_RECONNECT_DELAY,
+  LINEAR_STEP,
+  MAX_LINEAR_ATTEMPTS,
+  MAX_RECONNECT_DELAY,
+  Socket,
+  WS_CODES,
+  WS_URL,
+} from "@utils/socket";
 import {
   isWhitelistedAction,
   sendMessage,
@@ -15,6 +23,7 @@ export const socketMiddleware =
   (params) =>
   (next) => {
     const { dispatch } = params;
+    let reconnectAttempts = 0;
     let reconnectTimer: TTimeout | null = null;
 
     const cleanUp = () => {
@@ -33,11 +42,21 @@ export const socketMiddleware =
     const handleOpen = () => {
       dispatch(setMessages([]));
       dispatch(setStatus("ready"));
+      reconnectAttempts = 0;
     };
 
     const handleClose = () => {
       if (socket.getReadyState() === WS_CODES.CLOSED) {
         cleanUp();
+
+        const delay =
+          reconnectAttempts > MAX_LINEAR_ATTEMPTS
+            ? MAX_RECONNECT_DELAY
+            : Math.min(
+                BASE_RECONNECT_DELAY + reconnectAttempts * LINEAR_STEP,
+                MAX_RECONNECT_DELAY
+              );
+        reconnectAttempts++;
 
         dispatch(setStatus("pending"));
         dispatch(
@@ -45,14 +64,16 @@ export const socketMiddleware =
             type: "error",
             content: "Не удалось установить соединение! Переподключение...",
             options: {
-              autoClose: RECONNECT_DELAY - 500,
+              autoClose: BASE_RECONNECT_DELAY - 500,
+              pauseOnFocusLoss: false,
+              pauseOnHover: false,
             },
           })
         );
 
         reconnectTimer = setTimeout(() => {
           dispatch(socketConnect());
-        }, RECONNECT_DELAY);
+        }, delay);
       }
     };
 
