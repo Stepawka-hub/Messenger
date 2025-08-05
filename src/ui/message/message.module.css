@@ -45,7 +45,7 @@
 
 @media (max-width: 768px) {
   .message {
-    padding: 0.25rem 0.5rem;
+    padding: 0.35rem 0.75rem 0.25rem;
     max-width: 75%;
     min-width: 25%;
     width: fit-content;
@@ -64,6 +64,6 @@
   }
 
   .messageInfo {
-    margin: 0.5rem 0.25rem 0 1rem;
+    margin: 0.25rem 0.25rem 0 1rem;
   }
 }

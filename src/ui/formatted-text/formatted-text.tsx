@@ -2,6 +2,7 @@ import { FC } from "react";
 import { FormattedTextProps } from "./types";
 import Linkify from "linkify-react";
 import s from "./formatted-text.module.css";
+import { unescapeHtml } from "@utils/helpers";
 
 export const FormattedText: FC<FormattedTextProps> = ({
   content,
@@ -15,6 +16,8 @@ export const FormattedText: FC<FormattedTextProps> = ({
   const formattedContent = replaceLineBreaks
     ? content.replace(/<br \/>/g, "\n")
     : content;
+  const htmlSafeText = unescapeHtml(formattedContent);
+  console.log(htmlSafeText);
 
   return (
     <Linkify
@@ -25,9 +28,25 @@ export const FormattedText: FC<FormattedTextProps> = ({
           target: openLinksInNewTab ? "_blank" : undefined,
           rel: openLinksInNewTab ? "noopener noreferrer" : undefined,
         },
+        render: {
+          render: ({ content }) => {
+            const phoneRegex = /(\+?\d[\d\s\-()]{7,}\d)/g;
+            const phoneMatch = content.match(phoneRegex);
+
+            if (phoneMatch && phoneMatch[0] === content) {
+              const cleanPhone = phoneMatch[0].replace(/[\s\-()]/g, "");
+              return (
+                <a href={`tel:${cleanPhone}`} className={s.link}>
+                  {content}
+                </a>
+              );
+            }
+            return <span>{content}</span>;
+          },
+        },
       }}
     >
-      <span className={textClass}>{formattedContent}</span>
+      <span className={textClass}>{htmlSafeText}</span>
     </Linkify>
   );
 };
