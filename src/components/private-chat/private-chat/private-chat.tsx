@@ -10,6 +10,7 @@ import { Button } from "@ui/button";
 import { ChatHeader } from "@ui/chat-header";
 import { ChatWrapper } from "@ui/chat-wrapper";
 import { ChatStub } from "@ui/chat-stub";
+import { useScrollToBottom } from "@hooks";
 import clsx from "clsx";
 import s from "./private-chat.module.css";
 
@@ -20,6 +21,7 @@ export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
     getSelectedDialog(state, userId)
   );
   const bottomListRef = useRef<HTMLDivElement>(null);
+  const scrollToBottom = useScrollToBottom(bottomListRef);
 
   const openProfile = () => {
     navigate(`/profile/${userId}`);
@@ -52,12 +54,6 @@ export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
     );
   }
 
-  const onSendMessage = () => {
-    bottomListRef.current?.scrollIntoView({
-      block: "nearest",
-    });
-  };
-
   return (
     <ChatWrapper
       header={
@@ -73,10 +69,14 @@ export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
           userId={userId}
           partnerAvatar={selectedDialog.photos.small}
           bottomListRef={bottomListRef}
+          scrollToBottom={scrollToBottom}
         />
       }
       footer={
-        <SendMessageFormWrapper userId={userId} onSuccess={onSendMessage} />
+        <SendMessageFormWrapper
+          userId={userId}
+          scrollToBottom={scrollToBottom}
+        />
       }
     />
   );

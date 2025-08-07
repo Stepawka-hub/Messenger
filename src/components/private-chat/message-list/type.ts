@@ -1,8 +1,6 @@
-import { TUserId } from "@types";
-import { RefObject } from "react";
+import { ScrollController, TUserId } from "@types";
 
-export type MessageListProps = {
+export type MessageListProps = ScrollController & {
   userId: TUserId;
   partnerAvatar: string | null;
-  bottomListRef: RefObject<HTMLDivElement | null>;
 };

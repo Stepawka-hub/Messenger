@@ -6,4 +6,5 @@ export type MessagesContainerProps = ScrollController & {
   isLoading?: boolean;
   hasMore?: boolean;
   loadMoreRef?: React.RefObject<HTMLDivElement | null>;
+  chatId?: number;
 };

@@ -1,32 +1,24 @@
-import { FC, useEffect, useRef } from "react";
+import { FC, memo } from "react";
 import { MessagesContainerProps } from "./types";
 import { NoDataFound } from "@ui/no-data-found";
 import { Loader } from "@ui/loader";
+import { useInitialScroll } from "@hooks";
 import s from "./messages-container.module.css";
 
-export const MessagesContainer: FC<MessagesContainerProps> = ({
+export const MessagesContainer: FC<MessagesContainerProps> = memo(({
   messages,
   isLoading = false,
   hasMore = false,
   loadMoreRef,
+  chatId,
   bottomListRef,
   scrollToBottom,
 }) => {
-  const isFirstLoad = useRef<boolean>(true);
-
-  useEffect(() => {
-    console.log(isFirstLoad.current);
-    if (isFirstLoad.current && messages.length > 0) {
-      scrollToBottom();
-      isFirstLoad.current = false;
-    }
-  }, [messages, scrollToBottom]);
-
-  useEffect(() => {
-    return () => {
-      isFirstLoad.current = true;
-    };
-  }, []);
+  useInitialScroll({
+    elements: messages,
+    scrollToBottom,
+    chatId,
+  });
 
   if (!messages.length && !isLoading && !hasMore) {
     return (
@@ -37,6 +29,8 @@ export const MessagesContainer: FC<MessagesContainerProps> = ({
     );
   }
 
+  //console.log(messages, isLoading, hasMore, loadMoreRef, chatId, bottomListRef, scrollToBottom);
+
   return (
     <section className={s.list}>
       {isLoading && <Loader />}
@@ -45,4 +39,4 @@ export const MessagesContainer: FC<MessagesContainerProps> = ({
       <div className={s.bottomList} ref={bottomListRef} />
     </section>
   );
-};
+});
