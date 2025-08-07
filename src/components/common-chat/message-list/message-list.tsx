@@ -1,33 +1,18 @@
+import { FC } from "react";
 import { getCurrentUser } from "@slices/auth";
 import { getMessages } from "@slices/common-chat";
 import { useSelector } from "@store";
 import { Message } from "@ui/message";
-import { FC, useEffect } from "react";
 import { MessageListProps } from "./types";
 import { MessagesContainer } from "@components/chat";
-import { useScrollToBottom } from "@hooks";
 import { useMediaQuery } from "react-responsive";
 import { Loader } from "@ui/loader";
-import s from './message-list.module.css';
+import s from "./message-list.module.css";
 
-export const MessageList: FC<MessageListProps> = ({
-  status,
-  bottomListRef,
-}) => {
+export const MessageList: FC<MessageListProps> = ({ status, ...props }) => {
   const messages = useSelector(getMessages);
   const currentUser = useSelector(getCurrentUser);
   const isMobile = useMediaQuery({ maxWidth: 768 });
-
-  useEffect(() => {
-    const bottomRef = bottomListRef.current;
-    if (bottomRef) {
-      bottomRef.scrollIntoView({
-        block: "nearest",
-      });
-    }
-  }, [messages, bottomListRef]);
-
-  useScrollToBottom({ bottomListRef, deps: [messages] });
 
   if (status !== "ready") {
     return <Loader classes={{ container: s.loaderContainer }} />;
@@ -52,10 +37,5 @@ export const MessageList: FC<MessageListProps> = ({
     }
   );
 
-  return (
-    <MessagesContainer
-      messages={messageElements}
-      bottomListRef={bottomListRef}
-    />
-  );
+  return <MessagesContainer messages={messageElements} {...props} />;
 };

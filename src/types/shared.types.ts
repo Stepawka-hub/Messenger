@@ -34,3 +34,8 @@ export type TToastId = Id;
 export type TToastWithKey = TToast & {
   id: TToastId;
 };
+
+export type ScrollController = {
+  bottomListRef: React.RefObject<HTMLDivElement | null>;
+  scrollToBottom: () => void;
+};

@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect, useRef } from "react";
 import { MessagesContainerProps } from "./types";
 import { NoDataFound } from "@ui/no-data-found";
 import { Loader } from "@ui/loader";
@@ -10,7 +10,24 @@ export const MessagesContainer: FC<MessagesContainerProps> = ({
   hasMore = false,
   loadMoreRef,
   bottomListRef,
+  scrollToBottom,
 }) => {
+  const isFirstLoad = useRef<boolean>(true);
+
+  useEffect(() => {
+    console.log(isFirstLoad.current);
+    if (isFirstLoad.current && messages.length > 0) {
+      scrollToBottom();
+      isFirstLoad.current = false;
+    }
+  }, [messages, scrollToBottom]);
+
+  useEffect(() => {
+    return () => {
+      isFirstLoad.current = true;
+    };
+  }, []);
+
   if (!messages.length && !isLoading && !hasMore) {
     return (
       <NoDataFound

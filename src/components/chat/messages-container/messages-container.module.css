@@ -4,6 +4,7 @@
   padding: 1rem 1rem 0;
   gap: 0.5rem;
   height: 100%;
+  overflow: auto;
 }
 
 .list> :first-child {

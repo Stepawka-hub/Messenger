@@ -1,4 +1,5 @@
 export { useClickOutside } from './useClickOutside';
+export { useScrollToBottom } from './useScrollToBottom';
 export { useCursorDistance } from './useCursorDistance';
 export { useContextMenu } from './useContextMenu';
 export { useDebounce } from './useDebounce';

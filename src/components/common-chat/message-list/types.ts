@@ -1,7 +1,5 @@
-import { TSocketStatus } from '@types';
-import { RefObject } from "react";
+import { ScrollController, TSocketStatus } from "@types";
 
-export type MessageListProps = {
+export type MessageListProps = ScrollController & {
   status: TSocketStatus;
-  bottomListRef: RefObject<HTMLDivElement | null>;
 };
