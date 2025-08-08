@@ -6,7 +6,7 @@
 }
 
 .message.own {
-  align-self: flex-end;
+  margin-left: auto;
   background-color: var(--own-message-bg-color);
 }
 
