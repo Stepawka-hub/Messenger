@@ -15,6 +15,7 @@ export const MessageList: FC<MessageListProps> = ({
   userId,
   partnerAvatar,
   messagesContainerRef,
+  scrollToBottom
 }) => {
   const currentUser = useSelector(getCurrentUser);
   const deletingMessageIds = useSelector(getDeletingMessageIds);
@@ -24,6 +25,7 @@ export const MessageList: FC<MessageListProps> = ({
   // Fetch messages
   const { messages, hasMore, isLoading, fetchMessages } = useFetchMessages({
     userId,
+    scrollToBottom
   });
 
   const loadMoreRef = useInfiniteScroll({

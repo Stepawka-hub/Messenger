@@ -19,10 +19,20 @@ export const MessagesContainer = forwardRef<
     const virtualizer = useVirtualizer({
       count: dataLength,
       getScrollElement: () => parentRef.current,
-      estimateSize: () => 100,
-      overscan: 5,
+      estimateSize: () => 120,
     });
     const virtualItems = virtualizer.getVirtualItems();
+
+    useImperativeHandle(
+      ref,
+      () => ({
+        scrollToBottom: () => {
+          console.log(virtualizer.getTotalSize());
+          virtualizer.scrollToIndex(dataLength - 1, { align: "end" });
+        },
+      }),
+      [virtualizer, dataLength]
+    );
 
     useEffect(() => {
       if (dataLength && scrollRef?.current) {
@@ -30,16 +40,6 @@ export const MessagesContainer = forwardRef<
         virtualizer.scrollToIndex(index, { align: options?.align });
       }
     }, [virtualizer, scrollRef, dataLength]);
-
-    useImperativeHandle(
-      ref,
-      () => ({
-        scrollToBottom: () => {
-          virtualizer.scrollToIndex(dataLength - 1, { align: "end" });
-        },
-      }),
-      [virtualizer, dataLength]
-    );
 
     if (!dataLength && !isLoading && !hasMore) {
       return (
@@ -55,7 +55,7 @@ export const MessagesContainer = forwardRef<
         <div
           className={s.scrollContainer}
           style={{
-            height: `${virtualizer.getTotalSize()}px`,
+            height: virtualizer.getTotalSize(),
           }}
         >
           <div ref={loadMoreRef} />
