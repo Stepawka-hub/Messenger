@@ -1,8 +1,4 @@
-import { ScrollController } from "@types";
-
-export type SendMessageFormWrapperProps = Pick<
-  ScrollController,
-  "scrollToBottom"
-> & {
+export type SendMessageFormWrapperProps = {
   userId: number;
+  scrollToBottom: () => void;
 };

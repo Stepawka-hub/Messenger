@@ -1,14 +1,26 @@
 .list {
-  display: flex;
-  flex-direction: column;
   padding: 1rem 1rem 0;
-  gap: 0.5rem;
   height: 100%;
   overflow: auto;
+  display: flex;
+  flex-direction: column;
 }
 
-.list> :first-child {
+.scrollContainer {
   margin-top: auto;
+  position: relative;
+  width: 100%;
+}
+
+.itemsContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.item {
+  margin: 0.5rem 0;
 }
 
 .noData {
@@ -16,13 +28,9 @@
   align-items: center;
 }
 
-.bottomList {
-  padding-top: 0.75rem;
-}
 
 @media (max-width: 768px) {
   .list {
     padding: 0.5rem 0.5rem 0;
   }
-
 }

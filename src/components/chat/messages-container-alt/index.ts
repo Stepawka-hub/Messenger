@@ -1,1 +1,0 @@
-export { MessagesContainerAlt } from './messages-container-alt'; 

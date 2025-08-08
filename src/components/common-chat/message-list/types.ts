@@ -1,5 +1,9 @@
-import { ScrollController, TSocketStatus } from "@types";
+import { RefObject } from "react";
+import { MessagesContainerRef } from "@components/chat";
+import { TSocketStatus } from "@types";
 
-export type MessageListProps = ScrollController & {
+export type MessageListProps = {
   status: TSocketStatus;
+  messagesContainerRef: RefObject<MessagesContainerRef | null>;
+  scrollToBottom: () => void;
 };

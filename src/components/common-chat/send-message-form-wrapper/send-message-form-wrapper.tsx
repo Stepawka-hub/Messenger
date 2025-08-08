@@ -14,6 +14,7 @@ export const SendMessageFormWrapper: FC<SendMessageFormWrapperProps> = ({
 
   const onSubmit: SubmitHandler<TSendMessageForm> = async ({ message }) => {
     dispatch(sendMessage(message));
+    scrollToBottom();
   };
 
   return (

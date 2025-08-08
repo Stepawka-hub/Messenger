@@ -2,6 +2,7 @@ import { FC, Fragment } from "react";
 import { useMediaQuery } from "react-responsive";
 import { isSameDay } from "date-fns";
 import { ChatMessage } from "@components/private-chat";
+import { MessagesContainer } from "@components/chat";
 import { useFetchMessages, useInfiniteScroll, useMessageActions } from "@hooks";
 import { getCurrentUser } from "@slices/auth";
 import { getDeletingMessageIds, getRestoringMessageIds } from "@slices/dialogs";
@@ -9,12 +10,11 @@ import { useSelector } from "@store";
 import { checkInProgress, formatDateShort } from "@utils/helpers";
 import { MessageListProps } from "./type";
 import { Separator } from "@ui/separator";
-import { MessagesContainerAlt } from "@components/chat/messages-container-alt";
 
 export const MessageList: FC<MessageListProps> = ({
   userId,
   partnerAvatar,
-  bottomListRef
+  messagesContainerRef,
 }) => {
   const currentUser = useSelector(getCurrentUser);
   const deletingMessageIds = useSelector(getDeletingMessageIds);
@@ -68,12 +68,12 @@ export const MessageList: FC<MessageListProps> = ({
   };
 
   return (
-    <MessagesContainerAlt
+    <MessagesContainer
+      ref={messagesContainerRef}
       dataLength={messages.length}
       isLoading={isLoading}
       hasMore={hasMore}
       loadMoreRef={loadMoreRef}
-      bottomListRef={bottomListRef}
       renderItem={renderMessage}
     />
   );

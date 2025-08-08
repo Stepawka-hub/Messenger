@@ -28,6 +28,7 @@ export const SendMessageFormWrapper: FC<SendMessageFormWrapperProps> = ({
           date: new Date().toISOString(),
         })
       );
+      scrollToBottom();
     } catch (error) {
       console.error("Error sending message:", error);
     }

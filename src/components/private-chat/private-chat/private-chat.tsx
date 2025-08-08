@@ -1,4 +1,4 @@
-import { FC, useRef } from "react";
+import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "@store";
 import { getSelectedDialog } from "@selectors/dialogs";
@@ -20,8 +20,7 @@ export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
   const selectedDialog = useSelector((state) =>
     getSelectedDialog(state, userId)
   );
-  const bottomListRef = useRef<HTMLDivElement>(null);
-  const scrollToBottom = useScrollToBottom(bottomListRef);
+  const { messagesContainerRef, scrollToBottom } = useScrollToBottom();
 
   const openProfile = () => {
     navigate(`/profile/${userId}`);
@@ -68,7 +67,7 @@ export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
         <MessageList
           userId={userId}
           partnerAvatar={selectedDialog.photos.small}
-          bottomListRef={bottomListRef}
+          messagesContainerRef={messagesContainerRef}
           scrollToBottom={scrollToBottom}
         />
       }

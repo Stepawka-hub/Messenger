@@ -1,10 +1,13 @@
-import { ScrollController } from '@types';
 import { ReactNode } from "react";
 
-export type MessagesContainerProps = ScrollController & {
-  messages: ReactNode[];
+export type MessagesContainerProps = {
+  dataLength: number;
   isLoading?: boolean;
   hasMore?: boolean;
   loadMoreRef?: React.RefObject<HTMLDivElement | null>;
-  chatId?: number;
+  renderItem: (index: number) => ReactNode;
+};
+
+export type MessagesContainerRef = {
+  scrollToBottom: () => void;
 };
