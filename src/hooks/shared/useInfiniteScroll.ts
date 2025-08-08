@@ -3,22 +3,24 @@ import { useCallback, useEffect, useRef } from "react";
 export type TUseInfiniteScrollProps = {
   loadMore: () => void;
   hasMore: boolean;
+  isLoading: boolean;
 };
 
 export const useInfiniteScroll = ({
   loadMore,
   hasMore,
+  isLoading,
 }: TUseInfiniteScrollProps) => {
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
   const handleIntersection = useCallback(
     (entries: IntersectionObserverEntry[]) => {
       const isIntersecting = entries[0]?.isIntersecting;
-      if (isIntersecting && hasMore) {
+      if (isIntersecting && hasMore && !isLoading) {
         loadMore();
       }
     },
-    [loadMore, hasMore]
+    [loadMore, hasMore, isLoading]
   );
 
   useEffect(() => {

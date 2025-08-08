@@ -1,0 +1,21 @@
+.list {
+  padding: 1rem 1rem 0;
+  height: 100%;
+  overflow: auto;
+}
+
+.relative {
+  position: relative;
+  width: 100%;
+}
+
+.itemsContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.item {
+  margin: 0.5rem 0;
+}
