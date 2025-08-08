@@ -17,7 +17,7 @@ type TUseFetchMessagesReturn = {
   messages: TMessage[];
   hasMore: boolean;
   isLoading: boolean;
-  fetchMessages: () => void;
+  fetchMessages: () => Promise<void>;
 };
 
 export const useFetchMessages = ({
@@ -29,8 +29,14 @@ export const useFetchMessages = ({
   const { currentPage, pageSize } = useSelector(getMessagesPagination);
   const isLoading = useSelector(getIsLoadingMessages);
 
-  const fetchMessages = useCallback(() => {
-    dispatch(getMessagesAsync({ userId, pageSize, currentPage }));
+  const fetchMessages = useCallback(async () => {
+    try {
+      await dispatch(
+        getMessagesAsync({ userId, pageSize, currentPage })
+      ).unwrap();
+    } catch (error) {
+      console.error("Error fetching messages:", error);
+    }
   }, [dispatch, userId, pageSize, currentPage]);
 
   return { messages, hasMore, isLoading, fetchMessages };

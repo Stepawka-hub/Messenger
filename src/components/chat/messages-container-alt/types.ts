@@ -1,5 +1,10 @@
-import { TMessage } from '@types'
+import { ScrollController } from "@types";
+import { ReactNode } from "react";
 
-export type MessagesContainerAltProps = {
-  messages: TMessage[];
-}
+export type MessagesContainerAltProps = Pick<ScrollController, "bottomListRef"> & {
+  dataLength: number;
+  isLoading?: boolean;
+  hasMore?: boolean;
+  loadMoreRef?: React.RefObject<HTMLDivElement | null>;
+  renderItem: (index: number) => ReactNode;
+};
