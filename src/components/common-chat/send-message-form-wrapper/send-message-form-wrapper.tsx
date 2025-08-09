@@ -4,7 +4,10 @@ import { SendMessageForm, TSendMessageForm } from "@components/chat";
 import { sendMessage } from "@services/socket";
 import { useDispatch } from "@store";
 import { SendMessageFormWrapperProps } from "./type";
-import { MAX_CHAT_MESSAGE_LENGTH } from "@utils/constants";
+import {
+  MAX_CHAT_MESSAGE_LENGTH,
+  MESSAGE_SCROLL_DELAY_MS,
+} from "@utils/constants";
 
 export const SendMessageFormWrapper: FC<SendMessageFormWrapperProps> = ({
   status,
@@ -14,7 +17,12 @@ export const SendMessageFormWrapper: FC<SendMessageFormWrapperProps> = ({
 
   const onSubmit: SubmitHandler<TSendMessageForm> = async ({ message }) => {
     dispatch(sendMessage(message));
-    onSentMessage?.();
+
+    // TODO: Заменить на механизм подтверждения доставки (BACKEND-123)
+    // Временное решение из-за ограничений API
+    setTimeout(() => {
+      onSentMessage?.();
+    }, MESSAGE_SCROLL_DELAY_MS);
   };
 
   return (
