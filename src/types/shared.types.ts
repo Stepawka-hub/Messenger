@@ -1,4 +1,3 @@
-import { TScrollInfo } from "@components/chat";
 import { Id, ToastContent, ToastOptions } from "react-toastify";
 
 export type TTimeout = ReturnType<typeof setTimeout> | undefined;
@@ -34,14 +33,4 @@ export type TToast = {
 export type TToastId = Id;
 export type TToastWithKey = TToast & {
   id: TToastId;
-};
-
-export type ScrollController = {
-  bottomListRef: React.RefObject<HTMLDivElement | null>;
-  scrollToBottom: () => void;
-};
-
-export type TScrollController = {
-  scrollRef: React.RefObject<TScrollInfo>;
-  scrollToBottom: () => void;
 };

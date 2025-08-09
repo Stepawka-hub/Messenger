@@ -1,9 +1,9 @@
-import { ScrollController } from "@types";
 import { useEffect, useRef } from "react";
 
-type TUseInitialScrollArgs = Pick<ScrollController, "scrollToBottom"> & {
+type TUseInitialScrollArgs = {
   dataLength: number;
   chatId?: number;
+  scrollToBottom: () => void;
 };
 
 export const useInitialScroll = ({

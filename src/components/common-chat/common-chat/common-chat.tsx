@@ -20,7 +20,7 @@ export const CommonChat: FC = () => {
       footer={
         <SendMessageFormWrapper
           status={status}
-          scrollToBottom={scrollToBottom}
+          onSentMessage={scrollToBottom}
         />
       }
     />

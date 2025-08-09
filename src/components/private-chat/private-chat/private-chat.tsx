@@ -73,7 +73,7 @@ export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
       footer={
         <SendMessageFormWrapper
           userId={userId}
-          scrollToBottom={scrollToBottom}
+          onSentMessage={scrollToBottom}
         />
       }
     />

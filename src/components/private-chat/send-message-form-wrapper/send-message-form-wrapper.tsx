@@ -13,7 +13,7 @@ import { MAX_MESSAGE_LENGTH } from "@utils/constants";
 
 export const SendMessageFormWrapper: FC<SendMessageFormWrapperProps> = ({
   userId,
-  scrollToBottom,
+  onSentMessage,
 }) => {
   const dispatch = useDispatch();
   const isSendingMessage = useSelector(getIsSendingMessage);
@@ -28,7 +28,7 @@ export const SendMessageFormWrapper: FC<SendMessageFormWrapperProps> = ({
           date: new Date().toISOString(),
         })
       );
-      scrollToBottom();
+      onSentMessage?.();
     } catch (error) {
       console.error("Error sending message:", error);
     }

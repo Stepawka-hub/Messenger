@@ -1,8 +1,6 @@
-import { ScrollController, TSocketStatus } from "@types";
+import { TSocketStatus } from "@types";
 
-export type SendMessageFormWrapperProps = Pick<
-  ScrollController,
-  "scrollToBottom"
-> & {
+export type SendMessageFormWrapperProps = {
   status: TSocketStatus;
+  onSentMessage?: () => void;
 };

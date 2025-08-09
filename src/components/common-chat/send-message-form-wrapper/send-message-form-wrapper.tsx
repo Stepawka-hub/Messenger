@@ -8,13 +8,13 @@ import { MAX_CHAT_MESSAGE_LENGTH } from "@utils/constants";
 
 export const SendMessageFormWrapper: FC<SendMessageFormWrapperProps> = ({
   status,
-  scrollToBottom,
+  onSentMessage,
 }) => {
   const dispatch = useDispatch();
 
   const onSubmit: SubmitHandler<TSendMessageForm> = async ({ message }) => {
     dispatch(sendMessage(message));
-    scrollToBottom();
+    onSentMessage?.();
   };
 
   return (
