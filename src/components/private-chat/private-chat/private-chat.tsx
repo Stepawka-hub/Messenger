@@ -68,7 +68,6 @@ export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
           userId={userId}
           partnerAvatar={selectedDialog.photos.small}
           messagesContainerRef={messagesContainerRef}
-          scrollToBottom={scrollToBottom}
         />
       }
       footer={

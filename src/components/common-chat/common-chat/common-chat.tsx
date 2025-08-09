@@ -15,7 +15,6 @@ export const CommonChat: FC = () => {
         <MessageList
           status={status}
           messagesContainerRef={messagesContainerRef}
-          scrollToBottom={scrollToBottom}
         />
       }
       footer={

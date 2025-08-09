@@ -5,5 +5,4 @@ import { TSocketStatus } from "@types";
 export type MessageListProps = {
   status: TSocketStatus;
   messagesContainerRef: RefObject<MessagesContainerRef | null>;
-  scrollToBottom: () => void;
 };

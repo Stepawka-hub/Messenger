@@ -10,10 +10,9 @@ import { useCallback } from "react";
 
 type TUseFetchMessagesProps = {
   userId: number;
-  scrollToBottom: () => void;
 };
 
-export const useFetchMessages = ({ userId, scrollToBottom }: TUseFetchMessagesProps) => {
+export const useFetchMessages = ({ userId }: TUseFetchMessagesProps) => {
   const dispatch = useDispatch();
   const messages = useSelector(getMessages);
   const hasMore = useSelector(getHasMoreMessages);
@@ -25,11 +24,10 @@ export const useFetchMessages = ({ userId, scrollToBottom }: TUseFetchMessagesPr
       await dispatch(
         getMessagesAsync({ userId, pageSize, currentPage })
       ).unwrap();
-      scrollToBottom();
     } catch (error) {
       console.error("Error fetching messages:", error);
     }
-  }, [dispatch, scrollToBottom, userId, pageSize, currentPage]);
+  }, [dispatch, userId, pageSize, currentPage]);
 
   return { messages, hasMore, isLoading, fetchMessages };
 };

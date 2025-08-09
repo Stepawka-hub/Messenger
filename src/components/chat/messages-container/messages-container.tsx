@@ -1,9 +1,13 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
-import { MessagesContainerProps, MessagesContainerRef } from "./types";
-import { TScrollInfo } from "@components/chat";
+import { forwardRef, useCallback, useImperativeHandle, useRef } from "react";
+import {
+  MessagesContainerProps,
+  MessagesContainerRef,
+  TScrollToIndex,
+} from "./types";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { NoDataFound } from "@ui/no-data-found";
 import s from "./messages-container.module.css";
+import { useInitialScroll } from "@hooks";
 
 export const MessagesContainer = forwardRef<
   MessagesContainerRef,
@@ -14,7 +18,6 @@ export const MessagesContainer = forwardRef<
     ref
   ) => {
     const parentRef = useRef<HTMLDivElement>(null);
-    const scrollRef = useRef<TScrollInfo>(null);
 
     const virtualizer = useVirtualizer({
       count: dataLength,
@@ -23,23 +26,27 @@ export const MessagesContainer = forwardRef<
     });
     const virtualItems = virtualizer.getVirtualItems();
 
+    const scrollToBottom = useCallback(() => {
+      virtualizer.scrollToIndex(dataLength - 1, { align: "end" });
+    }, [virtualizer, dataLength]);
+
+    const scrollToIndex = useCallback<TScrollToIndex>(
+      (index: number, options = { align: "start" }) => {
+        virtualizer.scrollToIndex(index, options);
+      },
+      [virtualizer]
+    );
+
     useImperativeHandle(
       ref,
       () => ({
-        scrollToBottom: () => {
-          console.log(virtualizer.getTotalSize());
-          virtualizer.scrollToIndex(dataLength - 1, { align: "end" });
-        },
+        scrollToBottom,
+        scrollToIndex,
       }),
-      [virtualizer, dataLength]
+      [scrollToBottom, scrollToIndex]
     );
 
-    useEffect(() => {
-      if (dataLength && scrollRef?.current) {
-        const { index, options } = scrollRef.current;
-        virtualizer.scrollToIndex(index, { align: options?.align });
-      }
-    }, [virtualizer, scrollRef, dataLength]);
+    useInitialScroll({ dataLength, scrollToBottom });
 
     if (!dataLength && !isLoading && !hasMore) {
       return (
