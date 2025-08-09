@@ -1,16 +1,17 @@
 import { forwardRef, useCallback, useImperativeHandle, useRef } from "react";
-import {
-  MessagesContainerProps,
-  MessagesContainerRef,
-  TScrollToIndex,
-} from "./types";
+import { useInitialScroll } from "@hooks";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { NoDataFound } from "@ui/no-data-found";
+import {
+  MessagesContainerProps,
+  TMessagesContainerRef,
+  TScrollToBottom,
+  TScrollToIndex,
+} from "./types";
 import s from "./messages-container.module.css";
-import { useInitialScroll } from "@hooks";
 
 export const MessagesContainer = forwardRef<
-  MessagesContainerRef,
+  TMessagesContainerRef,
   MessagesContainerProps
 >(
   (
@@ -26,13 +27,13 @@ export const MessagesContainer = forwardRef<
     });
     const virtualItems = virtualizer.getVirtualItems();
 
-    const scrollToBottom = useCallback(() => {
+    const scrollToBottom = useCallback<TScrollToBottom>(() => {
       virtualizer.scrollToIndex(dataLength - 1, { align: "end" });
     }, [virtualizer, dataLength]);
 
     const scrollToIndex = useCallback<TScrollToIndex>(
-      (index: number, options = { align: "start" }) => {
-        virtualizer.scrollToIndex(index, options);
+      (value, options = { align: "start" }) => {
+        virtualizer.scrollToIndex(value, options);
       },
       [virtualizer]
     );

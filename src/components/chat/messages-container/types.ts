@@ -1,5 +1,5 @@
 import { ScrollToOptions } from "@tanstack/react-virtual";
-import { ReactNode } from "react";
+import { ReactNode, RefObject } from "react";
 
 export type MessagesContainerProps = {
   dataLength: number;
@@ -9,9 +9,12 @@ export type MessagesContainerProps = {
   renderItem: (index: number) => ReactNode;
 };
 
-export type MessagesContainerRef = {
-  scrollToBottom: () => void;
+export type TMessagesContainerRef = {
+  scrollToBottom: TScrollToBottom;
   scrollToIndex: TScrollToIndex;
 };
 
+export type TScrollToBottom = () => void;
 export type TScrollToIndex = (i: number, o?: ScrollToOptions) => void;
+
+export type TMessagesContainer = RefObject<TMessagesContainerRef | null>;

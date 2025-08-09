@@ -24,6 +24,7 @@ export const MessageList: FC<MessageListProps> = ({
   // Fetch messages
   const { messages, hasMore, isLoading, fetchMessages } = useFetchMessages({
     userId,
+    container: messagesContainerRef,
   });
 
   const loadMoreRef = useInfiniteScroll({

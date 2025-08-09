@@ -1,8 +1,8 @@
 import { useCallback, useRef } from "react";
-import { MessagesContainerRef } from "@components/chat";
+import { TMessagesContainerRef } from "@components/chat";
 
 export const useScrollToBottom = () => {
-  const messagesContainerRef = useRef<MessagesContainerRef>(null);
+  const messagesContainerRef = useRef<TMessagesContainerRef>(null);
 
   const scrollToBottom = useCallback(() => {
     messagesContainerRef.current?.scrollToBottom();

@@ -1,2 +1,2 @@
-export { MessagesContainer } from './messages-container'; 
-export type { MessagesContainerRef } from './types';
+export { MessagesContainer } from "./messages-container";
+export * from "./types";

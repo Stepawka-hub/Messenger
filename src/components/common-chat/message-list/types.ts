@@ -1,8 +1,7 @@
-import { RefObject } from "react";
-import { MessagesContainerRef } from "@components/chat";
+import { TMessagesContainer } from "@components/chat";
 import { TSocketStatus } from "@types";
 
 export type MessageListProps = {
   status: TSocketStatus;
-  messagesContainerRef: RefObject<MessagesContainerRef | null>;
+  messagesContainerRef: TMessagesContainer;
 };

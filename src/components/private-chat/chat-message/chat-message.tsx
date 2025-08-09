@@ -6,8 +6,8 @@ import { TrashIcon } from "@icons";
 import { Message } from "@ui/message";
 import { Loader } from "@ui/loader";
 import { DeletedMessageBanner } from "@ui/deleted-message-banner";
-import s from "./chat-message.module.css";
 import { MenuItem } from "@ui/menu-item";
+import s from "./chat-message.module.css";
 
 export const ChatMessage: FC<ChatMessageProps> = memo(
   ({
