@@ -1,4 +1,4 @@
-import { TMessagesContainer } from "@components/chat/messages-container/types";
+import { TScrollToIndex } from "@components/chat";
 import {
   getHasMoreMessages,
   getIsLoadingMessages,
@@ -11,12 +11,12 @@ import { useCallback } from "react";
 
 type TUseFetchMessagesProps = {
   userId: number;
-  container: TMessagesContainer;
+  scrollToIndex?: TScrollToIndex;
 };
 
 export const useFetchMessages = ({
   userId,
-  container,
+  scrollToIndex,
 }: TUseFetchMessagesProps) => {
   const dispatch = useDispatch();
   const messages = useSelector(getMessages);
@@ -30,11 +30,11 @@ export const useFetchMessages = ({
         getMessagesAsync({ userId, pageSize, currentPage })
       ).unwrap();
 
-      container.current?.scrollToIndex(items.length);
+      scrollToIndex?.(items.length);
     } catch (error) {
       console.error("Error fetching messages:", error);
     }
-  }, [dispatch, container, userId, pageSize, currentPage]);
+  }, [dispatch, scrollToIndex, userId, pageSize, currentPage]);
 
   return { messages, hasMore, isLoading, fetchMessages };
 };

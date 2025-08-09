@@ -2,7 +2,6 @@
   padding: 0 1rem;
   height: 100%;
   overflow: auto;
-  contain: 'strict';
 }
 
 .scrollContainer {
@@ -19,7 +18,7 @@
 }
 
 .item {
-  padding: 0.5rem 0;
+  padding: 0.35rem 0;
 }
 
 .noData {
@@ -30,5 +29,9 @@
 @media (max-width: 768px) {
   .list {
     padding: 0 0.5rem;
+  }
+
+  .item {
+    padding: 0.25rem 0;
   }
 }
