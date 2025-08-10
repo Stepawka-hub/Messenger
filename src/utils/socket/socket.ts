@@ -37,14 +37,12 @@ export class Socket {
     callback: WebSocketEventListener<T>
   ) {
     if (this.socket) {
-      console.log('ON', eventName);
       this.socket.addEventListener(eventName, callback);
     }
   }
 
   off<T extends WebSocketEvent>(eventName: T, callback: WebSocketEventListener<T>) {
     if (this.socket) {
-      console.log('OFF', eventName);
       this.socket.removeEventListener(eventName, callback);
     }
   }

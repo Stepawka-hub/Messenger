@@ -5,7 +5,8 @@ export type MessagesContainerProps = {
   dataLength: number;
   isLoading?: boolean;
   hasMore?: boolean;
-  loadMoreRef?: React.RefObject<HTMLDivElement | null>;
+  loadMoreRef?: RefObject<HTMLDivElement | null>;
+  resetScrollKey?: number;
   renderItem: (index: number) => ReactNode;
 };
 

@@ -8,6 +8,7 @@ import {
   TScrollToBottom,
   TScrollToIndex,
 } from "./types";
+import { Loader } from "@ui/loader";
 import s from "./messages-container.module.css";
 
 export const MessagesContainer = forwardRef<
@@ -15,7 +16,14 @@ export const MessagesContainer = forwardRef<
   MessagesContainerProps
 >(
   (
-    { dataLength, isLoading = false, hasMore = false, loadMoreRef, renderItem },
+    {
+      dataLength,
+      isLoading = false,
+      hasMore = false,
+      loadMoreRef,
+      resetScrollKey,
+      renderItem,
+    },
     ref
   ) => {
     const parentRef = useRef<HTMLDivElement>(null);
@@ -24,6 +32,7 @@ export const MessagesContainer = forwardRef<
       count: dataLength,
       getScrollElement: () => parentRef.current,
       estimateSize: () => 120,
+      overscan: 5,
     });
     const virtualItems = virtualizer.getVirtualItems();
 
@@ -47,7 +56,11 @@ export const MessagesContainer = forwardRef<
       [scrollToBottom, scrollToIndex]
     );
 
-    useInitialScroll({ dataLength, scrollToBottom });
+    useInitialScroll({
+      dataLength,
+      scrollToBottom,
+      resetDep: resetScrollKey,
+    });
 
     if (!dataLength && !isLoading && !hasMore) {
       return (
@@ -66,13 +79,14 @@ export const MessagesContainer = forwardRef<
             height: virtualizer.getTotalSize(),
           }}
         >
-          <div ref={loadMoreRef} />
+          {hasMore && <div ref={loadMoreRef} />}
           <div
             className={s.itemsContainer}
             style={{
               transform: `translateY(${virtualItems[0]?.start ?? 0}px)`,
             }}
           >
+            {isLoading && <Loader />}
             {virtualItems.map(({ key, index }) => (
               <div
                 className={s.item}

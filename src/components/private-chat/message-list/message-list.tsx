@@ -75,6 +75,7 @@ export const MessageList: FC<MessageListProps> = ({
       isLoading={isLoading}
       hasMore={hasMore}
       loadMoreRef={loadMoreRef}
+      resetScrollKey={userId}
       renderItem={renderMessage}
     />
   );

@@ -2,19 +2,19 @@ import { useEffect, useRef } from "react";
 
 type TUseInitialScrollArgs = {
   dataLength: number;
-  chatId?: number;
+  resetDep?: unknown;
   scrollToBottom: () => void;
 };
 
 export const useInitialScroll = ({
   dataLength,
+  resetDep,
   scrollToBottom,
-  chatId,
 }: TUseInitialScrollArgs) => {
   const isFirstLoad = useRef(true);
 
   useEffect(() => {
-    if (isFirstLoad.current && dataLength > 0) {
+    if (isFirstLoad.current && dataLength) {
       scrollToBottom();
       isFirstLoad.current = false;
     }
@@ -22,5 +22,5 @@ export const useInitialScroll = ({
 
   useEffect(() => {
     isFirstLoad.current = true;
-  }, [chatId]);
+  }, [resetDep]);
 };

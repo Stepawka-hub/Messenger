@@ -30,7 +30,9 @@ export const useInfiniteScroll = ({
       observer.observe(loadMoreRef.current);
     }
 
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+    };
   }, [handleIntersection]);
 
   return loadMoreRef;
