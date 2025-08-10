@@ -1,20 +1,12 @@
-import { RefObject, useEffect } from "react";
+import { useCallback, useRef } from "react";
+import { TMessagesContainerRef } from "@components/chat";
 
-type TUseScrollToBottomParams = {
-  deps?: unknown[];
-  bottomListRef: RefObject<HTMLDivElement | null>;
-};
+export const useScrollToBottom = () => {
+  const messagesContainerRef = useRef<TMessagesContainerRef>(null);
 
-export const useScrollToBottom = ({
-  deps = [],
-  bottomListRef,
-}: TUseScrollToBottomParams) => {
-  useEffect(() => {
-    const bottomRef = bottomListRef.current;
-    if (bottomRef) {
-      bottomRef.scrollIntoView({
-        block: "nearest",
-      });
-    }
-  }, [bottomListRef]);
+  const scrollToBottom = useCallback(() => {
+    messagesContainerRef.current?.scrollToBottom();
+  }, []);
+
+  return { messagesContainerRef, scrollToBottom };
 };

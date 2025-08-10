@@ -1,3 +1,6 @@
+import { TSocketStatus } from "@types";
+
 export type SendMessageFormWrapperProps = {
-  onSuccess?: () => void;
+  status: TSocketStatus;
+  onSentMessage?: () => void;
 };

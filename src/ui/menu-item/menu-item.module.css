@@ -1,0 +1,17 @@
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  aspect-ratio: 1;
+}
+
+@media (max-width: 768px) {
+  .text {
+    font-size: 0.875rem;
+  }
+
+  .iconWrapper {
+    width: 1.35rem;
+  }
+}

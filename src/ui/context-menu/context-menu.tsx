@@ -1,8 +1,16 @@
-import { FC, MouseEvent } from "react";
+import {
+  FC,
+  MouseEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { CSSTransition } from "react-transition-group";
-import { useClickOutside } from "@hooks";
+import { useClickOutside, useCursorDistance } from "@hooks";
 import { ContextMenuProps } from "./type";
 import s from "./context-menu.module.css";
+import clsx from "clsx";
 
 export const ContextMenu: FC<ContextMenuProps> = ({
   isOpen,
@@ -10,14 +18,48 @@ export const ContextMenu: FC<ContextMenuProps> = ({
   position,
   setIsOpen,
 }) => {
+  const menuRef = useRef<HTMLUListElement>(null);
+  const [menuPosition, setMenuPosition] = useState<[number, number]>(position);
+
+  const correctPosition = useCallback(
+    (position: [number, number]): [number, number] => {
+      if (!menuRef.current) return position;
+
+      const [x, y] = position;
+      const menuWidth = menuRef.current.offsetWidth;
+      const menuHeight = menuRef.current.offsetHeight;
+
+      let adjustedX = x;
+      if (x + menuWidth > window.innerWidth) {
+        adjustedX = x - menuWidth;
+      }
+
+      let adjustedY = y;
+      if (y + menuHeight > window.innerHeight) {
+        adjustedY = y - menuHeight;
+      }
+
+      return [adjustedX, adjustedY];
+    },
+    []
+  );
+
   const closeMenu = () => {
     setIsOpen(false);
   };
 
-  const ref = useClickOutside<HTMLUListElement>({
-    isActive: isOpen,
-    callback: closeMenu,
+  useClickOutside({
+    elementRef: menuRef,
+    isOpen,
+    onClose: closeMenu,
   });
+
+  useCursorDistance({ ref: menuRef, callback: closeMenu, condition: isOpen });
+
+  useEffect(() => {
+    const newPosition = correctPosition(position);
+    setMenuPosition(newPosition);
+  }, [position, correctPosition]);
 
   const onContextMenu = (e: MouseEvent<HTMLUListElement>) => {
     e.preventDefault();
@@ -27,7 +69,7 @@ export const ContextMenu: FC<ContextMenuProps> = ({
   return (
     <CSSTransition
       in={isOpen}
-      nodeRef={ref}
+      nodeRef={menuRef}
       timeout={300}
       classNames={{
         enter: s.menuEnter,
@@ -38,9 +80,9 @@ export const ContextMenu: FC<ContextMenuProps> = ({
       unmountOnExit
     >
       <ul
-        ref={ref}
-        className={s.contextMenu}
-        style={{ left: position[0], top: position[1] }}
+        ref={menuRef}
+        className={clsx("fix-block", s.contextMenu)}
+        style={{ left: menuPosition[0], top: menuPosition[1] }}
         onContextMenu={onContextMenu}
       >
         {items.map(({ content, onClick }, idx) => (

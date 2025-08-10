@@ -1,14 +1,9 @@
 import { FC, Fragment } from "react";
 import { useMediaQuery } from "react-responsive";
 import { isSameDay } from "date-fns";
-import { MessagesContainer } from "@components/chat";
 import { ChatMessage } from "@components/private-chat";
-import {
-  useFetchMessages,
-  useInfiniteScroll,
-  useMessageActions,
-  useScrollToBottom,
-} from "@hooks";
+import { MessagesContainer } from "@components/chat";
+import { useFetchMessages, useInfiniteScroll, useMessageActions } from "@hooks";
 import { getCurrentUser } from "@slices/auth";
 import { getDeletingMessageIds, getRestoringMessageIds } from "@slices/dialogs";
 import { useSelector } from "@store";
@@ -19,23 +14,30 @@ import { Separator } from "@ui/separator";
 export const MessageList: FC<MessageListProps> = ({
   userId,
   partnerAvatar,
-  bottomListRef,
+  messagesContainerRef,
 }) => {
   const currentUser = useSelector(getCurrentUser);
   const deletingMessageIds = useSelector(getDeletingMessageIds);
   const restoringMessageIds = useSelector(getRestoringMessageIds);
-
   const isMobile = useMediaQuery({ maxWidth: 768 });
+
+  // Fetch messages
   const { messages, hasMore, isLoading, fetchMessages } = useFetchMessages({
     userId,
+    scrollToIndex: messagesContainerRef.current?.scrollToIndex,
   });
+
+  const loadMoreRef = useInfiniteScroll({
+    loadMore: fetchMessages,
+    hasMore,
+    isLoading,
+  });
+
+  // Message actions
   const { deleteMessage, restoreMessage } = useMessageActions();
 
-  // Scroll logic
-  const loadMoreRef = useInfiniteScroll({ loadMore: fetchMessages, hasMore });
-  useScrollToBottom({ bottomListRef });
-
-  const messageElements = messages.map((m, index) => {
+  const renderMessage = (index: number) => {
+    const m = messages[index];
     const isMessageOwner = m.senderId === currentUser?.id;
     const prevMessage = index > 0 ? messages[index - 1] : null;
     const showSeparator =
@@ -64,15 +66,17 @@ export const MessageList: FC<MessageListProps> = ({
         />
       </Fragment>
     );
-  });
+  };
 
   return (
     <MessagesContainer
-      messages={messageElements}
+      ref={messagesContainerRef}
+      dataLength={messages.length}
       isLoading={isLoading}
       hasMore={hasMore}
       loadMoreRef={loadMoreRef}
-      bottomListRef={bottomListRef}
+      resetScrollKey={userId}
+      renderItem={renderMessage}
     />
   );
 };

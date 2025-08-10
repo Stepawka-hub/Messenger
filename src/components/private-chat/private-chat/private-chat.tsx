@@ -1,4 +1,4 @@
-import { FC, useRef } from "react";
+import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "@store";
 import { getSelectedDialog } from "@selectors/dialogs";
@@ -10,6 +10,7 @@ import { Button } from "@ui/button";
 import { ChatHeader } from "@ui/chat-header";
 import { ChatWrapper } from "@ui/chat-wrapper";
 import { ChatStub } from "@ui/chat-stub";
+import { useScrollToBottom } from "@hooks";
 import clsx from "clsx";
 import s from "./private-chat.module.css";
 
@@ -19,7 +20,7 @@ export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
   const selectedDialog = useSelector((state) =>
     getSelectedDialog(state, userId)
   );
-  const bottomListRef = useRef<HTMLDivElement>(null);
+  const { messagesContainerRef, scrollToBottom } = useScrollToBottom();
 
   const openProfile = () => {
     navigate(`/profile/${userId}`);
@@ -52,12 +53,6 @@ export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
     );
   }
 
-  const onSendMessage = () => {
-    bottomListRef.current?.scrollIntoView({
-      block: "nearest",
-    });
-  };
-
   return (
     <ChatWrapper
       header={
@@ -72,11 +67,14 @@ export const PrivateChat: FC<PrivateChatProps> = ({ userId }) => {
         <MessageList
           userId={userId}
           partnerAvatar={selectedDialog.photos.small}
-          bottomListRef={bottomListRef}
+          messagesContainerRef={messagesContainerRef}
         />
       }
       footer={
-        <SendMessageFormWrapper userId={userId} onSuccess={onSendMessage} />
+        <SendMessageFormWrapper
+          userId={userId}
+          onSentMessage={scrollToBottom}
+        />
       }
     />
   );

@@ -1,4 +1,5 @@
 export { useClickOutside } from './useClickOutside';
+export { useCursorDistance } from './useCursorDistance';
 export { useContextMenu } from './useContextMenu';
 export { useDebounce } from './useDebounce';
 export { useInfiniteScroll } from './useInfiniteScroll';
@@ -6,4 +7,5 @@ export { useModal } from './useModal';
 export { usePolling } from './usePolling';
 export { useSubmitOnEnter } from './useSubmitOnEnter';
 export { useTheme } from './useTheme';
+export { useThrottle } from './useThrottle';
 export * from './useBodyScrollLock';

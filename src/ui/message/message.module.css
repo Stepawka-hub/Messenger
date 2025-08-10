@@ -1,15 +1,12 @@
 .message {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  padding: 1rem;
+  padding: 0.75rem;
   border-radius: 1rem;
   color: var(--primary-text-color);
   background-color: var(--message-bg-color);
 }
 
 .message.own {
-  align-self: flex-end;
+  margin-left: auto;
   background-color: var(--own-message-bg-color);
 }
 
@@ -20,7 +17,7 @@
   min-width: 0;
 }
 
-.content {
+.container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -39,25 +36,22 @@
   overflow: hidden;
 }
 
-.text {
-  font-size: 1.15rem;
-  word-wrap: break-word;
-  white-space: pre-wrap;
-}
-
 .messageInfo {
-  align-self: flex-end;
+  margin: 0.5rem 0.25rem 0 3rem;
+  display: inline;
+  float: right;
+  z-index: 1;
 }
 
 @media (max-width: 768px) {
   .message {
-    padding: 0.5rem 0.75rem;
+    padding: 0.35rem 0.75rem 0.25rem;
     max-width: 75%;
     min-width: 25%;
     width: fit-content;
   }
 
-  .content {
+  .container {
     gap: 0.25rem;
   }
 
@@ -67,5 +61,9 @@
 
   .text {
     font-size: 1rem;
+  }
+
+  .messageInfo {
+    margin: 0.25rem 0.25rem 0 1rem;
   }
 }

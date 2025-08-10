@@ -10,7 +10,6 @@ const getValue = getSafeValue("-");
 export const ProfileContacts: FC<ProfileContactsProps> = ({ contacts }) => {
   const contactElements = CONTACT_ORDER.map((key) => {
     const value = contacts[key];
-    if (!value) return;
 
     return (
       <ProfileContactsItem

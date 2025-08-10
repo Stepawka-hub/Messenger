@@ -8,6 +8,10 @@ export class Socket {
     this.socket = null;
   }
 
+  getReadyState() {
+    return this.socket?.readyState;
+  }
+
   connect(url: string) {
     if (!this.socket) {
       this.socket = new WebSocket(url);
@@ -33,15 +37,13 @@ export class Socket {
     callback: WebSocketEventListener<T>
   ) {
     if (this.socket) {
-      console.log('ON', eventName);
       this.socket.addEventListener(eventName, callback);
     }
   }
 
   off<T extends WebSocketEvent>(eventName: T, callback: WebSocketEventListener<T>) {
     if (this.socket) {
-      console.log('OFF', eventName);
       this.socket.removeEventListener(eventName, callback);
     }
-  } 
+  }
 }

@@ -1,6 +1,7 @@
 import { Id, ToastContent, ToastOptions } from "react-toastify";
 
 export type TTimeout = ReturnType<typeof setTimeout> | undefined;
+export type TFunctionWithArgs<Args extends unknown[]> = (...args: Args) => void;
 
 export type TPagination = {
   currentPage: number;

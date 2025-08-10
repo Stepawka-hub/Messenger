@@ -1,4 +1,4 @@
 export type SendMessageFormWrapperProps = {
   userId: number;
-  onSuccess: () => void;
-}
+  onSentMessage?: () => void;
+};

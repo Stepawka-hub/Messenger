@@ -1,12 +1,10 @@
-import { TTimeout } from '@types';
+import { TFunctionWithArgs, TTimeout } from "@types";
 import { useCallback, useRef } from "react";
 
-type DebouncedFunction<Args extends unknown[]> = (...args: Args) => void;
-
 export const useDebounce = <Args extends unknown[]>(
-  callback: DebouncedFunction<Args>,
+  callback: TFunctionWithArgs<Args>,
   delay: number = 1000
-): DebouncedFunction<Args> => {
+): TFunctionWithArgs<Args> => {
   const timer = useRef<TTimeout>(null);
 
   const debouncedFunction = useCallback(

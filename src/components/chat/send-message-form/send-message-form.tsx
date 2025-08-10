@@ -1,10 +1,7 @@
 import { FC } from "react";
 import { useForm } from "react-hook-form";
 import { useSubmitOnEnter } from "@hooks";
-import {
-  maxLengthValidation,
-  requiredValidation,
-} from "@utils/helpers";
+import { maxLengthValidation, requiredValidation } from "@utils/helpers";
 import { SendMessageFormProps, TSendMessageForm } from "./types";
 import { SendIcon } from "@icons";
 import { Textarea } from "@ui/form-elements";
@@ -28,6 +25,7 @@ export const SendMessageForm: FC<SendMessageFormProps> = ({
   });
 
   const { handleKeyDown } = useSubmitOnEnter({
+    disabled,
     onSubmit: handleSubmitForm,
   });
 
