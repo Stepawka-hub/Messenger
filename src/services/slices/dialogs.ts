@@ -9,10 +9,7 @@ import {
   startDialogAsync,
 } from "@thunks/dialogs";
 import { TDialog, TMessage } from "@types";
-import {
-  removeFromArray,
-  updateObjectInArray,
-} from "@utils/helpers";
+import { removeFromArray, safeSub, updateObjectInArray } from "@utils/helpers";
 import {
   TDialogsState,
   TSetDeletedPayload,
@@ -132,10 +129,19 @@ const dialogsSlice = createSlice({
         if (numberOfRead > 0) {
           state.dialogs = state.dialogs.map((d) => {
             if (d.id === userId) {
-              const newMessageCount = d.newMessagesCount - numberOfRead;
+              const newMessagesCount = safeSub(
+                d.newMessagesCount,
+                numberOfRead
+              );
+
+              state.newMessageCount = safeSub(
+                state.newMessageCount,
+                numberOfRead
+              );
+
               return {
                 ...d,
-                newMessagesCount: newMessageCount < 0 ? 0 : newMessageCount,
+                newMessagesCount,
               };
             }
 
