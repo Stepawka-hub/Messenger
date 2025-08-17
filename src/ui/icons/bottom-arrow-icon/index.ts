@@ -1,0 +1,1 @@
+export { BottomArrowIcon } from './bottom-arrow-icon';
