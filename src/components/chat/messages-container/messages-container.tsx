@@ -9,6 +9,7 @@ import {
   TScrollToIndex,
 } from "./types";
 import { Loader } from "@ui/loader";
+import { ScrollButton } from "@ui/scroll-button";
 import s from "./messages-container.module.css";
 
 export const MessagesContainer = forwardRef<
@@ -72,33 +73,34 @@ export const MessagesContainer = forwardRef<
     }
 
     return (
-      <div ref={parentRef} className={s.list}>
-        <div
-          className={s.scrollContainer}
-          style={{
-            height: virtualizer.getTotalSize(),
-          }}
-        >
-          {hasMore && <div ref={loadMoreRef} />}
+      <div className={s.wrapper}>
+        <div ref={parentRef} className={s.list}>
           <div
-            className={s.itemsContainer}
-            style={{
-              transform: `translateY(${virtualItems[0]?.start ?? 0}px)`,
-            }}
+            className={s.scrollContainer}
+            style={{ height: virtualizer.getTotalSize() }}
           >
-            {isLoading && <Loader />}
-            {virtualItems.map(({ key, index }) => (
-              <div
-                className={s.item}
-                key={key}
-                data-index={index}
-                ref={virtualizer.measureElement}
-              >
-                {renderItem(index)}
-              </div>
-            ))}
+            {hasMore && <div ref={loadMoreRef} />}
+            <div
+              className={s.itemsContainer}
+              style={{
+                transform: `translateY(${virtualItems[0]?.start ?? 0}px)`,
+              }}
+            >
+              {isLoading && <Loader />}
+              {virtualItems.map(({ key, index }) => (
+                <div
+                  className={s.item}
+                  key={key}
+                  data-index={index}
+                  ref={virtualizer.measureElement}
+                >
+                  {renderItem(index)}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
+        <ScrollButton onClick={scrollToBottom} />
       </div>
     );
   }
