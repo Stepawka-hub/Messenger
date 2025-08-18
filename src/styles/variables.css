@@ -42,6 +42,9 @@
   --select-option-color-active: #ff745f;
 
   --menu-shadow-color: #bdbdbd;
+
+  --scroll-btn-bg-color: #fff;
+  --scroll-btn-text-color: #676767;
 }
 
 .dark {
@@ -76,4 +79,7 @@
   --select-option-color-active: #282828;
 
   --menu-shadow-color: #272727;
+
+  --scroll-btn-bg-color: #222;
+  --scroll-btn-text-color: #a9a9a9;
 }

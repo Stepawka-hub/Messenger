@@ -24,7 +24,7 @@ export const ScrollButton: FC<ScrollButtonProps> = memo(
       >
         <div ref={ref}>
           <IconButton extraClass={s.scrollButton} onClick={onClick}>
-            <BottomArrowIcon />
+            <BottomArrowIcon className={s.icon} />
           </IconButton>
         </div>
       </CSSTransition>

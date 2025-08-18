@@ -1,7 +1,13 @@
 .scrollButton {
   position: absolute;
-  right: 1.5rem;
-  bottom: 2rem;
+  right: 1.75rem;
+  bottom: 1rem;
+  background-color: var(--scroll-btn-bg-color);
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.15), 0px 0px 4px 0px rgba(0, 0, 0, 0.20);
+}
+
+.icon {
+  color: var(--scroll-btn-text-color);
 }
 
 .enter {
@@ -20,4 +26,17 @@
 .exitActive {
   opacity: 0;
   transition: opacity .25s;
+}
+
+@media (max-width: 968px) {
+  .scrollButton {
+    right: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .scrollButton {
+    right: 0.75rem;
+    bottom: 0.75rem;
+  }
 }
