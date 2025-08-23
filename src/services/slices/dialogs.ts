@@ -54,6 +54,7 @@ const dialogsSlice = createSlice({
       { payload }: PayloadAction<TSetDeletedPayload>
     ) => {
       const { messageId, value } = payload;
+
       state.messages = updateObjectInArray(state.messages, messageId, "id", {
         isDeleted: value,
       });
@@ -127,26 +128,21 @@ const dialogsSlice = createSlice({
         const { userId } = meta.arg;
 
         if (numberOfRead > 0) {
-          state.dialogs = state.dialogs.map((d) => {
-            if (d.id === userId) {
-              const newMessagesCount = safeSub(
-                d.newMessagesCount,
-                numberOfRead
-              );
+          const dialog = state.dialogs.find((d) => d.id === userId);
 
-              state.newMessageCount = safeSub(
-                state.newMessageCount,
-                numberOfRead
-              );
+          if (dialog) {
+            // Update number of messages in the dialog
+            dialog.newMessagesCount = safeSub(
+              dialog.newMessagesCount,
+              numberOfRead
+            );
 
-              return {
-                ...d,
-                newMessagesCount,
-              };
-            }
-
-            return d;
-          });
+            // Update total number of messages
+            state.newMessageCount = safeSub(
+              state.newMessageCount,
+              numberOfRead
+            );
+          }
         }
 
         if (items.length) {
