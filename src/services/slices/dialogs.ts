@@ -82,6 +82,7 @@ const dialogsSlice = createSlice({
     setCurrentDialog: (state) => {
       state.hasMoreMessages = true;
       state.pagination.messages.currentPage = 1;
+      state.pagination.messages.totalCount = 0;
       state.messages = [];
     },
     setDialogsPage: (state, { payload }: PayloadAction<number>) => {
@@ -143,15 +144,18 @@ const dialogsSlice = createSlice({
           }
         }
 
+        const pagination = state.pagination.messages;
         if (items.length) {
           state.messages = [...items, ...state.messages];
-          state.pagination.messages.currentPage += 1;
+
+          if (state.messages.length >= totalCount || items.length < pagination.pageSize) {
+            state.hasMoreMessages = false;
+          } else {
+            pagination.currentPage += 1;
+          }
         }
 
-        if (state.messages.length === totalCount) {
-          state.hasMoreMessages = false;
-        }
-
+        state.pagination.messages.totalCount = totalCount;
         state.loading.isGettingMessages = false;
       })
       .addCase(getMessagesAsync.rejected, (state) => {
