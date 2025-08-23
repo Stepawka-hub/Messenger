@@ -18,3 +18,5 @@ export const isReadySocketData = <T>(message: T) =>
 
 export const unescapeHtml = (text: string) =>
   text.replace(/&amp;|&lt;|&gt;|&quot;|&#039;/g, (m) => HTML_UNESCAPE_MAP[m]);
+
+export const safeSub = (a: number, b: number, min = 0) => Math.max(a - b, min);

@@ -5,10 +5,8 @@ import {
   TGetItemsDataResponse,
   TGetMessagesParams,
   TGetMessagesPayload,
-  TGetNewMessagesParams,
-  TGetNewMessagesPayload,
   TResponse,
-  TResponseWithData
+  TResponseWithData,
 } from "./types";
 
 class DialogsAPI extends BaseAPI {
@@ -51,11 +49,6 @@ class DialogsAPI extends BaseAPI {
     return data;
   };
 
-  getMessageViewStatus = async (messageId: string) => {
-    const { data } = await this.api.get(`dialogs/messages/${messageId}/viewed`);
-    return data;
-  };
-
   deleteMessage = async (messageId: string): Promise<TResponse> => {
     const { data } = await this.api.delete<TResponse>(
       `dialogs/messages/${messageId}`
@@ -72,17 +65,6 @@ class DialogsAPI extends BaseAPI {
 
   getNewMessageCount = async () => {
     const { data } = await this.api.get(`dialogs/messages/new/count`);
-    return data;
-  };
-
-  getNewMessages = async ({ userId, date }: TGetNewMessagesPayload) => {
-    const params: TGetNewMessagesParams = {
-      newerThen: date,
-    };
-
-    const { data } = await this.api.get(`dialogs/${userId}/messages/new`, {
-      params,
-    });
     return data;
   };
 }

@@ -9,10 +9,7 @@ import {
   startDialogAsync,
 } from "@thunks/dialogs";
 import { TDialog, TMessage } from "@types";
-import {
-  removeFromArray,
-  updateObjectInArray,
-} from "@utils/helpers";
+import { removeFromArray, safeSub } from "@utils/helpers";
 import {
   TDialogsState,
   TSetDeletedPayload,
@@ -57,9 +54,11 @@ const dialogsSlice = createSlice({
       { payload }: PayloadAction<TSetDeletedPayload>
     ) => {
       const { messageId, value } = payload;
-      state.messages = updateObjectInArray(state.messages, messageId, "id", {
-        isDeleted: value,
-      });
+      const message = state.messages.find((m) => m.id === messageId);
+
+      if (message) {
+        message.isDeleted = value;
+      }
     },
     moveDialogToTop: (state, { payload }: PayloadAction<number>) => {
       const index = state.dialogs.findIndex((d) => d.id === payload);
@@ -74,18 +73,16 @@ const dialogsSlice = createSlice({
       state,
       { payload }: PayloadAction<TSetDialogActivityDatePayload>
     ) => {
-      state.dialogs = updateObjectInArray(
-        state.dialogs,
-        payload.dialogId,
-        "id",
-        {
-          lastDialogActivityDate: payload.date,
-        }
-      );
+      const dialog = state.dialogs.find((d) => d.id === payload.dialogId);
+
+      if (dialog) {
+        dialog.lastDialogActivityDate = payload.date;
+      }
     },
     setCurrentDialog: (state) => {
       state.hasMoreMessages = true;
       state.pagination.messages.currentPage = 1;
+      state.pagination.messages.totalCount = 0;
       state.messages = [];
     },
     setDialogsPage: (state, { payload }: PayloadAction<number>) => {
@@ -130,28 +127,35 @@ const dialogsSlice = createSlice({
         const { userId } = meta.arg;
 
         if (numberOfRead > 0) {
-          state.dialogs = state.dialogs.map((d) => {
-            if (d.id === userId) {
-              const newMessageCount = d.newMessagesCount - numberOfRead;
-              return {
-                ...d,
-                newMessagesCount: newMessageCount < 0 ? 0 : newMessageCount,
-              };
-            }
+          const dialog = state.dialogs.find((d) => d.id === userId);
 
-            return d;
-          });
+          if (dialog) {
+            // Update number of messages in the dialog
+            dialog.newMessagesCount = safeSub(
+              dialog.newMessagesCount,
+              numberOfRead
+            );
+
+            // Update total number of messages
+            state.newMessageCount = safeSub(
+              state.newMessageCount,
+              numberOfRead
+            );
+          }
         }
 
+        const pagination = state.pagination.messages;
         if (items.length) {
           state.messages = [...items, ...state.messages];
-          state.pagination.messages.currentPage += 1;
+
+          if (state.messages.length >= totalCount || items.length < pagination.pageSize) {
+            state.hasMoreMessages = false;
+          } else {
+            pagination.currentPage += 1;
+          }
         }
 
-        if (state.messages.length === totalCount) {
-          state.hasMoreMessages = false;
-        }
-
+        state.pagination.messages.totalCount = totalCount;
         state.loading.isGettingMessages = false;
       })
       .addCase(getMessagesAsync.rejected, (state) => {
