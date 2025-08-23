@@ -2,10 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { followUnfollowFlow, getUsersAsync } from "@thunks/users";
 import { TSocialUser, TUserFilter } from "@types";
 import { TGetItemsDataResponse } from "@utils/api/types";
-import {
-  removeFromArray,
-  updateObjectInArray,
-} from "@utils/helpers";
+import { removeFromArray } from "@utils/helpers";
 import { TUsersState } from "./types";
 
 const initialState: TUsersState = {
@@ -75,9 +72,10 @@ const usersSlice = createSlice({
           userId
         );
 
-        state.users = updateObjectInArray(state.users, userId, "id", {
-          followed: payload,
-        });
+        const user = state.users.find((u) => u.id === userId);
+        if (user) {
+          user.followed = payload;
+        }
       })
       .addCase(followUnfollowFlow.rejected, (state, { meta }) => {
         state.followingInProgressIds = removeFromArray(

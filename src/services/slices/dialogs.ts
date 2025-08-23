@@ -9,7 +9,7 @@ import {
   startDialogAsync,
 } from "@thunks/dialogs";
 import { TDialog, TMessage } from "@types";
-import { removeFromArray, safeSub, updateObjectInArray } from "@utils/helpers";
+import { removeFromArray, safeSub } from "@utils/helpers";
 import {
   TDialogsState,
   TSetDeletedPayload,
@@ -54,10 +54,11 @@ const dialogsSlice = createSlice({
       { payload }: PayloadAction<TSetDeletedPayload>
     ) => {
       const { messageId, value } = payload;
+      const message = state.messages.find((m) => m.id === messageId);
 
-      state.messages = updateObjectInArray(state.messages, messageId, "id", {
-        isDeleted: value,
-      });
+      if (message) {
+        message.isDeleted = value;
+      }
     },
     moveDialogToTop: (state, { payload }: PayloadAction<number>) => {
       const index = state.dialogs.findIndex((d) => d.id === payload);
@@ -72,14 +73,11 @@ const dialogsSlice = createSlice({
       state,
       { payload }: PayloadAction<TSetDialogActivityDatePayload>
     ) => {
-      state.dialogs = updateObjectInArray(
-        state.dialogs,
-        payload.dialogId,
-        "id",
-        {
-          lastDialogActivityDate: payload.date,
-        }
-      );
+      const dialog = state.dialogs.find((d) => d.id === payload.dialogId);
+
+      if (dialog) {
+        dialog.lastDialogActivityDate = payload.date;
+      }
     },
     setCurrentDialog: (state) => {
       state.hasMoreMessages = true;
